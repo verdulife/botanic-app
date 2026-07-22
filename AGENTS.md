@@ -1,3 +1,11 @@
+## Project Configuration
+
+- **Language**: TypeScript
+- **Package Manager**: bun
+- **Add-ons**: none
+
+---
+
 # Botanic — Contexto para OpenCode
 
 ## Proyecto
