@@ -109,3 +109,46 @@
 * {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
+
+@keyframes blob {
+	0% { transform: translate(0, 0) scale(1); }
+	33% { transform: translate(30px, -40px) scale(1.05); }
+	66% { transform: translate(-20px, 20px) scale(0.95); }
+	100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes blob2 {
+	0% { transform: translate(0, 0) scale(1); }
+	33% { transform: translate(-40px, 30px) scale(0.95); }
+	66% { transform: translate(20px, -30px) scale(1.08); }
+	100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes blob3 {
+	0% { transform: translate(0, 0) scale(1); }
+	50% { transform: translate(20px, 20px) scale(1.1); }
+	100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes gradient-shift {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+.animate-blob {
+	animation: blob 10s ease-in-out infinite;
+}
+
+.animate-blob2 {
+	animation: blob2 12s ease-in-out infinite;
+}
+
+.animate-blob3 {
+	animation: blob3 8s ease-in-out infinite;
+}
+
+.animate-gradient {
+	animation: gradient-shift 8s ease infinite;
+	background-size: 200% 200%;
+}

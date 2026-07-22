@@ -32,28 +32,36 @@ import {
 </nav>
 
 <!-- Hero -->
-<section class="flex flex-col items-center gap-6 px-6 pt-16 pb-20 text-center md:px-12 md:pt-24 md:pb-28">
-	<Badge variant="outline" class="gap-1.5">
-		<Sprout />
-		Marketplace P2P de plantas
-	</Badge>
-	<h1 class="text-4xl font-bold tracking-tight md:text-6xl">
-		Tu marketplace de<br />
-		<span class="text-primary">plantas de confianza</span>
-	</h1>
-	<p class="text-muted-foreground max-w-lg text-base md:text-lg">
-		Publica tus esquejes, semillas y plantas. Encuentra lo que buscas cerca de ti.
-		Sin envíos, sin comisiones. Solo quedar en mano.
-	</p>
-	<div class="flex flex-wrap justify-center gap-3">
-		<Button variant="default" size="lg">
-			<Store data-icon="inline-start" />
-			Explorar plantas
-		</Button>
-		<Button variant="outline" size="lg">
-			<Leaf data-icon="inline-start" />
-			Publicar anuncio
-		</Button>
+<section class="relative flex flex-col items-center gap-6 overflow-hidden px-6 pt-16 pb-20 text-center md:px-12 md:pt-24 md:pb-28">
+	<div class="animate-gradient pointer-events-none absolute inset-0 opacity-40" style="background: linear-gradient(-45deg, oklch(0.228 0.013 107.4 / 0.08), oklch(0.737 0.021 106.9 / 0.05), oklch(0.228 0.013 107.4 / 0.06), oklch(0.58 0.031 107.3 / 0.08));"></div>
+
+	<div class="animate-blob pointer-events-none absolute top-10 left-10 size-72 rounded-full blur-3xl" style="background: oklch(0.58 0.031 107.3 / 0.12);"></div>
+	<div class="animate-blob2 pointer-events-none absolute top-20 right-10 size-56 rounded-full blur-3xl" style="background: oklch(0.737 0.021 106.9 / 0.1);"></div>
+	<div class="animate-blob3 pointer-events-none absolute bottom-10 left-1/2 size-48 -translate-x-1/2 rounded-full blur-3xl" style="background: oklch(0.228 0.013 107.4 / 0.08);"></div>
+
+	<div class="relative z-10 flex flex-col items-center gap-6">
+		<Badge variant="outline" class="gap-1.5">
+			<Sprout />
+			Marketplace P2P de plantas
+		</Badge>
+		<h1 class="text-4xl font-bold tracking-tight md:text-6xl">
+			Tu marketplace de<br />
+			<span class="text-primary">plantas de confianza</span>
+		</h1>
+		<p class="text-muted-foreground max-w-lg text-base md:text-lg">
+			Publica tus esquejes, semillas y plantas. Encuentra lo que buscas cerca de ti.
+			Sin envíos, sin comisiones. Solo quedar en mano.
+		</p>
+		<div class="flex flex-wrap justify-center gap-3">
+			<Button variant="default" size="lg">
+				<Store data-icon="inline-start" />
+				Explorar plantas
+			</Button>
+			<Button variant="outline" size="lg">
+				<Leaf data-icon="inline-start" />
+				Publicar anuncio
+			</Button>
+		</div>
 	</div>
 </section>
 
@@ -141,7 +149,7 @@ import {
 </section>
 
 <!-- Categories -->
-<section class="bg-muted/50 flex flex-col items-center gap-10 px-6 py-16 md:px-12 md:py-20">
+<section class="flex flex-col items-center gap-10 px-6 py-16 md:px-12 md:py-20" style="background: oklch(0.966 0.005 106.5 / 0.5);">
 	<div class="flex flex-col items-center gap-3 text-center">
 		<h2 class="text-2xl font-bold md:text-3xl">Categorías</h2>
 		<p class="text-muted-foreground max-w-md text-sm">
@@ -149,66 +157,26 @@ import {
 		</p>
 	</div>
 	<div class="flex flex-col gap-4 md:grid md:grid-cols-5">
-		<Card.Card class="hover:ring-foreground/20 transition-shadow">
-			<Card.CardContent class="flex flex-col items-center gap-3 py-8 text-center">
-				<div class="bg-primary/10 flex size-12 items-center justify-center rounded-full">
-					<Sprout class="text-primary size-6" />
-				</div>
-				<div class="flex flex-col gap-1">
-					<span class="font-medium text-sm">Semillas</span>
-					<span class="text-muted-foreground text-xs">120 anuncios</span>
-				</div>
-				<Badge variant="secondary">Semillas</Badge>
-			</Card.CardContent>
-		</Card.Card>
-		<Card.Card class="hover:ring-foreground/20 transition-shadow">
-			<Card.CardContent class="flex flex-col items-center gap-3 py-8 text-center">
-				<div class="bg-primary/10 flex size-12 items-center justify-center rounded-full">
-					<Leaf class="text-primary size-6" />
-				</div>
-				<div class="flex flex-col gap-1">
-					<span class="font-medium text-sm">Esquejes</span>
-					<span class="text-muted-foreground text-xs">80 anuncios</span>
-				</div>
-				<Badge variant="secondary">Esquejes</Badge>
-			</Card.CardContent>
-		</Card.Card>
-		<Card.Card class="hover:ring-foreground/20 transition-shadow">
-			<Card.CardContent class="flex flex-col items-center gap-3 py-8 text-center">
-				<div class="bg-primary/10 flex size-12 items-center justify-center rounded-full">
-					<Sprout class="text-primary size-6" />
-				</div>
-				<div class="flex flex-col gap-1">
-					<span class="font-medium text-sm">Brotes</span>
-					<span class="text-muted-foreground text-xs">45 anuncios</span>
-				</div>
-				<Badge variant="secondary">Brotes</Badge>
-			</Card.CardContent>
-		</Card.Card>
-		<Card.Card class="hover:ring-foreground/20 transition-shadow">
-			<Card.CardContent class="flex flex-col items-center gap-3 py-8 text-center">
-				<div class="bg-primary/10 flex size-12 items-center justify-center rounded-full">
-					<Leaf class="text-primary size-6" />
-				</div>
-				<div class="flex flex-col gap-1">
-					<span class="font-medium text-sm">Plantas</span>
-					<span class="text-muted-foreground text-xs">200 anuncios</span>
-				</div>
-				<Badge variant="secondary">Plantas</Badge>
-			</Card.CardContent>
-		</Card.Card>
-		<Card.Card class="hover:ring-foreground/20 transition-shadow">
-			<Card.CardContent class="flex flex-col items-center gap-3 py-8 text-center">
-				<div class="bg-primary/10 flex size-12 items-center justify-center rounded-full">
-					<ShoppingCart class="text-primary size-6" />
-				</div>
-				<div class="flex flex-col gap-1">
-					<span class="font-medium text-sm">Tiestos</span>
-					<span class="text-muted-foreground text-xs">35 anuncios</span>
-				</div>
-				<Badge variant="secondary">Tiestos</Badge>
-			</Card.CardContent>
-		</Card.Card>
+		{#each [
+			{ name: "Semillas", count: "120", icon: Sprout },
+			{ name: "Esquejes", count: "80", icon: Leaf },
+			{ name: "Brotes", count: "45", icon: Sprout },
+			{ name: "Plantas", count: "200", icon: Leaf },
+			{ name: "Tiestos", count: "35", icon: ShoppingCart },
+		] as cat}
+			<Card.Card class="hover:-translate-y-0.5 border-0 ring-1 transition-all duration-200" style="--tw-ring-color: oklch(0.737 0.021 106.9 / 0.3);">
+				<Card.CardContent class="flex flex-col items-center gap-3 py-8 text-center">
+					<div class="flex size-14 items-center justify-center rounded-2xl" style="background: oklch(0.737 0.021 106.9 / 0.15);">
+						<cat.icon class="size-6" style="color: oklch(0.466 0.025 107.4);" />
+					</div>
+					<div class="flex flex-col gap-0.5">
+						<span class="font-semibold text-sm">{cat.name}</span>
+						<span class="text-xs" style="color: oklch(0.58 0.031 107.3);">{cat.count} anuncios</span>
+					</div>
+					<Badge class="rounded-full px-3 text-[10px] font-medium" style="background: oklch(0.228 0.013 107.4 / 0.08); color: oklch(0.228 0.013 107.4);">{cat.name}</Badge>
+				</Card.CardContent>
+			</Card.Card>
+		{/each}
 	</div>
 </section>
 
