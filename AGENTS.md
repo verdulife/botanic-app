@@ -60,8 +60,23 @@ botanic-app/
 | Post-validación (Supabase Pro) | ~25 € |
 | Escalado | Variable |
 
+## Estado actual
+
+- Landing pública terminada: hero, copy "conocer a gente nueva", waitlist (UI con mock), favicon, OG image, metas SEO, JSON-LD, sitemap + robots, llms.txt.
+- Dependencias de Supabase instaladas (`@supabase/supabase-js`, `@supabase/ssr`) pero **sin cliente ni proyecto creados**.
+- Rutas: `/` (landing) y `/app` (marketplace con datos mock, noindex).
+- PWA y Auth aún sin implementar.
+
+## Siguiente paso
+
+Conectar la waitlist a Supabase: crear proyecto Free tier, tabla `waitlist`, RLS solo-insert, `src/lib/supabase.ts`, e integrar en `WaitlistForm.svelte`. Detalle en [`docs/plan-desarrollo.md`](docs/plan-desarrollo.md).
+
 ## Para empezar a desarrollar
 
-1. `bun create svelte@latest botanic --template typescript`
-2. Configurar Supabase project
+1. `bun install`
+2. `bun run dev`
 3. Seguir [`docs/plan-desarrollo.md`](docs/plan-desarrollo.md)
+
+## Reglas de trabajo
+
+- Si el usuario pide **hacer un commit o un push**, recomienda primero **actualizar los docs** (AGENTS.md, docs/, roadmap.md) si el cambio de código los ha dejado desactualizados.

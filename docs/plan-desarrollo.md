@@ -2,10 +2,28 @@
 
 6 sprints (~8-10 semanas).
 
+## Estado actual
+
+Ya hecho:
+
+- Scaffold SvelteKit 5 + TypeScript + TailwindCSS 4
+- Landing completa: hero, copy "conocer a gente nueva", waitlist (UI con mock), favicon, OG image, metas SEO, JSON-LD, sitemap + robots, llms.txt
+- Rutas `/` (landing) y `/app` (marketplace con datos mock, noindex)
+
+**Siguiente tarea — conectar la waitlist a Supabase** (antes de Auth):
+
+- [ ] Conectar Supabase (`/supabase`) y crear proyecto Free tier
+- [ ] `.env.local` con `PUBLIC_SUPABASE_URL` + `PUBLIC_SUPABASE_ANON_KEY` (+ `.env.example`)
+- [ ] Tabla `waitlist` (email único) + RLS solo-insert
+- [ ] `src/lib/supabase.ts` con `createClient`
+- [ ] Integrar en `WaitlistForm.svelte`: `insert` + tratar duplicado (`23505`) como éxito
+- [ ] Verificar: `bun run check` y prueba manual
+
 ## Sprint 1 — Setup + Auth (Semana 1)
 
-- [ ] `bun create svelte@latest botanic --template typescript`
-- [ ] TailwindCSS, Prettier, ESLint
+- [x] `bun create svelte@latest botanic --template typescript`
+- [x] TailwindCSS
+- [ ] Prettier, ESLint
 - [ ] Proyecto Supabase (DB + Auth + Storage)
 - [ ] Schema: profiles, categories + seed
 - [ ] @vite-pwa/sveltekit + manifest básico
@@ -72,6 +90,6 @@
 - [ ] Sitemap.xml + robots.txt
 - [ ] Páginas 404, error, empty, offline
 - [ ] Testing manual móvil/desktop
-- [ ] Landing teaser + waitlist
+- [x] Landing teaser + waitlist (UI, sin backend)
 
 **Hito**: MVP listo para lanzar.

@@ -7,6 +7,8 @@ Inversión en marketing: **0 €**. Crecimiento orgánico vía comunidad y conte
 ### Landing teaser + waitlist
 Página simple: "Próximamente: el Wallapop de las plantas". Formulario de email. **Objetivo: 1.000 suscriptores.**
 
+**Estado**: landing + waitlist (UI) publicadas; pendiente conectar el formulario a Supabase (tabla `waitlist` + RLS). Ver [`plan-desarrollo.md`](plan-desarrollo.md).
+
 ### Instagram + TikTok
 Cuenta `@botanic.app`. Contenido 3-4x/semana. Construir audiencia **Plant Lovers** sin vender la app todavía.
 

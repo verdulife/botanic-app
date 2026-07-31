@@ -17,6 +17,8 @@ Coste 0          1.000 users RN / Flutter                 │       Latam + IA
 
 **Objetivo**: Lanzar PWA funcional con coste 0.
 
+**Hecho**: landing completa + waitlist (UI con mock), favicon, OG image, SEO (JSON-LD, sitemap, robots, llms.txt). **En curso**: conectar la waitlist a Supabase.
+
 | Sprint | Semana | Contenido | Hito |
 |---|---|---|---|
 | 1 | 1 | Setup + Auth (SvelteKit + Supabase + login) | Usuario se registra |
