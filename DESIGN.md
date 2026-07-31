@@ -27,21 +27,28 @@ colors:
   chart-4: "oklch(0.577 0.245 27.325)"
   chart-5: "oklch(0.28 0.02 55)"
   star: "oklch(0.79 0.16 90)"
+  still-900: "oklch(0.265 0.159 146)"
+  still-950: "oklch(0.195 0.122 146)"
+  zinc-950: "oklch(0.141 0.005 285)"
 typography:
   sans: "Onest Variable, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
   display:
     fontFamily: "Onest Variable, system-ui, sans-serif"
-    fontSize: "clamp(2.25rem, 6vw, 3.75rem)"
+    fontSize: "2.25rem (text-4xl) → 3.75rem (md:text-6xl)"
     fontWeight: 300
     lineHeight: 1.05
     letterSpacing: "normal"
     textWrap: "balance"
   h2:
     fontFamily: "Onest Variable, system-ui, sans-serif"
-    fontSize: "1.875rem (3xl) / 2.25rem (4xl)"
+    fontSize: "2.25rem (text-4xl) / 2.875rem (md)"
     fontWeight: 300
     lineHeight: 1.2
     letterSpacing: "normal"
+  h3:
+    fontFamily: "Onest Variable, system-ui, sans-serif"
+    fontSize: "0.875rem–1rem"
+    fontWeight: 600
   body:
     fontFamily: "Onest Variable, system-ui, sans-serif"
     fontSize: "1rem (lg) / 0.875rem (sm)"
@@ -54,6 +61,9 @@ rounded:
   sm: "0.5rem"
   md: "0.75rem"
   lg: "1rem"
+  xl: "0.75rem (imagen de tarjeta)"
+  "2xl": "1rem (tarjetas)"
+  "3xl": "1.5rem (botones)"
   full: "9999px"
 spacing:
   sm: "0.5rem"
@@ -64,7 +74,7 @@ components:
   button-primary:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.primary-foreground}"
-    rounded: "{rounded.sm}"
+    rounded: "{rounded.3xl} + corner-shape: squircle"
     height: "2.25rem (sm) / 2.5rem (default) / 3rem (lg custom)"
     padding: "0 1rem (sm) / 0 2rem (lg custom)"
   button-outline:
@@ -72,42 +82,35 @@ components:
     borderColor: "{colors.border}"
     textColor: "{colors.foreground}"
   input:
-    backgroundColor: "bg-muted/50"
+    backgroundColor: "bg-background"
     borderColor: "{colors.border}"
     textColor: "{colors.foreground}"
-    rounded: "{rounded.sm}"
+    rounded: "{rounded.full}"
+    height: "3.5rem (h-14)"
   card:
     backgroundColor: "{colors.card}"
     borderColor: "{colors.border}"
-    rounded: "{rounded.lg}"
-    padding: "1.5rem"
-  listing-card:
-    backgroundColor: "{colors.background}"
-    borderColor: "{colors.border}/60"
-    rounded: "{rounded.lg}"
-    padding: "0.625rem"
-  badge:
-    backgroundColor: "{colors.muted}"
-    textColor: "{colors.muted-foreground}"
-    rounded: "{rounded.full}"
+    rounded: "{rounded.2xl}"
+    padding: "0.875rem"
+  listing-card (fan):
+    backgroundColor: "{colors.card}"
+    borderColor: "{colors.border}"
+    rounded: "{rounded.2xl}"
+    width: "max-w-72"
+    shadow: "shadow-sm (reposo) / elevación en hover"
   pill-category:
     backgroundColor: "{colors.background}"
     borderColor: "{colors.border}"
     rounded: "{rounded.full}"
-  nav:
-    height: "3.5rem (h-14)"
-    backgroundColor: "bg-background/85"
-    backdrop: "backdrop-blur-md"
-    borderBottom: "{colors.border}/70"
-  hero-eyebrow:
-    backgroundColor: "{colors.secondary}"
-    textColor: "{colors.secondary-foreground}"
-    rounded: "{rounded.full}"
-  step-number:
-    textColor: "{colors.primary}"
-    fontWeight: 800
+  logo-wordmark:
+    textColor: "still-900"
+    fontSize: "2.5rem"
+    fontWeight: 700
   waitlist-section:
     backgroundColor: "{colors.secondary}/70"
+  footer:
+    backgroundColor: "zinc-950"
+    textColor: "primary-foreground"
 ---
 
 # Design System: Botanic (canon 2026)
@@ -116,17 +119,18 @@ components:
 
 **Creative North Star: el estándar de categoría de marketplace, ejecutado impecablemente, con voz de economía circular.**
 
-Botanic es la landing de un marketplace P2P de plantas; el listón de acabado es Wallapop + Vinted + Airbnb (elegido por el usuario en el flujo `new-work`, seed `77b83067`, acción `canon`). La página ejecuta la estructura clásica de la categoría — nav, hero foto-liderado, categorías, manifiesto, cómo funciona, por qué, waitlist prefooter y footer — a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk. El copy habla en el vocabulario de la economía circular ("segunda vida", "vender, cambiar o regalar", "las plantas se comparten, no se desperdician") y evita declarar como promesas permanentes los "sin envíos", "sin comisiones" ni "solo cerca de ti".
+Botanic es la landing de un marketplace P2P de plantas; el listón de acabado es Wallapop + Vinted + Airbnb. La página ejecuta la estructura clásica de la categoría — hero foto-liderado, categorías, manifiesto, por qué, waitlist prefooter y footer — a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk. El copy habla en el vocabulario de la economía circular ("vender, cambiar o regalar", "conocer a gente nueva", "las plantas se comparten y así conocen a gente nueva") y evita declarar como promesas permanentes los "sin envíos", "sin comisiones" ni "solo cerca de ti".
 
-El sistema es cálido y sobrio: un fondo de lino cálido, tinta cálida casi negra, un único acento de Still Green (`#74AA7B`) para el CTA, el logo y los iconos, y un ámbar puntual para las estrellas. La fotografía real de plantas es protagonista en el hero, etiquetada como `Anuncios de ejemplo` donde es material sintético. La profundidad se construye con bordes finos, esquinas redondeadas (`rounded-2xl` en tarjetas, `rounded-full` en pills) y contraste tonal entre superficies; no hay sombras. Se evita explícitamente el `AI slop`: sin degradados de neón, sin blobs animados estridentes, sin glassmorphism, sin serif itálicos decorativos, sin métricas o testimonios inventados. Las únicas animaciones del sistema son el mesh viento de las bandas de categorías y waitlist (The Wind Mesh Rule) y el crossfade de la tarjeta destacada de demo.
+El sistema es cálido y sobrio: un fondo de lino cálido, tinta cálida casi negra, un único acento de Still Green (`#74AA7B`) para el CTA, el logo y los iconos, y un ámbar puntual para las estrellas. La fotografía real de plantas es protagonista en el hero (abanico de anuncios de ejemplo etiquetado como material sintético). La profundidad se construye con bordes finos, esquinas redondeadas (`rounded-2xl` en tarjetas, `rounded-full` en pills) y contraste tonal entre superficies; solo hay sombra puntual en la tarjeta del abanico elevada. Se evita explícitamente el `AI slop`: sin degradados de neón, sin glassmorphism, sin serif itálicos decorativos, sin métricas o testimonios inventados. Las animaciones del sistema son el mesh viento de las bandas de categorías y waitlist (The Wind Mesh Rule, con dos variantes de intensidad) y el abanico de anuncios del hero (The Fan Rule).
 
 **Key Characteristics**
 - Estructura clásica de marketplace, executed impeccably.
-- Fotografía real de plantas (Unsplash verificado, sujetos nombrados correctamente).
+- Fotografía real de plantas servida localmente (`static/images/`), no por CDN.
 - Un solo acento de color: Still Green, sobre una rampa completa de tints y shades.
 - Tipografía Onest Variable (single family, geometrico-humanista) con system stack como fallback.
 - Calidez uniforme en todos los neutros (lino/tinta); nunca grises fríos.
 - Mobile-first, ritmo vertical generoso y constante.
+- Wordmark "Botanic" que integra el icono Sprout como la letra "t" (logo y texto, uno).
 
 ## Colors
 
@@ -135,7 +139,7 @@ Paleta cálida de lino y Still Green. El verde se usa con propósito (CTA, logo,
 Dos rampas completas viven en `@theme inline` de `src/app.css` (`still-50…950` y `linen-50…950`), derivadas del Still Green `#74AA7B` y del lino de fondo.
 
 ### Primary
-- **Still Green 700** (`oklch(0.465 0.25 146)`, ≈ `#517756`) — el acento del sistema como token `primary`. Botón primario, tile del logo, iconos de categorías/pasos, anillos de foco. Contraste 5.09:1 con `primary-foreground` blanco (cumple AA).
+- **Still Green 700** (`oklch(0.465 0.25 146)`, ≈ `#517756`) — el acento del sistema como token `primary`. Botón primario, iconos de categorías, anillos de foco. Contraste 5.09:1 con `primary-foreground` blanco (cumple AA).
 - **Still Green 600** (`oklch(0.527 0.279 146)`, ≈ `#5D8862`) — `ring` y `chart-1`, el paso intermedio para foco.
 
 ### Neutral (lino cálido)
@@ -148,14 +152,18 @@ Dos rampas completas viven en `@theme inline` de `src/app.css` (`still-50…950`
 
 ### Secondary (tinte de Still Green)
 - **Still Green 800 (secondary-fg)** `oklch(0.401 0.218 146)` — texto sobre el tinte verde.
-- **Still Green 100 (secondary)** `oklch(0.931 0.061 150)` — chips, eyebrow del hero, icon-tiles, banda de la waitlist al 70%.
+- **Still Green 100 (secondary)** `oklch(0.931 0.061 150)` — chips, icon-tiles, banda de la waitlist al 70%.
 
 ### Acentos puntuales
 - **Estrella (ámbar)** `oklch(0.79 0.16 90)` — exclusivo para la estrella de valoración.
-- **Terra (destructive)** `oklch(0.577 0.245 27.325)` — exclusivo para estados de error, `aria-invalid` y el corazón del footer.
+- **Terra (destructive)** `oklch(0.577 0.245 27.325)` — exclusivo para estados de error y `aria-invalid`.
 
-### Charts
-- `chart-1` still-600, `chart-2` still-400, `chart-3` ámbar, `chart-4` terra, `chart-5` tinta.
+### Shade oscuro del wordmark
+- **Still Green 900** (`oklch(0.265 0.159 146)`) — color del logo "Botanic" en el hero y en el título de la waitlist (`still-950`).
+- **Still Green 950** (`oklch(0.195 0.122 146)`) — título h2 de la waitlist.
+
+### Footer
+- **Zinc 950** (`oklch(0.141 0.005 285)`) — gris casi negro para el fondo del footer, con texto `primary-foreground`.
 
 ### Rampa Still Green (`still-*`)
 | step | oklch | hex |
@@ -169,8 +177,8 @@ Dos rampas completas viven en `@theme inline` de `src/app.css` (`still-50…950`
 | 600 | `0.527 0.279 146` | `#5D8862` |
 | **700** | `0.465 0.25 146` | `#517756` |
 | 800 | `0.401 0.218 146` | `#46664A` |
-| 900 | `0.265 0.159 146` | `#2E4431` |
-| 950 | `0.195 0.122 146` | `#233325` |
+| **900** | `0.265 0.159 146` | `#2E4431` |
+| **950** | `0.195 0.122 146` | `#233325` |
 
 ### Rampa Lino (`linen-*`)
 | step | oklch |
@@ -188,79 +196,83 @@ Dos rampas completas viven en `@theme inline` de `src/app.css` (`still-50…950`
 | 950 | `0.22 0.025 85` |
 
 ### Dark mode
-Los mismos tokens se invierten sobre la rampa: `primary` → `still-400`, `secondary`/`accent` → `still-800` con fg `still-100`, `background` → `linen-900`, `card`/`popover` → `linen-950`, `muted` → `linen-800`, `border`/`input` → alphas cálidos sobre lino.
+Los mismos tokens se invierten sobre la rampa: `primary` → `still-400`, `secondary`/`accent` → `still-800` con fg `still-100`, `background` → `linen-900`, `card`/`popover` → `linen-950`, `muted` → `linen-800`, `border`/`input` → alphas cálidos sobre lino. El mesh tiene variantes dark propias.
 
 ### Reglas nombradas
 - **The One Accent Rule.** Still Green y el ámbar son los únicos acentos. El verde aparece en CTA, logo, iconos y foco; el ámbar, solo en la estrella.
-- **The Warmth Rule.** Todos los neutros comparten la misma calidez de lino/tierra. No introducir grises fríos ni blancos azulados.
+- **The Warmth Rule.** Todos los neutros comparten la misma calidez de lino/tierra. No introducir grises fríos ni blancos azulados (excepción deliberada: el footer, que usa zinc-950 como cierre dramático).
 - **The Star Rarity Rule.** El ámbar de la estrella nunca pinta fondos ni chips; solo el glifo de la estrella.
 - **The Rarity Rule.** El Still Green se usa con moderación (≤10% de una pantalla); su escasez es lo que hace destacar al CTA y al logo.
 
 ## Typography
 
-**Familia única:** Onest Variable (`@fontsource-variable/onest`, single family para todo), con system stack como fallback. Onest está fuera de la lista de defaults prohibidos y aporta un registro geometrico-humanista coherente con el listón (Wallapop/Vinted/Airbnb).
+**Familia única:** Onest Variable (`@fontsource-variable/onest`, single family para todo), con system stack como fallback.
+
+Text-wrap global en `src/app.css`: `h1/h2/h3 → text-wrap: balance`, `p → text-wrap: pretty`.
 
 ### Jerarquía
-- **Display** — peso 300, `clamp(2.25rem, 6vw, 3.75rem)`, `line-height: 1.05`, `letter-spacing: normal`, `text-wrap: balance`. Usado solo en el `h1` del hero. Las palabras de refuerzo van en `font-semibold` (600).
-- **H2** — peso 300, `text-3xl`/`text-4xl`, `line-height: 1.2`, `letter-spacing: normal`. Titulares de sección; refuerzo puntual en 600.
-- **Body** — peso 400, `text-sm` (0.875rem) en tarjetas, `text-lg` (1rem) en la promesa del hero, `line-height: 1.5`.
-- **Label** — peso 500, `text-xs` (0.75rem). Chips, badges, eyebrows, "0X" de los pasos.
+- **Display** — peso 300, `text-4xl` → `md:text-6xl` (`clamp` de 2.25rem a 3.75rem), `line-height: 1.05`, `letter-spacing: normal`, `text-wrap: balance`. Solo en el `h1` del hero. Las palabras de refuerzo van en `font-semibold` (600).
+- **H2** — peso 300, `text-4xl` → `md:text-[2.875rem]` (46px desktop), `line-height: 1.2`, `text-wrap: balance`. Titulares de sección; refuerzo puntual en 600.
+- **H3 (tarjeta)** — peso 600, `text-sm`/`text-base`/`text-lg` según tarjeta.
+- **Body** — peso 400, `text-sm` (0.875rem) en tarjetas, `text-lg` (1rem) en la promesa del hero y de la waitlist, `line-height: 1.5`.
+- **Label** — peso 500, `text-xs` (0.75rem). Chips, badges, microcopy.
 
 ### Reglas nombradas
 - **The Light Headline Rule.** Los titulares (h1/h2) van en 300 con tracking normal; el 600 queda reservado como refuerzo semántico puntual dentro del titular (`<strong>`). Nunca peso 800 ni tracking-tight en titulares.
-- **The Card Title Rule.** Los h3 de tarjeta (manifiesto, pasos, por-qué) van en `font-semibold` (600) fijo, sin refuerzo interno.
+- **The Card Title Rule.** Los h3 de tarjeta van en `font-semibold` (600) fijo.
 - **The Muted Body Rule.** El texto de apoyo va en `text-muted-foreground` para que el titular mande.
 - **The One Family Rule.** Onest Variable para todo. No mezclar con serif decorativos, ni mono, ni una segunda grotesk.
 
 ## Layout
 
-Mobile-first y centrado. Secciones de anchura acotada (`max-w-6xl` para hero/listas, `max-w-3xl` para la waitlist) centradas, con padding lateral `px-4` → `md:px-6` y vertical `py-16` → `md:py-20`. El hero usa un grid `md:grid-cols-2` con `gap-14` para colocar el copy a la izquierda y la tarjeta destacada de demo a la derecha; en móvil cae debajo del copy.
+Mobile-first y centrado. Secciones de anchura acotada (`max-w-6xl` para hero/listas, `max-w-3xl` para la waitlist) centradas, con padding lateral `px-4`/`px-6`/`px-8` y vertical `py-24` → `md:py-28` (las secciones de contenido) o `py-48` → `md:py-56` (la waitlist). El hero usa un grid `md:grid-cols-2` con `gap-12 md:gap-16` para colocar el copy a la izquierda y el abanico de anuncios a la derecha; en móvil cae debajo del copy.
 
-Bandas alternas para separar secciones sin líneas extra: las secciones claras van sobre `background`, y las bandas (categorías, cómo funciona) van sobre `muted/40` con `border-y`. La waitlist va sobre `secondary/70` como cierre cálido antes del footer.
+Bandas alternas para separar secciones sin líneas extra: las secciones claras van sobre `background`, y la banda de categorías va sobre `muted/40` con `border-y`. La waitlist va sobre `secondary/70` como cierre cálido antes del footer.
 
 ## Elevation & Depth
 
-Profundidad por **bordes y radio**, no por sombra. Las tarjetas usan `rounded-2xl` y `border border-border`; la imagen de la tarjeta destacada usa `rounded-xl`. No hay `box-shadow` en el sistema; la elevación se comunica con el contraste tonal (fondo `background` vs tarjeta `card`) y los bordes finos.
+Profundidad por **bordes y radio**, con una excepción de sombra. Las tarjetas del abanico usan `shadow-sm` en reposo y una sombra elevada (`0 16px 32px -12px`) solo cuando están en primer plano (hover o rotación automática). El resto del sistema no tiene `box-shadow`; la elevación se comunica con el contraste tonal y los bordes finos.
 
 ### Reglas nombradas
 - **The Border-By-Default Rule.** La profundidad se comunica con un borde fino y un radio generoso, no con sombra.
+- **The Fan Shadow Rule.** La única sombra del sistema es la de la tarjeta del abanico en primer plano, y se aplica por estado (`.fan-lift`), no solo por `:hover`, para que la rotación automática también la muestre.
 
 ## Shapes
 
-- `rounded-sm` (0.5rem) en botón e input.
-- `rounded-md` (0.75rem) en el `radius` base de shadcn.
-- `rounded-xl` (0.75rem) en la imagen de la tarjeta destacada.
-- `rounded-2xl` (1.5rem) en tarjetas de manifiesto, pasos, por-qué y la tarjeta destacada.
-- `rounded-full` en pills de categoría, badges, eyebrow y avatares.
+- `rounded-sm` (0.5rem) en el `radius` base de shadcn.
+- `rounded-xl` (0.75rem) en la imagen dentro de las tarjetas del abanico.
+- `rounded-2xl` (1rem) en tarjetas del abanico, manifiesto y por-qué.
+- `rounded-3xl` (1.5rem) en botones (base), combinado con `corner-shape: squircle` en navegadores que lo soportan (`@supports`).
+- `rounded-full` en pills de categoría, input de la waitlist y el botón "Unirme" integrado en el input (este último con `corner-shape: round` inline para anular el squircle).
 
 ## Components
 
-### Nav
-Sticky `top-0`, fondo `bg-background/85` con `backdrop-blur-md` y `border-b border-border/70`. Altura `h-14` y contenedor `max-w-6xl`. Logo a la izquierda: tile `size-8 rounded-lg bg-primary text-primary-foreground` con `Sprout`, seguido del wordmark `Botanic` en negrita. CTA `Únete a la waitlist` a la derecha (variant default, `size=sm`).
+### Logo wordmark (hero, sin nav)
+No hay nav: el logo abre el hero a la izquierda. Wordmark `text-[2.5rem] font-bold tracking-tight text-still-800` donde el icono `Sprout` hace de letra "t": "Bo" + icono + "anic". Todo en unidades `em` para que escale con el font-size: icono `size-[0.9em]`, offsets `-mr-[0.125em]` (Bo), `-mt-[0.1em] ml-[0.05em]` (icono), `-ml-[0.125em]` (anic).
 
 ### Hero — left column
-- Eyebrow: pill `bg-secondary text-secondary-foreground rounded-full`, `Recycle` `size-3.5` + "La economía circular de las plantas".
-- `h1` display (60px/300) con `text-wrap: balance` y refuerzos `font-semibold` (600): "Dale una **segunda vida** a tus plantas".
-- Párrafo en `text-lg text-muted-foreground`, `max-w-md` ("Saca más partido a tus plantas y encuentra las que siempre quisiste. Vender, cambiar o regalar: las plantas nunca se tiran, cambian de manos.").
-- CTA primary: `size=lg` con `class="h-12 px-8 text-base"`.
-- `text-sm text-muted-foreground` ("Pronto · sé de los primeros en entrar") debajo del CTA.
+- Wordmark `Botanic` (ver arriba).
+- `h1` display (300) con `text-wrap: balance` y refuerzos `font-semibold`: "Tus plantas quieren **conocer a gente nueva**".
+- Párrafo en `text-lg text-muted-foreground`, `max-w-md` ("Saca más partido a tus plantas y encuentra las que siempre quisiste. Vender, cambiar o regalar: así tus plantas conocen a gente que las va a cuidar.").
+- CTA primary: `size=lg` con `class="mt-2 h-12 px-8 text-base"`, label "Únete a la waitlist" (href `#waitlist`). Sin microcopy debajo.
 
-### Hero — right column: tarjeta destacada de demo
-**Una sola tarjeta destacada** `rounded-2xl border border-border bg-card max-w-96 mx-auto` que muestra un anuncio a la vez (envuelta en `{#key active}` con `transition:fade` de 400ms):
-- Foto `aspect-square w-full rounded-t-2xl object-cover` (Unsplash verificada, 640×640).
-- Info: `h3` `truncate text-sm font-semibold` con el nombre de la planta, `MapPin size-3` + barrio en `text-xs text-muted-foreground`, `Star size-3 fill-star text-star` + rating + nº de reseñas en `text-xs`, precio `text-sm font-bold` alineado a la derecha.
+### Hero — right column: abanico de anuncios (The Fan Rule)
+**Abanico de 3 tarjetas** (`demoListings`), cada una `max-w-72 rounded-2xl border border-border bg-card shadow-sm`:
+- Foto `aspect-square w-full rounded-xl border border-border/60 object-cover shadow-xs` dentro de `p-3.5`, más `p-3.5` de info: `h3` `truncate text-base font-semibold` con el nombre, `MapPin size-3.5` + lugar en `text-sm text-muted-foreground`, `Star size-3.5 fill-star text-star` + rating + nº de reseñas, precio `text-lg font-bold` a la derecha.
 
-**Rotación:** avanza automáticamente cada 4s (`$effect` + `setInterval`), se pausa en hover/focus (`paused`), y queda estático con `prefers-reduced-motion`. **Dots**: fila centrada de 3 botones `size-2 rounded-full` (activo `bg-primary`, inactivo `bg-border`), `aria-label="Ver {name}"`, clic → selecciona.
+**Geometría:** contenedor `.fan-stage` con `perspective: 1400px` y `perspective-origin: 85% 50%`; `.fan` flex centrado con `transform: rotateY(-8deg)` (fuga a la derecha). Cada `.fan-card` tiene `transform-origin: 50% 100%`, `margin-left: -17rem` (−11rem en md), rotación `var(--fan-rotate)` = `(i − fanCenter) × 10deg` y escala `var(--fan-scale)` (central 1.04 en reposo; la enfocada 1.07; el resto 1). `z-index` base 10/11/12 y 30 para la enfocada.
 
-Los tres anuncios de ejemplo:
-- `1614594975525-e45190c55d0b` → Monstera deliciosa · Chamberí · 4.9 (38) · 12 €
-- `1509423350716-97f9360b4e09` → Aloe vera en maceta · Lavapiés · 5.0 (12) · 6 €
-- `1485955900006-10f4d324d411` → Suculentas variadas · Malasaña · 4.8 (25) · 9 €
+**Comportamiento:** rotación automática cada **2.5s** que enfoca la siguiente tarjeta; se pausa en hover/focus (`autoPaused`) y arranca en la central (`hovered = Math.floor(fanCenter)`); desactivada con `prefers-reduced-motion`. La sombra elevada se aplica con la clase `.fan-lift` (hover o tarjeta enfocada por rotación), con transición `transform 0.35s cubic-bezier(0.22,1,0.36,1)` + `box-shadow 0.35s ease`.
 
-**Lista de reemplazo (cuando el usuario las publique):** las tres fotos son de stock; en cuanto el equipo tenga anuncios reales, sustituir las URLs y los textos por los definitivos.
+**Accesibilidad:** `role="group"`, cada tarjeta con `tabindex="0"` y `aria-label={name}`; `aria-hidden="true"` en iconos decorativos.
+
+Los tres anuncios de ejemplo (imágenes locales):
+- `static/images/monstera.jpg` → Monstera deliciosa · Olivella, Barcelona · 4.9 (38) · 12 €
+- `static/images/aloe.jpg` → Aloe vera en maceta · Sitges, Barcelona · 5.0 (12) · 6 €
+- `static/images/suculentas.jpg` → Suculentas variadas · Les Botigues de Sitges, Barcelona · 4.8 (25) · 9 €
 
 ### Categorías
-Banda `border-y border-border/70 bg-muted/40`, contenedor `max-w-6xl` con `flex flex-wrap justify-center gap-2.5 py-6`. Pills `rounded-full border border-border bg-background px-4 py-2 text-sm font-medium` con icono `text-primary size-4`:
+Banda `border-y border-border/70 bg-muted/40` (clase `mesh-original` para el mesh suave), contenedor `max-w-6xl` con `flex flex-wrap justify-center gap-2.5 py-6`. Pills `rounded-full border border-border bg-background px-4 py-2 text-sm font-medium` con icono `text-primary size-4`:
 - Semillas · `Sprout`
 - Esquejes · `Scissors`
 - Plantas · `Leaf`
@@ -268,29 +280,31 @@ Banda `border-y border-border/70 bg-muted/40`, contenedor `max-w-6xl` con `flex 
 - Accesorios · `Shovel`
 
 ### Manifiesto
-Sección centrada `max-w-6xl`, `h2` 300 con refuerzo 600 + subtítulo `text-muted-foreground`. Titular: "Las plantas se **comparten**, no se **desperdician**". Copy en el vocabulario de economía circular ("vender, cambiar o regalar", "economía circular, hecha fácil"). Dos tarjetas `rounded-2xl border border-border bg-card p-4` en grid `md:grid-cols-2`, layout horizontal (imagen izquierda + texto derecha). Cada tarjeta lleva una imagen `size-28 md:size-44 rounded-2xl object-cover` (Unsplash verificada, 640×640, `loading="lazy"`) a la izquierda y un `h3 text-lg font-semibold` + párrafo `text-sm text-muted-foreground` a la derecha. Vendedores: foto `photo-1711915744121` (persona sosteniendo una planta en maceta). Compradores: foto `photo-1714379773066` (manos acercándose a una planta en maceta blanca).
-
-### Cómo funciona
-Banda `border-y border-border/70 bg-muted/40`, `h2` + subtítulo, grid `md:grid-cols-3`. Cada paso: número `text-sm font-extrabold text-primary` ("01/02/03"), icon-tile `bg-secondary`, `h3 text-lg font-semibold`, párrafo `text-sm text-muted-foreground`. Pasos: "Publica tu planta", "Encuentra tu planta", "Acuerda el trato".
+Sección centrada `max-w-6xl` con `pt-24 md:pt-28` (sin padding inferior), bloque de cabecera `max-w-2xl mx-auto text-center`. `h2` 300 con refuerzo 600 + subtítulo `text-muted-foreground`. Titular: "Las plantas se **comparten** y así **conocen a gente nueva**". Copy en el vocabulario de economía circular. Dos tarjetas `rounded-2xl border border-border bg-card p-4` en grid `md:grid-cols-2`, layout horizontal (imagen izquierda + texto derecha). Cada tarjeta lleva una imagen local `size-28 md:size-44 rounded-2xl object-cover` (`loading="lazy"`) a la izquierda y un `h3 text-lg font-semibold` + párrafo `text-sm text-muted-foreground` a la derecha. Vendedores: `static/images/vendedores.jpg` (persona sosteniendo una planta en maceta). Compradores: `static/images/compradores.jpg` (manos acercándose a una planta en maceta blanca).
 
 ### Por qué Botanic
-Sección centrada, `h2` + subtítulo, grid `md:grid-cols-3` con tres tarjetas `rounded-2xl border border-border bg-card p-6`:
+Sección centrada, `h2` + subtítulo centrados, y **sin cajas**: tres columnas separadas por dividers. En móvil, `divide-y divide-border`; en `md`, grid `md:grid-cols-3` con `border-l border-border` en las columnas 2 y 3 y padding `md:px-12`/`md:pl-12`/`md:pr-12` para que los dividers queden equidistantes del contenido (sin usar `gap` para no descentrar la columna central):
 - Pensado para plantas · `ShieldCheck`
 - Sostenible por naturaleza · `MapPin`
 - Comunidad de confianza · `Star`
 
+Cada columna: icon-tile `bg-secondary` `rounded-lg`, `h3 text-lg font-semibold`, párrafo `text-sm text-muted-foreground`, todo `text-center` con el tile `mx-auto`.
+
 ### Waitlist
-`id="waitlist"`, `scroll-mt-16`, banda `bg-secondary/70 px-4 py-16 md:py-20`. Contenedor `max-w-3xl`, `h2` centrado, párrafo `max-w-md text-muted-foreground`, `WaitlistForm`:
-- Input con icono `Mail` `text-muted-foreground` y `placeholder` `tu@email.com`, fondo `bg-muted/50`, foco con `focus-visible:ring-ring`.
-- Botón `size=lg` `Unirme a la lista` con `Send` a la derecha; estados: `loading` deshabilitado con texto "Enviando…", `success` mensaje en `text-foreground`, `error` mensaje en `text-destructive` con `aria-invalid`.
-- Microcopy en `text-xs text-muted-foreground`.
+`id="waitlist"`, `scroll-mt-16`, banda `bg-secondary/70 px-8 py-48 md:py-56` con el mesh **intensificado**. Contenedor `max-w-3xl mx-auto` centrado:
+- `h2` `max-w-3xl text-4xl md:text-[2.875rem] font-light text-balance text-still-950`: "Únete a la **primera comunidad** donde las plantas **conocen a gente nueva**."
+- Párrafo `max-w-md mx-auto text-lg text-muted-foreground`: "Déjanos tu email y **entérate antes que nadie** del lanzamiento."
+- `WaitlistForm` (form `mx-auto w-full max-w-[31.5rem]`):
+  - **Input pill** `h-14 w-full rounded-full border border-border bg-background pl-12 pr-40 text-lg shadow-sm` con icono `Mail size-5` a la izquierda y `focus-visible:ring-2 ring-ring`.
+  - **Botón integrado en el input** (absolute `right-[3px] top-[3px] h-[calc(100%-6px)] rounded-full px-5`, `style="corner-shape: round"`) con `Send` + "Unirme"; estados: `loading` deshabilitado "Enviando…", `success` mensaje en `text-foreground`, `error` mensaje en `text-destructive` con `aria-invalid`.
+  - Microcopy en `text-xs text-muted-foreground`: "Al unirte, usaremos tu email para mantenerte al día de todas las novedades, actualizaciones y la fecha de lanzamiento. No somos pesados, pero podrás darte de baja cuando quieras."
 
 ### Footer
-`border-t border-border/70`, párrafo `text-xs text-muted-foreground` con `Heart` `fill-destructive text-destructive` en línea ("Hecho con ♥ para la comunidad plant lover").
+`border-t border-border/70 bg-zinc-950`, texto `text-[0.8125rem] text-primary-foreground`, centrado, `px-4 py-4`. Línea: "Botanic™ 2026. Hecho con `Heart` (fill-primary) para la comunidad **Plant Lovers**." El corazón usa `fill-primary text-primary`.
 
 ## SEO
 
-- `<title>` "Botanic — Tu marketplace de plantas de confianza" vía `<svelte:head>` en `+page.svelte`.
+- `<title>` "Botanic ✦ Donde las plantas conocen a gente" vía `<svelte:head>` en `+page.svelte`.
 - `<meta name="description">` con la propuesta en una línea.
 - `og:title`, `og:description`, `og:type=website`.
 - `lang="es"` en `app.html`.
@@ -300,28 +314,28 @@ Sección centrada, `h2` + subtítulo, grid `md:grid-cols-3` con tres tarjetas `r
 
 ## Performance
 
-- Imágenes de Unsplash servidas a 640×640 con `loading="lazy"`.
+- Imágenes servidas localmente desde `static/images/` (640×640, JPEG) con `loading="lazy"`.
 - Tipografía self-hosted vía `@fontsource-variable/onest` (sin CDN externo).
-- Animaciones del sistema limitadas a: mesh viento (solo `transform` + `opacity`, composición GPU, sin repintados) y crossfade del panel demo (400ms). Ambas desactivadas con `prefers-reduced-motion`.
-- Sin `box-shadow` decorativos.
-- `bun run build` sin warnings; el contrato de dirección sobrevive al build (verificado con grep en `.svelte-kit/output`).
+- Animaciones del sistema limitadas a: mesh viento (solo `transform` + `opacity`, composición GPU) y el abanico de anuncios (solo `transform` + `box-shadow` en la tarjeta enfocada). Desactivadas con `prefers-reduced-motion`.
+- `bun run check` y `bun run build` sin errores.
 
 ## Motion
 
 ### The Wind Mesh Rule
-Las bandas de **categorías** y **waitlist** llevan un mesh gradient fijo que evoca el movimiento de las hojas al viento.
+Las bandas de **categorías** y **waitlist** llevan un mesh gradient que evoca el movimiento de las hojas al viento, con **dos variantes de intensidad**:
 
-- **Implementación**: dos capas de `radial-gradient` (`mesh-a`/`mesh-b`) con la rampa Still/Lino a baja opacidad (25–45%), en crossfade de `opacity` (14s, `alternate`) mientras el contenedor hace un drift de `translate3d` ±1.5% y `rotate` ±1deg (40s, `alternate`). Solo `transform` + `opacity`.
+- **Variante suave (banda de categorías, `.mesh-original`)**: dos capas `mesh-a`/`mesh-b` de `radial-gradient` con la rampa Still/Lino a baja opacidad (22–45%), en crossfade de `opacity` 0.35→1 (14s, `alternate`, delay −7s en `mesh-b`), mientras el contenedor hace un drift de `translate3d` ±1.5% y `rotate` ±1deg (40s, `alternate`). `inset: -15%`.
+- **Variante intensificada (waitlist)**: mismas dos capas pero con `saturate(1.5)`, alphas 0.85–1.0, `mesh-breathe` con `scale` hasta 1.4 y `opacity` 0.2→1 (3.5s, `alternate`, delay −1.75s), y `mesh-drift` de `translate3d` ±12% y `rotate` ±8deg (8s, `alternate`). `inset: -30%`.
 - **Paleta**: tintes de Still (`still-100/200/300`) y lino cálido; en dark, la rampa oscura (`still-800/900`, `linen-900`). Nunca neón ni tonos fuera de rampa.
-- **Accesibilidad**: `aria-hidden="true"`, `pointer-events-none`, y `@media (prefers-reduced-motion: reduce)` deja el mesh estático.
+- **Accesibilidad**: `aria-hidden="true"`, `pointer-events-none`, y `@media (prefers-reduced-motion: reduce)` deja ambos meshes estáticos.
 - **Restricción**: solo en esas dos bandas. No extender a tarjetas, hero, fondo de página ni secciones de contenido.
 
-### The Demo Crossfade Rule
-La **tarjeta destacada de demo** del hero rota entre los anuncios de ejemplo con un crossfade de `opacity` de 400ms (`transition:fade` de Svelte sobre `{#key active}`).
+### The Fan Rule
+El **abanico de anuncios** del hero rota el foco entre las tarjetas de ejemplo.
 
-- **Rotación**: auto cada 4s vía `$effect` + `setInterval`; se pausa en hover/focus (`paused`) y no arranca con `prefers-reduced-motion`.
-- **Navegación**: dots `size-2 rounded-full` (activo `bg-primary`, inactivo `bg-border`) con `aria-label="Ver {name}"`.
-- **Restricción**: solo en esta tarjeta. El resto de la landing no tiene transiciones.
+- **Rotación**: auto cada 2.5s vía `$effect` + `setInterval`; arranca en la tarjeta central; se pausa en hover/focus (`autoPaused`) y no arranca con `prefers-reduced-motion`.
+- **Geometría**: perspectiva en el contenedor (`.fan-stage`, 1400px, origin 85%), rotación base `rotateY(-8deg)`, rotación relativa `±10deg` por tarjeta, escala 1.04/1.07 según estado, `z-index` 10/11/12 → 30 al enfocar.
+- **Restricción**: solo en este abanico. El resto de la landing no tiene transiciones.
 
 ## Do's and Don'ts
 
@@ -330,15 +344,17 @@ La **tarjeta destacada de demo** del hero rota entre los anuncios de ejemplo con
 - Usar Onest Variable para todo el texto.
 - Etiquetar como "Anuncios de ejemplo" cualquier tarjeta que use material sintético.
 - Mantener la calidez de lino/tinta en todos los neutros.
-- Medir la altura de hero y rhythm en una rejilla vertical, no por secciones aisladas.
-- Sustituir las fotos de stock por anuncios reales en cuanto estén disponibles, manteniendo la tarjeta destacada de demo.
-- Animar solo `transform` y `opacity` (mesh) o el crossfade del panel demo; respetar `prefers-reduced-motion`.
+- Servir las imágenes desde `static/images/`; sustituir el stock por anuncios reales en cuanto estén disponibles.
+- Animar solo `transform` y `opacity` (mesh) o `transform`/`box-shadow` (abanico); respetar `prefers-reduced-motion`.
+- Mantener el wordmark con unidades `em` para que escale con el tamaño del logo.
+- Los dividers del por-qué se espacian con padding en las columnas, nunca con `gap` (descentra la columna central).
 
 **Don't**
-- No introducir sombras flotantes, glassmorphism o degradados de neón.
+- No introducir sombras flotantes (excepto la del abanico en primer plano), glassmorphism o degradados de neón.
 - No usar una segunda familia tipográfica ni un serif decorativo.
 - No fabricar métricas, testimonios o cifras de la landing.
-- No enlazar a `/app` ni añadir CTAs muertos.
+- No añadir una nav ni CTAs muertos fuera del CTA a `#waitlist`.
 - No usar el verde como color de fondo de pantalla completa.
-- No extender el mesh viento fuera de las bandas de categorías y waitlist, ni el crossfade fuera de la tarjeta destacada.
-- No re-introducir `box-shadow` ni el contenedor exterior del panel demo.
+- No extender el mesh viento fuera de las bandas de categorías y waitlist, ni el abanico fuera del hero.
+- No usar URLs de Unsplash: las imágenes se sirven localmente.
+- No re-introducir el carrusel con dots ni la tarjeta destacada única (sustituida por el abanico).

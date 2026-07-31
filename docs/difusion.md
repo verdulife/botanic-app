@@ -8,14 +8,14 @@ Inversión en marketing: **0 €**. Crecimiento orgánico vía comunidad y conte
 Página simple: "Próximamente: el Wallapop de las plantas". Formulario de email. **Objetivo: 1.000 suscriptores.**
 
 ### Instagram + TikTok
-Cuenta `@botanic.app`. Contenido 3-4x/semana. Construir audiencia plant lover sin vender la app todavía.
+Cuenta `@botanic.app`. Contenido 3-4x/semana. Construir audiencia **Plant Lovers** sin vender la app todavía.
 
 ### Comunidades
 Unirse y participar genuinamente en:
 - **Infojardín** — foro de plantas de referencia en España
 - **Grupos Facebook** de intercambio de plantas (decenas de grupos activos)
 - **r/plantasES** — Reddit
-- **Grupos WhatsApp/Telegram** de plant lovers
+- **Grupos WhatsApp/Telegram** de Plant Lovers
 
 ### SEO seeds
 Artículos en Substack/Medium:
@@ -32,10 +32,10 @@ Artículos en Substack/Medium:
 | Facebook Groups | Compartir en grupos donde ya participas |
 | Reddit | Post en r/plantasES |
 | Product Hunt | Lanzamiento categoría Apps |
-| WhatsApp | Grupos personales de plant lovers |
+| WhatsApp | Grupos personales de Plant Lovers |
 | Uneed / BetaList | Directorios startups españolas |
 
-**Mensajes clave**: "El Wallapop de las plantas", "Sin comisiones, sin intermediarios", "De plant lover a plant lover 🌱"
+**Mensajes clave**: "El Wallapop de las plantas", "Sin comisiones, sin intermediarios", "De **Plant Lovers** a **Plant Lovers** 🌱"
 
 ## Post-lanzamiento (meses 3-6)
 

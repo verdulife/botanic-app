@@ -138,9 +138,27 @@
 html {
 	scroll-behavior: smooth;
 	font-family: var(--font-sans);
+	overflow-x: clip;
 }
 
 body {
 	background-color: var(--background);
 	color: var(--foreground);
+	overflow-x: clip;
+}
+
+h1,
+h2,
+h3 {
+	text-wrap: balance;
+}
+
+p {
+	text-wrap: pretty;
+}
+
+@supports (corner-shape: squircle) {
+	[data-slot="button"] {
+		corner-shape: squircle;
+	}
 }

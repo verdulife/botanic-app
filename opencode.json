@@ -1,5 +1,6 @@
 {
 	"$schema": "https://opencode.ai/config.json",
+	"plugin": ["seo-for-ai@git+https://github.com/akimovpro/seo-for-ai.git"],
 	"mcp": {
 		"shadcn-svelte": {
 			"type": "remote",

@@ -1,0 +1,14 @@
+# Botanic
+
+> Botanic es un marketplace P2P donde Plant Lovers venden, cambian y regalan plantas, semillas, esquejes y tiestos. Las plantas conocen a gente nueva y encuentran hogares donde las quieran.
+
+## Páginas
+
+- [Inicio](https://www.botanicapp.es/)
+- [App — explorar anuncios](https://www.botanicapp.es/app)
+
+## Sobre el proyecto
+
+- Marketplace entre personas (P2P), sin envíos: quedar en mano.
+- MVP gratuito como PWA; sin pagos integrados.
+- Foco: economía circular y comunidad Plant Lovers.

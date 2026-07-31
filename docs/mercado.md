@@ -14,7 +14,7 @@ Las plantas tienen comunidad propia pero ninguna plataforma dedicada:
 
 - Grupos de Facebook de intercambio de plantas con **cientos de miles de miembros**
 - Foros como Infojardín con **décadas de conversaciones**
-- **Miles de plant lovers** en Instagram y TikTok
+- **Miles de Plant Lovers** en Instagram y TikTok
 
 Esta comunidad **ya existe, está activa y está dispersa**. Botanic les da un hogar común.
 

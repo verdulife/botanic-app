@@ -22,33 +22,41 @@
 	}
 </script>
 
-<form onsubmit={handleSubmit} novalidate class="flex w-full max-w-sm flex-col gap-3">
-	<div class="relative">
-		<Mail class="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+<form onsubmit={handleSubmit} novalidate class="mx-auto flex w-full max-w-[31.5rem] flex-col gap-3">
+	<div class="relative w-full">
+		<Mail class="text-muted-foreground absolute top-1/2 left-4 size-5 -translate-y-1/2" />
 		<Input
 			bind:value={email}
 			type="email"
 			placeholder="tu@email.com"
 			aria-label="Tu email"
 			aria-invalid={status === "error"}
-			class="border-0 bg-muted/50 pl-9 placeholder:text-muted-foreground/60 focus-visible:ring-ring"
+			class="h-14 w-full rounded-full border border-border bg-background pl-12 pr-40 text-lg shadow-sm placeholder:text-muted-foreground/60 focus-visible:ring-2 focus-visible:ring-ring"
 		/>
+		<Button
+			type="submit"
+			size="lg"
+			style="corner-shape: round"
+			class="absolute top-[3px] right-[3px] h-[calc(100%-6px)] rounded-full px-5 text-base"
+			disabled={status === "loading" || status === "success"}
+		>
+			{#if status === "loading"}
+				Enviando…
+			{:else}
+				<Send />
+				Unirme
+			{/if}
+		</Button>
 	</div>
-	<Button type="submit" size="lg" disabled={status === "loading" || status === "success"}>
-		{#if status === "loading"}
-			Enviando…
-		{:else}
-			<Send data-icon="inline-end" />
-			Unirme a la lista
-		{/if}
-	</Button>
 	<p aria-live="polite" class="min-h-4 text-center text-xs">
 		{#if status === "success"}
-			<span class="text-foreground">¡Listo! Te avisaremos cuando haya novedades.</span>
+			<span class="text-foreground">¡Pase reservado! Te avisaremos antes que a nadie.</span>
 		{:else if status === "error"}
 			<span class="text-destructive">Introduce un email válido.</span>
-		{:else}
-			<span class="text-muted-foreground">Sin spam. Date de baja cuando quieras.</span>
 		{/if}
+	</p>
+	<p class="text-center text-xs text-muted-foreground">
+		Al unirte, usaremos tu email para mantenerte al día de todas las novedades, actualizaciones
+		y la fecha de lanzamiento. No somos pesados, pero podrás darte de baja cuando quieras.
 	</p>
 </form>

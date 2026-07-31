@@ -2,7 +2,7 @@
 
 ## Filosofía
 
-> Haz lo mínimo indispensable para que un plant lover publique un anuncio y otro lo encuentre cerca.
+> Haz lo mínimo indispensable para que un **Plant Lovers** publique un anuncio y otro lo encuentre cerca.
 
 ## IN (MVP)
 

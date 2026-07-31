@@ -14,6 +14,12 @@
 	);
 </script>
 
+<svelte:head>
+	<title>Botanic ✦ App</title>
+	<meta name="robots" content="noindex, nofollow" />
+	<link rel="canonical" href="https://www.botanicapp.es/app" />
+</svelte:head>
+
 <div class="flex flex-col gap-5 px-5 pt-5 pb-3">
 	<div class="flex items-center gap-3">
 		<div class="bg-primary/10 flex size-9 items-center justify-center rounded-xl">

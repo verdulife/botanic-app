@@ -15,7 +15,7 @@
 
 1. **Especialización** — Categorías pensadas para el mundo vegetal
 2. **Cercanía** — Búsqueda por ubicación para quedar en mano
-3. **Comunidad** — Perfiles, valoraciones, reputación entre plant lovers
+3. **Comunidad** — Perfiles, valoraciones, reputación entre Plant Lovers
 4. **Sencillez** — Publicar un anuncio lleva menos de un minuto
 
 ## Público objetivo

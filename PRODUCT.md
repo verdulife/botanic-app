@@ -17,7 +17,7 @@ Plant lovers en España que quieren vender lo que les sobra y comprar cerca de c
 
 ## Product Purpose
 
-Botanic es el marketplace P2P de plantas entre particulares. Cualquiera publica semillas, esquejes, brotes, plantas o tiestos y los vende a gente de su zona. El éxito es que un plant lover publique un anuncio en menos de un minuto y otro lo encuentre cerca, quedando en mano. Modelo 100% gratuito en el MVP: los usuarios se pagan fuera de la plataforma, sin comisiones ni intermediarios.
+Botanic es el marketplace P2P de plantas entre particulares. Cualquiera publica semillas, esquejes, brotes, plantas o tiestos y los vende a gente de su zona. El éxito es que un **Plant Lovers** publique un anuncio en menos de un minuto y otro lo encuentre cerca, quedando en mano. Modelo 100% gratuito en el MVP: los usuarios se pagan fuera de la plataforma, sin comisiones ni intermediarios.
 
 ## Positioning
 
@@ -47,8 +47,8 @@ Botanic es el marketplace P2P de plantas entre particulares. Cualquiera publica 
 - Tagline: "El Wallapop de las plantas"
 - Identidad visual: canon de marketplace — fondo cálido de lino, tinta cálida casi negra, acento verde hoja saturado, estrellas ámbar, tipografía Onest, fotografía real de plantas; tokens en `src/app.css`
 - Estilo por defecto: estándar de categoría ejecutado impecablemente (elegido en el flujo new-work, seed 77b83067); sin quirk ni sobre-decoración
-- Tono: cercano y de comunidad plant lover
-- Terminología: lenguaje de economía circular y consumo sostenible ("segunda vida", "segunda mano", "cambiar de manos", "pluralidad") frente a "marketplace", que suena técnico y frío; "vender, cambiar o regalar" como tríada de acciones
+- Tono: cercano y de comunidad **Plant Lovers**
+- Terminología: lenguaje cercano de comunidad y economía circular ("conocer a gente nueva", "vender, cambiar o regalar", "segunda mano", "pluralidad") frente a "marketplace", que suena técnico y frío; "vender, cambiar o regalar" como tríada de acciones
 - Restricción de copy: el copy de la landing no declara como promesas permanentes los "sin envíos", "sin comisiones", "solo cerca de ti", "queda en mano" ni "de tu barrio" — son decisiones del MVP, no verdades de marca, para no condicionar la monetización ni los cambios de rumbo
 
 ## Evidence on Hand
@@ -65,4 +65,4 @@ Botanic es el marketplace P2P de plantas entre particulares. Cualquiera publica 
 - Especialización total en el mundo vegetal frente a generalistas
 - Confianza entre particulares: perfiles, valoraciones y chat directo
 - Sencillez: publicar un anuncio en menos de un minuto
-- Vocabulario de economía circular: las plantas se comparten, no se tiran
+- Vocabulario de comunidad: las plantas se comparten para conocer a gente nueva
