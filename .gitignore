@@ -21,3 +21,9 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Impeccable skill artifacts
+.impeccable/screenshots/
+.impeccable/questions/
+.impeccable/q-err.txt
+.impeccable/q-out.txt
