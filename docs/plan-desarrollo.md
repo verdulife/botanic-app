@@ -9,8 +9,8 @@ Ya hecho:
 - Scaffold SvelteKit 5 + TypeScript + TailwindCSS 4
 - Landing completa: hero, copy "conocer a gente nueva", waitlist (UI con mock), favicon, OG image, metas SEO, JSON-LD, sitemap + robots, llms.txt
 - Rutas `/` (landing) y `/app` (marketplace con datos mock, noindex)
-- Waitlist conectada a Supabase: proyecto Free `botanic`, tabla `waitlist` (email único) con RLS solo-insert, `src/lib/supabase.ts`, `WaitlistForm.svelte` → `fetch('/api/waitlist')` con duplicado (`23505`) tratado como éxito
-- Emails waitlist (Resend): dominio `botanicapp.es` verificado (DKIM + SPF + MX), API key, Audience "waitlist", ruta `POST /api/waitlist` (insert + confirmación al usuario + aviso al admin + alta en Audience, solo en fila nueva), `WaitlistForm.svelte` conectado. Probado en real (ambos emails `delivered`). Texto plano; **pendiente diseñar HTML cuando toque**
+- Waitlist conectada a Supabase: proyecto Free `botanic`, tabla `waitlist` (email único) con RLS solo-insert, `src/lib/supabase.ts`, `WaitlistForm.svelte` → `fetch('/api/waitlist')` con duplicado (`23505`) tratado como éxito y feedback `alreadyRegistered` en el form (sin reenviar email)
+- Emails waitlist (Resend): dominio `botanicapp.es` verificado (DKIM + SPF + MX), API key, Audience "waitlist", ruta `POST /api/waitlist` (insert + confirmación al usuario + aviso al admin + alta en Audience, solo en fila nueva), `WaitlistForm.svelte` conectado. Probado en real (ambos emails `delivered`). Emails en **HTML con marca** (`src/lib/emails/`), asuntos sin emojis
 
 **Siguiente tarea — Sprint 1: Setup + Auth** (ver abajo).
 
@@ -18,7 +18,7 @@ Ya hecho:
 - [x] `.env.local` con `PUBLIC_SUPABASE_URL` + `PUBLIC_SUPABASE_ANON_KEY` (+ `.env.example`)
 - [x] Tabla `waitlist` (email único) + RLS solo-insert
 - [x] `src/lib/supabase.ts` con `createClient`
-- [x] Integrar en `WaitlistForm.svelte`: `insert` + tratar duplicado (`23505`) como éxito
+- [x] Integrar en `WaitlistForm.svelte`: `insert` + tratar duplicado (`23505`) como éxito con feedback `alreadyRegistered`
 - [x] Verificar: `bun run check` y prueba manual
 
 **Emails de la waitlist (Resend) — hecho:**
@@ -29,6 +29,7 @@ Ya hecho:
 - [x] `WaitlistForm.svelte` → `fetch('/api/waitlist')`
 - [x] Verificar: `bun run check` + prueba real (recibir emails)
 - [x] Diseñar los emails automáticos con HTML (marca Botanic: layout en `src/lib/emails/`, estilos inline, header con `og-image.jpg` optimizado con sharp y compartido con el OG metadata)
+- [x] Feedback de duplicado en el form (`alreadyRegistered`, sin reenvío de email) + confeti de celebración en altas nuevas (`canvas-confetti`, paleta de la landing)
 
 ## Sprint 1 — Setup + Auth (Semana 1)
 

@@ -17,7 +17,7 @@ Coste 0          1.000 users RN / Flutter                 │       Latam + IA
 
 **Objetivo**: Lanzar PWA funcional con coste 0.
 
-**Hecho**: landing completa + waitlist operativa (Supabase con RLS solo-insert + emails Resend: confirmación al usuario, aviso al admin y Audience "waitlist"; dominio `botanicapp.es` verificado), favicon, OG image, SEO (JSON-LD, sitemap, robots, llms.txt). **Siguiente**: Sprint 1 — Setup + Auth (registro email + Google OAuth, schema `profiles` + `categories`).
+**Hecho**: landing completa + waitlist operativa (Supabase con RLS solo-insert + emails Resend: confirmación al usuario, aviso al admin y Audience "waitlist"; dominio `botanicapp.es` verificado), duplicado con feedback (sin reenvío) y confeti en altas nuevas, favicon, OG image, SEO (JSON-LD, sitemap, robots, llms.txt). **Siguiente**: Sprint 1 — Setup + Auth (registro email + Google OAuth, schema `profiles` + `categories`).
 
 | Sprint | Semana | Contenido | Hito |
 |---|---|---|---|
