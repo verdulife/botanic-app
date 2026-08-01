@@ -57,7 +57,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		{
 			from: FROM,
 			to: [email],
-			subject: "Tus plantas quieren conocer a gente nueva 🌿",
+			subject: "¡Gracias por apuntarte a la waitlist de Botanic!",
 			html: confirmationHtml(),
 			text: confirmationText(),
 		},
@@ -69,7 +69,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			{
 				from: FROM,
 				to: [env.ADMIN_NOTIFY_EMAIL.trim()],
-				subject: "🌱 Nuevo en la waitlist",
+				subject: "Nuevo en la waitlist",
 				html: adminNotifyHtml(email, now),
 				text: adminNotifyText(email, now),
 			},
