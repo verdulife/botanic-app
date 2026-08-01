@@ -58,8 +58,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const { error } = await supabase.from("waitlist").insert({ email });
 	if (error) {
 		if (error.code === "23505") {
-			await sendConfirmation(email);
-			return json({ ok: true });
+			return json({ ok: true, alreadyRegistered: true });
 		}
 		console.error("[waitlist] insert error", error);
 		return json({ error: "Error al guardar" }, { status: 500 });

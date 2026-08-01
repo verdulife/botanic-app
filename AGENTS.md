@@ -66,7 +66,7 @@ botanic-app/
 
 - Landing pública terminada: hero, copy "conocer a gente nueva", waitlist conectada a Supabase, favicon, OG image, metas SEO, JSON-LD, sitemap + robots, llms.txt.
 - Proyecto Supabase Free `botanic` (ref `whfctiwljwdamnypthrz`, eu-central-1). Tabla `waitlist` (email único) con RLS solo-insert (anon). Credenciales en `.env.local` (git-ignored); `.env.example` con placeholders.
-- `src/lib/supabase.ts` con `createClient`. `WaitlistForm.svelte` hace `fetch('/api/waitlist')`; duplicado (`23505`) se trata como éxito.
+- `src/lib/supabase.ts` con `createClient`. `WaitlistForm.svelte` hace `fetch('/api/waitlist')`; duplicado (`23505`) se trata como éxito **sin enviar ningún email** y la respuesta (`alreadyRegistered`) muestra feedback al usuario ("Ya estás en la waitlist").
 - Rutas: `/` (landing), `/app` (marketplace con datos mock, noindex) y `/api/waitlist` (POST).
 - PWA y Auth aún sin implementar.
 - Emails de la waitlist operativos con Resend: dominio `botanicapp.es` verificado (DKIM + SPF + MX, región eu-west-1), Audience "waitlist" (id `fbe9c75b-b2d4-41b3-89e9-848f7755de43`), API key en `.env.local`, ruta `POST /api/waitlist` (insert + confirmación al usuario + aviso a `ADMIN_NOTIFY_EMAIL` + alta en Audience, solo en fila nueva) y `WaitlistForm.svelte` conectado. Probado en real: ambos emails `delivered`. Emails en **HTML con marca** (`src/lib/emails/`: layout + confirmation + adminNotify, estilos inline). Header con `og-image.jpg` (banner de marca, ~23 KB), el mismo asset optimizado (sharp) que se usa en el OG metadata (`og:image`/`twitter:image`).

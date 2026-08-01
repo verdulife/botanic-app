@@ -8,6 +8,9 @@
 	let email = $state("");
 	let status = $state<Status>("idle");
 	let errorMessage = $state("");
+	let alreadyRegistered = $state(false);
+
+	const CONFETTI_COLORS = ["#74AA7B", "#5D8862", "#517756", "#2E4431", "#7C766A", "#4A4238"];
 
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
@@ -28,8 +31,20 @@
 			errorMessage = "Algo salió mal. Inténtalo de nuevo.";
 			return;
 		}
+		const data = (await res.json().catch(() => null)) as { alreadyRegistered?: boolean } | null;
 		email = "";
+		alreadyRegistered = Boolean(data?.alreadyRegistered);
 		status = "success";
+		if (!alreadyRegistered && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+			const confetti = (await import("canvas-confetti")).default;
+			confetti({
+				particleCount: 280,
+				spread: 90,
+				startVelocity: 50,
+				origin: { y: 0.7 },
+				colors: CONFETTI_COLORS,
+			});
+		}
 	}
 </script>
 
@@ -59,9 +74,13 @@
 			{/if}
 		</Button>
 	</div>
-	<p aria-live="polite" class="min-h-4 text-center text-xs">
+	<p aria-live="polite" class="min-h-5 text-center text-sm">
 		{#if status === "success"}
-			<span class="text-foreground">¡Pase reservado! Te avisaremos antes que a nadie.</span>
+			<span class="text-foreground">
+				{alreadyRegistered
+					? "Ya estás en la waitlist de Botanic 🌿"
+					: "¡Pase reservado! Te avisaremos antes que a nadie."}
+			</span>
 		{:else if status === "error"}
 			<span class="text-destructive">{errorMessage}</span>
 		{/if}
