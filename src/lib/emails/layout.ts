@@ -47,7 +47,7 @@ export function emailLayout(preheader: string, body: string): string {
 <tr>
 <td style="background-color:${paper};border-radius:16px;padding:16px;font-family:${EMAIL_FONT};font-size:16px;line-height:24px;color:${ink};">
 <img src="${EMAIL_HEADER_IMG.src}" width="${EMAIL_HEADER_IMG.width}" height="${EMAIL_HEADER_IMG.height}" alt="${escapeHtml(EMAIL_HEADER_IMG.alt)}" style="display:block;width:100%;height:auto;border-radius:12px;border:1px solid ${border};">
-<div style="padding:24px 0 0 0;">
+<div style="padding:24px 0 0 0;text-align:center;">
 ${body}
 </div>
 </td>
