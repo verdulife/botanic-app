@@ -10,6 +10,19 @@ const RESEND_EMAILS_URL = "https://api.resend.com/emails";
 const RESEND_CONTACTS_URL = "https://api.resend.com/audiences";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+async function sendConfirmation(email: string) {
+	await sendResend(
+		{
+			from: FROM,
+			to: [email],
+			subject: "¡Gracias por apuntarte a la waitlist de Botanic!",
+			html: confirmationHtml(),
+			text: confirmationText(),
+		},
+		RESEND_EMAILS_URL
+	);
+}
+
 async function sendResend(payload: Record<string, unknown>, url: string) {
 	const key = env.RESEND_API_KEY?.trim();
 	if (!key) {
@@ -45,6 +58,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const { error } = await supabase.from("waitlist").insert({ email });
 	if (error) {
 		if (error.code === "23505") {
+			await sendConfirmation(email);
 			return json({ ok: true });
 		}
 		console.error("[waitlist] insert error", error);
@@ -53,16 +67,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	const now = new Date().toISOString();
 
-	await sendResend(
-		{
-			from: FROM,
-			to: [email],
-			subject: "¡Gracias por apuntarte a la waitlist de Botanic!",
-			html: confirmationHtml(),
-			text: confirmationText(),
-		},
-		RESEND_EMAILS_URL
-	);
+	await sendConfirmation(email);
 
 	if (env.ADMIN_NOTIFY_EMAIL?.trim()) {
 		await sendResend(
