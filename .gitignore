@@ -18,6 +18,9 @@ Thumbs.db
 !.env.example
 !.env.test
 
+# OpenCode MCP auth
+.opencode/*-auth.json
+
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*

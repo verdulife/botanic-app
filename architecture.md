@@ -24,11 +24,25 @@
 | Gestor | Bun | 1.3 | Solo `bun install` / `bun run` | $0 |
 | Backend | Supabase | Free | DB, Auth, Storage, Realtime | $0 |
 | Mapas | Leaflet + OSM | — | Sin API key | $0 |
+| Email | Resend | Free | Transaccional + broadcasts (waitlist) | $0 |
 | Hosting | Vercel | Hobby | SSR + CDN | $0 |
-| DNS/CDN | Cloudflare | Free | DDoS + CDN | $0 |
+| DNS/CDN | Cloudflare | Free | DDoS + CDN (dominio `botanicapp.es`) | $0 |
 | Repo | GitHub | Free | Código + CI/CD | $0 |
 
 **Coste total MVP: 0 €/mes**
+
+> **Dominio**: `botanicapp.es` (registrado por el usuario; DNS en Cloudflare). Resend envía desde `no-reply@botanicapp.es` (SPF/DKIM/DMARC).
+
+## Email (Resend)
+
+- **Proveedor**: [Resend](https://resend.com) (Free: 3.000 emails transaccionales/mes, 100/día; marketing ilimitado hasta 1.000 contactos/mes). Envío vía **SvelteKit server route** (`/api/waitlist`), nunca desde el cliente.
+- **Dominio verificado**: `botanicapp.es` → `no-reply@botanicapp.es`.
+- **Flujo alta waitlist**: el usuario hace `POST /api/waitlist` → insert en tabla `waitlist` → se envían (solo en fila nueva):
+  1. Email de confirmación al usuario ("¡Te has apuntado!").
+  2. Notificación a `ADMIN_NOTIFY_EMAIL` (email personal del dueño, por cada alta).
+  3. Alta del contacto en el **Audience "waitlist"** de Resend (para el broadcast de lanzamiento).
+- **Duplicado** (`23505`): 200 silencioso, sin emails (evita spam al admin).
+- **Plantillas**: HTML con la marca de Botanic en `src/lib/emails/` (`layout.ts` + `confirmation.ts` + `adminNotify.ts`), estilos inline, tablas 600px. Header con `og-image.jpg` (banner de marca ~23 KB, `static/og-image.jpg` generado por `scripts/generate-og.mjs` con sharp, mismo asset usado en `og:image`/`twitter:image`). Cada email lleva también su `text` como fallback.
 
 ## Límites Supabase Free
 

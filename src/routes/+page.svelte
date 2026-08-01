@@ -97,7 +97,7 @@
 	<meta property="og:url" content="https://www.botanicapp.es/" />
 	<meta property="og:site_name" content="Botanic" />
 	<meta property="og:locale" content="es_ES" />
-	<meta property="og:image" content="https://www.botanicapp.es/og-image.png" />
+	<meta property="og:image" content="https://www.botanicapp.es/og-image.jpg" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 	<meta property="og:image:alt" content="Botanic ✦ Donde las plantas conocen a gente" />
@@ -107,7 +107,7 @@
 		name="twitter:description"
 		content="Saca más partido a tus plantas y encuentra las que siempre quisiste. Vender, cambiar o regalar."
 	/>
-	<meta name="twitter:image" content="https://www.botanicapp.es/og-image.png" />
+	<meta name="twitter:image" content="https://www.botanicapp.es/og-image.jpg" />
 	<script type="application/ld+json">
 		{
 			"@context": "https://schema.org",
@@ -131,7 +131,7 @@
 					"@type": "SoftwareApplication",
 					"name": "Botanic",
 					"url": "https://www.botanicapp.es/app",
-					"image": "https://www.botanicapp.es/og-image.png",
+					"image": "https://www.botanicapp.es/og-image.jpg",
 					"description": "Botanic conecta a Plant Lovers para vender, cambiar y regalar plantas, semillas, esquejes y tiestos. Para que tus plantas conozcan a quien las querrá.",
 					"applicationCategory": "ShoppingApplication",
 					"operatingSystem": "Web",

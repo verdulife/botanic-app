@@ -3,6 +3,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { create } from "fontkit";
 import { Resvg } from "@resvg/resvg-js";
+import sharp from "sharp";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
@@ -168,5 +169,8 @@ const resvg = new Resvg(buildSvg(false), {
 const png = resvg.render().asPng();
 writeFileSync(resolve(root, "static/og-image.png"), png);
 
+const jpg = await sharp(png).jpeg({ quality: 85, mozjpeg: true }).toBuffer();
+writeFileSync(resolve(root, "static/og-image.jpg"), jpg);
+
 console.log("W_BO:", W_BO.toFixed(1), "W_ANIC:", W_ANIC.toFixed(1), "TOTAL:", TOTAL.toFixed(1), "groupX:", groupX.toFixed(1));
-console.log("ok!", png.length, "bytes");
+console.log("ok!", png.length, "bytes png /", jpg.length, "bytes jpg");

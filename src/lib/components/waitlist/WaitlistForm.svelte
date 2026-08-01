@@ -7,16 +7,27 @@
 
 	let email = $state("");
 	let status = $state<Status>("idle");
+	let errorMessage = $state("");
 
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 		const trimmed = email.trim();
 		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
 			status = "error";
+			errorMessage = "Introduce un email válido.";
 			return;
 		}
 		status = "loading";
-		await new Promise((resolve) => setTimeout(resolve, 700));
+		const res = await fetch("/api/waitlist", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ email: trimmed }),
+		});
+		if (!res.ok) {
+			status = "error";
+			errorMessage = "Algo salió mal. Inténtalo de nuevo.";
+			return;
+		}
 		email = "";
 		status = "success";
 	}
@@ -52,7 +63,7 @@
 		{#if status === "success"}
 			<span class="text-foreground">¡Pase reservado! Te avisaremos antes que a nadie.</span>
 		{:else if status === "error"}
-			<span class="text-destructive">Introduce un email válido.</span>
+			<span class="text-destructive">{errorMessage}</span>
 		{/if}
 	</p>
 	<p class="text-center text-xs text-muted-foreground">

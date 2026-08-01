@@ -8,7 +8,7 @@
 
 ### Core
 
-- [x] Waitlist: captura de email pre-auth (UI hecha; backend Supabase pendiente)
+- [x] Waitlist: captura de email pre-auth (conectada a Supabase)
 - [ ] Registro (email + Google OAuth)
 - [ ] Perfil básico (username, avatar, ubicación)
 - [ ] Publicar anuncio con fotos (1-5)

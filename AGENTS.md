@@ -18,6 +18,7 @@ Marketplace P2P de plantas (semillas, esquejes, brotes, plantas, tiestos). MVP c
 - Supabase Free (PostgreSQL, Auth, Storage, Realtime)
 - @vite-pwa/sveltekit para PWA
 - Leaflet + OpenStreetMap para mapas (gratis)
+- Resend Free para emails (transaccional + broadcasts); dominio `botanicapp.es`
 - Vercel Hobby + Cloudflare Free para hosting
 - Bun como gestor de paquetes (no runtime)
 
@@ -31,6 +32,7 @@ Marketplace P2P de plantas (semillas, esquejes, brotes, plantas, tiestos). MVP c
 | Sin live shopping | Se pospone | Palmstreet ya lo hace, no es el core |
 | Sin app nativa al inicio | PWA primero | Coste 0, validación rápida |
 | React Native > Flutter | Para futuro nativo | Ya usamos TypeScript |
+| Emails | Resend Free | 3k tx/mes + broadcasts; integra con Supabase Auth vía SMTP |
 
 ## Estructura del proyecto
 
@@ -62,14 +64,16 @@ botanic-app/
 
 ## Estado actual
 
-- Landing pública terminada: hero, copy "conocer a gente nueva", waitlist (UI con mock), favicon, OG image, metas SEO, JSON-LD, sitemap + robots, llms.txt.
-- Dependencias de Supabase instaladas (`@supabase/supabase-js`, `@supabase/ssr`) pero **sin cliente ni proyecto creados**.
-- Rutas: `/` (landing) y `/app` (marketplace con datos mock, noindex).
+- Landing pública terminada: hero, copy "conocer a gente nueva", waitlist conectada a Supabase, favicon, OG image, metas SEO, JSON-LD, sitemap + robots, llms.txt.
+- Proyecto Supabase Free `botanic` (ref `whfctiwljwdamnypthrz`, eu-central-1). Tabla `waitlist` (email único) con RLS solo-insert (anon). Credenciales en `.env.local` (git-ignored); `.env.example` con placeholders.
+- `src/lib/supabase.ts` con `createClient`. `WaitlistForm.svelte` hace `fetch('/api/waitlist')`; duplicado (`23505`) se trata como éxito.
+- Rutas: `/` (landing), `/app` (marketplace con datos mock, noindex) y `/api/waitlist` (POST).
 - PWA y Auth aún sin implementar.
+- Emails de la waitlist operativos con Resend: dominio `botanicapp.es` verificado (DKIM + SPF + MX, región eu-west-1), Audience "waitlist" (id `fbe9c75b-b2d4-41b3-89e9-848f7755de43`), API key en `.env.local`, ruta `POST /api/waitlist` (insert + confirmación al usuario + aviso a `ADMIN_NOTIFY_EMAIL` + alta en Audience, solo en fila nueva) y `WaitlistForm.svelte` conectado. Probado en real: ambos emails `delivered`. Emails en **HTML con marca** (`src/lib/emails/`: layout + confirmation + adminNotify, estilos inline). Header con `og-image.jpg` (banner de marca, ~23 KB), el mismo asset optimizado (sharp) que se usa en el OG metadata (`og:image`/`twitter:image`).
 
 ## Siguiente paso
 
-Conectar la waitlist a Supabase: crear proyecto Free tier, tabla `waitlist`, RLS solo-insert, `src/lib/supabase.ts`, e integrar en `WaitlistForm.svelte`. Detalle en [`docs/plan-desarrollo.md`](docs/plan-desarrollo.md).
+Sprint 1 — Setup + Auth (registro email + Google OAuth, schema `profiles` + `categories`). Detalle en [`docs/plan-desarrollo.md`](docs/plan-desarrollo.md).
 
 ## Para empezar a desarrollar
 
@@ -79,4 +83,5 @@ Conectar la waitlist a Supabase: crear proyecto Free tier, tabla `waitlist`, RLS
 
 ## Reglas de trabajo
 
+- Trabajar **paso a paso**: dividir el trabajo en pasos pequeños y verificables, detectando problemas temprano en lugar de ejecutar muchos cambios de golpe.
 - Si el usuario pide **hacer un commit o un push**, recomienda primero **actualizar los docs** (AGENTS.md, docs/, roadmap.md) si el cambio de código los ha dejado desactualizados.
