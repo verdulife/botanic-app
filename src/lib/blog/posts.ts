@@ -41,13 +41,18 @@ function readingTime(content: string): number {
 	return Math.max(1, Math.round(words / WPM));
 }
 
+function formatDate(val: unknown): string {
+	if (val instanceof Date) return val.toISOString().slice(0, 10);
+	return String(val ?? "");
+}
+
 function toPost(file: RawFile): Post {
 	const { data, content } = matter(file.raw);
 	const meta: PostMeta = {
 		title: String(data.title ?? ""),
 		description: String(data.description ?? ""),
-		date: String(data.date ?? ""),
-		updated: data.updated ? String(data.updated) : undefined,
+		date: formatDate(data.date),
+		updated: data.updated ? formatDate(data.updated) : undefined,
 		category: (data.category as Category) ?? "guias",
 		tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
 		author: String(data.author ?? "Botanic"),
@@ -65,8 +70,10 @@ const posts: Post[] = Object.entries(modules)
 	.map(([path, raw]) => toPost({ slug: getSlug(path), raw }))
 	.sort((a, b) => Date.parse(b.meta.date) - Date.parse(a.meta.date));
 
+const SPAIN_UTC_OFFSET_MS = 2 * 60 * 60 * 1000;
+
 function isPublished(post: Post, now = new Date()): boolean {
-	return Date.parse(post.meta.date) <= now.getTime();
+	return Date.parse(post.meta.date) - SPAIN_UTC_OFFSET_MS <= now.getTime();
 }
 
 export function getAllPosts(): Post[] {
