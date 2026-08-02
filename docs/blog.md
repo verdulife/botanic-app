@@ -51,7 +51,7 @@ image: /blog/monstera.jpg     # opcional; fallback = gradient de marca
 
 - **Deps**: `marked` (md → HTML), `gray-matter` (frontmatter), `@tailwindcss/typography` (prose).
 - **Loader**: `import.meta.glob('/src/lib/blog/posts/**/*.md', { eager: true, query: '?raw', import: 'default' })` en `src/lib/blog/posts.ts`. Sin cambios en `vite.config.ts`. Se añade `declare module '*.md?raw'` en `src/app.d.ts`.
-- **Filtrado**: el loader excluye posts con `date > now` y los de `_drafts/` (fuera del glob). ⚠️ **Nota Bun/Windows**: `Date.parse("YYYY-MM-DD")` en Bun local se interpreta en zona horaria local (no UTC como dice el spec). En producción (Vercel/Linux) funciona correctamente.
+- **Filtrado**: el loader excluye posts con `date > now` y los de `_drafts/` (fuera del glob). `Date.parse("YYYY-MM-DD")` devuelve medianoche UTC en todos los entornos (Bun, Node, Vercel). `isPublished()` resta 2h (`SPAIN_UTC_OFFSET_MS`) para alinearse con hora española (CEST), de modo que un post con `date: 2026-08-03` se publica a las 00:00 hora peninsular, no a las 02:00.
 - **Rutas**: los `load` son `+page.server.ts` (server-only) — `gray-matter`/`js-yaml`/`marked` son APIs Node y rompían la navegación SPA en cliente (500). La navegación cliente usa `__data.json`.
 - **Rutas**: `/blog`, `/blog/[slug]` y `/blog/pagina/[page]` con `export const prerender = true` y `entries` = slugs publicados. HTML estático en build (SEO).
 - **404**: slug inexistente o programado → `error(404)`.
