@@ -70,7 +70,8 @@ function isPublished(post: Post, now = new Date()): boolean {
 }
 
 export function getAllPosts(): Post[] {
-	return posts.filter((post) => isPublished(post));
+	return posts
+		.filter((post) => isPublished(post));
 }
 
 export function getPostBySlug(slug: string): Post | undefined {
