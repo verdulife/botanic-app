@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { Button } from "$lib/components/ui/button";
-	import WaitlistForm from "$lib/components/waitlist/WaitlistForm.svelte";
+	import Logo from "$lib/components/Logo.svelte";
+	import BlogCta from "$lib/components/blog/BlogCta.svelte";
+	import AppFooter from "$lib/components/AppFooter.svelte";
 	import {
 		Sprout,
 		Leaf,
@@ -10,7 +12,6 @@
 		ShieldCheck,
 		ShoppingBasket,
 		Shovel,
-		Heart,
 	} from "lucide-svelte/icons";
 
 	const demoListings = [
@@ -146,12 +147,8 @@
 <!-- Hero -->
 <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 pt-24 pb-32 md:grid-cols-2 md:gap-16 md:px-8 md:pt-36 md:pb-40">
 	<div class="flex flex-col items-start gap-5">
-		<a href="/" class="inline-flex items-center text-[2.5rem] font-bold tracking-tight text-still-800">
-			<span class="-mr-[0.125em]">Bo</span>
-			<span class="-mt-[0.1em] ml-[0.05em] inline-flex">
-				<Sprout class="size-[0.9em]" aria-hidden="true" />
-			</span>
-			<span class="-ml-[0.125em]">anic</span>
+		<a href="/" class="inline-flex items-center">
+			<Logo class="h-10" />
 		</a>
 		<h1 class="text-4xl leading-[1.05] font-light text-balance md:text-6xl">
 			Tus plantas quieren <strong class="font-semibold">conocer a gente nueva</strong>
@@ -346,36 +343,14 @@
 </section>
 
 <!-- Waitlist -->
-<section id="waitlist" class="relative scroll-mt-16 overflow-hidden bg-secondary/70 px-8 py-48 md:py-56">
-	<div class="mesh" aria-hidden="true">
-		<div class="mesh-a"></div>
-		<div class="mesh-b"></div>
-	</div>
-	<div class="relative mx-auto flex max-w-3xl flex-col gap-4 text-center">
-		<h2 class="max-w-3xl text-4xl leading-tight font-light text-balance text-still-950 md:text-[2.875rem]">
-			Únete a la <strong class="font-semibold">primera comunidad</strong> donde las plantas
-			<strong class="font-semibold">conocen a gente nueva</strong>.
-		</h2>
-		<p class="mx-auto max-w-md text-lg text-muted-foreground">
-			Déjanos tu email y <strong class="font-semibold">entérate antes que nadie</strong> del
-			lanzamiento.
-		</p>
-		<div class="mt-2 w-full">
-			<WaitlistForm />
-		</div>
+<section class="mx-auto max-w-6xl px-4 py-24 md:px-6">
+	<div id="waitlist" class="scroll-mt-16">
+		<BlogCta />
 	</div>
 </section>
 
 <!-- Footer -->
-<footer
-	class="flex flex-col items-center gap-2 border-t border-border/70 bg-zinc-950 px-4 py-4 text-center text-[0.8125rem] text-primary-foreground"
->
-	<p>
-		Botanic™ 2026. Hecho con
-		<Heart class="inline size-3.5 fill-primary text-primary" aria-hidden="true" /> para la
-		comunidad <strong>Plant Lovers</strong>.
-	</p>
-</footer>
+<AppFooter />
 
 <style>
 	.fan-stage {

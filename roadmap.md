@@ -17,7 +17,7 @@ Coste 0          1.000 users RN / Flutter                 │       Latam + IA
 
 **Objetivo**: Lanzar PWA funcional con coste 0.
 
-**Hecho**: landing completa + waitlist operativa (Supabase con RLS solo-insert + emails Resend: confirmación al usuario, aviso al admin y Audience "waitlist"; dominio `botanicapp.es` verificado), duplicado con feedback (sin reenvío) y confeti en altas nuevas, favicon, OG image, SEO (JSON-LD, sitemap, robots, llms.txt). **Siguiente**: Sprint 1 — Setup + Auth (registro email + Google OAuth, schema `profiles` + `categories`).
+**Estado de ejecución**: ver [`docs/plan-desarrollo.md`](docs/plan-desarrollo.md) (única fuente de checkboxes por sprint). **Siguiente**: Sprint 1 — Setup + Auth (registro email + Google OAuth, schema `profiles` + `categories`).
 
 | Sprint | Semana | Contenido | Hito |
 |---|---|---|---|
@@ -29,6 +29,8 @@ Coste 0          1.000 users RN / Flutter                 │       Latam + IA
 | 6 | 7-8 | PWA + SEO + polish | App lista para público |
 
 **Detalle completo**: [`docs/plan-desarrollo.md`](docs/plan-desarrollo.md)
+
+**Carril paralelo — Blog (SEO + lead gen)**: ✅ implementado. Blog estático en Markdown sin CMS (`/blog`), cadencia 2/semana en arranque, programación automática con cron (GitHub Actions → Vercel Deploy Hook), 1 post real público + 3 en `_drafts/`. Detalle completo en [`docs/blog.md`](docs/blog.md).
 
 ## Fase 1 — Validación (Q4 2026)
 

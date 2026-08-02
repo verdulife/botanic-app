@@ -27,3 +27,6 @@ vite.config.ts.timestamp-*
 
 # Impeccable skill artifacts
 .impeccable/
+
+# Logo generator previews
+/scripts/.tmp/

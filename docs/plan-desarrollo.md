@@ -14,6 +14,8 @@ Ya hecho:
 
 **Siguiente tarea — Sprint 1: Setup + Auth** (ver abajo).
 
+**Carril paralelo — Blog**: blog estático en Markdown sin CMS para SEO + lead gen. No bloquea los sprints. Plan, arquitectura, guía de estilo y workflow en [`docs/blog.md`](docs/blog.md).
+
 - [x] Conectar Supabase (`/supabase`) y crear proyecto Free tier
 - [x] `.env.local` con `PUBLIC_SUPABASE_URL` + `PUBLIC_SUPABASE_ANON_KEY` (+ `.env.example`)
 - [x] Tabla `waitlist` (email único) + RLS solo-insert
