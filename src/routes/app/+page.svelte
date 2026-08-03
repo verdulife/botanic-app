@@ -15,7 +15,7 @@
 </script>
 
 <svelte:head>
-	<title>Botanic ✦ App</title>
+	<title>Botanic | App</title>
 	<meta name="robots" content="noindex, nofollow" />
 	<link rel="canonical" href="https://www.botanicapp.es/app" />
 </svelte:head>

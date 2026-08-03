@@ -82,14 +82,14 @@
 </script>
 
 <svelte:head>
-	<title>Botanic ✦ Donde las plantas conocen a gente</title>
+	<title>Botanic | Donde las plantas conocen a gente</title>
 	<meta
 		name="description"
 		content="Botanic conecta a Plant Lovers para vender, cambiar y regalar plantas, semillas, esquejes y tiestos. Para que tus plantas conozcan a quien las querrá."
 	/>
 	<meta name="robots" content="index, follow, max-image-preview:large" />
 	<link rel="canonical" href="https://www.botanicapp.es/" />
-	<meta property="og:title" content="Botanic ✦ Donde las plantas conocen a gente" />
+	<meta property="og:title" content="Botanic | Donde las plantas conocen a gente" />
 	<meta
 		property="og:description"
 		content="Saca más partido a tus plantas y encuentra las que siempre quisiste. Vender, cambiar o regalar."
@@ -101,9 +101,9 @@
 	<meta property="og:image" content="https://www.botanicapp.es/og-image.jpg" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
-	<meta property="og:image:alt" content="Botanic ✦ Donde las plantas conocen a gente" />
+	<meta property="og:image:alt" content="Botanic | Donde las plantas conocen a gente" />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Botanic ✦ Donde las plantas conocen a gente" />
+	<meta name="twitter:title" content="Botanic | Donde las plantas conocen a gente" />
 	<meta
 		name="twitter:description"
 		content="Saca más partido a tus plantas y encuentra las que siempre quisiste. Vender, cambiar o regalar."
