@@ -26,7 +26,7 @@ Ya hecho:
 **Emails de la waitlist (Resend) — hecho:**
 
 - [x] Verificar dominio `botanicapp.es` en Resend (DKIM/SPF/MX) + crear API key y Audience "waitlist"
-- [x] Env vars: `RESEND_API_KEY`, `ADMIN_NOTIFY_EMAIL`, `RESEND_AUDIENCE_ID` (`.env.local` + `.env.example`)
+- [x] Env vars: `RESEND_API_KEY`, `ADMIN_NOTIFY_EMAIL` (admite varios emails separados por coma), `RESEND_AUDIENCE_ID`, `SUPABASE_SERVICE_ROLE_KEY` (`.env.local` + `.env.example`)
 - [x] Ruta `POST /api/waitlist`: insert + confirmación al usuario + aviso al admin + alta en Audience (solo fila nueva)
 - [x] `WaitlistForm.svelte` → `fetch('/api/waitlist')`
 - [x] Verificar: `bun run check` + prueba real (recibir emails)
