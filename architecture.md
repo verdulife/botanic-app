@@ -39,7 +39,7 @@
 - **Dominio verificado**: `botanicapp.es` → `no-reply@botanicapp.es`.
 - **Flujo alta waitlist**: el usuario hace `POST /api/waitlist` → insert en tabla `waitlist` → se envían (solo en fila nueva):
   1. Email de confirmación al usuario ("¡Gracias por apuntarte a la waitlist de Botanic!").
-  2. Notificación a `ADMIN_NOTIFY_EMAIL` (admite uno o varios, separados por coma). Incluye **resumen de estado** (total, apuntes hoy, últimas 5 altas) consultado vía `SUPABASE_SERVICE_ROLE_KEY`.
+  2. Notificación a `ADMIN_NOTIFY_EMAIL` (admite uno o varios, separados por coma). Incluye **total de apuntes** consultado desde la vista `waitlist_count` (anon, sin service_role).
   3. Alta del contacto en el **Audience "waitlist"** de Resend (para el broadcast de lanzamiento).
 - **Duplicado** (`23505`): respuesta `alreadyRegistered` → el form muestra "Ya estás en la waitlist" sin enviar emails (evita spam al admin).
 - **Plantillas**: HTML con la marca de Botanic en `src/lib/emails/` (`layout.ts` + `confirmation.ts` + `adminNotify.ts`), estilos inline, tablas 600px. Header con `og-image.jpg` (banner de marca ~23 KB, `static/og-image.jpg` generado por `scripts/generate-og.mjs` con sharp, mismo asset usado en `og:image`/`twitter:image`). Cada email lleva también su `text` como fallback.

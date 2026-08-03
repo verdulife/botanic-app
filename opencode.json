@@ -5,6 +5,16 @@
 		"shadcn-svelte": {
 			"type": "remote",
 			"url": "https://shadcn-svelte-mcp.svelte-apps.workers.dev/api/mcp/shadcn/mcp",
+			"enabled": false
+		},
+		"resend": {
+			"type": "remote",
+			"url": "https://api.resend.com/mcp",
+			"enabled": false
+		},
+		"supabase-mcp": {
+			"type": "remote",
+			"url": "https://mcp.supabase.com/mcp",
 			"enabled": true
 		}
 	}

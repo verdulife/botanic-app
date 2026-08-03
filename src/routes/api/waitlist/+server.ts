@@ -1,17 +1,14 @@
 import { json } from "@sveltejs/kit";
 import { env } from "$env/dynamic/private";
-import { createClient } from "@supabase/supabase-js";
-import { PUBLIC_SUPABASE_URL } from "$env/static/public";
 import { supabase } from "$lib/supabase";
 import { confirmationHtml, confirmationText } from "$lib/emails/confirmation";
-import { adminNotifyHtml, adminNotifyText, type WaitlistSummary } from "$lib/emails/adminNotify";
+import { adminNotifyHtml, adminNotifyText } from "$lib/emails/adminNotify";
 import type { RequestHandler } from "./$types";
 
 const FROM = "Botanic <no-reply@botanicapp.es>";
 const RESEND_EMAILS_URL = "https://api.resend.com/emails";
 const RESEND_CONTACTS_URL = "https://api.resend.com/audiences";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const SPAIN_UTC_OFFSET_MS = 2 * 60 * 60 * 1000;
 
 async function sendConfirmation(email: string) {
 	await sendResend(
@@ -26,11 +23,7 @@ async function sendConfirmation(email: string) {
 	);
 }
 
-async function sendAdminNotification(
-	email: string,
-	now: string,
-	summary: WaitlistSummary | null
-) {
+async function sendAdminNotification(email: string, now: string, total: number) {
 	const recipients = (env.ADMIN_NOTIFY_EMAIL ?? "")
 		.split(",")
 		.map((addr) => addr.trim())
@@ -43,49 +36,24 @@ async function sendAdminNotification(
 				from: FROM,
 				to: [recipient],
 				subject: "Nuevo en la waitlist",
-				html: adminNotifyHtml(email, now, summary),
-				text: adminNotifyText(email, now, summary),
+				html: adminNotifyHtml(email, now, total),
+				text: adminNotifyText(email, now, total),
 			},
 			RESEND_EMAILS_URL
 		);
 	}
 }
 
-async function getWaitlistSummary(): Promise<WaitlistSummary | null> {
-	const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY?.trim();
-	if (!serviceKey) {
-		console.warn("[waitlist] SUPABASE_SERVICE_ROLE_KEY no configurada; sin resumen");
-		return null;
-	}
-	const admin = createClient(PUBLIC_SUPABASE_URL, serviceKey, { auth: { persistSession: false } });
-
-	const startOfTodaySpain = new Date();
-	startOfTodaySpain.setHours(0, 0, 0, 0);
-	const startUtc = new Date(startOfTodaySpain.getTime() - SPAIN_UTC_OFFSET_MS).toISOString();
-
+async function getWaitlistTotal(): Promise<number> {
 	try {
-		const [{ count: total } = {}, { count: today } = {}, { data: recent } = {}] =
-			await Promise.all([
-				admin.from("waitlist").select("email", { count: "exact", head: true }),
-				admin
-					.from("waitlist")
-					.select("email", { count: "exact", head: true })
-					.gte("created_at", startUtc),
-				admin
-					.from("waitlist")
-					.select("email, created_at")
-					.order("created_at", { ascending: false })
-					.limit(5),
-			]);
-
-		return {
-			total: total ?? 0,
-			today: today ?? 0,
-			recent: (recent ?? []).map((r) => ({ email: r.email, created_at: r.created_at })),
-		};
+		const { data } = await supabase
+			.from("waitlist_count")
+			.select("total")
+			.single();
+		return (data as { total: number } | null)?.total ?? 0;
 	} catch (err) {
-		console.warn("[waitlist] Error al obtener resumen:", err);
-		return null;
+		console.warn("[waitlist] Error al obtener total:", err);
+		return 0;
 	}
 }
 
@@ -134,7 +102,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	await sendConfirmation(email);
 
-	await sendAdminNotification(email, now, await getWaitlistSummary());
+	await sendAdminNotification(email, now, await getWaitlistTotal());
 
 	if (env.RESEND_AUDIENCE_ID?.trim()) {
 		await sendResend(
