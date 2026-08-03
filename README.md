@@ -1,10 +1,8 @@
-# Botanic 🌱
+# Botanic
 
-> **El marketplace de plantas entre particulares.**
->
-> Lo que Vinted es a la ropa, Botanic es a las plantas.
+> **Donde las plantas conocen a gente.**
 
-Compra y venta de semillas, esquejes, brotes, plantas y tiestos entre personas cercanas. Sin comisiones. Sin intermediarios.
+Vender, cambiar o regalar semillas, esquejes, brotes, plantas y tiestos con gente de tu zona. La comunidad donde tus plantas encuentran un nuevo hogar.
 
 ## Estado actual
 

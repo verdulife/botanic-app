@@ -5,7 +5,7 @@ Inversión en marketing: **0 €**. Crecimiento orgánico vía comunidad y conte
 ## Pre-lanzamiento
 
 ### Landing teaser + waitlist
-Página simple: "Próximamente: el Wallapop de las plantas". Formulario de email. **Objetivo: 1.000 suscriptores.**
+Página simple: "Donde las plantas conocen a gente". Formulario de email. **Objetivo: 1.000 suscriptores.**
 
 **Estado**: landing + waitlist publicadas y operativas (Supabase + emails de confirmación y aviso al admin vía Resend). Ver [`plan-desarrollo.md`](plan-desarrollo.md).
 
@@ -37,7 +37,7 @@ Artículos en Substack/Medium:
 | WhatsApp | Grupos personales de Plant Lovers |
 | Uneed / BetaList | Directorios startups españolas |
 
-**Mensajes clave**: "El Wallapop de las plantas", "Sin comisiones, sin intermediarios", "De **Plant Lovers** a **Plant Lovers** 🌱"
+**Mensajes clave**: "Donde las plantas conocen a gente", "Vender, cambiar o regalar", "De **Plant Lovers** a **Plant Lovers**"
 
 ## Post-lanzamiento (meses 3-6)
 

@@ -2,6 +2,8 @@
 
 Se ha creado un dossier profesional de 12 páginas (A4) para presentar Botanic a inversores, colaboradores o medios.
 
+> **⚠️ Pendiente de regeneración**: el PDF se compiló con el copy antiguo ("marketplace P2P", "el Wallapop de las plantas"). Regenerar con el tono actual ("Donde las plantas conocen a gente", comunidad de economía circular) antes de usarlo para difusión real.
+
 ## Localización
 
 El PDF está en el proyecto `art-director`:

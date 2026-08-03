@@ -17,11 +17,11 @@ Plant lovers en España que quieren vender lo que les sobra y comprar cerca de c
 
 ## Product Purpose
 
-Botanic es el marketplace P2P de plantas entre particulares. Cualquiera publica semillas, esquejes, brotes, plantas o tiestos y los vende a gente de su zona. El éxito es que un **Plant Lovers** publique un anuncio en menos de un minuto y otro lo encuentre cerca, quedando en mano. Modelo 100% gratuito en el MVP: los usuarios se pagan fuera de la plataforma, sin comisiones ni intermediarios.
+Botanic es la comunidad donde las plantas conocen a gente. Cualquiera publica semillas, esquejes, brotes, plantas o tiestos para vender, cambiar o regalar a gente de su zona. El éxito es que un **Plant Lovers** publique un anuncio en menos de un minuto y otro lo encuentre cerca. Modelo 100% gratuito en el MVP: los usuarios se pagan fuera de la plataforma (decisión de fase, no promesa de marca).
 
 ## Positioning
 
-Único marketplace P2P de España dedicado por completo al mundo vegetal, con lenguaje y categorías propias de plantas. Las plataformas generalistas (Wallapop, Vinted, Milanuncios) tratan las plantas como subcategoría; Botanic es el "Wallapop de las plantas": especialización vegetal + cercanía + comunidad de confianza + cero comisiones.
+Única comunidad de España dedicada por completo al mundo vegetal, con lenguaje y categorías propias de plantas. Las plataformas generalistas (Wallapop, Vinted, Milanuncios) tratan las plantas como subcategoría; Botanic ofrece especialización vegetal + cercanía + comunidad de confianza, donde las plantas conocen a gente nueva.
 
 ## Operating Context
 
@@ -44,7 +44,7 @@ Botanic es el marketplace P2P de plantas entre particulares. Cualquiera publica 
 ## Brand Commitments
 
 - Nombre: Botanic
-- Tagline: "El Wallapop de las plantas"
+- Tagline: "Donde las plantas conocen a gente"
 - Identidad visual: canon de marketplace — fondo cálido de lino, tinta cálida casi negra, acento verde hoja saturado, estrellas ámbar, tipografía Onest, fotografía real de plantas; tokens en `src/app.css`
 - Estilo por defecto: estándar de categoría ejecutado impecablemente (elegido en el flujo new-work, seed 77b83067); sin quirk ni sobre-decoración
 - Tono: cercano y de comunidad **Plant Lovers**
@@ -60,8 +60,8 @@ Botanic es el marketplace P2P de plantas entre particulares. Cualquiera publica 
 
 ## Product Principles
 
-- La cercanía es el producto: sin envíos, quedar en mano (decisión del MVP, revisable)
-- Gratis y sin comisiones para crecer la comunidad antes de monetizar (decisión del MVP, revisable)
+- La cercanía es el producto: sin logística integrada en el MVP (decisión revisable, no promesa de marca)
+- Gratuito para crecer la comunidad antes de monetizar (decisión del MVP, revisable)
 - Especialización total en el mundo vegetal frente a generalistas
 - Confianza entre particulares: perfiles, valoraciones y chat directo
 - Sencillez: publicar un anuncio en menos de un minuto

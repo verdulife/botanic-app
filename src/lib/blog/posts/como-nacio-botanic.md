@@ -20,7 +20,7 @@ Ya sabes de cuál hablo: cargando sacos de tierra, humus de lombriz y abono en u
 
 Con este escenario como telón de fondo, una idea empezó a brotar en mi cabeza. No fue en el vivero, ni cargando sacos de tierra. Fue una noche cualquiera, después de cenar.
 
-Le dije a Eva: *"Oye, si existiera una app como Wallapop o Vinted, pero enfocada solo a plantas, semillas, esquejes o cualquier cosa relacionada con las plantas... ¿la usarías?"*
+Le dije a Eva: *"Oye, si existiera una app como las de segunda mano que ya conoces, pero enfocada solo a plantas, semillas, esquejes o cualquier cosa relacionada con las plantas... ¿la usarías?"*
 
 Su respuesta fue instantánea: *"Estaría enganchada todas las noches como una loca."*
 

@@ -2,7 +2,7 @@
 
 ## Elevator Pitch
 
-**Botanic** es el marketplace de plantas entre particulares. Una plataforma donde cualquiera puede publicar semillas, esquejes, brotes, plantas y tiestos para venderlos a gente cerca de su zona. Como Wallapop, pero solo de plantas.
+**Botanic** es la comunidad donde las plantas conocen a gente. Una plataforma donde cualquiera puede publicar semillas, esquejes, brotes, plantas y tiestos para vender, cambiar o regalar a gente de su zona.
 
 ## Problema
 

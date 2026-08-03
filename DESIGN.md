@@ -1,6 +1,6 @@
 ---
 name: Botanic
-description: El Wallapop de las plantas — marketplace P2P de plantas entre particulares
+description: Donde las plantas conocen a gente — comunidad de economía circular para plantas
 colors:
   background: "oklch(0.977 0.008 85)"
   foreground: "oklch(0.28 0.02 55)"
@@ -119,7 +119,7 @@ components:
 
 **Creative North Star: el estándar de categoría de marketplace, ejecutado impecablemente, con voz de economía circular.**
 
-Botanic es la landing de un marketplace P2P de plantas; el listón de acabado es Wallapop + Vinted + Airbnb. La página ejecuta la estructura clásica de la categoría — hero foto-liderado, categorías, manifiesto, por qué, waitlist prefooter y footer — a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk. El copy habla en el vocabulario de la economía circular ("vender, cambiar o regalar", "conocer a gente nueva", "las plantas se comparten y así conocen a gente nueva") y evita declarar como promesas permanentes los "sin envíos", "sin comisiones" ni "solo cerca de ti".
+Botanic es la landing de una comunidad de economía circular para plantas; el listón de acabado es Wallapop + Vinted + Airbnb. La página ejecuta la estructura clásica de la categoría — hero foto-liderado, categorías, manifiesto, por qué, waitlist prefooter y footer — a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk. El copy habla en el vocabulario de la economía circular ("vender, cambiar o regalar", "conocer a gente nueva", "las plantas se comparten y así conocen a gente nueva") y evita declarar como promesas permanentes los "sin envíos", "sin comisiones" ni "solo cerca de ti".
 
 El sistema es cálido y sobrio: un fondo de lino cálido, tinta cálida casi negra, un único acento de Still Green (`#74AA7B`) para el CTA, el logo y los iconos, y un ámbar puntual para las estrellas. La fotografía real de plantas es protagonista en el hero (abanico de anuncios de ejemplo etiquetado como material sintético). La profundidad se construye con bordes finos, esquinas redondeadas (`rounded-2xl` en tarjetas, `rounded-full` en pills) y contraste tonal entre superficies; solo hay sombra puntual en la tarjeta del abanico elevada. Se evita explícitamente el `AI slop`: sin degradados de neón, sin glassmorphism, sin serif itálicos decorativos, sin métricas o testimonios inventados. Las animaciones del sistema son el mesh viento de las bandas de categorías y waitlist (The Wind Mesh Rule, con dos variantes de intensidad) y el abanico de anuncios del hero (The Fan Rule).
 

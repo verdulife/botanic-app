@@ -10,7 +10,7 @@
 
 ## Proyecto
 
-Marketplace P2P de plantas (semillas, esquejes, brotes, plantas, tiestos). MVP como PWA con coste 0, app nativa en el futuro.
+Comunidad donde las plantas conocen a gente (semillas, esquejes, brotes, plantas, tiestos). Vender, cambiar o regalar. MVP como PWA con coste 0, app nativa en el futuro.
 
 ## Stack
 
@@ -26,7 +26,7 @@ Marketplace P2P de plantas (semillas, esquejes, brotes, plantas, tiestos). MVP c
 
 | Decisión | Opción | Motivo |
 |---|---|---|
-| MVP sin envíos | Solo quedar en mano | Simplifica el MVP drásticamente |
+| MVP sin envíos | Solo quedar en mano | Simplifica el MVP drásticamente (decisión de fase, no promesa de marca) |
 | Sin pagos integrados | Los usuarios se pagan fuera | Evita integración compleja y comisiones |
 | Sin identificacion IA | Se pospone a Fase 4 | No necesaria para validar |
 | Sin live shopping | Se pospone | Palmstreet ya lo hace, no es el core |
