@@ -9,7 +9,6 @@ export const GET = () => {
 	const today = new Date().toISOString().slice(0, 10);
 	const urls = [
 		{ loc: `${BASE}/`, lastmod: today, changefreq: "weekly", priority: "1.0" },
-		{ loc: `${BASE}/app`, lastmod: today, changefreq: "weekly", priority: "0.8" },
 		{ loc: `${BASE}/blog`, lastmod: today, changefreq: "daily", priority: "0.9" },
 		...getAllPosts().map((post) => ({
 			loc: `${BASE}/blog/${post.slug}`,
