@@ -200,4 +200,32 @@ p {
 		text-decoration: underline;
 		text-underline-offset: 3px;
 	}
+
+	.blog-figure {
+		margin: 1.5em 0;
+	}
+
+	.blog-figure picture {
+		display: block;
+		margin: 0;
+	}
+
+	.blog-figure img {
+		display: block;
+		width: 100%;
+		margin: 0;
+		border-radius: 0.5rem 0.5rem 0 0;
+	}
+
+	.blog-figure figcaption {
+		margin: 0;
+		padding: 0.4rem 0.65rem;
+		font-size: 0.75rem;
+		line-height: 1.45;
+		color: var(--muted-foreground);
+		background: var(--muted);
+		border: 1px solid var(--border);
+		border-top: 0;
+		border-radius: 0 0 0.5rem 0.5rem;
+	}
 }

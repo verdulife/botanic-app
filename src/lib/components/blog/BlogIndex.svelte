@@ -29,14 +29,20 @@
 			>
 				<div class="p-3.5">
 					{#if post.meta.image}
-						<img
-							src={post.meta.image}
-							alt={post.meta.title}
-							width="640"
-							height="640"
-							loading="lazy"
-							class="aspect-square w-full rounded-xl border border-border/60 object-cover shadow-xs"
-						/>
+						<picture>
+							<source
+								srcset={post.meta.image.replace(/\.(jpe?g|png)$/i, ".webp")}
+								type="image/webp"
+							/>
+							<img
+								src={post.meta.image}
+								alt={post.meta.title}
+								width="640"
+								height="640"
+								loading="lazy"
+								class="aspect-square w-full rounded-xl border border-border/60 object-cover shadow-xs"
+							/>
+						</picture>
 					{:else}
 						<div
 							class="grid aspect-square w-full place-items-center rounded-xl border border-border/60 bg-gradient-to-br from-still-100 via-still-200 to-still-300 shadow-xs"

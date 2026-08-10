@@ -9,6 +9,7 @@
 	const base = "https://www.botanicapp.es";
 	const url = $derived(`${base}/blog/${data.post.slug}`);
 	const image = $derived(data.post.meta.image ? `${base}${data.post.meta.image}` : `${base}/og-image.jpg`);
+	const webpImage = $derived(data.post.meta.image?.replace(/\.(jpe?g|png)$/i, ".webp"));
 	const updated = $derived(data.post.meta.updated ? formatDate(data.post.meta.updated) : null);
 
 	const jsonLd = $derived({
@@ -112,13 +113,21 @@
 	</header>
 
 	{#if data.post.meta.image}
-		<img
-			src={data.post.meta.image}
-			alt={data.post.meta.title}
-			width="1200"
-			height="675"
-			class="mt-8 aspect-[16/9] w-full rounded-2xl border border-border object-cover"
-		/>
+		<figure class="blog-figure not-prose mt-8">
+			<picture>
+				<source srcset={webpImage} type="image/webp" />
+				<img
+					src={data.post.meta.image}
+					alt={data.post.meta.title}
+					width="1200"
+					height="675"
+					class="aspect-[16/9] object-cover"
+				/>
+			</picture>
+			{#if data.post.meta.imageCredit}
+				<figcaption>{data.post.meta.imageCredit}</figcaption>
+			{/if}
+		</figure>
 	{/if}
 
 	<hr class="mt-8 mb-0 border-border/30" />
