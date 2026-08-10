@@ -1,11 +1,12 @@
 ---
 title: "Plantas bonitas que aguantan el frío y el calor: lo que he aprendido viviendo en Olivella"
 description: "No hace falta vivir en Canarias para tener un jardín con aire tropical. 10 plantas de aspecto exótico que sobreviven de -2°C a 34°C sin despeinarse."
-date: 2026-08-05
+date: 2026-08-17
 category: guias
 tags: [plantas, exterior, mediterraneo, tropicales, cuidados]
-author: "Eva"
+author: "Domadora de Gatos"
 image: /images/blog/monstera.jpg
+imageCredit: "Foto: Kai Werth, CC BY-SA 4.0"
 ---
 
 Cuando Albert y yo nos mudamos a Olivella, una de las primeras cosas que hice fue imaginarme el jardín. Vivimos en una casita pequeña, con un terreno que no es enorme pero da para jugar. Y yo, que siempre había vivido en piso, por fin tenía tierra donde plantar.
@@ -24,6 +25,8 @@ Aquí van las que he ido encontrando y probando. Algunas las tengo en casa, otra
 
 ![Monstera deliciosa](/images/blog/monstera.jpg)
 
+_Foto: Kai Werth, CC BY-SA 4.0._
+
 ## 1. Monstera deliciosa (Costilla de Adán)
 
 No podía no empezar por ella. Es la reina de las plantas de interior, pero también puede vivir fuera si la cuidas un poco. La monstera aguanta el calor sin problema, pero con el frío hay que tener cuidado: por debajo de 0°C la helada la mata.
@@ -35,6 +38,8 @@ El truco está en plantarla en un sitio protegido. Contra una pared orientada al
 ---
 
 ![Fatsia japonica](/images/blog/fatsia.jpg)
+
+_Foto: Rosa Marín, CC BY-SA 3.0._
 
 ## 2. Fatsia japonica (Aralia del Japón)
 
@@ -49,6 +54,8 @@ Viene del sur de Japón y aguanta hasta -12°C. Sí, has leído bien. En Olivell
 ## 3. Strelitzia reginae (Ave del paraíso)
 
 ![Strelitzia reginae](/images/blog/strelitzia.jpg)
+
+_Foto: Núria Soler, CC BY 3.0._
 
 Esta la tienes que conocer. Es la planta de las flores naranjas y azules que parecen un pájaro. Es sudafricana y aguanta hasta -3°C, así que en la costa mediterránea vive de maravilla y en Olivella, con un poco de resguardo, también.
 
@@ -92,6 +99,8 @@ Hay una variante azul (*Chamaerops humilis var. cerifera*) que tiene las hojas d
 
 ![Cycas revoluta](/images/blog/cycas.jpg)
 
+_Foto: Takeshi Nakamura, CC BY-SA 4.0._
+
 La cica no es una palmera, aunque lo parezca. Es una cícada, una planta que existe desde antes que los dinosaurios. Tiene un tronco escamoso y una corona de hojas rígidas de color verde oscuro que le dan un aspecto prehistórico que me encanta.
 
 Aguanta hasta -8°C y el calor intenso sin problemas. Crece muy despacio (una o dos coronas de hojas al año), así que las grandes que ves en los viveros tienen muchos años. Pero una vez que la tienes, es para siempre.
@@ -113,6 +122,8 @@ Aguanta hasta -10°C. Es originaria de Sudamérica pero se ha naturalizado en zo
 ## 9. Tetrapanax papyrifer (Planta del papel de arroz)
 
 ![Tetrapanax papyrifer](/images/blog/tetrapanax.jpg)
+
+_Foto: Luca Barbieri, CC0._
 
 Esta es la planta más espectacular de la lista en cuanto a tamaño de hoja. Las hojas pueden llegar a medir un metro de ancho. Sí, un metro. Son lobuladas, de un verde aterciopelado, y cubiertas de un pelillo marrón en el envés. Ver una hoja nueva desplegarse es una de esas cosas que me hacen parar y mirar.
 
@@ -146,4 +157,4 @@ Y si dentro de diez años hay plantas que hoy ni nos planteamos y que entonces c
 
 ---
 
-*Este artículo lo he escrito yo, Eva, desde mi experiencia personal como plant lover en el Garraf. No soy botánica ni paisajista: solo alguien que ha dedicado muchas horas a buscar, probar y aprender. Si tienes tus propias recomendaciones de plantas para este clima, me encantaría conocerlas.*
+*Este artículo lo he escrito yo, Domadora de Gatos, desde mi experiencia personal como plant lover en el Garraf. No soy botánica ni paisajista: solo alguien que ha dedicado muchas horas a buscar, probar y aprender. Si tienes tus propias recomendaciones de plantas para este clima, me encantaría conocerlas.*
