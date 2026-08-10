@@ -15,8 +15,8 @@ Blog estático basado en Markdown, sin CMS. Carril paralelo de SEO + lead gen: *
 | Sitemap | Ruta generada (`sitemap.xml/+server.ts`) | Se autoactualiza al añadir posts |
 | RSS | `/blog/feed.xml` desde el inicio | Distribución y agregadores |
 | OG images | Marca por defecto; `image:` override. Por-post generado con sharp = fase posterior | Coste 0 primero |
-| Imágenes artículos | Fallback de marca (gradient + título) si no hay `image:`; sourcing del batch por decidir | No bloquea la estructura |
-| Autor | Multi-autor: campo `author` en frontmatter; `Botanic` por defecto | Pueden firmar colaboradores |
+| Imágenes artículos | Wikimedia Commons con pipeline propio; fallback de marca (gradient + título) si no hay `image:` | Coste 0, licencias claras, webp automático |
+| Autor | Constante `AUTHORS` en `src/lib/blog/authors.ts`; `"Domadora de Gatos"` como firma pública; `Botanic` por defecto | Pueden firmar colaboradores sin exponer nombres reales |
 | Enlace blog | `/blog` en el footer de la landing | Interlinking y descubrimiento |
 
 ## Árbol de URLs
@@ -47,6 +47,21 @@ image: /blog/monstera.jpg     # opcional; fallback = gradient de marca
 - **`date` = programador**: un post con `date` futura está en el bundle pero invisible (no sale en `/blog`, ni en sitemap, ni en feed, ni en la ruta detalle).
 - **No existe `draft`**: `_drafts/` cubre el trabajo en curso.
 
+## Autores
+
+Los autores posibles se guardan como variable en `src/lib/blog/authors.ts`:
+
+```ts
+export const AUTHORS = ["Albert", "Domadora de Gatos", "Laia"] as const;
+```
+
+- El frontmatter guarda el **identificador** (`author: "Domadora de Gatos"`), que es también el nombre público.
+- `resolveAuthor()` resuelve el **nombre público** en el render (byline + JSON-LD):
+  - `Domadora de Gatos` se muestra tal cual (firma pública, sin nombre real en el sitio).
+  - `Albert Verdú` → `Albert` (normalización al nombre de pila).
+  - Valores desconocidos se muestran tal cual; sin `author` se firma `Botanic`.
+- Para cambiar el alias solo hay que tocar `AUTHOR_DISPLAY` en `authors.ts`; los posts no se tocan.
+
 ## Arquitectura técnica
 
 - **Deps**: `marked` (md → HTML), `gray-matter` (frontmatter), `@tailwindcss/typography` (prose).
@@ -70,8 +85,7 @@ src/lib/blog/
 ├── posts.ts                    # tipos + loader + helpers (getAllPosts, getPostBySlug, readingTime)
 ├── utils.ts                    # formatDate, categoryLabel, escapeXml
 ├── _drafts/                    # NO se compilan (fuera del glob)
-│   ├── como-propagar-monstera.md
-│   ├── cuidados-suculentas-principiantes.md
+│   ├── plantas-bonitas-frio-calor.md
 │   └── tissue-culture-plantas.md
 └── posts/                      # publicados o programados
     └── como-nacio-botanic.md
@@ -93,6 +107,20 @@ src/lib/components/blog/BlogCta.svelte
 src/lib/components/Logo.svelte      # SVG vectorial (texto + brote trazados a paths)
 src/lib/components/AppFooter.svelte # compartido landing + blog
 ```
+
+## Imágenes: sourcing y pipeline
+
+**Sourcing** → Wikimedia Commons (coste 0, licencias libres). Scripts en `scripts/`:
+
+- `bun run img search "<query>"` → lista resultados de Commons filtrando por licencia (CC BY / CC BY-SA / PD), ancho ≥ 1200 px, y priorizando `featured`/`quality`.
+- `bun run img fetch <nº> <dest>` → descarga, optimiza (webp + jpg, cada uno ≤ 100 KB con techo duro de 120 KB por búsqueda binaria de calidad), y registra la atribución en [`docs/images-credits.md`](images-credits.md).
+- `bun run img:optimize [--force]` → audita y reoptimiza las imágenes del blog (14 MB → ~800 KB en la pasada inicial).
+
+**Formato**: cada imagen se sirve como `<picture>` con `<source type="image/webp">` y fallback jpg. El renderer de `marked` envuelve cualquier `<img>` con src bajo `/images/`; hero y cards usan componentes equivalentes. Si falta el `.webp`, el navegador cae al jpg (grácil).
+
+**Atribución**: obligatoria. Bajo cada imagen inline, línea `_Foto: <autor>, <licencia>._` en cursiva; el hero usa el campo `imageCredit` del frontmatter (renderizado bajo la imagen del hero).
+
+**Ficheros generados**: `static/images/blog/<slug>.jpg|.webp` e `images/blog/<slug>-N.*` para inline. Nombres derivados del slug.
 
 ## Programación de publicaciones
 
@@ -131,4 +159,7 @@ src/lib/components/AppFooter.svelte # compartido landing + blog
 - [x] Workflow cron GitHub Actions + Deploy Hook Vercel (`publish-daily.yml`)
 - [x] Prueba con `.md` falso (guía, noticia, fecha futura) → movidos a `_drafts/`
 - [x] Post real: "Cómo nació Botanic" (Albert Verdú, comunidad, 3 imágenes)
+- [x] Pipeline de imágenes: `scripts/encode-budget.mjs`, `scripts/images.mjs` (`img search`/`img fetch`), `scripts/optimize-images.mjs` (`img:optimize`)
+- [x] WebP automático en artículos (renderer de `marked` + hero/cards) y créditos visibles (`docs/images-credits.md`)
+- [x] Post de prueba con imágenes reales de Commons (hero + 3 inline, créditos OK) → en `_drafts/`
 - [ ] Batch 16-20 artículos en `_drafts/`

@@ -1,4 +1,5 @@
 import matter from "gray-matter";
+import { resolveAuthor } from "./authors";
 
 export type Category = "guias" | "noticias" | "comunidad";
 
@@ -11,6 +12,7 @@ export interface PostMeta {
 	tags: string[];
 	author: string;
 	image?: string;
+	imageCredit?: string;
 }
 
 export interface Post {
@@ -55,8 +57,9 @@ function toPost(file: RawFile): Post {
 		updated: data.updated ? formatDate(data.updated) : undefined,
 		category: (data.category as Category) ?? "guias",
 		tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
-		author: String(data.author ?? "Botanic"),
+		author: resolveAuthor(data.author ?? "Botanic"),
 		image: data.image ? String(data.image) : undefined,
+		imageCredit: data.imageCredit ? String(data.imageCredit) : undefined,
 	};
 	return {
 		slug: file.slug,
