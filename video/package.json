@@ -1,0 +1,26 @@
+{
+  "name": "botanic-video",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts",
+    "render:reel": "remotion render src/index.ts BotanicReel --codec=h264 --pixel-format=yuv420p",
+    "still": "remotion still src/index.ts",
+    "browser": "remotion browser ensure",
+    "types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/captions": "4.0.507",
+    "@remotion/cli": "4.0.507",
+    "@remotion/fonts": "^4.0.507",
+    "remotion": "4.0.507"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.8",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "typescript": "6.0.3"
+  }
+}

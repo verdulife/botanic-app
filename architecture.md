@@ -160,6 +160,18 @@ CREATE POLICY "messages_insert" ON messages FOR INSERT WITH CHECK (
 );
 ```
 
+## Repo: carpeta autónoma `video/` (Remotion)
+
+- **Proyecto Remotion independiente** para reels IG/TikTok y carruseles IG (generación de vídeo 9:16 y stills 4:5). Tiene su **propio `package.json` y `node_modules`** y queda **fuera de workspaces** y fuera de la build de Vercel: `bun install` en raíz no lo toca ni el deploy lo builda (build SvelteKit ~30s).
+- Browser de render: **Chrome Headless Shell** descargado por Remotion (`npx remotion browser ensure`) — versión pinned determinista.
+- Render local: `npx remotion render` (mp4) y `npx remotion still` (PNG carrusel), leyendo el guion como inputProps.
+- Guion agéntico `script.json` en `src/lib/social/`; assets Pexels bajo `static/social/<slug>/` vía `scripts/stock.mjs`.
+- Detalle completo en [`docs/social-video.md`](docs/social-video.md) y [`docs/social-post.md`](docs/social-post.md).
+
+## Design system cross-surface
+
+[`DESIGN.md`](DESIGN.md) (impeccable) es la autoridad global de tokens y reglas de marca (paleta Still/Lino, tipografía Onest Variable, motion, Do's & Don'ts). Cada superficie mantiene su propio surface brief (p. ej. [`video/DESIGN.reels.md`](video/DESIGN.reels.md) para reels y carruseles). El script `bun run tokens` regenera `video/src/brand.generated.ts` desde el frontmatter de `DESIGN.md`; `bun run fonts` copia Onest woff2 a `static/fonts/`; `bun run lint:brand` audita `video/src/**` contra tokens. Ver `AGENTS.md` → Reglas de trabajo.
+
 ## Estructura del proyecto SvelteKit
 
 ```

@@ -1,0 +1,48 @@
+{
+  "$comment": "Catálogo de plantillas y estilos. Lo consulta el agente (opencode) para generar script.json válidos. El agente escribe DATOS, nunca animación.",
+  "motionStyles": [
+    { "id": "energy", "personality": "dinámico, enérgico, punch", "bestFor": "tips y reels cortos" },
+    { "id": "cozy", "personality": "orgánico, cálido, acogedor", "bestFor": "estética, historias de marca" },
+    { "id": "minimal", "personality": "editorial, limpio, tipográfico", "bestFor": "citas y statement" }
+  ],
+  "templates": [
+    {
+      "id": "tip-stack",
+      "kind": "video",
+      "fps": 30,
+      "resolution": "1080x1920",
+      "scenes": [
+        { "type": "hook", "durationSeconds": 2 },
+        { "type": "tip", "durationSeconds": 4 },
+        { "type": "tip", "durationSeconds": 4 },
+        { "type": "outro", "durationSeconds": 3 }
+      ],
+      "defaults": {
+        "hook": 2,
+        "tip": 4,
+        "cover": 0,
+        "slide": 0,
+        "quote": 0,
+        "outro": 3
+      }
+    },
+    {
+      "id": "carousel-tips",
+      "kind": "still",
+      "resolution": "1080x1350",
+      "scenes": [
+        { "type": "cover", "durationSeconds": 0 },
+        { "type": "slide", "durationSeconds": 0 },
+        { "type": "slide", "durationSeconds": 0 },
+        { "type": "outro", "durationSeconds": 0 }
+      ]
+    }
+  ],
+  "platforms": ["ig", "tiktok"],
+  "rules": [
+    "Escribir SOLO datos en script.json, nunca animación.",
+    "Textos <= 8 palabras por escena para legibilidad móvil.",
+    "La última escena es siempre type=outro con CTA + logo.",
+    "media se referencia como 'pexels:<id>' o ruta local bajo static/social/<slug>/."
+  ]
+}

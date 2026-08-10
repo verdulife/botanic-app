@@ -1,6 +1,8 @@
 ---
 name: Botanic
 description: Donde las plantas conocen a gente — comunidad de economía circular para plantas
+surface_briefs:
+  - video/DESIGN.reels.md
 colors:
   background: "oklch(0.977 0.008 85)"
   foreground: "oklch(0.28 0.02 55)"
@@ -27,8 +29,28 @@ colors:
   chart-4: "oklch(0.577 0.245 27.325)"
   chart-5: "oklch(0.28 0.02 55)"
   star: "oklch(0.79 0.16 90)"
+  still-50: "oklch(0.967 0.033 149)"
+  still-100: "oklch(0.931 0.061 150)"
+  still-200: "oklch(0.897 0.1 147)"
+  still-300: "oklch(0.861 0.128 148)"
+  still-400: "oklch(0.827 0.162 147)"
+  still-500: "oklch(0.649 0.334 146)"
+  still-600: "oklch(0.527 0.279 146)"
+  still-700: "oklch(0.465 0.25 146)"
+  still-800: "oklch(0.401 0.218 146)"
   still-900: "oklch(0.265 0.159 146)"
   still-950: "oklch(0.195 0.122 146)"
+  linen-50: "oklch(0.99 0.006 85)"
+  linen-100: "oklch(0.977 0.008 85)"
+  linen-200: "oklch(0.95 0.012 85)"
+  linen-300: "oklch(0.91 0.014 85)"
+  linen-400: "oklch(0.84 0.02 85)"
+  linen-500: "oklch(0.76 0.025 85)"
+  linen-600: "oklch(0.64 0.028 85)"
+  linen-700: "oklch(0.52 0.03 85)"
+  linen-800: "oklch(0.4 0.03 85)"
+  linen-900: "oklch(0.3 0.028 85)"
+  linen-950: "oklch(0.22 0.025 85)"
   zinc-950: "oklch(0.141 0.005 285)"
 typography:
   sans: "Onest Variable, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"

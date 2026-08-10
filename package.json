@@ -15,7 +15,12 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"logo:gen": "bun run scripts/render-logo.ts",
 		"img": "bun run scripts/images.mjs",
-		"img:optimize": "bun run scripts/optimize-images.mjs"
+		"img:optimize": "bun run scripts/optimize-images.mjs",
+		"stock": "bun run scripts/stock.mjs",
+		"frames": "bun run scripts/video-frames.mjs",
+		"tokens": "bun run scripts/sync-brand-tokens.mjs",
+		"fonts": "bun run scripts/copy-fonts.mjs",
+		"lint:brand": "bun run scripts/lint-brand.mjs"
 	},
 	"devDependencies": {
 		"@fontsource/onest": "^5.3.0",
@@ -28,6 +33,7 @@
 		"@tailwindcss/vite": "^4.3.3",
 		"@types/canvas-confetti": "^1.9.0",
 		"@types/leaflet": "^1.9.21",
+		"ffmpeg-static": "^5.3.0",
 		"fontkit": "^2.0.4",
 		"opentype.js": "^2.0.0",
 		"sharp": "^0.35.3",

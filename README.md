@@ -31,6 +31,8 @@ Vender, cambiar o regalar semillas, esquejes, brotes, plantas y tiestos con gent
 | [`AGENTS.md`](AGENTS.md) | Contexto completo para abrir en nueva sesión |
 | [`roadmap.md`](roadmap.md) | Timeline 2026-2028 con fases e hitos |
 | [`architecture.md`](architecture.md) | Arquitectura, DB schema, proyecto, tech stack |
+| [`DESIGN.md`](DESIGN.md) | Design system canónico (impeccable) — autoridad global |
+| [`video/DESIGN.reels.md`](video/DESIGN.reels.md) | Surface brief de reels y carruseles (Remotion) |
 
 ### Producto
 
@@ -48,6 +50,9 @@ Vender, cambiar o regalar semillas, esquejes, brotes, plantas y tiestos con gent
 |---|---|
 | [`docs/plan-desarrollo.md`](docs/plan-desarrollo.md) | 6 sprints detallados con checkboxes |
 | [`docs/pwa.md`](docs/pwa.md) | Configuración PWA con @vite-pwa/sveltekit |
+| [`docs/social-video.md`](docs/social-video.md) | Reels IG + TikTok (Remotion, pipeline agéntico) |
+| [`docs/social-post.md`](docs/social-post.md) | IG feed + carruseles (stills Remotion) |
+| [`docs/social-eval.md`](docs/social-eval.md) | Subagente `visual-eval` (visión) + script `frames` |
 
 ### Prensa
 

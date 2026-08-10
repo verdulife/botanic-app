@@ -1,0 +1,13 @@
+{
+	"title": "5 plantas imposibles de matar",
+	"style": "cozy",
+	"template": "carousel-tips",
+	"platform": ["ig"],
+	"scenes": [
+		{ "type": "cover", "text": "5 plantas imposibles de matar", "duration": 0 },
+		{ "type": "slide", "text": "Sansevieria: riego mensual", "media": "static/social/plantas-indestructibles/pexels-17619301.jpg", "duration": 0 },
+		{ "type": "slide", "text": "Pothos: tolera poca luz", "duration": 0 },
+		{ "type": "slide", "text": "Aspidistra: casi indestructible", "duration": 0 },
+		{ "type": "outro", "text": "Guarda este carrusel 🌿", "cta": "Guarda este carrusel 🌿", "logo": true, "duration": 0 }
+	]
+}

@@ -10,7 +10,9 @@ Página simple: "Donde las plantas conocen a gente". Formulario de email. **Obje
 **Estado**: landing + waitlist publicadas y operativas (Supabase + emails de confirmación y aviso al admin vía Resend). Ver [`plan-desarrollo.md`](plan-desarrollo.md).
 
 ### Instagram + TikTok
-Cuenta `@botanic.app`. Contenido 3-4x/semana. Construir audiencia **Plant Lovers** sin vender la app todavía.
+Cuenta `@botanic.app`. Contenido 3-4x/semana (reels) + 2-3x/semana (posts/carruseles). Construir audiencia **Plant Lovers** sin vender la app todavía.
+
+**Estado**: pipeline implementado a nivel PoC (reel mp4 + carrusel renderizados). Generación agéntica con **Remotion**: guiones `script.json` + B-roll/fotos de Pexels (`scripts/stock.mjs`) → `mp4` 9:16 y carruseles 4:5; publicación manual en batch semanal (Meta Business Suite + TikTok Studio). Detalle en [`social-video.md`](social-video.md) y [`social-post.md`](social-post.md).
 
 ### Comunidades
 Unirse y participar genuinamente en:

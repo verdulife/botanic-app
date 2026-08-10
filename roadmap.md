@@ -32,6 +32,8 @@ Coste 0          1.000 users RN / Flutter                 │       Latam + IA
 
 **Carril paralelo — Blog (SEO + lead gen)**: ✅ implementado. Blog estático en Markdown sin CMS (`/blog`), cadencia 2/semana en arranque, programación automática con cron (GitHub Actions → Vercel Deploy Hook), 1 post real público + 3 en `_drafts/`. Detalle completo en [`docs/blog.md`](docs/blog.md).
 
+**Carril paralelo — Redes sociales**: 🚧 PoC implementado. Reels IG/TikTok + posts/carruseles IG generados con **Remotion** desde guiones agénticos (`script.json`), assets vía Pexels, publicación manual en batch semanal. Detalle en [`docs/social-video.md`](docs/social-video.md) y [`docs/social-post.md`](docs/social-post.md).
+
 ## Fase 1 — Validación (Q4 2026)
 
 - Crecimiento orgánico a **1.000 usuarios activos**

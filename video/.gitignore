@@ -1,0 +1,16 @@
+# Dependencias
+node_modules/
+
+# Outputs de render
+out/
+static/
+*.mp4
+*.png
+*.jpg
+*.webp
+
+# Env
+.env.local
+
+# Studio cache
+.remotion/

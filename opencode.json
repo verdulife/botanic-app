@@ -17,5 +17,14 @@
 			"url": "https://mcp.supabase.com/mcp",
 			"enabled": true
 		}
+	},
+	"agent": {
+		"build": {
+			"permission": {
+				"task": {
+					"visual-eval": "allow"
+				}
+			}
+		}
 	}
 }
