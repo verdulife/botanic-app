@@ -6,7 +6,7 @@ Vender, cambiar o regalar semillas, esquejes, brotes, plantas y tiestos con gent
 
 ## Estado actual
 
-**Fase**: Planificación / Pre-desarrollo
+**Fase**: Pre-desarrollo (landing, blog y waitlist operativos)
 **Siguiente paso**: Sprint 1 — Setup + Auth
 
 ## Stack

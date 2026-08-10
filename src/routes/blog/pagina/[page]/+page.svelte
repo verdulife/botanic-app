@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BlogIndex from "$lib/components/blog/BlogIndex.svelte";
+	import BlogCta from "$lib/components/blog/BlogCta.svelte";
 
 	let { data } = $props();
 
@@ -10,10 +11,10 @@
 </script>
 
 <svelte:head>
-	<title>Blog Botanic — Página {data.page} · Guías para plant lovers</title>
+	<title>El blog de Botanic — Página {data.page}</title>
 	<meta
 		name="description"
-		content="Guías de cuidados, propagación y novedades del mundo de las plantas — página {data.page}."
+		content="Cuidados, propagación y novedades del mundo de las plantas — página {data.page}."
 	/>
 	<meta name="robots" content="index, follow, max-image-preview:large" />
 	<link rel="canonical" href={`${base}/blog/pagina/${data.page}`} />
@@ -27,4 +28,8 @@
 
 <section class="mx-auto max-w-6xl px-4 pt-6 pb-20 md:px-6">
 	<BlogIndex posts={data.posts} page={data.page} totalPages={data.totalPages} />
+
+	<div class="mt-20">
+		<BlogCta />
+	</div>
 </section>

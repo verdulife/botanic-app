@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from "$lib/components/ui/button";
-	import Logo from "$lib/components/Logo.svelte";
+	import AppHeader from "$lib/components/AppHeader.svelte";
 	import BlogCta from "$lib/components/blog/BlogCta.svelte";
 	import AppFooter from "$lib/components/AppFooter.svelte";
 	import {
@@ -12,6 +12,8 @@
 		ShieldCheck,
 		ShoppingBasket,
 		Shovel,
+		Heart,
+		Recycle,
 	} from "lucide-svelte/icons";
 
 	const demoListings = [
@@ -82,17 +84,17 @@
 </script>
 
 <svelte:head>
-	<title>Botanic | Donde las plantas conocen a gente</title>
+	<title>Botanic | Donde las plantas conocen a gente nueva</title>
 	<meta
 		name="description"
 		content="Botanic conecta a Plant Lovers para vender, cambiar y regalar plantas, semillas, esquejes y tiestos. Para que tus plantas conozcan a quien las querrá."
 	/>
 	<meta name="robots" content="index, follow, max-image-preview:large" />
 	<link rel="canonical" href="https://www.botanicapp.es/" />
-	<meta property="og:title" content="Botanic | Donde las plantas conocen a gente" />
+	<meta property="og:title" content="Botanic | Donde las plantas conocen a gente nueva" />
 	<meta
 		property="og:description"
-		content="Saca más partido a tus plantas y encuentra las que siempre quisiste. Vender, cambiar o regalar."
+		content="La app para Plant Lovers. Saca más partido a tus plantas y encuentra las que siempre quisiste: vender, cambiar o regalar."
 	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://www.botanicapp.es/" />
@@ -101,12 +103,12 @@
 	<meta property="og:image" content="https://www.botanicapp.es/og-image.jpg" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
-	<meta property="og:image:alt" content="Botanic | Donde las plantas conocen a gente" />
+	<meta property="og:image:alt" content="Botanic | Donde las plantas conocen a gente nueva" />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Botanic | Donde las plantas conocen a gente" />
+	<meta name="twitter:title" content="Botanic | Donde las plantas conocen a gente nueva" />
 	<meta
 		name="twitter:description"
-		content="Saca más partido a tus plantas y encuentra las que siempre quisiste. Vender, cambiar o regalar."
+		content="La app para Plant Lovers. Saca más partido a tus plantas y encuentra las que siempre quisiste: vender, cambiar o regalar."
 	/>
 	<meta name="twitter:image" content="https://www.botanicapp.es/og-image.jpg" />
 	<script type="application/ld+json">
@@ -144,18 +146,18 @@
 	</script>
 </svelte:head>
 
+<AppHeader />
+
 <!-- Hero -->
 <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 pt-24 pb-32 md:grid-cols-2 md:gap-16 md:px-8 md:pt-36 md:pb-40">
 	<div class="flex flex-col items-start gap-5">
-		<a href="/" class="inline-flex items-center">
-			<Logo class="h-10" />
-		</a>
+		<p class="text-sm font-medium tracking-wide text-primary uppercase">La app para Plant Lovers</p>
 		<h1 class="text-4xl leading-[1.05] font-light text-balance md:text-6xl">
 			Tus plantas quieren <strong class="font-semibold">conocer a gente nueva</strong>
 		</h1>
 		<p class="max-w-md text-lg text-muted-foreground">
-			Saca más partido a tus plantas y encuentra las que siempre quisiste. Vender, cambiar o
-			regalar: así tus plantas conocen a gente que las va a cuidar.
+			Saca más partido a tus plantas y encuentra las que siempre quisiste. Con la app de
+			Botanic, vender, cambiar o regalar.
 		</p>
 		<Button href="#waitlist" size="lg" class="mt-2 h-12 px-8 text-base">Únete a la waitlist</Button>
 	</div>
@@ -242,6 +244,45 @@
 				{cat.name}
 			</span>
 		{/each}
+	</div>
+</section>
+
+<!-- ¿Qué es Botanic? -->
+<section class="mx-auto max-w-6xl px-4 pt-32 pb-16 md:px-6 md:pt-36 md:pb-20">
+	<div
+		class="rounded-3xl border border-border bg-secondary/40 px-6 py-14 md:px-12 md:py-16"
+	>
+		<div class="mx-auto max-w-2xl text-center">
+			<p class="text-sm font-medium tracking-wide text-primary uppercase">¿Qué es Botanic?</p>
+			<h2 class="mt-2 text-4xl leading-tight font-light text-balance md:text-[2.875rem]">
+				La app donde las plantas <strong class="font-semibold">conocen a gente nueva</strong>
+			</h2>
+			<p class="mt-3 text-pretty text-muted-foreground">
+				Botanic es una aplicación para la comunidad de Plant Lovers. Publica tus plantas,
+				esquejes, semillas o tiestos y encuentra a quien los quiera: para venderlos,
+				cambiarlos o regalarlos.
+			</p>
+		</div>
+		<div class="mt-10 flex flex-wrap items-center justify-center gap-2.5">
+			<span
+				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
+			>
+				<Leaf class="size-4 text-primary" aria-hidden="true" />
+				Solo plantas — pensado para el mundo vegetal
+			</span>
+			<span
+				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
+			>
+				<Heart class="size-4 text-primary" aria-hidden="true" />
+				Comunidad — entre gente que cuida plantas
+			</span>
+			<span
+				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
+			>
+				<Recycle class="size-4 text-primary" aria-hidden="true" />
+				Segunda vida — la economía circular, hecha fácil
+			</span>
+		</div>
 	</div>
 </section>
 
@@ -344,9 +385,7 @@
 
 <!-- Waitlist -->
 <section class="mx-auto max-w-6xl px-4 py-24 md:px-6">
-	<div id="waitlist" class="scroll-mt-16">
-		<BlogCta />
-	</div>
+	<BlogCta />
 </section>
 
 <!-- Footer -->

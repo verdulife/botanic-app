@@ -8,7 +8,10 @@
 	}: { title?: string; subtitle?: string } = $props();
 </script>
 
-<section class="relative overflow-hidden rounded-3xl bg-secondary/70 px-6 py-16 md:py-20">
+<section
+	id="waitlist"
+	class="relative scroll-mt-16 overflow-hidden rounded-3xl bg-secondary/70 px-6 py-16 md:py-20"
+>
 	<div class="relative mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
 		<Logo class="h-7" />
 		<h2 class="max-w-2xl text-3xl leading-tight font-light text-balance text-still-950 md:text-4xl">

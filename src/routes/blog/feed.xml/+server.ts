@@ -23,7 +23,7 @@ export const GET = () => {
 <channel>
 \t<title>Blog Botanic</title>
 \t<link>${BASE}/blog</link>
-\t<description>Guías de cuidados, propagación y novedades para plant lovers.</description>
+\t	<description>Cuidados, propagación y novedades del mundo de las plantas.</description>
 \t<language>es-es</language>
 \t<atom:link href="${BASE}/blog/feed.xml" rel="self" type="application/rss+xml" />
 ${items}

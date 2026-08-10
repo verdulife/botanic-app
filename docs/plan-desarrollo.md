@@ -38,7 +38,7 @@ Ya hecho:
 - [x] `bun create svelte@latest botanic --template typescript`
 - [x] TailwindCSS
 - [ ] Prettier, ESLint
-- [ ] Proyecto Supabase (DB + Auth + Storage)
+- [x] Proyecto Supabase `botanic` creado (Free tier, eu-central-1)
 - [ ] Schema: profiles, categories + seed
 - [ ] @vite-pwa/sveltekit + manifest básico
 - [ ] Auth (email + Google OAuth)

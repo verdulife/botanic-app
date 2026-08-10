@@ -147,7 +147,7 @@ function wordmark() {
 		${sprout}
 		<text x="${anicLeft}" y="${baselineY - 20}" font-family="Onest" font-size="${FONT_SIZE}" font-weight="700" fill="${LOGO}">anic</text>
 	</g>
-	<text x="${WIDTH / 2}" y="${baselineY + 45}" font-family="Onest" font-size="${TAGLINE_SIZE}" font-weight="400" fill="${TAGLINE}" text-anchor="middle">Donde las plantas conocen a gente</text>`;
+	<text x="${WIDTH / 2}" y="${baselineY + 45}" font-family="Onest" font-size="${TAGLINE_SIZE}" font-weight="400" fill="${TAGLINE}" text-anchor="middle">Donde las plantas conocen a gente nueva</text>`;
 }
 
 function buildSvg(includeFont) {

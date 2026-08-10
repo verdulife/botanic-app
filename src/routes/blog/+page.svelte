@@ -6,10 +6,10 @@
 </script>
 
 <svelte:head>
-	<title>Blog Botanic — Guías y cuidados para plant lovers</title>
+	<title>El blog de Botanic</title>
 	<meta
 		name="description"
-		content="Guías de cuidados, propagación y novedades del mundo de las plantas, para que tus plantas y tus esquejes conozcan a gente nueva."
+		content="Cuidados, propagación y novedades del mundo de las plantas, para que tus plantas y tus esquejes conozcan a gente nueva."
 	/>
 	<meta name="robots" content="index, follow, max-image-preview:large" />
 	<link rel="canonical" href="https://www.botanicapp.es/blog" />
@@ -19,7 +19,7 @@
 	<header class="mx-auto mb-12 max-w-2xl text-center">
 		<p class="text-sm font-medium tracking-wide text-primary uppercase">Blog Botanic</p>
 		<h1 class="mt-2 text-4xl leading-tight font-light text-balance md:text-5xl">
-			Guías para <strong class="font-semibold">plant lovers</strong>
+			El blog de <strong class="font-semibold">Botanic</strong>
 		</h1>
 		<p class="mt-3 text-pretty text-muted-foreground">
 			Cuidados, propagación y novedades del mundo vegetal, escritos con cariño. Y recuerda: si
