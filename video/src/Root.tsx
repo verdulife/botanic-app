@@ -3,6 +3,8 @@ import { Composition, staticFile } from "remotion";
 import { loadFont } from "@remotion/fonts";
 import { BotanicReel } from "./BotanicReel";
 import { BotanicSlide } from "./BotanicSlide";
+import { Catalog } from "./catalog/Catalog";
+import { catalogSlots } from "./catalog/slots";
 import type { Script } from "./types";
 
 const defaultScript: Script = {
@@ -83,6 +85,19 @@ export const RemotionRoot: React.FC = () => {
 				width={1080}
 				height={1350}
 				defaultProps={{ script: defaultCarousel }}
+			/>
+			<Composition
+				id="Catalog"
+				component={({ slots }) => (
+					<OnestBoot>
+						<Catalog slots={slots} />
+					</OnestBoot>
+				)}
+				durationInFrames={catalogSlots.reduce((acc, s) => acc + s.frames, 0)}
+				fps={30}
+				width={1080}
+				height={1920}
+				defaultProps={{ slots: catalogSlots }}
 			/>
 		</>
 	);

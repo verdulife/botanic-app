@@ -8,7 +8,7 @@ Carril de video vertical (`reels` en Instagram + `TikTok`) generado de forma **a
 |---|---|---|
 | Tecnología de render | **Remotion** (React, código como fuente de verdad) | Motion graphics real (no Ken Burns), determinista, batch, versionable en git, coste 0 |
 | Formato del guion | `script.json` = **inputProps** de la composición | Sin capa de transformación: el mismo archivo que revisa el humano alimenta el render |
-| Biblioteca de motion | **Adoptar librerías prehechas** (RemotionUI, Remotion Scenes, Onda, TikTokTextBox, SwiftClip) evaluadas por preview en Studio | No reinventar animaciones; escenas que ya funcionan estéticamente |
+| Biblioteca de motion | **Adoptar librerías prehechas restilizadas a marca vía composición `Catalog`** (RemotionUI + `ondajs`; TikTokTextBox/SwiftClip a petición; onda.video/onda-engine descartado: motor GPU independiente, no es Remotion) | No reinventar animaciones; escenas que ya funcionan estéticamente |
 | Estructura en repo | `video/` como **carpeta autónoma** (package.json propio, fuera de workspaces y de la build de Vercel) | Deploy Vercel sigue en ~30s; Remotion no entra en la app SvelteKit |
 | Browser | **Chrome Headless Shell** descargado por Remotion (no Puppeteer/Playwright) | Versión pinned determinista, ~50% más ligero que Chrome completo |
 | Fuentes de stock | **Pexels API** (fotos + clips de vídeo 9:16) | Atribución no requerida, B-roll vertical real para dar movimiento |
@@ -158,7 +158,7 @@ scripts/
 
 **Pendiente (por orden):**
 
-- [ ] **1. Pruebas con Remotion Studio** — evaluar en paralelo vía `bun run studio` las librerías decididas en el plan (RemotionUI `social-clip`, Remotion Scenes, Onda, TikTokTextBox, SwiftClip) y adoptar las que pasen el preview como `video/src/components/scenes/*` propias
+- [ ] **1. Catálogo de elementos 9:16** — composición `Catalog` (`video/src/catalog/`) con slots INTRO/HOOK/TIP/QUOTE/OUTRO/TRANSICIÓN/ENDING (empieza vacía). Sesiones por elemento: elegir componente (RemotionUI `npx remotion-ui add <c>`, Onda `npx ondajs add <c>`) → restilizar a marca → revisar en Studio → `git commit` + inventario en `video/CATALOG.md`. Hito 1 = INTRO
 - [ ] **2. Re-render + auditoría visual del PoC** — regenerar `video/out/poc-reel-v2.mp4` (pesos/sombras corregidos) y pasar por `@visual-eval` (contact sheet: `bun run frames`)
 - [ ] **3. Clip de vídeo de fondo en escenas `tip`** — hoy solo foto; el mp4 Pexels se descarga (`stock fetch:video`) pero la escena usa `<Img>`
 - [ ] **4. Audio Fase 2** — Pixabay (música) + edge-tts (narración español) + faster-whisper (word-timestamps) + `@remotion/captions`
