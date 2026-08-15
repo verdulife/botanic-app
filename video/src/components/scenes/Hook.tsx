@@ -1,17 +1,30 @@
 import React from "react";
-import { useCurrentFrame, interpolate, Easing } from "remotion";
-import { FONT_FAMILY, type StyleTokens } from "../../brand";
+import { interpolate, useCurrentFrame, Easing } from "remotion";
+import { COLORS, FONT_FAMILY } from "../../brand";
 
-export const Hook: React.FC<{
-	text: string;
-	style: StyleTokens;
-}> = ({ text, style }) => {
+const Strong: React.FC<{ text: string }> = ({ text }) => (
+	<>
+		{text.split("**").map((part, i) =>
+			i % 2 === 1 ? (
+				<span key={i} style={{ fontWeight: 600 }}>
+					{part}
+				</span>
+			) : (
+				<React.Fragment key={i}>{part}</React.Fragment>
+			)
+		)}
+	</>
+);
+
+export const Hook: React.FC<{ text: string }> = ({ text }) => {
 	const frame = useCurrentFrame();
-	const opacity = interpolate(frame, [0, 15, 40], [0, 1, 1], {
+	const slideX = interpolate(frame, [0, 30], [40, 0], {
+		easing: Easing.out(Easing.cubic),
+		extrapolateLeft: "clamp",
 		extrapolateRight: "clamp",
 	});
-	const y = interpolate(frame, [0, 30], [40, 0], {
-		easing: Easing.out(Easing.cubic),
+	const opacity = interpolate(frame, [0, 12], [0, 1], {
+		extrapolateLeft: "clamp",
 		extrapolateRight: "clamp",
 	});
 	return (
@@ -19,41 +32,37 @@ export const Hook: React.FC<{
 			style={{
 				position: "absolute",
 				inset: 0,
-				background: style.background,
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
-				padding: 48,
-				opacity,
 			}}
 		>
-			<div style={{ transform: `translateY(${y}px)`, maxWidth: "85%" }}>
-				<h1
+			<div
+				style={{
+					transform: `translateX(${slideX}vw)`,
+					opacity,
+					width: "100%",
+					padding: "0 80px",
+					position: "relative",
+					display: "flex",
+					justifyContent: "center",
+				}}
+			>
+				<p
 					style={{
 						fontFamily: FONT_FAMILY,
 						fontWeight: 300,
-						fontSize: 96,
-						lineHeight: 1.05,
+						fontSize: 120,
+						lineHeight: 1.15,
 						letterSpacing: "normal",
-						color: style.text,
-						margin: 0,
+						color: COLORS["linen-50"],
 						textAlign: "center",
+						margin: 0,
 						textWrap: "balance",
 					}}
 				>
-					{text}
-				</h1>
-				<div
-					style={{
-						marginTop: 32,
-						height: 8,
-						width: 96,
-						borderRadius: 4,
-						background: style.accent,
-						marginLeft: "auto",
-						marginRight: "auto",
-					}}
-				/>
+					<Strong text={text} />
+				</p>
 			</div>
 		</div>
 	);

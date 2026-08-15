@@ -6,20 +6,9 @@ import { BotanicSlide } from "./BotanicSlide";
 import { Catalog } from "./catalog/Catalog";
 import { catalogSlots } from "./catalog/slots";
 import type { Script } from "./types";
+import defaultScriptJson from "../../src/lib/social/_drafts/coleccionistas-de-esquejes/script.json";
 
-const defaultScript: Script = {
-	title: "3 errores al regar tu monstera",
-	style: "energy",
-	template: "tip-stack",
-	platform: ["ig", "tiktok"],
-	scenes: [
-		{ type: "hook", text: "¿Riegas tu monstera así?", duration: 2 },
-		{ type: "tip", text: "Error 1: agua del grifo", duration: 4 },
-		{ type: "tip", text: "Error 2: riego sin drenaje", duration: 4 },
-		{ type: "tip", text: "Error 3: exceso de agua", duration: 4 },
-		{ type: "outro", text: "Sigue para más cuidados", cta: "Sigue para más cuidados 🌱", logo: true, duration: 3 },
-	],
-};
+const defaultScript = defaultScriptJson as Script;
 
 const defaultCarousel: Script = {
 	title: "5 plantas imposibles de matar",

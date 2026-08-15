@@ -19,7 +19,7 @@ export default defineConfig({
         name: 'Botanic',
         short_name: 'Botanic',
         description: 'Compra y vende plantas entre particulares',
-        theme_color: '#517756',
+        theme_color: '#74AA7B',
         background_color: '#ffffff',
         display: 'standalone',
         icons: [

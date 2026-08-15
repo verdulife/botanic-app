@@ -10,36 +10,47 @@ colors:
   card-foreground: "oklch(0.28 0.02 55)"
   popover: "oklch(0.99 0.006 85)"
   popover-foreground: "oklch(0.28 0.02 55)"
-  primary: "oklch(0.465 0.25 146)"
+  primary: "oklch(0.687 0.089 148)"
   primary-foreground: "oklch(0.99 0.005 150)"
-  secondary: "oklch(0.931 0.061 150)"
-  secondary-foreground: "oklch(0.401 0.218 146)"
+  secondary: "oklch(0.931 0.026 145)"
+  secondary-foreground: "oklch(0.349 0.06 149)"
   muted: "oklch(0.95 0.012 85)"
   muted-foreground: "oklch(0.52 0.02 70)"
-  accent: "oklch(0.931 0.061 150)"
-  accent-foreground: "oklch(0.401 0.218 146)"
+  accent: "oklch(0.931 0.026 145)"
+  accent-foreground: "oklch(0.349 0.06 149)"
   destructive: "oklch(0.577 0.245 27.325)"
   destructive-foreground: "oklch(0.98 0.01 27.325)"
   border: "oklch(0.91 0.014 85)"
   input: "oklch(0.91 0.014 85)"
-  ring: "oklch(0.527 0.279 146)"
-  chart-1: "oklch(0.527 0.279 146)"
-  chart-2: "oklch(0.827 0.162 147)"
+  ring: "oklch(0.687 0.089 148)"
+  chart-1: "oklch(0.687 0.089 148)"
+  chart-2: "oklch(0.768 0.075 147)"
   chart-3: "oklch(0.79 0.16 90)"
   chart-4: "oklch(0.577 0.245 27.325)"
   chart-5: "oklch(0.28 0.02 55)"
   star: "oklch(0.79 0.16 90)"
-  still-50: "oklch(0.967 0.033 149)"
-  still-100: "oklch(0.931 0.061 150)"
-  still-200: "oklch(0.897 0.1 147)"
-  still-300: "oklch(0.861 0.128 148)"
-  still-400: "oklch(0.827 0.162 147)"
-  still-500: "oklch(0.649 0.334 146)"
-  still-600: "oklch(0.527 0.279 146)"
-  still-700: "oklch(0.465 0.25 146)"
-  still-800: "oklch(0.401 0.218 146)"
-  still-900: "oklch(0.265 0.159 146)"
-  still-950: "oklch(0.195 0.122 146)"
+  still-50: "oklch(0.972 0.012 145)"
+  still-100: "oklch(0.931 0.026 145)"
+  still-200: "oklch(0.863 0.047 146)"
+  still-300: "oklch(0.768 0.075 147)"
+  still-400: "oklch(0.687 0.089 148)"
+  still-500: "oklch(0.557 0.104 148)"
+  still-600: "oklch(0.471 0.093 148)"
+  still-700: "oklch(0.404 0.076 149)"
+  still-800: "oklch(0.349 0.06 149)"
+  still-900: "oklch(0.309 0.048 150)"
+  still-950: "oklch(0.221 0.032 151)"
+  tranquil-50: "oklch(0.985 0.025 100)"
+  tranquil-100: "oklch(0.97 0.068 100)"
+  tranquil-200: "oklch(0.935 0.128 99)"
+  tranquil-300: "oklch(0.895 0.163 95)"
+  tranquil-400: "oklch(0.847 0.171 87)"
+  tranquil-500: "oklch(0.782 0.161 81)"
+  tranquil-600: "oklch(0.67 0.144 71)"
+  tranquil-700: "oklch(0.544 0.124 61)"
+  tranquil-800: "oklch(0.468 0.107 57)"
+  tranquil-900: "oklch(0.415 0.094 53)"
+  tranquil-950: "oklch(0.281 0.068 49)"
   linen-50: "oklch(0.99 0.006 85)"
   linen-100: "oklch(0.977 0.008 85)"
   linen-200: "oklch(0.95 0.012 85)"
@@ -143,12 +154,12 @@ components:
 
 Botanic es la landing de una comunidad de economía circular para plantas; el listón de acabado es Wallapop + Vinted + Airbnb. La página ejecuta la estructura clásica de la categoría — hero foto-liderado, categorías, manifiesto, por qué, waitlist prefooter y footer — a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk. El copy habla en el vocabulario de la economía circular ("vender, cambiar o regalar", "conocer a gente nueva", "las plantas se comparten y así conocen a gente nueva") y evita declarar como promesas permanentes los "sin envíos", "sin comisiones" ni "solo cerca de ti".
 
-El sistema es cálido y sobrio: un fondo de lino cálido, tinta cálida casi negra, un único acento de Still Green (`#74AA7B`) para el CTA, el logo y los iconos, y un ámbar puntual para las estrellas. La fotografía real de plantas es protagonista en el hero (abanico de anuncios de ejemplo etiquetado como material sintético). La profundidad se construye con bordes finos, esquinas redondeadas (`rounded-2xl` en tarjetas, `rounded-full` en pills) y contraste tonal entre superficies; solo hay sombra puntual en la tarjeta del abanico elevada. Se evita explícitamente el `AI slop`: sin degradados de neón, sin glassmorphism, sin serif itálicos decorativos, sin métricas o testimonios inventados. Las animaciones del sistema son el mesh viento de las bandas de categorías y waitlist (The Wind Mesh Rule, con dos variantes de intensidad) y el abanico de anuncios del hero (The Fan Rule).
+El sistema es cálido y sobrio: un fondo de lino cálido, tinta cálida casi negra, Still Green (`#74AA7B`) para el CTA, el logo y los iconos, una rampa complementaria `tranquil` (amarillo) para romper la monotonía, y el ámbar `star` puntual para las estrellas. La fotografía real de plantas es protagonista en el hero (abanico de anuncios de ejemplo etiquetado como material sintético). La profundidad se construye con bordes finos, esquinas redondeadas (`rounded-2xl` en tarjetas, `rounded-full` en pills) y contraste tonal entre superficies; solo hay sombra puntual en la tarjeta del abanico elevada. Se evita explícitamente el `AI slop`: sin degradados de neón, sin glassmorphism, sin serif itálicos decorativos, sin métricas o testimonios inventados. Las animaciones del sistema son el mesh viento de las bandas de categorías y waitlist (The Wind Mesh Rule, con dos variantes de intensidad) y el abanico de anuncios del hero (The Fan Rule).
 
 **Key Characteristics**
 - Estructura clásica de marketplace, executed impeccably.
 - Fotografía real de plantas servida localmente (`static/images/`), no por CDN.
-- Un solo acento de color: Still Green, sobre una rampa completa de tints y shades.
+- Still Green como acento principal (rampa completa), con `tranquil` (amarillo) como acento complementario.
 - Tipografía Onest Variable (single family, geometrico-humanista) con system stack como fallback.
 - Calidez uniforme en todos los neutros (lino/tinta); nunca grises fríos.
 - Mobile-first, ritmo vertical generoso y constante.
@@ -156,13 +167,13 @@ El sistema es cálido y sobrio: un fondo de lino cálido, tinta cálida casi neg
 
 ## Colors
 
-Paleta cálida de lino y Still Green. El verde se usa con propósito (CTA, logo, iconos, anillos de foco); los neutros de lino hacen el resto del trabajo. El ámbar (`star`) es exclusivo para las estrellas de valoración. La `terra` es el único color destructivo.
+Paleta cálida de lino y Still Green. El verde se usa con propósito (CTA, logo, iconos, anillos de foco); los neutros de lino hacen el resto del trabajo. El ámbar (`star`) es exclusivo para las estrellas de valoración. La `terra` es el único color destructivo. La rampa **`tranquil`** (amarillo) es el acento complementario: sirve para romper la monotonía (badges, highlights, estados) sin robar protagonismo al verde.
 
-Dos rampas completas viven en `@theme inline` de `src/app.css` (`still-50…950` y `linen-50…950`), derivadas del Still Green `#74AA7B` y del lino de fondo.
+Dos rampas completas viven en `@theme inline` de `src/app.css` (`still-50…950` y `linen-50…950`). El verde principal es `still-400` (`#74AA7B`); el resto de la rampa son sus shades.
 
 ### Primary
-- **Still Green 700** (`oklch(0.465 0.25 146)`, ≈ `#517756`) — el acento del sistema como token `primary`. Botón primario, iconos de categorías, anillos de foco. Contraste 5.09:1 con `primary-foreground` blanco (cumple AA).
-- **Still Green 600** (`oklch(0.527 0.279 146)`, ≈ `#5D8862`) — `ring` y `chart-1`, el paso intermedio para foco.
+- **Still Green 400** (`oklch(0.687 0.089 148)`, ≈ `#74AA7B`) — el acento del sistema como token `primary`. Botón primario, iconos de categorías, anillos de foco. `ring` y `chart-1` usan el mismo 400; `chart-2` usa el 300.
+- **Contraste**: `primary-foreground` es casi-blanco (`oklch(0.99 0.005 150)`) — decisión del usuario (texto de botones casi-blanco sobre 400). Nota: blanco sobre `#74AA7B` da ~2.7:1 (no cumple AA en texto normal; válido para botones/texto grande). Para texto `text-primary` sobre superficies claras de lino usar `still-600`/`still-700`; 400 sobre lino da ~2.6:1.
 
 ### Neutral (lino cálido)
 - **Lino (fondo)** `oklch(0.977 0.008 85)` (`linen-100`) — superficie base.
@@ -173,34 +184,49 @@ Dos rampas completas viven en `@theme inline` de `src/app.css` (`still-50…950`
 - **Muted (superficie)** `oklch(0.95 0.012 85)` (`linen-200`) — bandas alternas y fondo de badges.
 
 ### Secondary (tinte de Still Green)
-- **Still Green 800 (secondary-fg)** `oklch(0.401 0.218 146)` — texto sobre el tinte verde.
-- **Still Green 100 (secondary)** `oklch(0.931 0.061 150)` — chips, icon-tiles, banda de la waitlist al 70%.
+- **Still Green 800 (secondary-fg)** `oklch(0.349 0.06 149)` — texto sobre el tinte verde.
+- **Still Green 100 (secondary)** `oklch(0.931 0.026 145)` — chips, icon-tiles, banda de la waitlist al 70%.
 
 ### Acentos puntuales
 - **Estrella (ámbar)** `oklch(0.79 0.16 90)` — exclusivo para la estrella de valoración.
 - **Terra (destructive)** `oklch(0.577 0.245 27.325)` — exclusivo para estados de error y `aria-invalid`.
 
 ### Shade oscuro del wordmark
-- **Still Green 900** (`oklch(0.265 0.159 146)`) — color del logo "Botanic" en el hero y en el título de la waitlist (`still-950`).
-- **Still Green 950** (`oklch(0.195 0.122 146)`) — título h2 de la waitlist.
+- **Still Green 800** (`oklch(0.349 0.06 149)`) — color del logo "Botanic" (`text-still-800`).
+- **Still Green 900** (`oklch(0.309 0.048 150)`) y **Still Green 950** (`oklch(0.221 0.032 151)`) — títulos del hero y de la waitlist.
 
 ### Footer
-- **Zinc 950** (`oklch(0.141 0.005 285)`) — gris casi negro para el fondo del footer, con texto `primary-foreground`.
+- Lino cálido de fondo, texto `text-muted-foreground` y enlaces `text-primary` (sobre superficies claras, usar `still-600`/`still-700` para legibilidad AA).
 
 ### Rampa Still Green (`still-*`)
 | step | oklch | hex |
 |---|---|---|
-| 50 | `0.967 0.033 149` | `#F1F7F2` |
-| 100 | `0.931 0.061 150` | `#E3EEE5` |
-| 200 | `0.897 0.1 147` | `#D5E6D7` |
-| 300 | `0.861 0.128 148` | `#C7DDCA` |
-| 400 | `0.827 0.162 147` | `#BAD5BD` |
-| **500** | `0.649 0.334 146` | `#74AA7B` (base) |
-| 600 | `0.527 0.279 146` | `#5D8862` |
-| **700** | `0.465 0.25 146` | `#517756` |
-| 800 | `0.401 0.218 146` | `#46664A` |
-| **900** | `0.265 0.159 146` | `#2E4431` |
-| **950** | `0.195 0.122 146` | `#233325` |
+| 50 | `0.972 0.012 145` | `#F1F8F1` |
+| 100 | `0.931 0.026 145` | `#DEEDDE` |
+| 200 | `0.863 0.047 146` | `#BFDBC0` |
+| 300 | `0.768 0.075 147` | `#94C198` |
+| **400** | `0.687 0.089 148` | `#74AA7B` (principal) |
+| 500 | `0.557 0.104 148` | `#45844F` (base) |
+| 600 | `0.471 0.093 148` | `#32693C` |
+| 700 | `0.404 0.076 149` | `#285431` |
+| 800 | `0.349 0.06 149` | `#224329` |
+| 900 | `0.309 0.048 150` | `#1D3723` |
+| 950 | `0.221 0.032 151` | `#0F1F13` |
+
+### Rampa Tranquil (`tranquil-*`) — acento complementario
+| step | oklch | hex |
+|---|---|---|
+| 50 | `0.985 0.025 100` | `#FEFBE8` |
+| 100 | `0.97 0.068 100` | `#FFF7C2` |
+| **200** | `0.935 0.128 99` | `#FFEB82` (base) |
+| 300 | `0.895 0.163 95` | `#FFDA45` |
+| 400 | `0.847 0.171 87` | `#FCC413` |
+| 500 | `0.782 0.161 81` | `#ECAB06` |
+| 600 | `0.67 0.144 71` | `#CC8302` |
+| 700 | `0.544 0.124 61` | `#A25C06` |
+| 800 | `0.468 0.107 57` | `#86480D` |
+| 900 | `0.415 0.094 53` | `#723B11` |
+| 950 | `0.281 0.068 49` | `#431D05` |
 
 ### Rampa Lino (`linen-*`)
 | step | oklch |

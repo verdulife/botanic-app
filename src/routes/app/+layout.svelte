@@ -10,7 +10,7 @@
 	</main>
 
 	<nav class="border-border sticky bottom-0 flex items-center justify-around border-t bg-card px-2 pt-2 pb-1">
-		<a href="/app" class="flex flex-col items-center gap-0.5 px-3 py-1 text-xs font-medium text-primary">
+		<a href="/app" class="flex flex-col items-center gap-0.5 px-3 py-1 text-xs font-medium text-still-600">
 			<Search class="size-5" />
 			Explorar
 		</a>

@@ -80,7 +80,7 @@
 	</a>
 
 	<header class="mt-6">
-		<p class="text-sm font-medium tracking-wide text-primary uppercase">
+		<p class="text-sm font-medium tracking-wide text-still-600 uppercase">
 			{categoryLabel(data.post.meta.category)}
 		</p>
 		<h1

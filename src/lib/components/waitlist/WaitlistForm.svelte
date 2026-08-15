@@ -10,7 +10,7 @@
 	let errorMessage = $state("");
 	let alreadyRegistered = $state(false);
 
-	const CONFETTI_COLORS = ["#74AA7B", "#5D8862", "#517756", "#2E4431", "#7C766A", "#4A4238"];
+	const CONFETTI_COLORS = ["#74AA7B", "#45844F", "#32693C", "#285431", "#7C766A", "#4A4238"];
 
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();

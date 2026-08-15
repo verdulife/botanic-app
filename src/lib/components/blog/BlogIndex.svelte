@@ -52,11 +52,11 @@
 					{/if}
 				</div>
 				<div class="flex flex-1 flex-col gap-2 p-5">
-					<p class="text-xs font-medium tracking-wide text-primary uppercase">
+					<p class="text-xs font-medium tracking-wide text-still-600 uppercase">
 						{categoryLabel(post.meta.category)}
 					</p>
 					<h2
-						class="text-lg leading-snug font-semibold text-balance transition-colors group-hover:text-primary"
+						class="text-lg leading-snug font-semibold text-balance transition-colors group-hover:text-still-600"
 					>
 						{post.meta.title}
 					</h2>

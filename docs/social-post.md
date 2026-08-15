@@ -97,6 +97,6 @@ Carril de **imágenes estáticas** para el feed de Instagram (posts simples 1:1 
 
 **Pendiente (por orden):**
 
-- [ ] **1. Re-render + auditoría visual** — regenerar `video/out/poc-carousel-*.png` (cover ahora 300, slides 700 + shadow) y pasar por `@visual-eval`
+- [ ] **1. Re-render + auditoría visual** — regenerar `video/out/poc-carousel-*.png` (cover ahora 300, slides 700 + shadow) y pedir revisión humana (parar y preguntar; no usar `@visual-eval`)
 - [ ] **2. Extraer escenas propias** — mover `Cover`/`Tip`/`Quote`/`Outro` de `BotanicSlide.tsx` a `video/src/components/scenes/*` reutilizables con los reels
 - [ ] **3. Batch semanal operativo** — cadencia 2-3x/semana, ~50% repurpose del blog

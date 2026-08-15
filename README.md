@@ -52,7 +52,7 @@ Vender, cambiar o regalar semillas, esquejes, brotes, plantas y tiestos con gent
 | [`docs/pwa.md`](docs/pwa.md) | Configuración PWA con @vite-pwa/sveltekit |
 | [`docs/social-video.md`](docs/social-video.md) | Reels IG + TikTok (Remotion, pipeline agéntico) |
 | [`docs/social-post.md`](docs/social-post.md) | IG feed + carruseles (stills Remotion) |
-| [`docs/social-eval.md`](docs/social-eval.md) | Subagente `visual-eval` (visión) + script `frames` |
+| [`docs/social-eval.md`](docs/social-eval.md) | Subagente `visual-eval` (visión; solo stock) + script `frames` |
 
 ### Prensa
 

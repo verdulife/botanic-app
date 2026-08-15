@@ -1,6 +1,6 @@
 export type MotionStyle = "energy" | "cozy" | "minimal";
 
-export type SceneType = "hook" | "tip" | "cover" | "slide" | "quote" | "outro";
+export type SceneType = "hook" | "tip" | "cover" | "slide" | "quote" | "outro" | "cta";
 
 export interface Scene {
 	type: SceneType;
@@ -9,6 +9,7 @@ export interface Scene {
 	duration: number;
 	cta?: string;
 	logo?: boolean;
+	button?: string;
 }
 
 export interface Script {

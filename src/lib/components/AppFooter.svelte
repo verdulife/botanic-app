@@ -9,13 +9,13 @@
 		class="mb-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1"
 		aria-label="Enlaces"
 	>
-		<a href="/" class="text-primary hover:underline">Inicio</a>
+		<a href="/" class="text-still-600 hover:underline">Inicio</a>
 		<span aria-hidden="true">·</span>
-		<a href="/blog" class="text-primary hover:underline">Blog</a>
+		<a href="/blog" class="text-still-600 hover:underline">Blog</a>
 	</nav>
 	<p>
 		Botanic™ 2026 · Hecho con
-		<Heart class="inline size-3.5 fill-primary text-primary" aria-hidden="true" /> para la
+		<Heart class="inline size-3.5 fill-still-600 text-still-600" aria-hidden="true" /> para la
 		comunidad <strong class="text-foreground">Plant Lovers</strong>
 	</p>
 </footer>

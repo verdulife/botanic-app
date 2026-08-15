@@ -1,15 +1,17 @@
 # Subagente `visual-eval` — evaluación visual
 
-Subagente de opencode (`.opencode/agents/visual-eval.md`, modelo `opencode-go/qwen3.7-plus`) que evalúa imágenes usando visión. Su único trabajo: mirar una imagen y devolver una evaluación estructurada.
+Subagente de opencode (`.opencode/agents/visual-eval.md`, modelo `opencode-go/qwen3.7-plus`) que evalúa imágenes usando visión. Su **única** función: verificar que un asset de **stock** (Pexels) encaja con el contexto de la escena. **No audita resultados propios renderizados** (reels/stills/carruseles); esa verificación es humana (parar y preguntar).
 
 ## Cuándo se usa
 
 | Caso | Pre-requisito | Comando |
 |---|---|---|
 | Verificar una **foto** descargada de Pexels antes de meterla como `media` en `script.json` | haber hecho `bun run stock fetch <nº> <dest>` | `@visual-eval <ruta> — <contexto de la escena>` |
-| Auditar un **mp4** renderizado por Remotion o un clip Pexels descargado | generar el contact-sheet | `bun run frames <mp4> <out.png>` → `@visual-eval <out.png> — evalúa este contact sheet…` |
+| Verificar un **clip de stock** (Pexels) descargado | generar el contact-sheet | `bun run frames <mp4> <out.png>` → `@visual-eval <out.png>` |
 
-El build agent **lo invoca automáticamente** tras cada `bun run stock fetch` (regla en `AGENTS.md`), y tú también puedes invocarlo manualmente con `@visual-eval`.
+> **Prohibido** auditar renders propios (reel/carrusel/still) con `visual-eval`: la verificación de calidad de lo generado es humana (parar y preguntar al usuario).
+
+El build agent **lo invoca automáticamente** tras cada `bun run stock fetch` (regla en `AGENTS.md`), y también puede invocarse manualmente con `@visual-eval`. Alcance exclusivo: assets de stock.
 
 ## Lo que devuelve
 

@@ -1,7 +1,7 @@
 export const EMAIL_COLORS = {
 	accent: "#74AA7B",
-	accentDark: "#2E4431",
-	tint: "#E3EEE5",
+	accentDark: "#224329",
+	tint: "#DEEDDE",
 	ink: "#4A4238",
 	muted: "#7C766A",
 	linen: "#FBF8F1",

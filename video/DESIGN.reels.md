@@ -42,7 +42,7 @@ cta_handle: "@botanic.app"
 
 ## Overview
 
-Esta superficie genera **mp4 9:16** (reels IG/TikTok) y **stills 4:5** (carruseles IG) con **Remotion 4** desde la carpeta autónoma `video/`. El guion `script.json` (en `src/lib/social/`) es el único input humano: el agente escribe **datos**, nunca animación. La composición se renderiza con `bunx remotion render/still`. La auditoría visual va al subagente [`visual-eval`](.opencode/agents/visual-eval.md).
+Esta superficie genera **mp4 9:16** (reels IG/TikTok) y **stills 4:5** (carruseles IG) con **Remotion 4** desde la carpeta autónoma `video/`. El guion `script.json` (en `src/lib/social/`) es el único input humano: el agente escribe **datos**, nunca animación. La composición se renderiza con `bunx remotion render/still`. La auditoría visual del render es humana: parar y preguntar al usuario ([`visual-eval`](.opencode/agents/visual-eval.md) es solo para verificar stock).
 
 **Modo**: `Persuade` — el visitante decide y actúa; el diseño ES el producto. Cada escena debe ganarse la atención y empujar al CTA en menos de 20s (reel) o 1 slide (carrusel).
 
@@ -52,14 +52,14 @@ Esta superficie genera **mp4 9:16** (reels IG/TikTok) y **stills 4:5** (carrusel
 
 | Token | oklch | Uso en vídeo |
 |---|---|---|
-| `still-900` | `oklch(0.265 0.159 146)` | fondo `energy`, texto principal sobre fondo claro |
-| `still-950` | `oklch(0.195 0.122 146)` | texto principal en `cozy` (alta jerarquía) |
-| `still-800` | `oklch(0.401 0.218 146)` | logo foreground, `accent` minimal |
-| `still-700` | `oklch(0.465 0.25 146)` | `accent` cozy (warm CTA) |
-| `still-400` | `oklch(0.827 0.162 147)` | `accent` energy (high contrast) |
-| `still-300` | `oklch(0.861 0.128 148)` | mesh suave (variante clear) |
-| `still-200` | `oklch(0.897 0.1 147)` | mesh suave |
-| `still-100` | `oklch(0.931 0.061 150)` | mesh suave |
+| `still-900` | `oklch(0.309 0.048 150)` | fondo `energy`, texto principal sobre fondo claro |
+| `still-950` | `oklch(0.221 0.032 151)` | texto principal en `cozy` (alta jerarquía) |
+| `still-800` | `oklch(0.349 0.06 149)` | logo foreground, `accent` minimal |
+| `still-700` | `oklch(0.404 0.076 149)` | `accent` cozy (warm CTA) |
+| `still-400` | `oklch(0.687 0.089 148)` | `accent` energy (color principal) |
+| `still-300` | `oklch(0.768 0.075 147)` | mesh suave (variante clear) |
+| `still-200` | `oklch(0.863 0.047 146)` | mesh suave |
+| `still-100` | `oklch(0.931 0.026 145)` | mesh suave |
 | `linen-50` | `oklch(0.99 0.006 85)` | texto principal sobre fondo oscuro |
 | `linen-100` | `oklch(0.977 0.008 85)` | fondo `cozy`, logo background |
 | `linen-200` | `oklch(0.95 0.012 85)` | fondo `minimal`, mesh atenuado |
@@ -167,18 +167,29 @@ Misma paleta y geometría del mesh de la landing (`src/routes/+page.svelte` lín
 - Solo en cover, outro y slides donde no haya foto. **Nunca** debajo de una foto con media.
 - `pointer-events: none`, `aria-hidden="true"`.
 
-## Logo y CTA final
+## Logo, CTA final y ending
 
-- **Logo**: paths SVG de `static/favicon.svg` (componente `video/src/components/Logo.tsx`). Siempre `bg: linen-100`, `fg: still-800`. Tamaño display: 110–120px en reels 9:16, 100–110px en carruseles 4:5.
-- **CTA final**: última escena con `logo + handle "@botanic.app"`. CTA en **700** (`weight_price`, dato destacado, como el precio de la landing); handle en **500** (`weight_label`). El color del accent sigue siendo `still-400`/`still-700`/`still-800` según el motion style. Sin texto adicional debajo.
+- **Wordmark**: SVG inline del logo completo (`video/src/components/Wordmark.tsx` y `WordmarkDraw.tsx`) — paths del wordmark "Botanic" con el brote integrado como "t". `fill="currentColor"` y `stroke="currentColor"` (los hijos del brote usan `fill="none" stroke="currentColor"`).
+- **WordmarkDraw (path draw escalonado)** — `WordmarkDraw` recibe `progress` (0–100) y dibuja los paths en dos fases: (1) **stroke** con `pathLength="100"` + `strokeDasharray="100 101"` + `strokeDashoffset = 101 - draw*1.01` (el truco de `dasharray "100 101"` evita el artefacto de "puntito" en el borde del primer dash), (2) **fill** con `fillOpacity` que sube de 0→1 cuando el draw de cada path supera el `fillThreshold`. Stagger: B-o-t dibuja 0–45% (fill 45–62%), sprout 30–70% (sin fill), a-n-i-c 55–90% (fill 82–100%). `strokeOpacity` final 1→0 funde el outline → fill limpio. Tamaño: 110–120 px en reels 9:16 (variable `width`).
+- **Ending en dos escenas** (separadas para que el logo respire):
+  - **`outro`** (texto solo) — `video/src/components/scenes/Outro.tsx`. Texto del guion en `still-50` con slide-in desde la derecha (`translateX(40vw → 0)` en 30 frames, `Easing.out(cubic)`) + fade-in 0→12 + fade-out en los últimos frames de la escena. Fondo `still-400`.
+  - **`cta`** (logo + botón) — `video/src/components/scenes/Cta.tsx`. Renderiza `<WordmarkDraw>` con un `logoOpacity` que hace fade-in 0→24 (enmascara cualquier artefacto de render al inicio), `drawProgress` 24→78 (delay 0.8s + draw 1.8s), `strokeFade` 78→84 (funde el outline), botón pill `www.botanicapp.es` con fade-in 78→90. Duración recomendada: 5s (los 90 frames finales son hold con logo + botón visibles).
+- **CTA final obligatorio** — cada reel/carrusel termina con `outro` + `cta`. Sin excepciones.
+
+## Audio
+
+- **Integración**: `<Audio src={staticFile("social/<slug>/music.mp3")} volume={0.6} />` dentro del `AbsoluteFill` de `BotanicReel.tsx`. Remotion recorta el audio al `durationInFrames` automáticamente.
+- **Fuentes libres sin atribución**: Pixabay Music (Pixabay License), Mixkit (Mixkit License), FMA CC0. La API de Pixabay no expone música (solo imágenes/vídeos): la búsqueda se hace en la web y el mp3 se descarga manualmente a `static/social/<slug>/music.mp3`.
+- **Volumen**: `0.4–0.6`. Debajo de la voz si la hubiera (aquí sin VO).
 
 ## Overlays sobre imagen
 
 - **Coherencia con el motion style**:
   - `energy` sobre foto: overlay `linear-gradient(180deg, still-900/.15 0%, still-900/.90 100%)` + texto `linen-50` con shadow `0 2px 24px rgba(11,45,16,.35)`.
   - `cozy` sobre foto: overlay `linear-gradient(180deg, linen-100/0 0%, linen-100/.85 100%)` + texto `still-950`.
-  - `minimal` sobre foto: overlay `linear-gradient(180deg, still-950/0 0%, still-950/.75 100%)` + texto `still-50`.
+  - `minimal` sobre foto: overlay `linear-gradient(180deg, still-950/0 0%, still-950/.75 100%)` + texto `linen-50`.
 - **Contraste**: la opacidad final del overlay garantiza ≥ 4.5:1 de contraste con el texto (WCAG AA).
+- **Caja glass en tips** — patrón sobre foto de Pexels: contenedor centrado con `background: color-mix(in oklch, still-950 70%, transparent)` + `backdropFilter: blur(24px)` (+ `WebkitBackdropFilter`), `borderRadius: 32`, `padding: 40px 56px`. Dentro: eyebrow (uppercase, `letter-spacing: 0.14em`, weight 500) + titular light 300 con `<strong>` a 600. Sin `box-shadow` (regla Portability). **Excepción documentada a la regla "no glassmorphism"** — aprobada por el usuario para dar legibilidad AA sobre los vídeos.
 
 ## Restricciones absolutas (The Portability Rules)
 
@@ -189,7 +200,7 @@ Estas reglas son específicas de motion graphics y **se suman** a las de `DESIGN
 - **The Warmth Rule (vídeo)** — todos los neutros salen de la rampa Lino (no `zinc-*` ni grises fríos).
 - **No sombras flotantes en mp4** — la elevación se construye con overlay `linear-gradient` sobre la imagen, no con `box-shadow`. Las sombras en mp4 añaden bytes y rompen la regla "elevación por borde" de `DESIGN.md`.
 - **No degradados fuera del mesh** — el único patrón decorativo de fondo es la versión estática del mesh. Prohibidos: gradientes cónicos, glassmorphism, neon, rainbow.
-- **No Tailwind utility classes en Remotion** — Remotion no resuelve `bg-primary` ni `text-still-900`. Siempre valores oklch directos (`oklch(0.265 0.159 146)`) o `BRAND.still900` desde `video/src/brand.ts`.
+- **No Tailwind utility classes en Remotion** — Remotion no resuelve `bg-primary` ni `text-still-900`. Siempre valores oklch directos (`oklch(0.309 0.048 150)`) o `BRAND.still900` desde `video/src/brand.ts`.
 - **No `corner-shape: squircle`** — no portable a mp4. Usar `border-radius` generoso (≥ 1rem en chips, ≥ 1.5rem en botones) como sustituto.
 - **CTA final obligatorio** — cada reel/carrusel termina con logo + handle. Sin excepciones.
 
@@ -201,7 +212,7 @@ Estas reglas son específicas de motion graphics y **se suman** a las de `DESIGN
 - Mencionar el handle `@botanic.app` en la última escena (consistente con el wordmark de la landing).
 - Regenerar `brand.generated.ts` con `bun run tokens` cada vez que cambie `DESIGN.md`.
 - Ejecutar `bun run lint:brand` antes de commit. Falla con cualquier hex/fuente externos.
-- Auditar el render con `@visual-eval` (subagente `opencode-go/qwen3.7-plus`) tras `bunx remotion render`.
+- Auditar el render en humano (parar y preguntar al usuario) tras `bunx remotion render`; no usar `@visual-eval`.
 
 ## Don'ts
 
@@ -222,24 +233,21 @@ Estas reglas son específicas de motion graphics y **se suman** a las de `DESIGN
 | `video/src/styles.ts` | `getStyle(name)` mapea `MotionStyle` → `StyleTokens` (bg/text/accent/overlay). |
 | `video/src/mesh.ts` | Componente `<MeshBackground variant="cozy"\|"energy"\|"minimal" />`. |
 | `video/src/Root.tsx` | Carga Onest con `@remotion/fonts` + registra composiciones. |
-| `video/src/components/Logo.tsx` | SVG paths de `static/favicon.svg`, bg/fg desde `BRAND`. |
-| `video/src/components/scenes/Hook.tsx` · `Tip.tsx` · `Outro.tsx` | Composición por motion style. |
+| `video/src/components/Logo.tsx` | SVG paths de `static/favicon.svg`, bg/fg desde `BRAND` (icono redondo; el wordmark completo vive en `Wordmark.tsx`). |
+| `video/src/components/Wordmark.tsx` | Wordmark "Botanic" con el brote integrado como "t". Componente reutilizable. |
+| `video/src/components/WordmarkDraw.tsx` | Wordmark con path draw escalonado (stroke + fill) para el `cta`. |
+| `video/src/components/scenes/Hook.tsx` · `Tip.tsx` · `Outro.tsx` · `Cta.tsx` | Composición por scene type (`hook` / `tip` / `outro` / `cta`). |
 | `video/src/BotanicReel.tsx` · `BotanicSlide.tsx` | Composiciones 9:16 / 4:5. |
 | `scripts/sync-brand-tokens.mjs` | Lee frontmatter de `DESIGN.md` → `brand.generated.ts`. |
 | `scripts/copy-fonts.mjs` | Copia Onest woff2 a `static/fonts/`. |
 | `scripts/lint-brand.mjs` | Caza hex hardcodeados y `font-family` que no sea `Onest Variable`. |
-| `.opencode/agents/visual-eval.md` | Audita coherencia de marca (bloque "Coherencia de marca" en la respuesta). |
+| `.opencode/agents/visual-eval.md` | Verifica assets de stock (Pexels) contra el contexto de la escena; no audita renders propios. |
 
 ## Auditoría de coherencia
 
 Tras cada render (`bunx remotion render` o `bunx remotion still`):
 
 1. **Lint**: `bun run lint:brand` (debe pasar).
-2. **Visual**: `@visual-eval video/out/<slug>.mp4` — el subagente responde con las secciones fijas más una nueva **"Coherencia de marca"** que evalúa:
-   - **Tipografía**: ¿se ve Onest Variable? (curvas humano-geometricas, sin serif, sin monospace).
-   - **Paleta**: ¿los fondos/acabados salen de Still/Lino? Penalizar si hay magenta, naranja saturado o grises fríos.
-   - **Overlay**: ¿oscuro sobre foto para legibilidad?
-   - **CTA final**: ¿logo + handle presentes en la última escena?
-   - **Mesh**: si hay mesh, ¿está en Still/Lino (no en neón)?
+2. **Visual**: revisión **humana** — parar y preguntar al usuario. Check rápido: tipografía Onest Variable, paleta dentro de Still/Lino (sin magenta/naranja saturado/grises fríos), overlay que garantice legibilidad, logo + handle en la última escena, mesh en Still/Lino.
 
-Si la recomendación es ≠ `usar`, iterar.
+El subagente `visual-eval` NO audita renders propios; es solo para verificar stock (Pexels).

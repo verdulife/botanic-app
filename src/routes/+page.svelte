@@ -151,7 +151,7 @@
 <!-- Hero -->
 <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 pt-24 pb-32 md:grid-cols-2 md:gap-16 md:px-8 md:pt-36 md:pb-40">
 	<div class="flex flex-col items-start gap-5">
-		<p class="text-sm font-medium tracking-wide text-primary uppercase">La app para Plant Lovers</p>
+		<p class="text-sm font-medium tracking-wide text-still-600 uppercase">La app para Plant Lovers</p>
 		<h1 class="text-4xl leading-[1.05] font-light text-balance md:text-6xl">
 			Tus plantas quieren <strong class="font-semibold">conocer a gente nueva</strong>
 		</h1>
@@ -240,7 +240,7 @@
 			<span
 				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
 			>
-				<cat.icon class="size-4 text-primary" aria-hidden="true" />
+				<cat.icon class="size-4 text-still-600" aria-hidden="true" />
 				{cat.name}
 			</span>
 		{/each}
@@ -253,7 +253,7 @@
 		class="rounded-3xl border border-border bg-secondary/40 px-6 py-14 md:px-12 md:py-16"
 	>
 		<div class="mx-auto max-w-2xl text-center">
-			<p class="text-sm font-medium tracking-wide text-primary uppercase">¿Qué es Botanic?</p>
+			<p class="text-sm font-medium tracking-wide text-still-600 uppercase">¿Qué es Botanic?</p>
 			<h2 class="mt-2 text-4xl leading-tight font-light text-balance md:text-[2.875rem]">
 				La app donde las plantas <strong class="font-semibold">conocen a gente nueva</strong>
 			</h2>
@@ -267,19 +267,19 @@
 			<span
 				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
 			>
-				<Leaf class="size-4 text-primary" aria-hidden="true" />
+				<Leaf class="size-4 text-still-600" aria-hidden="true" />
 				Solo plantas — pensado para el mundo vegetal
 			</span>
 			<span
 				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
 			>
-				<Heart class="size-4 text-primary" aria-hidden="true" />
+				<Heart class="size-4 text-still-600" aria-hidden="true" />
 				Comunidad — entre gente que cuida plantas
 			</span>
 			<span
 				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
 			>
-				<Recycle class="size-4 text-primary" aria-hidden="true" />
+				<Recycle class="size-4 text-still-600" aria-hidden="true" />
 				Segunda vida — la economía circular, hecha fácil
 			</span>
 		</div>
@@ -451,17 +451,17 @@
 		background:
 			radial-gradient(
 				55% 70% at 22% 38%,
-				oklch(0.931 0.061 150 / 1),
+				oklch(0.931 0.026 145 / 1),
 				transparent 70%
 			),
 			radial-gradient(
 				48% 62% at 74% 28%,
-				oklch(0.897 0.1 147 / 0.95),
+				oklch(0.863 0.047 146 / 0.95),
 				transparent 70%
 			),
 			radial-gradient(
 				60% 72% at 58% 78%,
-				oklch(0.861 0.128 148 / 0.9),
+				oklch(0.768 0.075 147 / 0.9),
 				transparent 70%
 			),
 			radial-gradient(
@@ -475,17 +475,17 @@
 		background:
 			radial-gradient(
 				56% 66% at 68% 58%,
-				oklch(0.931 0.061 150 / 0.95),
+				oklch(0.931 0.026 145 / 0.95),
 				transparent 70%
 			),
 			radial-gradient(
 				46% 62% at 28% 66%,
-				oklch(0.897 0.1 147 / 0.9),
+				oklch(0.863 0.047 146 / 0.9),
 				transparent 70%
 			),
 			radial-gradient(
 				58% 70% at 82% 24%,
-				oklch(0.861 0.128 148 / 0.85),
+				oklch(0.768 0.075 147 / 0.85),
 				transparent 70%
 			),
 			radial-gradient(
@@ -499,17 +499,17 @@
 		background:
 			radial-gradient(
 				55% 70% at 22% 38%,
-				oklch(0.401 0.218 146 / 0.85),
+				oklch(0.349 0.06 149 / 0.85),
 				transparent 70%
 			),
 			radial-gradient(
 				48% 62% at 74% 28%,
-				oklch(0.265 0.159 146 / 0.85),
+				oklch(0.309 0.048 150 / 0.85),
 				transparent 70%
 			),
 			radial-gradient(
 				60% 72% at 58% 78%,
-				oklch(0.195 0.122 146 / 0.8),
+				oklch(0.221 0.032 151 / 0.8),
 				transparent 70%
 			),
 			radial-gradient(
@@ -523,17 +523,17 @@
 		background:
 			radial-gradient(
 				56% 66% at 68% 58%,
-				oklch(0.401 0.218 146 / 0.8),
+				oklch(0.349 0.06 149 / 0.8),
 				transparent 70%
 			),
 			radial-gradient(
 				46% 62% at 28% 66%,
-				oklch(0.265 0.159 146 / 0.75),
+				oklch(0.309 0.048 150 / 0.75),
 				transparent 70%
 			),
 			radial-gradient(
 				58% 70% at 82% 24%,
-				oklch(0.195 0.122 146 / 0.7),
+				oklch(0.221 0.032 151 / 0.7),
 				transparent 70%
 			),
 			radial-gradient(
@@ -586,17 +586,17 @@
 		background:
 			radial-gradient(
 				40% 55% at 22% 38%,
-				oklch(0.931 0.061 150 / 0.45),
+				oklch(0.931 0.026 145 / 0.45),
 				transparent 70%
 			),
 			radial-gradient(
 				36% 48% at 74% 28%,
-				oklch(0.897 0.1 147 / 0.3),
+				oklch(0.863 0.047 146 / 0.3),
 				transparent 70%
 			),
 			radial-gradient(
 				46% 60% at 58% 78%,
-				oklch(0.861 0.128 148 / 0.25),
+				oklch(0.768 0.075 147 / 0.25),
 				transparent 70%
 			),
 			radial-gradient(
@@ -610,17 +610,17 @@
 		background:
 			radial-gradient(
 				42% 52% at 68% 58%,
-				oklch(0.931 0.061 150 / 0.4),
+				oklch(0.931 0.026 145 / 0.4),
 				transparent 70%
 			),
 			radial-gradient(
 				34% 50% at 28% 66%,
-				oklch(0.897 0.1 147 / 0.28),
+				oklch(0.863 0.047 146 / 0.28),
 				transparent 70%
 			),
 			radial-gradient(
 				44% 58% at 82% 24%,
-				oklch(0.861 0.128 148 / 0.22),
+				oklch(0.768 0.075 147 / 0.22),
 				transparent 70%
 			),
 			radial-gradient(
@@ -634,17 +634,17 @@
 		background:
 			radial-gradient(
 				40% 55% at 22% 38%,
-				oklch(0.401 0.218 146 / 0.32),
+				oklch(0.349 0.06 149 / 0.32),
 				transparent 70%
 			),
 			radial-gradient(
 				36% 48% at 74% 28%,
-				oklch(0.265 0.159 146 / 0.3),
+				oklch(0.309 0.048 150 / 0.3),
 				transparent 70%
 			),
 			radial-gradient(
 				46% 60% at 58% 78%,
-				oklch(0.195 0.122 146 / 0.28),
+				oklch(0.221 0.032 151 / 0.28),
 				transparent 70%
 			),
 			radial-gradient(
@@ -658,17 +658,17 @@
 		background:
 			radial-gradient(
 				42% 52% at 68% 58%,
-				oklch(0.401 0.218 146 / 0.28),
+				oklch(0.349 0.06 149 / 0.28),
 				transparent 70%
 			),
 			radial-gradient(
 				34% 50% at 28% 66%,
-				oklch(0.265 0.159 146 / 0.26),
+				oklch(0.309 0.048 150 / 0.26),
 				transparent 70%
 			),
 			radial-gradient(
 				44% 58% at 82% 24%,
-				oklch(0.195 0.122 146 / 0.24),
+				oklch(0.221 0.032 151 / 0.24),
 				transparent 70%
 			),
 			radial-gradient(

@@ -4,10 +4,10 @@
 	"template": "tip-stack",
 	"platform": ["ig", "tiktok"],
 	"scenes": [
-		{ "type": "hook", "text": "¿Riegas tu monstera así?", "duration": 2 },
-		{ "type": "tip", "text": "Error 1: agua del grifo", "media": "static/social/monstera-riego/pexels-17619301.jpg", "duration": 4 },
-		{ "type": "tip", "text": "Error 2: riego sin drenaje", "duration": 4 },
-		{ "type": "tip", "text": "Error 3: exceso de agua", "duration": 4 },
-		{ "type": "outro", "text": "Sigue para más cuidados 🌱", "cta": "Sigue para más cuidados 🌱", "logo": true, "duration": 3 }
+		{ "type": "hook", "text": "No cometas estos **errores** con tu monstera", "duration": 3.5 },
+		{ "type": "tip", "text": "Error 1: agua del grifo", "media": "static/social/monstera-riego/pexels-7218427.mp4", "duration": 4 },
+		{ "type": "tip", "text": "Error 2: riego sin drenaje", "media": "static/social/monstera-riego/pexels-6911647.mp4", "duration": 4 },
+		{ "type": "tip", "text": "Error 3: exceso de agua", "media": "static/social/monstera-riego/pexels-7292469.mp4", "duration": 4 },
+		{ "type": "outro", "text": "Únete a la primera comunidad donde las **plantas conocen a gente nueva**.", "cta": "Únete a la primera comunidad donde las **plantas conocen a gente nueva**.", "logo": true, "duration": 3 }
 	]
 }

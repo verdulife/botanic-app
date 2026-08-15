@@ -17,7 +17,7 @@
 
 <section class="mx-auto max-w-6xl px-4 pt-6 pb-20 md:px-6">
 	<header class="mx-auto mb-12 max-w-2xl text-center">
-		<p class="text-sm font-medium tracking-wide text-primary uppercase">Blog Botanic</p>
+		<p class="text-sm font-medium tracking-wide text-still-600 uppercase">Blog Botanic</p>
 		<h1 class="mt-2 text-4xl leading-tight font-light text-balance md:text-5xl">
 			El blog de <strong class="font-semibold">Botanic</strong>
 		</h1>

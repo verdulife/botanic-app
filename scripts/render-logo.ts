@@ -64,11 +64,11 @@ const sproutPaths = `
 		<path d="M5 21h14"/>`;
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}">
-	<path fill="#2e4431" d="${bo}"/>
-	<g transform="translate(${sprBoxLeft} ${baseline + sprTopFont}) scale(${SPR / 24})" fill="none" stroke="#2e4431" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path fill="#224329" d="${bo}"/>
+	<g transform="translate(${sprBoxLeft} ${baseline + sprTopFont}) scale(${SPR / 24})" fill="none" stroke="#224329" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 ${sproutPaths}
 	</g>
-	<path fill="#2e4431" d="${anic}"/>
+	<path fill="#224329" d="${anic}"/>
 </svg>
 `;
 

@@ -23,7 +23,7 @@
 <div class="flex flex-col gap-5 px-5 pt-5 pb-3">
 	<div class="flex items-center gap-3">
 		<div class="bg-primary/10 flex size-9 items-center justify-center rounded-xl">
-			<Sprout class="text-primary size-5" />
+			<Sprout class="text-still-600 size-5" />
 		</div>
 		<div class="relative flex-1">
 			<Search class="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />

@@ -33,7 +33,7 @@ Carril de video vertical (`reels` en Instagram + `TikTok`) generado de forma **a
 
 **Principio rector**: el agente escribe **datos** (`script.json`), nunca animación. La biblioteca de motion se construye/adopta una vez; el LLM solo compone. Menor coste de tokens, computación y tiempo, con calidad estética garantizada.
 
-**Evaluación visual**: el subagente [`visual-eval`](social-eval.md) (`opencode-go/qwen3.7-plus`) verifica cada asset descargado con Pexels y audita los mp4 renderizados. Invocado automáticamente por el build agent tras `bun run stock fetch`.
+**Evaluación visual**: el subagente [`visual-eval`](social-eval.md) (`opencode-go/qwen3.7-plus`) verifica cada asset de stock descargado con Pexels (foto o clip) contra el contexto de la escena. Invocado automáticamente por el build agent tras `bun run stock fetch`. Los renders propios NO se auditan con `visual-eval`: la verificación de calidad es humana (parar y preguntar).
 
 ## script.json (inputProps)
 
@@ -117,14 +117,16 @@ scripts/
 - `bun run stock fetch <nº> <dest>` → descarga al asset local (foto jpg/webp vía sharp; clip mp4) y registra la referencia.
 - API key en `.env.local` (`PEXELS_API_KEY`). Límites: 200 req/h, 20.000/mes (de sobra).
 - **Atribución**: no requerida por la licencia Pexels; opcional agradecer al autor en el copy. **No** usar Commons ni Unsplash en redes (Commons queda para el blog; Unsplash descartado).
-- **Evaluación visual**: cada asset descargado se pasa al subagente [`visual-eval`](social-eval.md) (`opencode-go/qwen3.7-plus`) antes de fijarlo en `script.json`. Para clips de vídeo y mp4 renderizados por Remotion, primero `bun run frames <mp4> <png>` para generar un contact-sheet y luego `@visual-eval` sobre el PNG.
+- **Evaluación visual**: cada asset de stock descargado se pasa al subagente [`visual-eval`](social-eval.md) (`opencode-go/qwen3.7-plus`) antes de fijarlo en `script.json`. Para clips de vídeo (stock Pexels), primero `bun run frames <mp4> <png>` para generar un contact-sheet y luego `@visual-eval` sobre el PNG. Los renders de Remotion no se auditan con `visual-eval` (verificación humana: parar y preguntar).
 
-## Audio (Fase 2, diferido)
+## Audio
 
-- **Música**: Pixabay audio (licencia limpia, sin atribución).
-- **Narración**: edge-tts (voz Microsoft, español, gratis, sin cuenta) → mp3.
-- **Captions sincronizadas**: faster-whisper (local) para word-timestamps → estilo karaoke.
-- Se integra con `@remotion/captions` y `<Audio>` de Remotion. El pipeline actual genera el mp4 **sin pista**; la música se puede añadir también desde la librería de la propia app (IG/TikTok) al publicar.
+- **Música**: Pixabay Music (Pixabay License, **sin atribución**, comercial OK). Integrada vía `<Audio src={staticFile("social/<slug>/music.mp3")} volume={0.6} />` dentro del `AbsoluteFill` de `BotanicReel.tsx`. Remotion recorta el audio al `durationInFrames` automáticamente.
+- **Búsqueda de música**: la API pública de Pixabay **no expone música** (solo imágenes y vídeos). Flujo real: el usuario abre `https://pixabay.com/music/search/?q=bossa+nova` (o equivalente) en el navegador, elige un track, descarga el mp3 a `static/social/<slug>/music.mp3`. Otras fuentes libres sin atribución: **Mixkit** (mixkit.co), **FMA CC0**. Uppbeat descartado (free tier requiere atribución en la descripción del post).
+- **Narración** (Fase 2): edge-tts (voz Microsoft, español) → mp3.
+- **Captions sincronizadas** (Fase 2): faster-whisper local → `@remotion/captions`.
+
+**Implementado**: el primer reel (`coleccionistas-de-esquejes`) ya incluye audio MP3 brasileño libre a `volume={0.6}`. Audio en slides pendiente.
 
 ## Publicación y cadencia
 
@@ -155,13 +157,16 @@ scripts/
 - [x] `src/lib/social/_drafts/ + posts/`
 - [x] **PoC end-to-end**: `script.json` → Pexels → `mp4` 9:16 + stills carrusel 4:5 ✓
 - [x] **Alineación al design system**: tokens oklch vía `bun run tokens` (`brand.generated.ts`), fuente variable Onest en `static/fonts/` (`bun run fonts`), `bun run lint:brand`, jerarquía tipográfica exacta de la landing (display 300, strong 600, label 500, dato destacado 700, nunca 800/900; excepción 700 + `text-shadow` token-based sobre foto). Detalle en `video/DESIGN.reels.md`
+- [x] **Política `visual-eval`** aplicada (solo audita stock; renders propios = auditoría humana)
+- [x] **Reel #1 publicable**: `coleccionistas-de-esquejes` ("3 cosas que solo entiendes si eres Plant Lover"). Render entregado: `video/out/coleccionistas-de-esquejes.mp4` (16.2 MB, 23.5s, 1080×1920). Patrones nuevos: hook con slide-in desde la derecha (`translateX(40vw → 0)`); tip con caja glass (`still-950` 70% + `backdropFilter: blur(24px)`, **excepción documentada a "no glassmorphism"** aprobada); wordmark con **path draw escalonado** (B-o-t → sprout → a-n-i-c, `strokeDasharray="100 101"` evita el puntito inicial, fill escalonado, `strokeOpacity` funde el outline al final); ending separado en dos escenas (`outro` solo texto + fade-out, `cta` logo con path draw + botón pill `www.botanicapp.es`); audio MP3 libre (Pixabay) integrado.
+- [x] **`monstera-riego`** mantenido como **plantilla técnica** — no se publica.
 
 **Pendiente (por orden):**
 
-- [ ] **1. Catálogo de elementos 9:16** — composición `Catalog` (`video/src/catalog/`) con slots INTRO/HOOK/TIP/QUOTE/OUTRO/TRANSICIÓN/ENDING (empieza vacía). Sesiones por elemento: elegir componente (RemotionUI `npx remotion-ui add <c>`, Onda `npx ondajs add <c>`) → restilizar a marca → revisar en Studio → `git commit` + inventario en `video/CATALOG.md`. Hito 1 = INTRO
-- [ ] **2. Re-render + auditoría visual del PoC** — regenerar `video/out/poc-reel-v2.mp4` (pesos/sombras corregidos) y pasar por `@visual-eval` (contact sheet: `bun run frames`)
-- [ ] **3. Clip de vídeo de fondo en escenas `tip`** — hoy solo foto; el mp4 Pexels se descarga (`stock fetch:video`) pero la escena usa `<Img>`
-- [ ] **4. Audio Fase 2** — Pixabay (música) + edge-tts (narración español) + faster-whisper (word-timestamps) + `@remotion/captions`
-- [ ] **5. Batch semanal operativo** — hito 6 del plan original (cadencia 3-4x/semana)
+- [ ] **1. Plantillas Remotion de reels en GitHub** — buscar y evaluar candidatos con criterios de diseño (Onest/sans cálida, paleta neutra/cálida), animaciones (typewriter/slide-in/fade-in), estructura hook→tips→cta, mantenimiento (último commit < 6 meses) y compatibilidad con Remotion 4. Umbral: ≥4/5 en criterios clave. Antes de forkar, hacer la **prueba de velocidad**: crear `src/lib/social/_drafts/segundo-reel/` y medir cuánto tarda de principio a fin. Si < 30 min/reel → el pipeline actual ya es "template-like", el fork no compensa.
+- [ ] **2. Catálogo de elementos 9:16** — composición `Catalog` (`video/src/catalog/`) con slots INTRO/HOOK/TIP/QUOTE/OUTRO/TRANSICIÓN/ENDING (empieza vacía). Sesiones por elemento: elegir componente (RemotionUI `npx remotion-ui add <c>`, Onda `npx ondajs add <c>`) → restilizar a marca → revisar en Studio → `git commit` + inventario en `video/CATALOG.md`. Hito 1 = INTRO
+- [ ] **3. Cablear elementos aprobados** en `BotanicReel.tsx`/`BotanicSlide.tsx` (eliminar duplicación: `SlideContent` inline, `Outro`/`ProgressDots` duplicados, `Tip` sin soporte vídeo).
+- [ ] **4. Audio en slides** — incorporar `<Audio>` a `BotanicSlide.tsx`.
+- [ ] **5. Batch semanal operativo** — hito 6 del plan original (cadencia 3-4x/semana).
 
-> Nota: este modelo no recibe imágenes; toda auditoría visual del render la hace el humano o `@visual-eval`.
+> Nota: este modelo no recibe imágenes; la auditoría visual del render es humana (parar y preguntar). `visual-eval` es solo para verificar stock.
