@@ -32,7 +32,7 @@
 					</a>
 				{/each}
 			</nav>
-			<Button href="#waitlist" class="hidden px-4 md:inline-flex">Únete a la waitlist</Button>
+			<Button href="/#waitlist" class="hidden px-4 md:inline-flex">Únete a la waitlist</Button>
 		</div>
 	</div>
 </header>

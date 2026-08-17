@@ -169,12 +169,6 @@ p {
 	text-wrap: pretty;
 }
 
-@supports (corner-shape: squircle) {
-	[data-slot="button"] {
-		corner-shape: squircle;
-	}
-}
-
 @layer components {
 	.prose-botanic {
 		--tw-prose-body: var(--foreground);

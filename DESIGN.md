@@ -107,7 +107,7 @@ components:
   button-primary:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.primary-foreground}"
-    rounded: "{rounded.3xl} + corner-shape: squircle"
+    rounded: "{rounded.full}"
     height: "2.25rem (sm) / 2.5rem (default) / 3rem (lg custom)"
     padding: "0 1rem (sm) / 0 2rem (lg custom)"
   button-outline:
@@ -290,8 +290,7 @@ Profundidad por **bordes y radio**, con una excepción de sombra. Las tarjetas d
 - `rounded-sm` (0.5rem) en el `radius` base de shadcn.
 - `rounded-xl` (0.75rem) en la imagen dentro de las tarjetas del abanico.
 - `rounded-2xl` (1rem) en tarjetas del abanico, manifiesto y por-qué.
-- `rounded-3xl` (1.5rem) en botones (base), combinado con `corner-shape: squircle` en navegadores que lo soportan (`@supports`).
-- `rounded-full` en pills de categoría, input de la waitlist y el botón "Unirme" integrado en el input (este último con `corner-shape: round` inline para anular el squircle).
+- `rounded-full` en botones (base), pills de categoría, input de la waitlist y el botón "Unirme" integrado en el input.
 
 ## Components
 
@@ -344,8 +343,9 @@ Cada columna: icon-tile `bg-secondary` `rounded-lg`, `h3 text-lg font-semibold`,
 - Párrafo `max-w-md mx-auto text-lg text-muted-foreground`: "Déjanos tu email y **entérate antes que nadie** del lanzamiento."
 - `WaitlistForm` (form `mx-auto w-full max-w-[31.5rem]`):
   - **Input pill** `h-14 w-full rounded-full border border-border bg-background pl-12 pr-40 text-lg shadow-sm` con icono `Mail size-5` a la izquierda y `focus-visible:ring-2 ring-ring`.
-  - **Botón integrado en el input** (absolute `right-[3px] top-[3px] h-[calc(100%-6px)] rounded-full px-5`, `style="corner-shape: round"`) con `Send` + "Unirme"; estados: `loading` deshabilitado "Enviando…", `success` mensaje en `text-foreground`, `error` mensaje en `text-destructive` con `aria-invalid`.
-  - Microcopy en `text-xs text-muted-foreground`: "Al unirte, usaremos tu email para mantenerte al día de todas las novedades, actualizaciones y la fecha de lanzamiento. No somos pesados, pero podrás darte de baja cuando quieras."
+  - **Botón integrado en el input** (absolute `right-[3px] top-[3px] h-[calc(100%-6px)] rounded-full px-5`) con `Send` + "Unirme"; estados: `loading` deshabilitado "Enviando…", `success` mensaje en `text-foreground`, `error` mensaje en `text-destructive` con `aria-invalid`.
+  - **Checkbox de consentimiento GDPR**: `size-4 shrink-0 accent-[var(--color-still-400)]` con links a `/politica-de-privacidad` y `/aviso-legal`. Validación client-side + server-side.
+  - Microcopy en `text-xs text-muted-foreground`: "Al unirte, usaremos tu email para mantenerte al día de todas las novedades, actualizaciones, contenido del blog y la fecha de lanzamiento. No somos pesados, pero podrás darte de baja cuando quieras."
 
 ### Footer
 `border-t border-border/70 bg-zinc-950`, texto `text-[0.8125rem] text-primary-foreground`, centrado, `px-4 py-4`. Línea: "Botanic™ 2026. Hecho con `Heart` (fill-primary) para la comunidad **Plant Lovers**." El corazón usa `fill-primary text-primary`.

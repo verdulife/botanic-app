@@ -12,6 +12,10 @@
 		<a href="/" class="text-still-600 hover:underline">Inicio</a>
 		<span aria-hidden="true">·</span>
 		<a href="/blog" class="text-still-600 hover:underline">Blog</a>
+		<span aria-hidden="true">·</span>
+		<a href="/politica-de-privacidad" class="text-still-600 hover:underline">Política de Privacidad</a>
+		<span aria-hidden="true">·</span>
+		<a href="/aviso-legal" class="text-still-600 hover:underline">Aviso Legal</a>
 	</nav>
 	<p>
 		Botanic™ 2026 · Hecho con

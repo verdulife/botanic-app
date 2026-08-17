@@ -78,15 +78,21 @@ async function sendResend(payload: Record<string, unknown>, url: string) {
 
 export const POST: RequestHandler = async ({ request }) => {
 	let email: string;
+	let consent: boolean;
 	try {
-		const body = (await request.json()) as { email?: unknown };
+		const body = (await request.json()) as { email?: unknown; consent?: unknown };
 		email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+		consent = body.consent === true;
 	} catch {
 		return json({ error: "Cuerpo inválido" }, { status: 400 });
 	}
 
 	if (!EMAIL_RE.test(email) || email.length > 320) {
 		return json({ error: "Email inválido" }, { status: 400 });
+	}
+
+	if (!consent) {
+		return json({ error: "Debes aceptar la Política de Privacidad y el Aviso Legal" }, { status: 400 });
 	}
 
 	const { error } = await supabase.from("waitlist").insert({ email });

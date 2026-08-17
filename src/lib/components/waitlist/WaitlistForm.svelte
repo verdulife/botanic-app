@@ -6,6 +6,7 @@
 	type Status = "idle" | "loading" | "success" | "error";
 
 	let email = $state("");
+	let consent = $state(false);
 	let status = $state<Status>("idle");
 	let errorMessage = $state("");
 	let alreadyRegistered = $state(false);
@@ -20,11 +21,16 @@
 			errorMessage = "Introduce un email válido.";
 			return;
 		}
+		if (!consent) {
+			status = "error";
+			errorMessage = "Debes aceptar la Política de Privacidad y el Aviso Legal.";
+			return;
+		}
 		status = "loading";
 		const res = await fetch("/api/waitlist", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ email: trimmed }),
+			body: JSON.stringify({ email: trimmed, consent }),
 		});
 		if (!res.ok) {
 			status = "error";
@@ -48,7 +54,7 @@
 	}
 </script>
 
-<form onsubmit={handleSubmit} novalidate class="mx-auto flex w-full max-w-[31.5rem] flex-col gap-3">
+<form onsubmit={handleSubmit} novalidate class="mx-auto flex w-full max-w-[31.5rem] flex-col">
 	<div class="relative w-full">
 		<Mail class="text-muted-foreground absolute top-1/2 left-4 size-5 -translate-y-1/2" />
 		<Input
@@ -62,7 +68,6 @@
 		<Button
 			type="submit"
 			size="lg"
-			style="corner-shape: round"
 			class="absolute top-[3px] right-[3px] h-[calc(100%-6px)] rounded-full px-5 text-base"
 			disabled={status === "loading" || status === "success"}
 		>
@@ -74,7 +79,7 @@
 			{/if}
 		</Button>
 	</div>
-	<p aria-live="polite" class="min-h-5 text-center text-sm">
+	<p aria-live="polite" class="min-h-[1.25rem] pt-2 text-center text-sm">
 		{#if status === "success"}
 			<span class="text-foreground">
 				{alreadyRegistered
@@ -85,8 +90,17 @@
 			<span class="text-destructive">{errorMessage}</span>
 		{/if}
 	</p>
-	<p class="text-center text-xs text-muted-foreground">
-		Al unirte, usaremos tu email para mantenerte al día de todas las novedades, actualizaciones
-		y la fecha de lanzamiento. No somos pesados, pero podrás darte de baja cuando quieras.
+	<label class="flex items-center justify-center gap-2 pt-2 text-sm text-muted-foreground">
+		<input type="checkbox" bind:checked={consent} class="size-4 shrink-0 accent-[var(--color-still-400)]" />
+		<span>
+			He leído y acepto la
+			<a href="/politica-de-privacidad" class="underline underline-offset-2 hover:text-foreground">Política de Privacidad</a>
+			y el
+			<a href="/aviso-legal" class="underline underline-offset-2 hover:text-foreground">Aviso Legal</a>.
+		</span>
+	</label>
+	<p class="pt-3 text-center text-xs text-muted-foreground">
+		Al unirte, usaremos tu email para mantenerte al día de todas las novedades, actualizaciones,
+		contenido del blog y la fecha de lanzamiento. No somos pesados, pero podrás darte de baja cuando quieras.
 	</p>
 </form>
