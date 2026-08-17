@@ -20,7 +20,8 @@
 		"frames": "bun run scripts/video-frames.mjs",
 		"tokens": "bun run scripts/sync-brand-tokens.mjs",
 		"fonts": "bun run scripts/copy-fonts.mjs",
-		"lint:brand": "bun run scripts/lint-brand.mjs"
+		"lint:brand": "bun run scripts/lint-brand.mjs",
+		"poster": "bunx serve . -l 4322"
 	},
 	"devDependencies": {
 		"@fontsource/onest": "^5.3.0",

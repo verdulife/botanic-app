@@ -36,6 +36,8 @@ Coste 0          1.000 users RN / Flutter                 │       Latam + IA
 
 **Carril paralelo — Redes sociales**: 🚧 PoC implementado. Reels IG/TikTok + posts/carruseles IG generados con **Remotion** desde guiones agénticos (`script.json`), assets vía Pexels, publicación manual en batch semanal. Detalle en [`docs/social-video.md`](docs/social-video.md) y [`docs/social-post.md`](docs/social-post.md).
 
+**Carril paralelo — Poster A3 (captación offline)**: ✅ implementado. HTML standalone en `poster/`, fuera de SvelteKit/Vercel. Render manual via `bun run poster` → Chrome → Cmd+P → PDF A3. Diseño on-brand (tokens sincronizados con `DESIGN.md`): fondo `tranquil-200` + textura de hojas al 25%, headline "El wallapop de las plantas", sub unificado (tríada + gancho + "Plant Lovers"), QR 80×80mm sin marco apuntando a `www.botanicapp.es`. Detalle y workflow en [`poster/README.md`](poster/README.md).
+
 ## Fase 1 — Validación (Q4 2026)
 
 - Crecimiento orgánico a **1.000 usuarios activos**

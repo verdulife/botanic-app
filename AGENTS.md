@@ -56,6 +56,7 @@ botanic-app/
 │   ├── social-video.md    # Reels IG + TikTok (Remotion, agéntico)
 │   └── social-post.md     # IG feed + carruseles (stills Remotion)
 ├── video/                 # Proyecto Remotion autónomo (reels/carruseles)
+├── poster/                # Proyecto autónomo A3 para impresión (posters, flyers)
 ├── scripts/               # Stock (Pexels), OG, etc.
 ├── src/lib/social/        # Guiones script.json (posts/, _drafts/)
 ├── src/lib/legal/         # Markdown de páginas legales
@@ -86,6 +87,7 @@ botanic-app/
   - **Pipeline**: `bun run stock fetch:video <nº> <dest>` → `@visual-eval <dest>` → si recomendación ≠ `usar`, re-buscar. `bun run frames <mp4> <png>` para contact-sheets. Auditoría final del mp4: humana (parar y mostrar al usuario).
   - **Pendientes**: sesión de catálogo por elemento (Hito 1 = INTRO); cablear elementos aprobados en `BotanicReel`/`BotanicSlide` (eliminar duplicación: `SlideContent` inline, `Outro`/`ProgressDots` duplicados, `Tip` sin soporte vídeo); re-render + auditoría; audio pendiente de incorporar a slides; **próxima iteración**: evaluar plantillas Remotion de reels en GitHub para ver si compensa forkar una base externa vs. seguir con `script.json` data-driven.
   - Detalle en [`docs/social-video.md`](docs/social-video.md) y [`docs/social-post.md`](docs/social-post.md).
+- **Poster A3 (carril paralelo — captación offline)**: ✅ implementado. HTML standalone + CSS plano en `poster/` (mismo patrón autónomo que `video/`, fuera de SvelteKit/Vercel). Render: `bun run poster` → `http://localhost:4322/poster/` → Chrome Cmd+P → PDF A3. Diseño actual: fondo `tranquil-200` + textura de hojas al 25%, headline "El wallapop de las plantas", sub unificado (tríada + gancho + "Plant Lovers"), QR 80×80mm sin marco apuntando a `www.botanicapp.es`. Tokens sincronizados con `DESIGN.md`. Detalle y workflow en `poster/README.md`.
 
 - PWA y Auth aún sin implementar.
 - Emails de la waitlist operativos con Resend: dominio `botanicapp.es` verificado (DKIM + SPF + MX, región eu-west-1), Audience "waitlist" (id `fbe9c75b-b2d4-41b3-89e9-848f7755de43`), API key en `.env.local`, ruta `POST /api/waitlist` (insert + confirmación al usuario + aviso a `ADMIN_NOTIFY_EMAIL` — admite múltiples emails separados por coma — + alta en Audience, solo en fila nueva). El aviso admin incluye **total de apuntes** consultado desde la vista `waitlist_count` (anon, sin necesidad de service_role). `WaitlistForm.svelte` conectado. Probado en real: ambos emails `delivered`. Emails en **HTML con marca** (`src/lib/emails/`: layout + confirmation + adminNotify, estilos inline). Header con `og-image.jpg` (banner de marca, ~23 KB), el mismo asset optimizado (sharp) que se usa en el OG metadata (`og:image`/`twitter:image`). Asuntos sin emojis: confirmación "¡Gracias por apuntarte a la waitlist de Botanic!" y aviso admin "Nuevo en la waitlist". DMARC añadido en Vercel DNS (`_dmarc.botanicapp.es`, `p=none`); verificación pendiente.

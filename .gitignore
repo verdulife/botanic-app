@@ -39,3 +39,7 @@ vite.config.ts.timestamp-*
 
 # Tokens de marca autogeados desde DESIGN.md (regenerados con `bun run tokens`)
 /video/src/brand.generated.ts
+
+# Poster A3 — logs residuales del servidor `bun run poster`
+/poster.log
+/poster.err.log

@@ -25,9 +25,17 @@ Ideas, tareas pendientes y oportunidades detectadas. Cuando una idea se concrete
 
 9. **Merchandising de plantas** — camisetas con hojas de plantas raras, etc. Buscar más ideas para esto.
 10. **Contenido de valor** — ideas para dar a los seguidores cosas que creen sentimiento de comunidad o beneficio propio en lugar de spam.
+11. ✅ **Documentos para impresión** — poster A3 implementado en `poster/` (autónomo, fuera de Vercel). Pendientes fase 2: derivados A4/A5, horizontal, render automatizado.
 
 ## Branding / Diseño
 
-11. **Rediseño de logotipo**.
-12. **Rediseño de paleta de colores**.
-13. **Crear design system**.
+12. **Rediseño de logotipo**.
+13. **Rediseño de paleta de colores**.
+14. **Crear design system**.
+
+## Arquitectura / Developer Experience
+
+15. **Convertir en monorepo** — definir bien cada parte y separar responsabilidades claramente.
+16. **Optimizar documentos para agentes IA** — crear un agent global + agents por sección (web, database/backend, app, video/social — generador de reels/carruseles, etc.). Así se consumen menos tokens, liberamos la ventana de contexto de ruido en cada sesión y cada carpeta es independiente a nivel agentico de las otras (aunque siempre pueden existir consultas internas).
+
+    **Opinión del agente (2026-08-17)**: buena idea, pero hacer **15 antes** (el monorepo) porque define las carpetas sobre las que vivirá cada subagente. Orden recomendado: (1) monorepo con carpetas `web/`, `database/`, `app/`, `social/`, `docs/`; (2) `AGENTS.md` raíz corto (proyecto, stack, decisiones clave, reglas) + `AGENTS.md` por carpeta con lo específico. Cada sesión carga raíz + el suyo. Naming: **`social/`** mejor que `video/` porque ya no es solo reels — también carruseles, IG feed, futuro TikTok. Riesgos a vigilar: acoplamiento real entre secciones (`DESIGN.md`, `WaitlistForm` compartido, `waitlist_count` consumido por el email admin) → el agente global existe para esos solapamientos; sincronización (varios AGENTS.md pueden divergir si cambia una convención transversal, ej. un token de marca). Subagentes específicos ya existentes (`@visual-eval`) se mantienen y se referencian desde el AGENTS.md de su sección.

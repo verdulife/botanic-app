@@ -1,0 +1,237 @@
+/* =========================================================================
+   Botanic Poster — A3 portrait
+   Tokens synced con DESIGN.md (canon 2026).
+   ========================================================================= */
+
+@page {
+	size: 297mm 420mm;
+	margin: 0;
+}
+
+:root {
+	/* Still Green (rampa) */
+	--still-50: oklch(0.972 0.012 145);
+	--still-100: oklch(0.931 0.026 145);
+	--still-200: oklch(0.863 0.047 146);
+	--still-300: oklch(0.768 0.075 147);
+	--still-400: oklch(0.687 0.089 148);
+	--still-500: oklch(0.557 0.104 148);
+	--still-600: oklch(0.471 0.093 148);
+	--still-700: oklch(0.404 0.076 149);
+	--still-800: oklch(0.349 0.06 149);
+	--still-900: oklch(0.309 0.048 150);
+	--still-950: oklch(0.221 0.032 151);
+
+	/* Lino (rampa) */
+	--linen-50: oklch(0.99 0.006 85);
+	--linen-100: oklch(0.977 0.008 85);
+	--linen-200: oklch(0.95 0.012 85);
+	--linen-300: oklch(0.91 0.014 85);
+
+	/* Tranquil (acento amarillo) */
+	--tranquil-200: oklch(0.935 0.128 99);
+
+	/* Neutros */
+	--foreground: oklch(0.28 0.02 55);
+
+	/* Tipografía */
+	--font-sans: 'Onest', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+	/* Poster-only tokens */
+	--pad-x: 18mm;
+	--pad-y: 18mm;
+	--gap: 14mm;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	font-family: var(--font-sans);
+	color: var(--foreground);
+	background: #2a2a2a;
+	-webkit-print-color-adjust: exact;
+	print-color-adjust: exact;
+}
+
+/* =========================================================================
+   Layout — fixed A3 portrait, flex column con gap generoso.
+   Sin imagen: logo → copy → cta → footer.
+   ========================================================================= */
+.poster {
+	width: 297mm;
+	height: 420mm;
+	padding: 32mm var(--pad-x) var(--pad-y);
+	background: var(--tranquil-200);
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap);
+	overflow: hidden;
+	position: relative;
+}
+
+.poster::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url('/poster/leaves-texture.svg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	opacity: 0.25;
+	pointer-events: none;
+	z-index: 0;
+}
+
+.poster > * {
+	position: relative;
+	z-index: 1;
+}
+
+/* =========================================================================
+   Header — Logo Botanic (más grande)
+   ========================================================================= */
+.poster-header {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.logo {
+	font-family: var(--font-sans);
+	font-size: 72pt;
+	font-weight: 700;
+	letter-spacing: -0.03em;
+	color: var(--still-800);
+	display: inline-flex;
+	align-items: baseline;
+	line-height: 1;
+}
+
+.logo-bo,
+.logo-anic {
+	display: inline-block;
+}
+
+.logo-anic {
+	margin-left: -0.05em;
+}
+
+.logo-icon {
+	display: inline-block;
+	width: 0.9em;
+	height: 0.9em;
+	margin: 0 -0.04em;
+	vertical-align: 0.12em;
+	color: var(--still-800);
+}
+
+/* =========================================================================
+   Copy — headline + subtítulos (mucho más grandes)
+   ========================================================================= */
+.copy {
+	display: flex;
+	flex-direction: column;
+	gap: 6mm;
+	margin-top: 4mm;
+}
+
+.headline {
+	font-size: 130pt;
+	font-weight: 300;
+	line-height: 0.95;
+	letter-spacing: -0.035em;
+	color: var(--still-950);
+	text-wrap: balance;
+}
+
+.headline em {
+	font-style: normal;
+	font-weight: 600;
+	color: var(--still-800);
+}
+
+.sub {
+	font-size: 42pt;
+	line-height: 1.25;
+	letter-spacing: -0.01em;
+	font-weight: 400;
+	color: var(--foreground);
+	margin-top: 8mm; /* gap base 6mm + 8mm = 14mm headline→sub */
+	max-width: 240mm;
+}
+
+.sub em {
+	font-style: normal;
+	font-weight: 500;
+}
+
+/* =========================================================================
+   CTA — QR sin marco + texto de invitación a tamaño web.
+   ========================================================================= */
+.cta {
+	display: flex;
+	align-items: center;
+	gap: 14mm;
+	margin-top: auto;
+}
+
+.qr {
+	width: 80mm;
+	height: 80mm;
+	display: block;
+	flex-shrink: 0;
+}
+
+.cta-text {
+	display: flex;
+	flex-direction: column;
+	gap: 4mm;
+	max-width: 150mm;
+}
+
+.cta-line {
+	font-size: 28pt;
+	line-height: 1.25;
+	letter-spacing: -0.01em;
+	font-weight: 400;
+	color: var(--foreground);
+}
+
+/* =========================================================================
+   Print-specific — body pasa a color del poster, sin marco de preview.
+   ========================================================================= */
+@media print {
+	html,
+	body {
+		background: var(--tranquil-200);
+	}
+}
+
+/* =========================================================================
+   Preview-only — centra el poster en el viewport, lo enmarca con borde y
+   sombra para que se vea el límite del A3 en navegador. No se imprime.
+   ========================================================================= */
+@media screen {
+	html,
+	body {
+		min-height: 100vh;
+		padding: 24px;
+	}
+
+	body {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+	}
+
+	.poster {
+		outline: 2px solid #d04848;
+		outline-offset: -2px;
+		box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 12px 40px rgba(0, 0, 0, 0.45);
+		flex-shrink: 0;
+	}
+}
