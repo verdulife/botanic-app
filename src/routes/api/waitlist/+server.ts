@@ -5,19 +5,27 @@ import { confirmationHtml, confirmationText } from "$lib/emails/confirmation";
 import { adminNotifyHtml, adminNotifyText } from "$lib/emails/adminNotify";
 import type { RequestHandler } from "./$types";
 
-const FROM = "Botanic <no-reply@botanicapp.es>";
+const FROM = "Botanic <hola@botanicapp.es>";
+const REPLY_TO = "botanictheapp@gmail.com";
 const RESEND_EMAILS_URL = "https://api.resend.com/emails";
 const RESEND_CONTACTS_URL = "https://api.resend.com/audiences";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const LIST_UNSUBSCRIBE_HEADERS = {
+	"List-Unsubscribe": "<mailto:unsubscribe@botanicapp.es>",
+	"List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+} as const;
 
 async function sendConfirmation(email: string) {
 	await sendResend(
 		{
 			from: FROM,
+			replyTo: [REPLY_TO],
 			to: [email],
 			subject: "¡Gracias por apuntarte a la waitlist de Botanic!",
 			html: confirmationHtml(),
 			text: confirmationText(),
+			headers: LIST_UNSUBSCRIBE_HEADERS,
 		},
 		RESEND_EMAILS_URL
 	);
@@ -34,10 +42,12 @@ async function sendAdminNotification(email: string, now: string, total: number) 
 		await sendResend(
 			{
 				from: FROM,
+				replyTo: [REPLY_TO],
 				to: [recipient],
 				subject: "Nuevo en la waitlist",
 				html: adminNotifyHtml(email, now, total),
 				text: adminNotifyText(email, now, total),
+				headers: LIST_UNSUBSCRIBE_HEADERS,
 			},
 			RESEND_EMAILS_URL
 		);

@@ -16,7 +16,16 @@ export const EMAIL_HEADER_IMG = {
 	src: "https://www.botanicapp.es/og-image.jpg",
 	width: 1200,
 	height: 630,
-	alt: "Botanic ✦ Donde las plantas conocen a gente",
+	alt: "Botanic — comunidad para vender, cambiar y regalar plantas, esquejes, semillas y tiestos con gente de tu zona",
+	displayWidth: 600,
+} as const;
+
+export const EMAIL_LEGAL = {
+	holder: "Albert Verdú Llinares",
+	nif: "46356977-V",
+	address: "Olivella, Barcelona, Cataluña, España",
+	contactEmail: "botanictheapp@gmail.com",
+	website: "www.botanicapp.es",
 } as const;
 
 export function escapeHtml(value: string): string {
@@ -46,7 +55,7 @@ export function emailLayout(preheader: string, body: string): string {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;">
 <tr>
 <td style="background-color:${paper};border-radius:16px;padding:16px;font-family:${EMAIL_FONT};font-size:16px;line-height:24px;color:${ink};">
-<img src="${EMAIL_HEADER_IMG.src}" width="${EMAIL_HEADER_IMG.width}" height="${EMAIL_HEADER_IMG.height}" alt="${escapeHtml(EMAIL_HEADER_IMG.alt)}" style="display:block;width:100%;height:auto;border-radius:12px;border:1px solid ${border};">
+<img src="${EMAIL_HEADER_IMG.src}" width="${EMAIL_HEADER_IMG.displayWidth}" height="${Math.round((EMAIL_HEADER_IMG.displayWidth * EMAIL_HEADER_IMG.height) / EMAIL_HEADER_IMG.width)}" alt="${escapeHtml(EMAIL_HEADER_IMG.alt)}" style="display:block;width:100%;max-width:${EMAIL_HEADER_IMG.displayWidth}px;height:auto;border-radius:12px;border:1px solid ${border};">
 <div style="padding:24px 0 0 0;text-align:center;">
 ${body}
 </div>
@@ -54,8 +63,9 @@ ${body}
 </tr>
 <tr>
 <td align="center" style="padding:24px 16px 0 16px;font-family:${EMAIL_FONT};font-size:12px;line-height:18px;color:${muted};">
-Botanic — Donde las plantas conocen a gente<br>
-<a href="https://botanicapp.es" style="color:${accent};text-decoration:underline;">botanicapp.es</a>
+${EMAIL_LEGAL.holder} · NIF ${EMAIL_LEGAL.nif}<br>
+${EMAIL_LEGAL.address}<br>
+<a href="https://${EMAIL_LEGAL.website}" style="color:${accent};text-decoration:underline;">${EMAIL_LEGAL.website}</a> · <a href="mailto:${EMAIL_LEGAL.contactEmail}" style="color:${accent};text-decoration:underline;">${EMAIL_LEGAL.contactEmail}</a>
 </td>
 </tr>
 </table>
