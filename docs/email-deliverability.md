@@ -151,11 +151,18 @@ Si Resend sugiere un valor distinto para SPF en su panel (tras añadir el domini
 
 ---
 
-## Hito 3 — Re-medir (pendiente)
+## Hito 3 — Re-medir (hecho ✅, 2026-08-20)
 
-Bloqueado por la acción DNS del usuario (añadir SPF en Vercel).
+Re-test con el código del Hito 2 (form re-registro real con el email personal del usuario, borrado en Studio antes para poder repetir).
 
-Pasos una vez aplicado el SPF:
+**Resultado**:
+- Envío funcional (confeti + confirmación + aviso admin con total correcto vía `waitlist_count`).
+- **Gmail**: entregado (ya funcionaba).
+- **Outlook**: sigue en Junk → **se atribuye a calentamiento del dominio** (dominio nuevo, poca reputación), no a configuración. El usuario lo asume y no prioriza más fixes ahora.
+
+**Decisión**: no abrir investigación adicional de momento. Cuando el dominio acumule volumen y reputación (post-lanzamiento), re-testar Outlook.
+
+Pasos cuando se re-testee:
 1. Re-enviar email con `bun run scripts/email-test-hito1.ts`.
 2. Verificar bandeja de entrada en Gmail + Outlook.
 3. Capturar Authentication-Results de ambos para confirmar SPF pass.
