@@ -151,15 +151,15 @@
 <!-- Hero -->
 <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 pt-24 pb-32 md:grid-cols-2 md:gap-16 md:px-8 md:pt-36 md:pb-40">
 	<div class="flex flex-col items-start gap-5">
-		<p class="text-sm font-medium tracking-wide text-still-600 uppercase">La app para Plant Lovers</p>
-		<h1 class="text-4xl leading-[1.05] font-light text-balance md:text-6xl">
-			Tus plantas quieren <strong class="font-semibold">conocer a gente nueva</strong>
+		<p class="eyebrow tracking-wide">Pensada para Plant Lovers</p>
+		<h1 class="text-4xl leading-[1.05] text-balance md:text-6xl">
+			Donde las <strong>plantas</strong> y la <strong>gente</strong> se conocen
 		</h1>
-		<p class="max-w-md text-lg text-muted-foreground">
-			Saca más partido a tus plantas y encuentra las que siempre quisiste. Con la app de
-			Botanic, vender, cambiar o regalar.
+		<p class="max-w-md text-muted-foreground">
+			Como las apps de segunda mano que ya conoces, pero solo para plantas y todo lo relacionado con ellas: semillas, esquejes, plantas, tiestos y accesorios. Para Plant Lovers y tu huerta.
 		</p>
-		<Button href="#waitlist" size="lg" class="mt-2 h-12 px-8 text-base">Únete a la waitlist</Button>
+		<Button href="#waitlist" size="lg" class="mt-2 h-12 px-8 text-base">Unirme a la lista de espera</Button>
+		<p class="text-sm text-muted-foreground -mt-1">Acceso anticipado. Apúntate y desbloquea acceso antes que nadie.</p>
 	</div>
 
 		<div class="fan-stage relative" role="group">
@@ -207,7 +207,7 @@
 						<div class="p-3.5">
 							<div class="flex items-start justify-between gap-2">
 								<div class="min-w-0">
-									<h3 class="truncate text-base font-semibold">{listing.name}</h3>
+									<p class="font-display truncate text-base font-normal">{listing.name}</p>
 									<p class="flex items-center gap-1 text-sm text-muted-foreground">
 										<MapPin class="size-3.5" aria-hidden="true" />
 										{listing.place}
@@ -238,9 +238,9 @@
 	>
 		{#each categories as cat}
 			<span
-				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
+				class="eyebrow inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2"
 			>
-				<cat.icon class="size-4 text-still-600" aria-hidden="true" />
+				<cat.icon class="size-3 text-still-600" aria-hidden="true" />
 				{cat.name}
 			</span>
 		{/each}
@@ -253,9 +253,9 @@
 		class="rounded-3xl border border-border bg-secondary/40 px-6 py-14 md:px-12 md:py-16"
 	>
 		<div class="mx-auto max-w-2xl text-center">
-			<p class="text-sm font-medium tracking-wide text-still-600 uppercase">¿Qué es Botanic?</p>
-			<h2 class="mt-2 text-4xl leading-tight font-light text-balance md:text-[2.875rem]">
-				La app donde las plantas <strong class="font-semibold">conocen a gente nueva</strong>
+			<p class="eyebrow tracking-wide">¿Qué es Botanic?</p>
+			<h2 class="mt-2 text-4xl leading-tight text-balance md:text-[2.875rem]">
+				La app donde las plantas <strong>conocen a gente nueva</strong>
 			</h2>
 			<p class="mt-3 text-pretty text-muted-foreground">
 				Botanic es una aplicación para la comunidad de Plant Lovers. Publica tus plantas,
@@ -265,21 +265,21 @@
 		</div>
 		<div class="mt-10 flex flex-wrap items-center justify-center gap-2.5">
 			<span
-				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
+				class="eyebrow inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2"
 			>
-				<Leaf class="size-4 text-still-600" aria-hidden="true" />
+				<Leaf class="size-3 text-still-600" aria-hidden="true" />
 				Solo plantas — pensado para el mundo vegetal
 			</span>
 			<span
-				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
+				class="eyebrow inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2"
 			>
-				<Heart class="size-4 text-still-600" aria-hidden="true" />
+				<Heart class="size-3 text-still-600" aria-hidden="true" />
 				Comunidad — entre gente que cuida plantas
 			</span>
 			<span
-				class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
+				class="eyebrow inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2"
 			>
-				<Recycle class="size-4 text-still-600" aria-hidden="true" />
+				<Recycle class="size-3 text-still-600" aria-hidden="true" />
 				Segunda vida — la economía circular, hecha fácil
 			</span>
 		</div>
@@ -289,12 +289,12 @@
 <!-- Manifiesto -->
 <section class="mx-auto max-w-6xl px-4 pt-24 md:px-6 md:pt-28">
 	<div class="mx-auto mb-10 max-w-2xl text-center">
-		<h2 class="text-4xl leading-tight font-light text-balance md:text-[2.875rem]">
-			Las plantas se <strong class="font-semibold">comparten</strong> y así
-			<strong class="font-semibold">conocen a gente nueva</strong>
+		<h2 class="text-4xl leading-tight text-balance md:text-[2.875rem]">
+			Las plantas se <strong>comparten</strong> y así
+			<strong>conocen a gente nueva</strong>
 		</h2>
 		<p class="mt-3 text-pretty text-muted-foreground">
-			Botanic conecta a <strong class="font-semibold">Plant Lovers</strong> que quieren presentar sus plantas a gente que las quiera
+			Botanic conecta a <strong>Plant Lovers</strong> que quieren presentar sus plantas a gente que las quiera
 			con quien está buscando su próxima favorita. La economía circular, hecha fácil.
 		</p>
 	</div>
@@ -311,7 +311,7 @@
 				class="size-28 shrink-0 rounded-2xl object-cover md:size-44"
 			/>
 			<div class="min-w-0">
-				<h3 class="text-lg font-semibold">Para vendedores</h3>
+				<h3 class="text-lg">Para vendedores</h3>
 				<p class="mt-1.5 text-sm text-muted-foreground">
 					Da a tus plantas la oportunidad de conocer a quien las va a cuidar. Publica en
 					minutos.
@@ -330,7 +330,7 @@
 				class="size-28 shrink-0 rounded-2xl object-cover md:size-44"
 			/>
 			<div class="min-w-0">
-				<h3 class="text-lg font-semibold">Para compradores</h3>
+				<h3 class="text-lg">Para compradores</h3>
 				<p class="mt-1.5 text-sm text-muted-foreground">
 					Encuentra plantas únicas que no verás en tiendas y trátalas directamente con quien
 					las cuida.
@@ -343,11 +343,11 @@
 <!-- Por qué Botanic -->
 <section class="mx-auto max-w-6xl px-4 py-24 md:px-6 md:py-28">
 	<div class="mx-auto mb-10 max-w-2xl text-center">
-		<h2 class="text-4xl leading-tight font-light text-balance md:text-[2.875rem]">
-			¿Por qué <strong class="font-semibold">Botanic</strong>?
+		<h2 class="text-4xl leading-tight text-balance md:text-[2.875rem]">
+			¿Por qué <strong>Botanic</strong>?
 		</h2>
 		<p class="mt-3 text-pretty text-muted-foreground">
-			Pensado para la comunidad <strong class="font-semibold">Plant Lovers</strong>
+			Pensado para la comunidad <strong>Plant Lovers</strong>
 		</p>
 	</div>
 	<div class="divide-y divide-border md:grid md:grid-cols-3 md:divide-y-0">
@@ -355,7 +355,7 @@
 			<div class="mx-auto mb-3 grid size-10 place-items-center rounded-lg bg-secondary text-secondary-foreground">
 				<ShieldCheck class="size-5" aria-hidden="true" />
 			</div>
-			<h3 class="text-lg font-semibold">Pensado para plantas</h3>
+			<h3 class="text-lg">Pensado para plantas</h3>
 			<p class="mt-1.5 text-sm text-muted-foreground">
 				Categorías, filtros y lenguaje propios del mundo vegetal. Nada de subcategorías
 				perdidas.
@@ -365,7 +365,7 @@
 			<div class="mx-auto mb-3 grid size-10 place-items-center rounded-lg bg-secondary text-secondary-foreground">
 				<MapPin class="size-5" aria-hidden="true" />
 			</div>
-			<h3 class="text-lg font-semibold">Sostenible por naturaleza</h3>
+			<h3 class="text-lg">Sostenible por naturaleza</h3>
 			<p class="mt-1.5 text-sm text-muted-foreground">
 				Segunda mano, menos transporte, menos residuos: hacer que las plantas sigan
 				creciendo en nuevos hogares es el gesto más verde.
@@ -375,7 +375,7 @@
 			<div class="mx-auto mb-3 grid size-10 place-items-center rounded-lg bg-secondary text-secondary-foreground">
 				<Star class="size-5" aria-hidden="true" />
 			</div>
-			<h3 class="text-lg font-semibold">Comunidad de confianza</h3>
+			<h3 class="text-lg">Comunidad de confianza</h3>
 			<p class="mt-1.5 text-sm text-muted-foreground">
 				Valoraciones de 1 a 5 estrellas. Perfiles públicos para que sepas con quién tratas.
 			</p>

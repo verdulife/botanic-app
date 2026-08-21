@@ -76,7 +76,7 @@ Catálogo de plantillas/estilos en `video/templates/manifest.json` (lo consulta 
 | `cozy` | orgánico, cálido, acogedor | easing suave, escala/fade lento, formas redondeadas, motivos hoja |
 | `minimal` | editorial, limpio, tipográfico | movimiento contenido, mucho aire, seriedad |
 
-Cada estilo es un set de tokens (`video/src/styles/*.ts`): colores de marca (oklch), tipografía Onest, easing, timing. Los componentes los consumen por prop `style`.
+Cada estilo es un set de tokens (`video/src/styles/*.ts`): colores de marca (oklch), tipografía Fraunces para titulares + Inter para body + JetBrains Mono para eyebrows, easing, timing. Los componentes los consumen por prop `style`.
 
 ## Arquitectura técnica
 
@@ -86,7 +86,7 @@ Cada estilo es un set de tokens (`video/src/styles/*.ts`): colores de marca (okl
 - **Renderer**: `video/src/BotanicReel.tsx` lee `inputProps` y compone `Sequence`s por escena.
 - **Studio**: `npx remotion studio` para preview en tiempo real y decidir entre librerías.
 - **Stills**: el carrusel de IG = los mismos componentes renderizados como PNG (`npx remotion still`), 1080×1350 (4:5) o 1080×1080.
-- **Estilos de marca**: reutiliza tokens de `scripts/generate-og.mjs` (gradient oklch + Onest).
+- **Estilos de marca**: reutiliza tokens de `scripts/generate-og.mjs` (gradient oklch + tipografías Fraunces/Inter/JetBrains Mono).
 
 ### Estructura
 
@@ -140,7 +140,7 @@ scripts/
 - **Tone**: Botanic — cercano, claro, útil. Público Plant Lovers. Sin clickbait, sin relleno.
 - **Hook**: frase corta con tensión/curiosidad en los primeros 1.5-2s. Texto grande (se ve en silencio).
 - **Estructura reel**: hook → 3-4 tips/value → CTA (sigue, guarda, lista de espera).
-- **Texto**: ≤6-8 palabras por slide legible en móvil; Onest bold.
+- **Texto**: ≤6-8 palabras por slide legible en móvil; Inter Variable bold.
 - **Mix**: ~80% tips/cuidados/propagación, ~20% estética/historias de marca (estilo `cozy`/`minimal`).
 - **CTA**: siempre pantalla final con logo + handle. En IG, link en bio → lista de espera.
 - **Noticias/factual**: revisión humana obligatoria de precisión botánica antes de programar.
@@ -156,14 +156,14 @@ scripts/
 - [x] Skills en `.opencode/skills/` (`remotion-best-practices`)
 - [x] `src/lib/social/_drafts/ + posts/`
 - [x] **PoC end-to-end**: `script.json` → Pexels → `mp4` 9:16 + stills carrusel 4:5 ✓
-- [x] **Alineación al design system**: tokens oklch vía `bun run tokens` (`brand.generated.ts`), fuente variable Onest en `static/fonts/` (`bun run fonts`), `bun run lint:brand`, jerarquía tipográfica exacta de la landing (display 300, strong 600, label 500, dato destacado 700, nunca 800/900; excepción 700 + `text-shadow` token-based sobre foto). Detalle en `video/DESIGN.reels.md`
+- [x] **Alineación al design system**: tokens oklch vía `bun run tokens` (`brand.generated.ts`), fuentes variables Fraunces/Inter/JetBrains Mono en `static/fonts/` (`bun run fonts`), `bun run lint:brand`, jerarquía tipográfica exacta de la landing (Fraunces 400 + opsz 144 SOFT 30 en headlines con strongs italic + still-400; Inter 300 en body con strongs 600; JetBrains Mono 13px uppercase tracking still-500 en eyebrows; botones Inter 600; nunca 800/900; excepción 700 + `text-shadow` token-based sobre foto). Detalle en `video/DESIGN.reels.md`
 - [x] **Política `visual-eval`** aplicada (solo audita stock; renders propios = auditoría humana)
 - [x] **Reel #1 publicable**: `coleccionistas-de-esquejes` ("3 cosas que solo entiendes si eres Plant Lover"). Render entregado: `video/out/coleccionistas-de-esquejes.mp4` (16.2 MB, 23.5s, 1080×1920). Patrones nuevos: hook con slide-in desde la derecha (`translateX(40vw → 0)`); tip con caja glass (`still-950` 70% + `backdropFilter: blur(24px)`, **excepción documentada a "no glassmorphism"** aprobada); wordmark con **path draw escalonado** (B-o-t → sprout → a-n-i-c, `strokeDasharray="100 101"` evita el puntito inicial, fill escalonado, `strokeOpacity` funde el outline al final); ending separado en dos escenas (`outro` solo texto + fade-out, `cta` logo con path draw + botón pill `www.botanicapp.es`); audio MP3 libre (Pixabay) integrado.
 - [x] **`monstera-riego`** mantenido como **plantilla técnica** — no se publica.
 
 **Pendiente (por orden):**
 
-- [ ] **1. Plantillas Remotion de reels en GitHub** — buscar y evaluar candidatos con criterios de diseño (Onest/sans cálida, paleta neutra/cálida), animaciones (typewriter/slide-in/fade-in), estructura hook→tips→cta, mantenimiento (último commit < 6 meses) y compatibilidad con Remotion 4. Umbral: ≥4/5 en criterios clave. Antes de forkar, hacer la **prueba de velocidad**: crear `src/lib/social/_drafts/segundo-reel/` y medir cuánto tarda de principio a fin. Si < 30 min/reel → el pipeline actual ya es "template-like", el fork no compensa.
+- [ ] **1. Plantillas Remotion de reels en GitHub** — buscar y evaluar candidatos con criterios de diseño (Fraunces + Inter + JetBrains Mono, paleta neutra/cálida), animaciones (typewriter/slide-in/fade-in), estructura hook→tips→cta, mantenimiento (último commit < 6 meses) y compatibilidad con Remotion 4. Umbral: ≥4/5 en criterios clave. Antes de forkar, hacer la **prueba de velocidad**: crear `src/lib/social/_drafts/segundo-reel/` y medir cuánto tarda de principio a fin. Si < 30 min/reel → el pipeline actual ya es "template-like", el fork no compensa.
 - [ ] **2. Catálogo de elementos 9:16** — composición `Catalog` (`video/src/catalog/`) con slots INTRO/HOOK/TIP/QUOTE/OUTRO/TRANSICIÓN/ENDING (empieza vacía). Sesiones por elemento: elegir componente (RemotionUI `npx remotion-ui add <c>`, Onda `npx ondajs add <c>`) → restilizar a marca → revisar en Studio → `git commit` + inventario en `video/CATALOG.md`. Hito 1 = INTRO
 - [ ] **3. Cablear elementos aprobados** en `BotanicReel.tsx`/`BotanicSlide.tsx` (eliminar duplicación: `SlideContent` inline, `Outro`/`ProgressDots` duplicados, `Tip` sin soporte vídeo).
 - [ ] **4. Audio en slides** — incorporar `<Audio>` a `BotanicSlide.tsx`.

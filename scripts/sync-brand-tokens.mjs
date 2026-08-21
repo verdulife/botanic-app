@@ -67,9 +67,17 @@ const flatColors = Object.entries(colors)
 	.map(([k, v]) => `  ${jsKey(k)}: ${JSON.stringify(v)},`)
 	.join("\n");
 
-const fontFamily = typography.sans
-	? typography.sans.split(",")[0].trim().replace(/^["']|["']$/g, "")
-	: "Onest Variable";
+const fontFamilies = {
+	display: typography.display
+		? typography.display.split(",")[0].trim().replace(/^["']|["']$/g, "")
+		: "Fraunces Variable",
+	sans: typography.sans
+		? typography.sans.split(",")[0].trim().replace(/^["']|["']$/g, "")
+		: "Inter Variable",
+	mono: typography.mono
+		? typography.mono.split(",")[0].trim().replace(/^["']|["']$/g, "")
+		: "JetBrains Mono Variable",
+};
 
 const flatRadius = Object.entries(rounded)
 	.map(([k, v]) => `  ${jsKey(k)}: ${JSON.stringify(v)},`)
@@ -89,7 +97,13 @@ export const COLORS = {
 ${flatColors}
 } as const;
 
-export const FONT_FAMILY = ${JSON.stringify(fontFamily)};
+export const FONT_FAMILY = ${JSON.stringify(fontFamilies.sans)};
+
+export const FONT_FAMILIES = {
+${Object.entries(fontFamilies)
+	.map(([k, v]) => `  ${k}: ${JSON.stringify(v)},`)
+	.join("\n")}
+} as const;
 
 export const RADIUS = {
 ${flatRadius}
@@ -102,4 +116,6 @@ export type RadiusToken = keyof typeof RADIUS;
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, banner, "utf8");
 console.log(`OK ${OUT}`);
-console.log(`  ${Object.keys(colors).length} colores · ${Object.keys(rounded).length} radios · font: ${fontFamily}`);
+console.log(
+	`  ${Object.keys(colors).length} colores · ${Object.keys(rounded).length} radios · fuentes: ${Object.values(fontFamilies).join(", ")}`,
+);

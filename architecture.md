@@ -170,7 +170,7 @@ CREATE POLICY "messages_insert" ON messages FOR INSERT WITH CHECK (
 
 ## Design system cross-surface
 
-[`DESIGN.md`](DESIGN.md) (impeccable) es la autoridad global de tokens y reglas de marca (paleta Still/Lino, tipografía Onest Variable, motion, Do's & Don'ts). Cada superficie mantiene su propio surface brief (p. ej. [`video/DESIGN.reels.md`](video/DESIGN.reels.md) para reels y carruseles). El script `bun run tokens` regenera `video/src/brand.generated.ts` desde el frontmatter de `DESIGN.md`; `bun run fonts` copia Onest woff2 a `static/fonts/`; `bun run lint:brand` audita `video/src/**` contra tokens. Ver `AGENTS.md` → Reglas de trabajo.
+[`DESIGN.md`](DESIGN.md) (impeccable) es la autoridad global de tokens y reglas de marca (paleta Still/Lino, sistema de 3 familias — Fraunces + Inter + JetBrains Mono — motion, Do's & Don'ts). Cada superficie mantiene su propio surface brief (p. ej. [`video/DESIGN.reels.md`](video/DESIGN.reels.md) para reels y carruseles). El script `bun run tokens` regenera `video/src/brand.generated.ts` desde el frontmatter de `DESIGN.md`; `bun run fonts` copia los woff2 de Fraunces/Inter/JetBrains Mono a `static/fonts/`; `bun run lint:brand` audita `video/src/**` contra tokens. Ver `AGENTS.md` → Reglas de trabajo.
 
 ## Estructura del proyecto SvelteKit
 

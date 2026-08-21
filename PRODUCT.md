@@ -89,7 +89,7 @@ Análisis comparativo con la competencia en [docs/mercado.md](docs/mercado.md).
 
 - **Nombre**: Botanic
 - **Tagline canónico**: "Donde las plantas conocen a gente"
-- **Identidad visual**: canon de marketplace — fondo cálido de lino, tinta cálida casi negra, acento verde hoja saturado, estrellas ámbar, tipografía Onest, fotografía real de plantas; tokens en `src/app.css`. Autoridad global: [DESIGN.md](DESIGN.md).
+- **Identidad visual**: canon de marketplace ejecutado con voz editorial — fondo cálido de lino, tinta cálida casi negra, acento verde hoja saturado, estrellas ámbar, **3 familias tipográficas** (Fraunces Variable para titulares, Inter Variable para body y botones, JetBrains Mono Variable para eyebrows/tags/pills), fotografía real de plantas; tokens en `src/app.css`. Autoridad global: [DESIGN.md](DESIGN.md).
 - **Estilo por defecto**: estándar de categoría ejecutado impecablemente (elegido en el flujo new-work, seed 77b83067); sin quirk ni sobre-decoración.
 - **Tono**: cercano y de comunidad **Plant Lovers**.
 - **Terminología**: lenguaje cercano de comunidad y economía circular ("conocer a gente nueva", "vender, cambiar o regalar", "segunda mano") frente a anglicismos como "marketplace" (que suena técnico y frío); "vender, cambiar o regalar" como tríada de acciones.

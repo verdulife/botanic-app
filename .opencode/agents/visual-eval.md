@@ -51,6 +51,6 @@ El caller te invocará con:
 usar | rebuscar("<query alternativa sugerida>") | recortar a <sugerencia>
 ```
 
-Referencia de marca (por si el asset debe casar con la paleta): [`DESIGN.md`](../../DESIGN.md) — paleta Still-50…950 / Linen-50…950, `Onest Variable` como única familia. Un asset de stock no debe chocar con la marca (p. ej. neones, tonos fríos).
+Referencia de marca (por si el asset debe casar con la paleta): [`DESIGN.md`](../../DESIGN.md) — paleta Still-50…950 / Linen-50…950, **3 familias** (Fraunces Variable titulares + Inter Variable body/botones + JetBrains Mono Variable eyebrows/tags). Un asset de stock no debe chocar con la marca (p. ej. neones, tonos fríos).
 
 No llames a más herramientas después de `read`. Responde y termina.

@@ -34,7 +34,7 @@ vite.config.ts.timestamp-*
 # Social media assets (Pexels) - regenerados con `bun run stock fetch`
 /static/social/
 
-# Fuentes Onest Variable copiadas por `bun run fonts` (regeneradas)
+# Fuentes Onest copiadas por `bun run fonts` (legacy — regeneradas con las 3 familias del sistema)
 /static/fonts/
 
 # Tokens de marca autogeados desde DESIGN.md (regenerados con `bun run tokens`)

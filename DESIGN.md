@@ -64,32 +64,59 @@ colors:
   linen-950: "oklch(0.22 0.025 85)"
   zinc-950: "oklch(0.141 0.005 285)"
 typography:
-  sans: "Onest Variable, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
-  display:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
+  display: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, Times New Roman, serif"
+  sans: "Inter Variable, Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
+  mono: "JetBrains Mono Variable, JetBrains Mono, ui-monospace, monospace"
+  eyebrow:
+    fontFamily: "JetBrains Mono Variable, JetBrains Mono, ui-monospace, monospace"
+    fontWeight: 400
+    fontSize: "0.8125rem (13px)"
+    color: "still-500"
+    textTransform: "uppercase"
+    letterSpacing: "0.04em"
+  display-headline:
+    fontFamily: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, Times New Roman, serif"
+    fontWeight: 400
     fontSize: "2.25rem (text-4xl) → 3.75rem (md:text-6xl)"
-    fontWeight: 300
     lineHeight: 1.05
     letterSpacing: "normal"
     textWrap: "balance"
   h2:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
-    fontSize: "2.25rem (text-4xl) / 2.875rem (md)"
-    fontWeight: 300
+    fontFamily: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, Times New Roman, serif"
+    fontWeight: 400
+    fontSize: "2.25rem (text-4xl) → 2.875rem (md)"
     lineHeight: 1.2
     letterSpacing: "normal"
+    textWrap: "balance"
   h3:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
-    fontSize: "0.875rem–1rem"
-    fontWeight: 600
+    fontFamily: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, Times New Roman, serif"
+    fontWeight: 400
+    fontSize: "1rem (text-base) – 1.125rem (text-lg)"
+    textWrap: "balance"
   body:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
-    fontSize: "1rem (lg) / 0.875rem (sm)"
+    fontFamily: "Inter Variable, Inter, system-ui, -apple-system, sans-serif"
+    fontWeight: 300
+    fontSize: "1rem (base) / 0.875rem (sm)"
     lineHeight: 1.5
-  label:
-    fontFamily: "Onest Variable, system-ui, sans-serif"
-    fontSize: "0.75rem"
-    fontWeight: 500
+    textWrap: "pretty"
+  body-strong:
+    fontFamily: "Inter Variable, Inter, system-ui, sans-serif"
+    fontWeight: 600
+  headline-strong:
+    fontFamily: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, serif"
+    fontWeight: 400
+    fontStyle: italic
+    color: "still-400"
+  button:
+    fontFamily: "Inter Variable, Inter, system-ui, sans-serif"
+    fontWeight: 600
+  eyebrow-class:
+    fontFamily: "JetBrains Mono Variable, JetBrains Mono, ui-monospace, monospace"
+    fontWeight: 400
+    fontSize: "0.8125rem (13px)"
+    color: "still-500"
+    textTransform: "uppercase"
+    letterSpacing: "0.04em"
 rounded:
   sm: "0.5rem"
   md: "0.75rem"
@@ -160,7 +187,7 @@ El sistema es cálido y sobrio: un fondo de lino cálido, tinta cálida casi neg
 - Estructura clásica de marketplace, executed impeccably.
 - Fotografía real de plantas servida localmente (`static/images/`), no por CDN.
 - Still Green como acento principal (rampa completa), con `tranquil` (amarillo) como acento complementario.
-- Tipografía Onest Variable (single family, geometrico-humanista) con system stack como fallback.
+- **Tipografía** — sistema de 3 familias: Fraunces Variable (display, h1/h2/h3), Inter Variable (body, p, botones), JetBrains Mono Variable (eyebrows, tags). System stack como fallback de Inter. Sin CDN: self-hosted vía `@fontsource-variable/*`.
 - Calidez uniforme en todos los neutros (lino/tinta); nunca grises fríos.
 - Mobile-first, ritmo vertical generoso y constante.
 - Wordmark "Botanic" que integra el icono Sprout como la letra "t" (logo y texto, uno).
@@ -254,22 +281,63 @@ Los mismos tokens se invierten sobre la rampa: `primary` → `still-400`, `secon
 
 ## Typography
 
-**Familia única:** Onest Variable (`@fontsource-variable/onest`, single family para todo), con system stack como fallback.
+**Sistema de 3 familias** (self-hosted vía `@fontsource-variable/*`, sin CDN):
+
+| Token | Familia | Uso principal |
+|---|---|---|
+| `font-display` | **Fraunces Variable** (`opsz` 144, `SOFT` 30) | h1, h2, h3 — titulares |
+| `font-sans` | **Inter Variable** → system-ui fallback | body, p, microcopy, pills, botones |
+| `font-mono` | **JetBrains Mono Variable** → ui-monospace fallback | eyebrows, tags |
+
+Definidas en `@theme inline` de `src/app.css`. La carga se hace con `@import "@fontsource-variable/fraunces/opsz.css"` (variante con eje `opsz`), `@import "@fontsource-variable/inter"` y `@import "@fontsource-variable/jetbrains-mono"`.
 
 Text-wrap global en `src/app.css`: `h1/h2/h3 → text-wrap: balance`, `p → text-wrap: pretty`.
 
 ### Jerarquía
-- **Display** — peso 300, `text-4xl` → `md:text-6xl` (`clamp` de 2.25rem a 3.75rem), `line-height: 1.05`, `letter-spacing: normal`, `text-wrap: balance`. Solo en el `h1` del hero. Las palabras de refuerzo van en `font-semibold` (600).
-- **H2** — peso 300, `text-4xl` → `md:text-[2.875rem]` (46px desktop), `line-height: 1.2`, `text-wrap: balance`. Titulares de sección; refuerzo puntual en 600.
-- **H3 (tarjeta)** — peso 600, `text-sm`/`text-base`/`text-lg` según tarjeta.
-- **Body** — peso 400, `text-sm` (0.875rem) en tarjetas, `text-lg` (1rem) en la promesa del hero y de la waitlist, `line-height: 1.5`.
-- **Label** — peso 500, `text-xs` (0.75rem). Chips, badges, microcopy.
+
+- **H1 / H2 / H3 — Fraunces Variable, weight 400, opsz 144 SOFT 30** (`font-variation-settings: "opsz" 144, "SOFT" 30`)
+  - H1 — `text-4xl` → `md:text-6xl`, `line-height: 1.05`, `tracking: normal`. Solo en el `h1` del hero.
+  - H2 — `text-4xl` → `md:text-[2.875rem]`, `line-height: 1.2`. Titulares de sección.
+  - H3 (tarjeta) — `text-sm` / `text-base` / `text-lg` según tarjeta. Los nombres de listings de ejemplo se renderizan como `<p class="font-display ...">` (no `<h3>`) para no contaminar la jerarquía semántica del hero demo.
+
+- **Body / p — Inter Variable, weight 300**, `line-height: 1.5`, `text-wrap: pretty`. Tamaños: `text-sm` (0.875rem) en tarjetas, `text-base` (1rem) por defecto en párrafos de sección, `text-lg` cuando se quiere énfasis (ej. promesa del hero de la waitlist).
+
+- **Botones — Inter Variable, weight 600**.
+
+- **Eyebrow / Tag / Pill-label — JetBrains Mono Variable, weight 400, `0.8125rem` (13px), `color: still-500`, `text-transform: uppercase`, `letter-spacing: 0.04em`**. Se aplica con la clase `.eyebrow` (definida en `src/app.css`). No admite `<strong>` dentro.
+
+### Comportamiento de `<strong>`
+
+| Contexto | Resultado |
+|---|---|
+| Dentro de `h1` / `h2` / `h3` (Fraunces) | `font-style: italic`, mantiene weight 400 + opsz 144 SOFT 30, `color: still-400` |
+| Dentro de `body` / `p` (Inter) | `font-weight: 600`, sin italic, sin color |
+| Dentro de `.eyebrow` (JetBrains Mono) | ❌ no se permite (la norma JetBrains Mono es solo uppercase sin strong) |
+
+La regla global vive en `src/app.css`:
+
+```css
+h1 strong, h2 strong, h3 strong {
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  color: var(--color-still-400);
+}
+
+body strong, p strong {
+  font-weight: 600;
+  font-style: normal;
+}
+```
 
 ### Reglas nombradas
-- **The Light Headline Rule.** Los titulares (h1/h2) van en 300 con tracking normal; el 600 queda reservado como refuerzo semántico puntual dentro del titular (`<strong>`). Nunca peso 800 ni tracking-tight en titulares.
-- **The Card Title Rule.** Los h3 de tarjeta van en `font-semibold` (600) fijo.
+
+- **The Three Family Rule.** El sistema usa 3 familias (`Fraunces`, `Inter`, `JetBrains Mono`). Cada una tiene un rol estricto. No introducir serif decorativos adicionales, ni una segunda grotesk, ni otra mono.
+- **The Display Headline Rule.** Los h1/h2/h3 van en Fraunces 400 con opsz 144 + SOFT 30. Nunca peso 800 ni `tracking-tight` en titulares.
+- **The Headline Strong Rule.** Los `<strong>` dentro de h1/h2/h3 son italic en Fraunces 400 + color `still-400`. No se añade otro peso ni decoración.
+- **The Body Strong Rule.** Los `<strong>` dentro de body/p suben de Inter 300 a Inter 600. Sin italic, sin color.
+- **The Eyebrow Rule.** Eyebrows, tags y pills-label usan JetBrains Mono 13px uppercase tracking 0.04em en `still-500`. No llevan `<strong>` adentro.
 - **The Muted Body Rule.** El texto de apoyo va en `text-muted-foreground` para que el titular mande.
-- **The One Family Rule.** Onest Variable para todo. No mezclar con serif decorativos, ni mono, ni una segunda grotesk.
 
 ## Layout
 
@@ -298,10 +366,11 @@ Profundidad por **bordes y radio**, con una excepción de sombra. Las tarjetas d
 No hay nav: el logo abre el hero a la izquierda. Wordmark `text-[2.5rem] font-bold tracking-tight text-still-800` donde el icono `Sprout` hace de letra "t": "Bo" + icono + "anic". Todo en unidades `em` para que escale con el font-size: icono `size-[0.9em]`, offsets `-mr-[0.125em]` (Bo), `-mt-[0.1em] ml-[0.05em]` (icono), `-ml-[0.125em]` (anic).
 
 ### Hero — left column
-- Wordmark `Botanic` (ver arriba).
-- `h1` display (300) con `text-wrap: balance` y refuerzos `font-semibold`: "Tus plantas quieren **conocer a gente nueva**".
-- Párrafo en `text-lg text-muted-foreground`, `max-w-md` ("Saca más partido a tus plantas y encuentra las que siempre quisiste. Vender, cambiar o regalar: así tus plantas conocen a gente que las va a cuidar.").
-- CTA primary: `size=lg` con `class="mt-2 h-12 px-8 text-base"`, label "Únete a la waitlist" (href `#waitlist`). Sin microcopy debajo.
+- **Eyebrow** (clase `.eyebrow`): JetBrains Mono 13px uppercase tracking, color `still-500`. Texto actual: "Pensada para Plant Lovers".
+- **`h1` display** (Fraunces 400 + opsz 144 SOFT 30): `text-4xl` → `md:text-6xl`, `line-height: 1.05`, `text-wrap: balance`. Los `<strong>` dentro van en italic + `still-400`. Texto actual: "Donde las **plantas** y la **gente** se conocen".
+- **Párrafo promesa** (Inter 300, `max-w-md`): "Como las apps de segunda mano que ya conoces, pero solo para plantas y todo lo relacionado con ellas: semillas, esquejes, plantas, tiestos y accesorios. Para Plant Lovers y tu huerta."
+- **CTA primary**: Inter 600, `size=lg` con `class="mt-2 h-12 px-8 text-base"`, label "Unirme a la lista de espera" (href `#waitlist`).
+- **Microcopy bajo CTA** (Inter 300, `text-sm`, `text-muted-foreground`): "Acceso anticipado. Apúntate y desbloquea acceso antes que nadie."
 
 ### Hero — right column: abanico de anuncios (The Fan Rule)
 **Abanico de 3 tarjetas** (`demoListings`), cada una `max-w-72 rounded-2xl border border-border bg-card shadow-sm`:
@@ -388,8 +457,10 @@ El **abanico de anuncios** del hero rota el foco entre las tarjetas de ejemplo.
 ## Do's and Don'ts
 
 **Do**
-- Usar el Still Green con moderación: CTA, logo, iconos de chips, anillos de foco.
-- Usar Onest Variable para todo el texto.
+- Usar el Still Green con moderación: CTA, logo, iconos de chips, anillos de foco, color del eyebrow (`still-500`) y del headline-strong (`still-400`).
+- Aplicar las 3 familias según rol: Fraunces para titulares, Inter para body y botones, JetBrains Mono para eyebrows/tags/pills.
+- Respetar el comportamiento de `<strong>` por contexto: italic + `still-400` en headlines, peso 600 en body, prohibido en eyebrow.
+- Mantener los Fraunces con `opsz` 144 y `SOFT` 30 en h1/h2/h3 para preservar el carácter editorial.
 - Etiquetar como "Anuncios de ejemplo" cualquier tarjeta que use material sintético.
 - Mantener la calidez de lino/tinta en todos los neutros.
 - Servir las imágenes desde `static/images/`; sustituir el stock por anuncios reales en cuanto estén disponibles.
@@ -399,7 +470,9 @@ El **abanico de anuncios** del hero rota el foco entre las tarjetas de ejemplo.
 
 **Don't**
 - No introducir sombras flotantes (excepto la del abanico en primer plano), glassmorphism o degradados de neón.
-- No usar una segunda familia tipográfica ni un serif decorativo.
+- No añadir una cuarta familia tipográfica ni un serif decorativo adicional.
+- No usar peso 800 ni `tracking-tight` en titulares (Fraunces 400 + tracking normal canónico).
+- No usar italic fuera de los `<strong>` en Fraunces — el italic está reservado al headline-strong.
 - No fabricar métricas, testimonios o cifras de la landing.
 - No añadir una nav ni CTAs muertos fuera del CTA a `#waitlist`.
 - No usar el verde como color de fondo de pantalla completa.

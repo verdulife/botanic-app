@@ -24,17 +24,29 @@ const defaultCarousel: Script = {
 	],
 };
 
-const OnestBoot: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const BrandFontsBoot: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [ready, setReady] = useState(false);
 	useEffect(() => {
-		loadFont({
-			family: "Onest Variable",
-			url: staticFile("fonts/onest-variable.woff2"),
-			weight: "100 900",
-		})
+		Promise.all([
+			loadFont({
+				family: "Fraunces Variable",
+				url: staticFile("fonts/fraunces-variable.woff2"),
+				weight: "300 700",
+			}),
+			loadFont({
+				family: "Inter Variable",
+				url: staticFile("fonts/inter-variable.woff2"),
+				weight: "100 900",
+			}),
+			loadFont({
+				family: "JetBrains Mono Variable",
+				url: staticFile("fonts/jetbrains-mono-variable.woff2"),
+				weight: "100 900",
+			}),
+		])
 			.then(() => setReady(true))
 			.catch((e) => {
-				console.warn("No se pudo cargar Onest Variable, fallback system-ui:", e);
+				console.warn("No se pudieron cargar las 3 fuentes del sistema, fallback system-ui:", e);
 				setReady(true);
 			});
 	}, []);
@@ -49,45 +61,45 @@ export const RemotionRoot: React.FC = () => {
 	);
 	return (
 		<>
-			<Composition
-				id="BotanicReel"
-				component={({ script }) => (
-					<OnestBoot>
+		<Composition
+			id="BotanicReel"
+			component={({ script }) => (
+					<BrandFontsBoot>
 						<BotanicReel script={script} />
-					</OnestBoot>
+					</BrandFontsBoot>
 				)}
-				durationInFrames={reelFrames}
-				fps={30}
-				width={1080}
-				height={1920}
-				defaultProps={{ script: defaultScript }}
-			/>
-			<Composition
-				id="BotanicSlide"
-				component={({ script }) => (
-					<OnestBoot>
+			durationInFrames={reelFrames}
+			fps={30}
+			width={1080}
+			height={1920}
+			defaultProps={{ script: defaultScript }}
+		/>
+		<Composition
+			id="BotanicSlide"
+			component={({ script }) => (
+					<BrandFontsBoot>
 						<BotanicSlide script={script} />
-					</OnestBoot>
+					</BrandFontsBoot>
 				)}
-				durationInFrames={defaultCarousel.scenes.length}
-				fps={30}
-				width={1080}
-				height={1350}
-				defaultProps={{ script: defaultCarousel }}
-			/>
-			<Composition
-				id="Catalog"
-				component={({ slots }) => (
-					<OnestBoot>
+			durationInFrames={defaultCarousel.scenes.length}
+			fps={30}
+			width={1080}
+			height={1350}
+			defaultProps={{ script: defaultCarousel }}
+		/>
+		<Composition
+			id="Catalog"
+			component={({ slots }) => (
+					<BrandFontsBoot>
 						<Catalog slots={slots} />
-					</OnestBoot>
+					</BrandFontsBoot>
 				)}
-				durationInFrames={catalogSlots.reduce((acc, s) => acc + s.frames, 0)}
-				fps={30}
-				width={1080}
-				height={1920}
-				defaultProps={{ slots: catalogSlots }}
-			/>
+			durationInFrames={catalogSlots.reduce((acc, s) => acc + s.frames, 0)}
+			fps={30}
+			width={1080}
+			height={1920}
+			defaultProps={{ slots: catalogSlots }}
+		/>
 		</>
 	);
 };

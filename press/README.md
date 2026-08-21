@@ -33,7 +33,7 @@ C:\Users\verdu\art-director\output\resultado.pdf
 - **Tipografía**: Fraunces (títulos) + Inter (cuerpo)
 - **Formato**: A4, 3mm sangrado
 
-> La paleta y tipografía actuales del proyecto son las de [DESIGN.md](../DESIGN.md) (Onest Variable + Still/Lino). Este dossier no las usa; hay que regenerarlo on-brand.
+> La paleta y tipografía actuales del proyecto son las de [DESIGN.md](../DESIGN.md) (Fraunces + Inter + JetBrains Mono + Still/Lino). Este dossier no las usa; hay que regenerarlo on-brand.
 
 ## Recompilar (cuando se regenere)
 

@@ -34,8 +34,10 @@
 	/* Neutros */
 	--foreground: oklch(0.28 0.02 55);
 
-	/* Tipografía */
-	--font-sans: 'Onest', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	/* Tipografía — sistema de 3 familias (alineado con DESIGN.md) */
+	--font-display: 'Fraunces', 'Times New Roman', serif;
+	--font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
 	/* Poster-only tokens */
 	--pad-x: 18mm;
@@ -101,9 +103,9 @@ body {
 }
 
 .logo {
-	font-family: var(--font-sans);
-	font-size: 72pt;
+	font-family: var(--font-display);
 	font-weight: 700;
+	font-size: 72pt;
 	letter-spacing: -0.03em;
 	color: var(--still-800);
 	display: inline-flex;
@@ -140,12 +142,14 @@ body {
 }
 
 .headline {
+	font-family: var(--font-display);
+	font-weight: 400;
 	font-size: 130pt;
-	font-weight: 300;
 	line-height: 0.95;
 	letter-spacing: -0.035em;
 	color: var(--still-950);
 	text-wrap: balance;
+	font-style: italic;
 }
 
 .headline em {
@@ -155,10 +159,11 @@ body {
 }
 
 .sub {
+	font-family: var(--font-sans);
+	font-weight: 300;
 	font-size: 42pt;
 	line-height: 1.25;
 	letter-spacing: -0.01em;
-	font-weight: 400;
 	color: var(--foreground);
 	margin-top: 8mm; /* gap base 6mm + 8mm = 14mm headline→sub */
 	max-width: 240mm;
@@ -166,7 +171,7 @@ body {
 
 .sub em {
 	font-style: normal;
-	font-weight: 500;
+	font-weight: 600;
 }
 
 /* =========================================================================
@@ -194,10 +199,11 @@ body {
 }
 
 .cta-line {
+	font-family: var(--font-sans);
+	font-weight: 400;
 	font-size: 28pt;
 	line-height: 1.25;
 	letter-spacing: -0.01em;
-	font-weight: 400;
 	color: var(--foreground);
 }
 

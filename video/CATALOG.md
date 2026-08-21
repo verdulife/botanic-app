@@ -19,7 +19,7 @@ Solo se trabaja 9:16 de momento; la variante 4:5 (posts) se retoma después.
 
 Fuente completa: `video/DESIGN.reels.md` y `DESIGN.md`.
 
-- **Tipografía**: solo `Onest Variable` (`FONT_FAMILY`). Pesos: 300 display, 600 refuerzo/h3, 500 label, 700 precio/CTA. **Nunca 800/900.** `letterSpacing: normal`, `textWrap: balance` en títulos.
+- **Tipografía**: solo las **3 familias del sistema** (Fraunces Variable + Inter Variable + JetBrains Mono Variable, tokens `FONT_FAMILY`/`FONT_FAMILIES` en `src/brand.ts`). Jerarquía: Fraunces 400 (+ opsz 144 SOFT 30) display con strongs italic + still-400; Inter 300 body con strongs 600; JetBrains Mono 400 uppercase tracking still-500 en eyebrows. Botones Inter 600. **Nunca 800/900.** `letterSpacing: normal` excepto eyebrow (`0.04em`), `textWrap: balance` en titulares.
 - **Color**: solo paleta oklch Still/Lino (tokens `COLORS` en `src/brand.ts`), o tokens semánticos de estilo (`energy`/`cozy`/`minimal`).
 - **Radios**: solo `--radius: 0.625rem` (o `full` para pills/chips).
 - **Fondos**: mesh oficial (`MeshBackground`) o token `background` del estilo. **Sin `box-shadow`**, **sin gradientes fuera del mesh**, sin patrones ajenos.

@@ -46,9 +46,18 @@ for (const file of files) {
 		violations.push({ file: rel, type: "hex", match: m[0], line: lineOf(src, m.index) });
 	}
 
+	const ALLOWED_FONTS = new Set([
+		"Fraunces Variable",
+		"Fraunces",
+		"Inter Variable",
+		"Inter",
+		"JetBrains Mono Variable",
+		"JetBrains Mono",
+	]);
+
 	for (const m of src.matchAll(FONT_FAMILY_RE)) {
 		const family = m[1];
-		if (family === "Onest Variable") continue;
+		if (ALLOWED_FONTS.has(family)) continue;
 		violations.push({ file: rel, type: "font", match: family, line: lineOf(src, m.index) });
 	}
 

@@ -7,7 +7,7 @@ Poster A3 vertical para captación de la lista de espera en viveros. Autónomo, 
 - **HTML standalone** (`index.html`)
 - **CSS plano** (`poster.css`) con tokens sincronizados con `DESIGN.md`
 - **@page A3 nativo** de Chrome al imprimir (sin paged.js)
-- **Onest Variable** vía Google Fonts
+- **3 familias tipográficas vía Google Fonts**: Fraunces Variable (display), Inter Variable (sans), JetBrains Mono Variable (mono)
 - **QR SVG vectorial** (`qr.svg`) con módulos Still Green sobre fondo lino
 
 ## Render a PDF A3
@@ -59,7 +59,7 @@ El poster referencia `../static/images/monstera.jpg` desde la raíz del repo. Si
 
 ## Diseño
 
-- **On-brand** con `DESIGN.md`: Still Green como acento sobre fondo `tranquil-200` (acento complementario amarillo), Onest Variable como única familia.
+- **On-brand** con `DESIGN.md`: Still Green como acento sobre fondo `tranquil-200` (acento complementario amarillo), **3 familias** (Fraunces titulares + Inter body + JetBrains Mono eyebrows).
 - **Sin imagen hero**: el poster funciona solo con tipografía, color y QR. Más bold y cálido para captar atención desde el cristal del vivero.
 - **Sin AI slop**: sin glassmorphism, sin degradados neón, sin serif decorativos, sin sombras flotantes.
 - **Sin métricas inventadas**, sin testimonios, sin slogans vacíos.

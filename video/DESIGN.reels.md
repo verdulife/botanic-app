@@ -7,26 +7,33 @@ canvas:
   reel: { width: 1080, height: 1920, fps: 30 }
   slide: { width: 1080, height: 1350, fps: 30 }
 typography_in_video:
-  family: "Onest Variable"
-  weight_display: 300       # The Light Headline Rule (landing h1/h2)
-  weight_strong: 600        # refuerzo semántico puntual dentro del titular (<strong>)
-  weight_h3: 600            # The Card Title Rule (h3 de tarjeta, fijo)
-  weight_label: 500         # eyebrow / chip / pill / microcopy
+  families:
+    display: "Fraunces Variable (opsz 144, SOFT 30)"
+    sans: "Inter Variable"
+    mono: "JetBrains Mono Variable"
+  weight_display: 400       # Fraunces titulares (opsz 144, SOFT 30)
+  weight_strong: 400        # refuerzo en headlines: italic + still-400 (mismo peso, italic es el cambio)
+  weight_h3: 400            # Fraunces h3 sin italic (igual que h1/h2)
+  weight_body: 300          # Inter body
+  weight_body_strong: 600   # Inter strong dentro de body
+  weight_label: 400         # JetBrains Mono eyebrow/pill (13px uppercase)
+  weight_button: 600        # Inter botones
   weight_price: 700         # dato destacado (precio, CTA final, wordmark)
-  weight_never: [800, 900] # prohibidos (The One Family Rule)
+  weight_never: [800, 900] # prohibidos (regla global)
   size_display: "80–120px"
   size_h2: "48–58px"
   size_body: "40–52px"
-  size_label: "24–32px"
+  size_label: "24–32px (JetBrains Mono)"
   line_height_display: 1.05
   line_height_h2: 1.2
   line_height_body: 1.5
   tracking: "normal"
+  tracking_eyebrow: "0.04em"
   text_wrap: "balance"
   legibility_over_image:
     weight: 700              # compensación de legibilidad AA sobre foto
     text_shadow_token: "color-mix(in oklch,<bg-token> 35%, transparent)"
-    rationale: "excepción documentada; la landing no usa 700 en h1/h2, pero mp4/still a 1080×1920 requiere peso alto para mantener contraste AA sobre foto de Pexels. Se compensa con text-shadow del color del fondo."
+    rationale: "excepción documentada; la landing no usa 700 en titulares, pero mp4/still a 1080×1920 requiere peso alto para mantener contraste AA sobre foto de Pexels. Se compensa con text-shadow del color del fondo."
 overlay_over_image:
   reel: "linear-gradient(180deg, var(--bg-from) 0%, var(--bg-to) 100%)"
   slide: "linear-gradient(180deg, var(--bg-from) 0%, var(--bg-to) 100%)"
@@ -46,7 +53,7 @@ Esta superficie genera **mp4 9:16** (reels IG/TikTok) y **stills 4:5** (carrusel
 
 **Modo**: `Persuade` — el visitante decide y actúa; el diseño ES el producto. Cada escena debe ganarse la atención y empujar al CTA en menos de 20s (reel) o 1 slide (carrusel).
 
-**Hereda toda la autoridad visual de `DESIGN.md`** (paleta Still/Lino, tipografía Onest Variable, reglas nombradas: One Accent, Warmth, One Family, Rarity, Star Rarity, Light Headline). Este brief **solo añade** lo específico de motion graphics: motion styles, mesh estático, escalas tipográficas, overlays y reglas de portabilidad (no hay Tailwind, no hay CSS variables de `:root` en tiempo de render, no hay squircle portable).
+**Hereda toda la autoridad visual de `DESIGN.md`** (paleta Still/Lino, sistema de 3 familias — Fraunces + Inter + JetBrains Mono, reglas nombradas: One Accent, Warmth, Three Family, Display Headline, Headline Strong, Body Strong, Eyebrow, Muted Body). Este brief **solo añade** lo específico de motion graphics: motion styles, mesh estático, escalas tipográficas, overlays y reglas de portabilidad (no hay Tailwind, no hay CSS variables de `:root` en tiempo de render, no hay squircle portable).
 
 ## Tokens consumidos (de `DESIGN.md` frontmatter)
 
@@ -100,32 +107,36 @@ Tres sistemas coherentes con la marca. Cada uno mapea a tokens Still/Lino (no se
 
 ## Tipografía en vídeo
 
-La jerarquía sigue **al pie de la letra** las reglas de la landing (ver [`DESIGN.md`](../DESIGN.md) líneas 207–225 y 234–243). Cualquier excepción queda documentada en el frontmatter y se compensa con `text-shadow` token-based para mantener contraste AA.
+La jerarquía sigue **al pie de la letra** las reglas de la landing (ver [`DESIGN.md`](../DESIGN.md) sección Typography). Cualquier excepción queda documentada en el frontmatter y se compensa con `text-shadow` token-based para mantener contraste AA.
 
-- **Familia única**: `Onest Variable`. Cargada vía `@remotion/fonts` desde `staticFile("fonts/onest-variable.woff2")` (woff2 copiado por `bun run fonts` desde `node_modules/@fontsource-variable/onest/files/onest-latin-wght-normal.woff2`). Si la fuente no existe, `Remotion` loguea un warning y renderiza en fallback `system-ui` — ejecutar `bun run fonts` antes de cualquier render.
+- **3 familias**: `Fraunces Variable` (display, h1/h2/h3), `Inter Variable` (body, botones), `JetBrains Mono Variable` (eyebrows/tags). Cargadas vía `@remotion/fonts` desde `staticFile("fonts/fraunces-variable.woff2")`, `staticFile("fonts/inter-variable.woff2")` y `staticFile("fonts/jetbrains-mono-variable.woff2")` (woff2 copiados por `bun run fonts` desde `node_modules/@fontsource-variable/{fraunces,inter,jetbrains-mono}/files/`). Si alguna fuente no existe, `Remotion` loguea un warning y renderiza en fallback — ejecutar `bun run fonts` antes de cualquier render.
 
 ### Jerarquía
 
-| Nivel | Weight | Tamaño | Uso | Equivalente en landing |
-|---|---|---|---|---|
-| Display | **300** | 80–120px | hook, cover (sin foto) | h1/h2 hero (`font-light`) |
-| Display + refuerzo | **600** | mismo | `<strong>` dentro del titular | `<strong class="font-semibold">` |
-| H2 / Cita | **300** | 48–58px | quote, outro | h2 secciones |
-| H3 / Slide | **600** | 48–58px | h3 de tarjeta cuando aparezca | h3 tarjeta (`font-semibold` fijo) |
-| Tip sobre foto* | **700** | 48–58px | tip con media (Pexels) | **excepción documentada** (ver más abajo) |
-| Body / Label | **500** | 40–52px | cuerpo, eyebrow, handle `@botanic.app` | label/pill (`font-medium`) |
-| Dato destacado | **700** | 40–56px | CTA final ("Sigue para más cuidados") | precio, wordmark (`font-bold`) |
+| Nivel | Familia | Weight | Tamaño | Uso | Equivalente en landing |
+|---|---|---|---|---|---|
+| Display | Fraunces (opsz 144, SOFT 30) | **400** | 80–120px | hook, cover (sin foto) | h1/h2 hero |
+| Display + refuerzo | Fraunces | **400 italic + still-400** | mismo | `<strong>` dentro del titular | `<strong>` en Fraunces |
+| H2 / Cita | Fraunces | **400** | 48–58px | quote, outro | h2 secciones |
+| H3 / Slide | Fraunces | **400** | 48–58px | h3 de tarjeta cuando aparezca | h3 tarjeta |
+| Eyebrow | JetBrains Mono | **400** uppercase tracking 0.04em still-500 | 24–32px | tags, "Próximamente", handle `@botanic.app` | clase `.eyebrow` |
+| Body | Inter | **300** | 40–52px | cuerpo, microcopy | body/p |
+| Body + refuerzo | Inter | **600** | mismo | `<strong>` dentro del body | `<strong>` en body |
+| Botones | Inter | **600** | 40–52px | CTA final ("Sigue para más cuidados") | botones landing |
+| Tip sobre foto* | Fraunces | **700** | 48–58px | tip con media (Pexels) | **excepción documentada** (ver más abajo) |
+| Dato destacado | Fraunces | **700** | 40–56px | precio, wordmark | wordmark hero |
 
-\* **Compensación sobre foto**: la landing usa 300 en h1/h2 incluso con foto de fondo porque la `font-weight: 300` de Onest mantiene buena legibilidad al tamaño de la web. En mp4/still a 1080×1920 el mismo peso 300 sobre foto Pexels con filtro se ve débil (probado). Por eso el tip con media **sube a 700** y se compensa con `text-shadow` del color del fondo (`color-mix(in oklch, <bg-token> 35%, transparent)`). El asterisco deja claro que esto es una excepción local al surface brief, no rompe la jerarquía global.
+\* **Compensación sobre foto**: la landing usa Fraunces 400 incluso con foto de fondo porque la optical size 144 + SOFT 30 mantiene buena legibilidad al tamaño de la web. En mp4/still a 1080×1920 el mismo peso 400 sobre foto Pexels con filtro se ve débil (probado). Por eso el tip con media **sube a 700** y se compensa con `text-shadow` del color del fondo (`color-mix(in oklch, <bg-token> 35%, transparent)`). El asterisco deja claro que esto es una excepción local al surface brief, no rompe la jerarquía global.
 
 ### Reglas de aplicación
 
-- **Titular sin foto** (hook, cover, outro, quote) → **300**. Idéntico a la landing.
-- **Titular sobre foto** (tip con media) → **700 + text-shadow token-based**. Excepción documentada.
-- **Refuerzo semántico** dentro de cualquier titular → `<strong>` con **600**.
-- **CTA final** ("Sigue para más cuidados") → **700** (dato destacado, como precio).
-- **Handle `@botanic.app`** → **500** (label/eyebrow, como los chips de categoría).
-- **Eyebrow / microcopy** → **500**.
+- **Titular sin foto** (hook, cover, outro, quote) → **Fraunces 400 + opsz 144 + SOFT 30**. Idéntico a la landing.
+- **Titular sobre foto** (tip con media) → **Fraunces 700 + text-shadow token-based**. Excepción documentada.
+- **Refuerzo semántico** dentro de cualquier titular → `<strong>` con Fraunces 400 italic + still-400 (mantiene peso, cambia a italic + color).
+- **Eyebrow / tag** → **JetBrains Mono 400 uppercase + tracking 0.04em + still-500**, sin `<strong>` adentro.
+- **Body** → **Inter 300**. Refuerzo semántico → `<strong>` con Inter 600 (sin italic, sin color).
+- **CTA final** ("Sigue para más cuidados") → **Inter 600** (botón) o **Fraunces 700** (dato destacado, como precio).
+- **Handle `@botanic.app`** → **JetBrains Mono 400 uppercase** (eyebrow).
 - **Nunca 800 ni 900** en ningún componente de `video/src/`. (Prohibido por el frontmatter `weight_never`.)
 
 ### Text-shadow token-based (compensación sobre foto)
@@ -148,11 +159,10 @@ La sombra hereda el token del tono de fondo del motion style (el mismo del overl
 
 ### Otras reglas
 
-- **Tracking**: `normal` siempre. **Nunca `tracking-tight` ni `tracking-wide`** (rompe The Light Headline Rule).
-- **Line-height**: `1.05` para display, `1.1`–`1.2` para h2/slide/tip, `1.5` para body/label.
+- **Tracking**: `normal` para todo excepto eyebrows (tracking `0.04em`). **Nunca `tracking-tight` ni `tracking-wide`** fuera de eyebrow.
+- **Line-height**: `1.05` para display, `1.1`–`1.2` para h2/slide/tip, `1.5` para body.
 - **Text-wrap**: `balance` para headlines (≤3 líneas), `pretty` para body.
 - **Max-width por línea**: ≤ 85% del ancho del canvas para legibilidad móvil.
-- **Text-wrap**: `balance` para headlines (≤3 líneas), `pretty` para body.
 - **Max-width por línea**: ≤ 80% del ancho del canvas para legibilidad móvil.
 
 ## Mesh estático (The Wind Mesh Rule)
@@ -195,7 +205,7 @@ Misma paleta y geometría del mesh de la landing (`src/routes/+page.svelte` lín
 
 Estas reglas son específicas de motion graphics y **se suman** a las de `DESIGN.md`:
 
-- **The One Family Rule (vídeo)** — solo `Onest Variable`. Nunca `system-ui`, `sans-serif`, `Helvetica`, `Arial` u otra familia externa. El fallback de Tailwind (`system-ui, -apple-system, …`) **no se aplica** en mp4/stills porque Remotion no carga el sistema de tokens; solo vale la familia declarada en `Root.tsx` con `loadFont`.
+- **The Three Family Rule (vídeo)** — solo `Fraunces Variable`, `Inter Variable` y `JetBrains Mono Variable`. Nunca `system-ui`, `sans-serif`, `Helvetica`, `Arial` u otra familia externa. El fallback de Tailwind (`system-ui, -apple-system, …`) **no se aplica** en mp4/stills porque Remotion no carga el sistema de tokens; solo valen las familias declaradas en `Root.tsx` con `loadFont`.
 - **The One Accent Rule (vídeo)** — Still Green es el único acento. El ámbar `star` sigue siendo exclusivo de estrellas (no se usa en reels/carruseles).
 - **The Warmth Rule (vídeo)** — todos los neutros salen de la rampa Lino (no `zinc-*` ni grises fríos).
 - **No sombras flotantes en mp4** — la elevación se construye con overlay `linear-gradient` sobre la imagen, no con `box-shadow`. Las sombras en mp4 añaden bytes y rompen la regla "elevación por borde" de `DESIGN.md`.
@@ -217,7 +227,7 @@ Estas reglas son específicas de motion graphics y **se suman** a las de `DESIGN
 ## Don'ts
 
 - No introducir colores fuera de Still/Lino. Si necesitas un tono, ajusta alpha o elige otra rampa.
-- No usar `font-family: 'Onest', system-ui, sans-serif`. Solo `Onest Variable`.
+- No usar `font-family` fuera de las 3 familias del sistema (Fraunces/Inter/JetBrains Mono).
 - No usar `tracking-tight` ni `font-weight: 900`.
 - No usar `box-shadow` ni `filter: drop-shadow` en mp4.
 - No usar `bg-primary` / `text-foreground` de Tailwind. Chrome no los resuelve sin Tailwind compilado.
@@ -232,15 +242,15 @@ Estas reglas son específicas de motion graphics y **se suman** a las de `DESIGN
 | `video/src/brand.generated.ts` | ⚠️ Auto-generado por `bun run tokens`. No editar a mano. |
 | `video/src/styles.ts` | `getStyle(name)` mapea `MotionStyle` → `StyleTokens` (bg/text/accent/overlay). |
 | `video/src/mesh.ts` | Componente `<MeshBackground variant="cozy"\|"energy"\|"minimal" />`. |
-| `video/src/Root.tsx` | Carga Onest con `@remotion/fonts` + registra composiciones. |
+| `video/src/Root.tsx` | Carga Fraunces + Inter + JetBrains Mono con `@remotion/fonts` + registra composiciones. |
 | `video/src/components/Logo.tsx` | SVG paths de `static/favicon.svg`, bg/fg desde `BRAND` (icono redondo; el wordmark completo vive en `Wordmark.tsx`). |
 | `video/src/components/Wordmark.tsx` | Wordmark "Botanic" con el brote integrado como "t". Componente reutilizable. |
 | `video/src/components/WordmarkDraw.tsx` | Wordmark con path draw escalonado (stroke + fill) para el `cta`. |
 | `video/src/components/scenes/Hook.tsx` · `Tip.tsx` · `Outro.tsx` · `Cta.tsx` | Composición por scene type (`hook` / `tip` / `outro` / `cta`). |
 | `video/src/BotanicReel.tsx` · `BotanicSlide.tsx` | Composiciones 9:16 / 4:5. |
 | `scripts/sync-brand-tokens.mjs` | Lee frontmatter de `DESIGN.md` → `brand.generated.ts`. |
-| `scripts/copy-fonts.mjs` | Copia Onest woff2 a `static/fonts/`. |
-| `scripts/lint-brand.mjs` | Caza hex hardcodeados y `font-family` que no sea `Onest Variable`. |
+| `scripts/copy-fonts.mjs` | Copia woff2 de Fraunces + Inter + JetBrains Mono a `static/fonts/`. |
+| `scripts/lint-brand.mjs` | Caza hex hardcodeados y `font-family` fuera de las 3 familias del sistema. |
 | `.opencode/agents/visual-eval.md` | Verifica assets de stock (Pexels) contra el contexto de la escena; no audita renders propios. |
 
 ## Auditoría de coherencia
@@ -248,6 +258,6 @@ Estas reglas son específicas de motion graphics y **se suman** a las de `DESIGN
 Tras cada render (`bunx remotion render` o `bunx remotion still`):
 
 1. **Lint**: `bun run lint:brand` (debe pasar).
-2. **Visual**: revisión **humana** — parar y preguntar al usuario. Check rápido: tipografía Onest Variable, paleta dentro de Still/Lino (sin magenta/naranja saturado/grises fríos), overlay que garantice legibilidad, logo + handle en la última escena, mesh en Still/Lino.
+2. **Visual**: revisión **humana** — parar y preguntar al usuario. Check rápido: tipografía Fraunces/Inter/JetBrains Mono según jerarquía, paleta dentro de Still/Lino (sin magenta/naranja saturado/grises fríos), overlay que garantice legibilidad, logo + handle en la última escena, mesh en Still/Lino.
 
 El subagente `visual-eval` NO audita renders propios; es solo para verificar stock (Pexels).

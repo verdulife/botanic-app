@@ -11,7 +11,7 @@ Carril de **imágenes estáticas** para el feed de Instagram (posts simples 1:1 
 | Guion | Mismo `script.json` que los reels (subconjunto: escenas `slide`) | Un formato, un pipeline |
 | Plantillas de slide | `Tip` (consejo+imagen), `Quote` (cita minimal), `Cover` (portada del carrusel), `Outro` (CTA) | Reutiliza los fragmentos de la biblioteca |
 | Fuentes de foto | **Pexels API** (fotos portrait) | Atribución no requerida; mismo sourcing que reels |
-| Tipografía | Onest bold, mismo sistema de estilos `energy`/`cozy`/`minimal` | Coherencia de marca en todo el feed |
+| Tipografía | Fraunces (titulares) + Inter bold (slides) + JetBrains Mono (eyebrows), mismo sistema de estilos `energy`/`cozy`/`minimal` | Coherencia de marca en todo el feed |
 | Publicación | Manual: Meta Business Suite (programador gratuito) | APIs de IG no permiten posteo automático gratis |
 | Cadencia | 2-3x/semana, batch semanal | Consistencia sin saturar feed |
 | Relación con reels | ~50% del contenido carrusel = repurpose de un post del blog; el resto ideas originales | El blog alimenta ambos carriles |
@@ -46,7 +46,7 @@ Carril de **imágenes estáticas** para el feed de Instagram (posts simples 1:1 
 ```
 
 - Las escenas tipo `cover`/`slide`/`outro` se renderizan como PNG (`npx remotion still` por frame), no como video.
-- Cada slide: imagen de fondo (foto Pexels, oscurecida con overlay de marca) + tipografía Onest bold.
+- Cada slide: imagen de fondo (foto Pexels, oscurecida con overlay de marca) + tipografía Inter Variable bold.
 - `ProgressDots` indica la posición dentro del carrusel en cada slide.
 
 ## Plantillas de slide
@@ -54,11 +54,11 @@ Carril de **imágenes estáticas** para el feed de Instagram (posts simples 1:1 
 | Plantilla | Uso | Composición |
 |---|---|---|
 | `Cover` | Portada del carrusel | Logo + título grande + mesh oficial + hint "swipe →" |
-| `Tip` | Consejo + foto | Imagen fondo + overlay `linear-gradient` + texto destacado (Onest Variable) |
+| `Tip` | Consejo + foto | Imagen fondo + overlay `linear-gradient` + texto destacado (Inter Variable bold) |
 | `Quote` | Cita / statement de marca | Fondo minimal, texto centrado, mucho aire |
 | `Outro` | CTA final | Logo + handle + "sigue / guarda / lista de espera" |
 
-**Estilo visual**: tokens de [`DESIGN.md`](../DESIGN.md); surface brief en [`video/DESIGN.reels.md`](../video/DESIGN.reels.md). Tipografía única Onest Variable, paleta Still/Lino, mesh estático de marca. Antes de renderizar: `bun run tokens && bun run fonts && bun run lint:brand`.
+**Estilo visual**: tokens de [`DESIGN.md`](../DESIGN.md); surface brief en [`video/DESIGN.reels.md`](../video/DESIGN.reels.md). **3 familias** (Fraunces titulares + Inter body+botones + JetBrains Mono eyebrows), paleta Still/Lino, mesh estático de marca. Antes de renderizar: `bun run tokens && bun run fonts && bun run lint:brand`.
 
 ## Imágenes: sourcing (Pexels)
 
@@ -77,7 +77,7 @@ Carril de **imágenes estáticas** para el feed de Instagram (posts simples 1:1 
 ## Guía de estilo para generación IA
 
 - **Tone**: Botanic — cercano, claro, útil.
-- **Slide**: 1 idea por slide, ≤6-8 palabras legibles, Onest bold.
+- **Slide**: 1 idea por slide, ≤6-8 palabras legibles, Inter Variable bold.
 - **Estructura carrusel**: cover → 4-5 slides de contenido → CTA final.
 - **Mix**: ~80% tips/cuidados, ~20% estética/historias de marca.
 - **CTA**: siempre slide final con logo + handle.
@@ -93,7 +93,7 @@ Carril de **imágenes estáticas** para el feed de Instagram (posts simples 1:1 
 - [x] Skills en `.opencode/skills/` (`remotion-best-practices`)
 - [x] `src/lib/social/_drafts/ + posts/`
 - [x] **PoC end-to-end**: carrusel 4:5 (cover + slide con foto Pexels de fondo) ✓
-- [x] **Alineación al design system** (idem reels: tokens, Onest Variable, lint:brand, jerarquía tipográfica de la landing)
+- [x] **Alineación al design system** (idem reels: tokens, Fraunces/Inter/JetBrains Mono, lint:brand, jerarquía tipográfica de la landing)
 
 **Pendiente (por orden):**
 
