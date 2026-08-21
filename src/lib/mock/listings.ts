@@ -31,10 +31,10 @@ export const mockListings: MockListing[] = Array.from({ length: 12 }, (_, i) => 
 	id: `listing-${i + 1}`,
 	title: names[i % names.length],
 	price: Math.floor(Math.random() * 45) + 3,
-	category: ["Semillas", "Esquejes", "Brotes", "Plantas", "Tiestos"][i % 5],
+	category: ["Semillas", "Esquejes", "Plantas", "Tiestos", "Accesorios"][i % 5],
 	location: ["Madrid", "Barcelona", "Valencia", "Sevilla", "Bilbao"][i % 5],
 	seller: sellers[i % sellers.length],
 	avatar: avatars[i % avatars.length],
 }));
 
-export const categories = ["Todas", "Semillas", "Esquejes", "Brotes", "Plantas", "Tiestos"];
+export const categories = ["Todas", "Semillas", "Esquejes", "Plantas", "Tiestos", "Accesorios"];

@@ -1,6 +1,6 @@
 # Blog Botanic — Guía y arquitectura
 
-Blog estático basado en Markdown, sin CMS. Carril paralelo de SEO + lead gen: **no bloquea el MVP**. Objetivo: ganar autoridad entre los Plant Lovers y alimentar la waitlist desde cada artículo.
+Blog estático basado en Markdown, sin CMS. Carril paralelo de SEO + lead gen: **no bloquea el MVP**. Objetivo: ganar autoridad entre los Plant Lovers y alimentar la lista de espera desde cada artículo.
 
 ## Decisiones tomadas
 
@@ -144,7 +144,7 @@ src/lib/components/AppFooter.svelte # compartido landing + blog
 - **Estructura SEO**: title (keyword), description con gancho, H2/H3 descriptivos, extracto, preguntas frecuentes donde aplique (para JSON-LD).
 - **Mix**: ~80% guías de cuidados y propagación, ~20% actualidad/noticias (p.ej. tissue culture).
 - **Interlinks**: enlazar artículos relacionados entre sí y a la landing.
-- **CTA**: cerrar cada artículo con CTA a la waitlist (componente, no texto duplicado).
+- **CTA**: cerrar cada artículo con CTA a la lista de espera (componente, no texto duplicado).
 - **Noticias**: fecha, fuentes y revisión humana obligatoria antes de programar.
 - **Asuntos/extensiones**: sin emojis en títulos.
 

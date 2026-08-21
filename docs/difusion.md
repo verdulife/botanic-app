@@ -2,17 +2,19 @@
 
 Inversión en marketing: **0 €**. Crecimiento orgánico vía comunidad y contenido.
 
+Mensajes clave y brand voice en [PRODUCT.md](../PRODUCT.md). KPIs por fase en [PLAN.md](../PLAN.md).
+
 ## Pre-lanzamiento
 
-### Landing teaser + waitlist
-Página simple: "Donde las plantas conocen a gente". Formulario de email. **Objetivo: 1.000 suscriptores.**
+### Landing teaser + lista de espera
+Página simple apuntando a la lista de espera. **Objetivo: 1.000 suscriptores** (ver [PLAN.md](../PLAN.md)).
 
-**Estado**: landing + waitlist publicadas y operativas (Supabase + emails de confirmación y aviso al admin vía Resend). Ver [`plan-desarrollo.md`](plan-desarrollo.md).
+**Estado**: landing + lista de espera operativas (Supabase + emails vía Resend). Ver [PLAN.md](../PLAN.md) — sprint 6.
 
 ### Instagram + TikTok
 Cuenta `@botanic.app`. Contenido 3-4x/semana (reels) + 2-3x/semana (posts/carruseles). Construir audiencia **Plant Lovers** sin vender la app todavía.
 
-**Estado**: pipeline implementado a nivel PoC (reel mp4 + carrusel renderizados). Generación agéntica con **Remotion**: guiones `script.json` + B-roll/fotos de Pexels (`scripts/stock.mjs`) → `mp4` 9:16 y carruseles 4:5; publicación manual en batch semanal (Meta Business Suite + TikTok Studio). Detalle en [`social-video.md`](social-video.md) y [`social-post.md`](social-post.md).
+**Estado**: pipeline Remotion a nivel PoC (reel mp4 + carrusel renderizados). Generación agéntica con guiones `script.json` + B-roll/fotos de Pexels (`scripts/stock.mjs`) → `mp4` 9:16 y carruseles 4:5; publicación manual en batch semanal (Meta Business Suite + TikTok Studio). Detalle en [docs/social-video.md](social-video.md) y [docs/social-post.md](social-post.md).
 
 ### Comunidades
 Unirse y participar genuinamente en:
@@ -24,22 +26,20 @@ Unirse y participar genuinamente en:
 ### SEO seeds
 Artículos en Substack/Medium:
 - "Cómo vender esquejes online"
-- "Dónde comprar plantas baratas cerca de ti"
+- "Dónde comprar plantas baratas cerca de tu zona"
 - "Las 10 plantas de interior más fáciles de propagar"
 
 ## Lanzamiento
 
 | Canal | Acción |
 |---|---|
-| Email | Email a la waitlist |
-| Instagram/TikTok | Video "Ya está aquí 🌱" |
+| Email | Email a la lista de espera |
+| Instagram/TikTok | Video de anuncio de lanzamiento |
 | Facebook Groups | Compartir en grupos donde ya participas |
 | Reddit | Post en r/plantasES |
 | Product Hunt | Lanzamiento categoría Apps |
 | WhatsApp | Grupos personales de Plant Lovers |
 | Uneed / BetaList | Directorios startups españolas |
-
-**Mensajes clave**: "Donde las plantas conocen a gente", "Vender, cambiar o regalar", "De **Plant Lovers** a **Plant Lovers**"
 
 ## Post-lanzamiento (meses 3-6)
 
@@ -47,13 +47,3 @@ Artículos en Substack/Medium:
 - **UGC**: Pedir a usuarios que compartan sus listings
 - **Micro-influencers**: Trueque visibilidad por promoción
 - **Bucle viral**: OG tags en cada listing (foto + precio + enlace)
-
-### KPIs primeros 3 meses
-
-| Métrica | Objetivo |
-|---|---|
-| Usuarios registrados | 500 |
-| Anuncios activos | 200 |
-| Transacciones | 50 |
-| Retención semanal | >30% |
-| Seguidores IG | 1.000 |

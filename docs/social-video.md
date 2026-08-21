@@ -133,16 +133,16 @@ scripts/
 - **Cadencia**: 3-4x/semana (difusión.md). Batch semanal generado y revisado por adelantado.
 - **Programación**: manual — Meta Business Suite (IG, gratuito) + TikTok Studio (programador nativo). No hay cron porque las APIs sociales no permiten posteo automático gratuito.
 - **Mix de contenido**: 50/50 repurpose del blog (un post → carrusel/reel) + ideas originales.
-- **Métricas a vigilar** (batch a batch): retención >30s, shares, conversión a la waitlist (CTA con link en bio).
+- **Métricas a vigilar** (batch a batch): retención >30s, shares, conversión a la lista de espera (CTA con link en bio).
 
 ## Guía de estilo para generación IA
 
 - **Tone**: Botanic — cercano, claro, útil. Público Plant Lovers. Sin clickbait, sin relleno.
 - **Hook**: frase corta con tensión/curiosidad en los primeros 1.5-2s. Texto grande (se ve en silencio).
-- **Estructura reel**: hook → 3-4 tips/value → CTA (sigue, guarda, waitlist).
+- **Estructura reel**: hook → 3-4 tips/value → CTA (sigue, guarda, lista de espera).
 - **Texto**: ≤6-8 palabras por slide legible en móvil; Onest bold.
 - **Mix**: ~80% tips/cuidados/propagación, ~20% estética/historias de marca (estilo `cozy`/`minimal`).
-- **CTA**: siempre pantalla final con logo + handle. En IG, link en bio → waitlist.
+- **CTA**: siempre pantalla final con logo + handle. En IG, link en bio → lista de espera.
 - **Noticias/factual**: revisión humana obligatoria de precisión botánica antes de programar.
 - **Idioma**: español (market España).
 

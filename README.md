@@ -1,61 +1,40 @@
 # Botanic
 
-> **Donde las plantas conocen a gente.**
+App donde las plantas conocen a gente. Marketplace P2P de plantas entre particulares, con Deseos, Comunidad y El Market como módulos adyacentes.
 
-Vender, cambiar o regalar semillas, esquejes, brotes, plantas y tiestos con gente de tu zona. La comunidad donde tus plantas encuentran un nuevo hogar.
+**Fase actual**: MVP PWA (pre-desarrollo · landing, lista de espera y blog operativos).  
+**Siguiente**: Sprint 1 — Setup + Auth. Detalle en [PLAN.md](PLAN.md).
 
-## Estado actual
+## Documentación
 
-**Fase**: Pre-desarrollo (landing, blog y waitlist operativos)
-**Siguiente paso**: Sprint 1 — Setup + Auth
+### Producto y plan
 
-## Stack
+- [PRODUCT.md](PRODUCT.md) — descripción canónica del producto
+- [PLAN.md](PLAN.md) — fases, sprints, KPIs, categorías y backlog
+- [DESIGN.md](DESIGN.md) — design system canónico (autoridad global)
+- [architecture.md](architecture.md) — stack, DB schema, estructura
 
-| Capa | Tecnología |
-|---|---|
-| Frontend | SvelteKit 5 + TailwindCSS 4 + TypeScript |
-| Backend/DB | Supabase (PostgreSQL, Auth, Storage, Realtime) |
-| PWA | @vite-pwa/sveltekit |
-| Mapas | Leaflet + OpenStreetMap |
-| Hosting | Vercel + Cloudflare |
-| Gestor | Bun (solo package management) |
+### Producto (detalle)
 
-**Coste operativo MVP**: 0 €/mes
+- [docs/mercado.md](docs/mercado.md) — datos de mercado y competencia
+- [docs/monetizacion.md](docs/monetizacion.md) — modelo de negocio
+- [docs/difusion.md](docs/difusion.md) — plan de difusión pre y post lanzamiento
 
-## Docs
+### Técnico (operativo)
 
-### Generales
-
-| Documento | Contenido |
-|---|---|
-| [`AGENTS.md`](AGENTS.md) | Contexto completo para abrir en nueva sesión |
-| [`roadmap.md`](roadmap.md) | Timeline 2026-2028 con fases e hitos |
-| [`architecture.md`](architecture.md) | Arquitectura, DB schema, proyecto, tech stack |
-| [`DESIGN.md`](DESIGN.md) | Design system canónico (impeccable) — autoridad global |
-| [`video/DESIGN.reels.md`](video/DESIGN.reels.md) | Surface brief de reels y carruseles (Remotion) |
-
-### Producto
-
-| Documento | Contenido |
-|---|---|
-| [`docs/concepto.md`](docs/concepto.md) | Idea, problema, solución, diferenciación |
-| [`docs/mercado.md`](docs/mercado.md) | Análisis de mercado, competidores, nicho |
-| [`docs/mvp-scope.md`](docs/mvp-scope.md) | Alcance MVP (in/out), user stories |
-| [`docs/monetizacion.md`](docs/monetizacion.md) | Modelo de negocio, planes de pricing |
-| [`docs/difusion.md`](docs/difusion.md) | Plan de difusión pre y post lanzamiento |
-
-### Técnico
-
-| Documento | Contenido |
-|---|---|
-| [`docs/plan-desarrollo.md`](docs/plan-desarrollo.md) | 6 sprints detallados con checkboxes |
-| [`docs/pwa.md`](docs/pwa.md) | Configuración PWA con @vite-pwa/sveltekit |
-| [`docs/social-video.md`](docs/social-video.md) | Reels IG + TikTok (Remotion, pipeline agéntico) |
-| [`docs/social-post.md`](docs/social-post.md) | IG feed + carruseles (stills Remotion) |
-| [`docs/social-eval.md`](docs/social-eval.md) | Subagente `visual-eval` (visión; solo stock) + script `frames` |
+- [docs/pwa.md](docs/pwa.md) — configuración PWA
+- [docs/blog.md](docs/blog.md) — guía del blog
+- [docs/social-video.md](docs/social-video.md) — reels IG + TikTok (Remotion)
+- [docs/social-post.md](docs/social-post.md) — posts IG + carruseles (Remotion)
+- [docs/social-eval.md](docs/social-eval.md) — subagente `visual-eval`
+- [docs/email-deliverability.md](docs/email-deliverability.md) — auditoría de emails
 
 ### Prensa
 
-| Documento | Contenido |
-|---|---|
-| [`press/README.md`](press/README.md) | Dossier de prensa en PDF (12 páginas) |
+- [press/README.md](press/README.md) — dossier de prensa (*pendiente de regeneración*)
+
+## Para empezar a desarrollar
+
+1. `bun install`
+2. `bun run dev`
+3. Seguir [PLAN.md](PLAN.md) — sprint actual.

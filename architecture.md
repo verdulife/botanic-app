@@ -31,12 +31,12 @@
 
 **Coste total MVP: 0 €/mes**
 
-> **Dominio**: `botanicapp.es` (registrado por el usuario; nameservers y DNS gestionados en Vercel). Resend envía desde `no-reply@botanicapp.es` (SPF/DKIM OK; DMARC añadido `p=none`, verificación pendiente).
+> **Dominio**: `botanicapp.es` (registrado por el usuario; nameservers y DNS gestionados en Vercel). Resend envía desde `Botanic <hola@botanicapp.es>` (DKIM en root + SPF/MX en subdomain `send.botanicapp.es`, región eu-west-1; DMARC `p=none`).
 
 ## Email (Resend)
 
 - **Proveedor**: [Resend](https://resend.com) (Free: 3.000 emails transaccionales/mes, 100/día; marketing ilimitado hasta 1.000 contactos/mes). Envío vía **SvelteKit server route** (`/api/waitlist`), nunca desde el cliente.
-- **Dominio verificado**: `botanicapp.es` → `no-reply@botanicapp.es`.
+- **Dominio verificado**: `botanicapp.es` → `hola@botanicapp.es`.
 - **Flujo alta waitlist**: el usuario hace `POST /api/waitlist` → insert en tabla `waitlist` → se envían (solo en fila nueva):
   1. Email de confirmación al usuario ("¡Gracias por apuntarte a la waitlist de Botanic!").
   2. Notificación a `ADMIN_NOTIFY_EMAIL` (admite uno o varios, separados por coma). Incluye **total de apuntes** consultado desde la vista `waitlist_count` (anon, sin service_role).
@@ -74,7 +74,7 @@ CREATE TABLE profiles (
 
 CREATE TABLE categories (
   id    SERIAL PRIMARY KEY,
-  slug  TEXT UNIQUE NOT NULL,  -- semillas, esquejes, brotes, plantas, tiestos
+  slug  TEXT UNIQUE NOT NULL,  -- semillas, esquejes, plantas, tiestos, accesorios
   name  TEXT NOT NULL
 );
 

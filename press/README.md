@@ -1,18 +1,16 @@
 # Dossier de prensa
 
-Se ha creado un dossier profesional de 12 páginas (A4) para presentar Botanic a inversores, colaboradores o medios.
+> **⚠️ OBSOLETO — NO USAR**. Este dossier se compiló con el copy antiguo ("marketplace P2P", "el Wallapop de las plantas") que **no está alineado** con el claim, brand commitments y brand voice actuales en [PRODUCT.md](../PRODUCT.md). Regenerar antes de cualquier uso real.
+>
+> **Si una sesión de agente lee este README, debe pasar de largo**: el PDF no representa el producto actual. No lo cites como referencia ni lo distribuyas.
 
-> **⚠️ Pendiente de regeneración**: el PDF se compiló con el copy antiguo ("marketplace P2P", "el Wallapop de las plantas"). Regenerar con el tono actual ("Donde las plantas conocen a gente", comunidad de economía circular) antes de usarlo para difusión real.
-
-## Localización
-
-El PDF está en el proyecto `art-director`:
+## Localización del PDF antiguo
 
 ```
 C:\Users\verdu\art-director\output\resultado.pdf
 ```
 
-## Estructura del dossier
+## Estructura del dossier (a regenerar)
 
 | Pág | Sección |
 |---|---|
@@ -29,13 +27,15 @@ C:\Users\verdu\art-director\output\resultado.pdf
 | 11 | Contacto |
 | 12 | Back cover |
 
-## Diseño
+## Diseño (referencia del dossier antiguo)
 
 - **Paleta**: Verde bosque (#1B4332) + salvia (#95D5B2) + crema + terracota
 - **Tipografía**: Fraunces (títulos) + Inter (cuerpo)
 - **Formato**: A4, 3mm sangrado
 
-## Recompilar
+> La paleta y tipografía actuales del proyecto son las de [DESIGN.md](../DESIGN.md) (Onest Variable + Still/Lino). Este dossier no las usa; hay que regenerarlo on-brand.
+
+## Recompilar (cuando se regenere)
 
 ```bash
 cd art-director

@@ -1,6 +1,6 @@
 # Poster Botanic A3
 
-Poster A3 vertical para captación de waitlist en viveros. Autónomo, fuera del proyecto web, no se publica en Vercel.
+Poster A3 vertical para captación de la lista de espera en viveros. Autónomo, fuera del proyecto web, no se publica en Vercel.
 
 ## Stack
 
@@ -45,7 +45,7 @@ poster/
 
 ## Regenerar el QR
 
-Si cambia la URL de la waitlist:
+Si cambia la URL de la lista de espera:
 
 ```bash
 bun poster/regen-qr.mjs

@@ -1,6 +1,6 @@
 ---
 name: Botanic
-description: Donde las plantas conocen a gente — comunidad de economía circular para plantas
+description: Botanic — la app donde las plantas conocen a gente. Marketplace P2P de plantas entre particulares.
 surface_briefs:
   - video/DESIGN.reels.md
 colors:
@@ -152,7 +152,7 @@ components:
 
 **Creative North Star: el estándar de categoría de marketplace, ejecutado impecablemente, con voz de economía circular.**
 
-Botanic es la landing de una comunidad de economía circular para plantas; el listón de acabado es Wallapop + Vinted + Airbnb. La página ejecuta la estructura clásica de la categoría — hero foto-liderado, categorías, manifiesto, por qué, waitlist prefooter y footer — a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk. El copy habla en el vocabulario de la economía circular ("vender, cambiar o regalar", "conocer a gente nueva", "las plantas se comparten y así conocen a gente nueva") y evita declarar como promesas permanentes los "sin envíos", "sin comisiones" ni "solo cerca de ti".
+Botanic es la landing de una comunidad de economía circular para plantas; el listón de acabado es Wallapop + Vinted + Airbnb. La página ejecuta la estructura clásica de la categoría — hero foto-liderado, categorías, manifiesto, por qué, waitlist prefooter y footer — a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk. El copy habla en el vocabulario de la economía circular ("vender, cambiar o regalar", "conocer a gente nueva", "las plantas se comparten y así conocen a gente nueva") y evita declarar como promesas permanentes los "sin envíos", "sin comisiones", "quedar en mano" ni "solo cerca de ti" — son decisiones del MVP, no verdades de marca (ver [PRODUCT.md](PRODUCT.md)).
 
 El sistema es cálido y sobrio: un fondo de lino cálido, tinta cálida casi negra, Still Green (`#74AA7B`) para el CTA, el logo y los iconos, una rampa complementaria `tranquil` (amarillo) para romper la monotonía, y el ámbar `star` puntual para las estrellas. La fotografía real de plantas es protagonista en el hero (abanico de anuncios de ejemplo etiquetado como material sintético). La profundidad se construye con bordes finos, esquinas redondeadas (`rounded-2xl` en tarjetas, `rounded-full` en pills) y contraste tonal entre superficies; solo hay sombra puntual en la tarjeta del abanico elevada. Se evita explícitamente el `AI slop`: sin degradados de neón, sin glassmorphism, sin serif itálicos decorativos, sin métricas o testimonios inventados. Las animaciones del sistema son el mesh viento de las bandas de categorías y waitlist (The Wind Mesh Rule, con dos variantes de intensidad) y el abanico de anuncios del hero (The Fan Rule).
 

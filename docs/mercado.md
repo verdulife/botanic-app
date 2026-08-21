@@ -29,3 +29,16 @@ Esta comunidad **ya existe, está activa y está dispersa**. Botanic les da un h
 | Milanuncios | Clásico | UX anticuada, nada especializado |
 
 **Conclusión**: No existe en España una plataforma P2P dedicada a plantas entre particulares. Nicho vacío con demanda real.
+
+## Diferenciación
+
+| Dimensión | Botanic | Wallapop | Vinted | Palmstreet | Plant Position |
+|---|---|---|---|---|---|
+| Enfoque | Solo plantas | Generalista | Ropa | Plantas + lifestyle | Viveros (B2B) |
+| Modelo | P2P (+ B2B futuro vía El Market) | P2P | P2P | Live shopping | Profesional |
+| España | ✅ | ✅ | ✅ | ❌ | ✅ |
+| Comunidad vegetal | ✅ (núcleo) | ❌ | ❌ | ✅ (lifestyle) | ❌ |
+| Categorías vegetales propias | ✅ | ❌ (subcategoría) | ❌ | ✅ | ✅ |
+| Idioma | Español (cat/gl/eu en fase 2) | ES | ES | EN | ES |
+
+Botanic es la única plataforma española que combina: enfoque exclusivo en plantas + P2P entre particulares + categorías vegetales propias + comunidad de Plant Lovers. Los módulos adyacentes (Deseos, Comunidad, El Market) cubren wishlist, social y B2B sin necesidad de cambiar de app.

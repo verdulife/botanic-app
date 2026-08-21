@@ -56,7 +56,7 @@ Carril de **imágenes estáticas** para el feed de Instagram (posts simples 1:1 
 | `Cover` | Portada del carrusel | Logo + título grande + mesh oficial + hint "swipe →" |
 | `Tip` | Consejo + foto | Imagen fondo + overlay `linear-gradient` + texto destacado (Onest Variable) |
 | `Quote` | Cita / statement de marca | Fondo minimal, texto centrado, mucho aire |
-| `Outro` | CTA final | Logo + handle + "sigue / guarda / waitlist" |
+| `Outro` | CTA final | Logo + handle + "sigue / guarda / lista de espera" |
 
 **Estilo visual**: tokens de [`DESIGN.md`](../DESIGN.md); surface brief en [`video/DESIGN.reels.md`](../video/DESIGN.reels.md). Tipografía única Onest Variable, paleta Still/Lino, mesh estático de marca. Antes de renderizar: `bun run tokens && bun run fonts && bun run lint:brand`.
 
@@ -72,7 +72,7 @@ Carril de **imágenes estáticas** para el feed de Instagram (posts simples 1:1 
 
 - **Cadencia**: 2-3x/semana (difusion.md), batch semanal.
 - **Programación**: manual — Meta Business Suite (gratuito, permite programar carruseles e imágenes).
-- **Métricas a vigilar**: saves (guardados), shares, alcance, conversión vía link en bio → waitlist.
+- **Métricas a vigilar**: saves (guardados), shares, alcance, conversión vía link en bio → lista de espera.
 
 ## Guía de estilo para generación IA
 
