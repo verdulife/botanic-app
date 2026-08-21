@@ -14,6 +14,9 @@
 		Shovel,
 		Heart,
 		Recycle,
+		Users,
+		MessagesSquare,
+		Store,
 	} from "lucide-svelte/icons";
 
 	const demoListings = [
@@ -50,6 +53,101 @@
 		{ name: "Tiestos", icon: ShoppingBasket },
 		{ name: "Accesorios", icon: Shovel },
 	];
+
+	const features = [
+		{
+			number: "01",
+			icon: Users,
+			image: "/images/vendedores.jpg",
+			title: "Particular a particular",
+			shortDescription: "Entre personas, cerca de ti.",
+			longDescription:
+				"Compra, vende, cambia o regala entre personas de tu zona. Sin intermediarios, sin comisiones, sin tiendas.",
+			bullets: ["Sin intermediarios", "Cerca de tu zona"],
+			coming: false,
+		},
+		{
+			number: "02",
+			icon: Heart,
+			image: "/images/compradores.jpg",
+			title: "Deseos",
+			shortDescription: "Te avisamos cuando alguien la publique.",
+			longDescription:
+				"Dinos qué plantas buscas y te avisamos al instante cuando alguien las publique. Como una wishlist, pero supervitaminada.",
+			bullets: ["Avisos al instante", "Sin listas genéricas"],
+			coming: false,
+		},
+		{
+			number: "03",
+			icon: MessagesSquare,
+			image: "/images/aloe.jpg",
+			title: "Comunidad",
+			shortDescription: "Consejos reales entre Plant Lovers.",
+			longDescription:
+				"Un espacio para preguntar, compartir consejos y aprender de gente que cuida plantas como tú.",
+			bullets: ["Consejos reales", "De Plant Lovers para Plant Lovers"],
+			coming: true,
+		},
+		{
+			number: "04",
+			icon: Store,
+			image: "/images/suculentas.jpg",
+			title: "El Market de Botanic",
+			shortDescription: "Profesionales y tiendas del sector.",
+			longDescription:
+				"Viveros, jardineros, iluminación, tiestos, abonos y todo lo que tu jardín necesita, en un solo catálogo.",
+			bullets: ["Viveros, jardineros, iluminación", "Un solo catálogo"],
+			coming: true,
+		},
+	];
+
+	const ROTATION_MS_DESKTOP = 4000;
+	const ROTATION_MS_MOBILE = 5000;
+
+	let activeIndex = $state(0);
+	let paused = $state(false);
+	let isMobile = $state(false);
+
+	$effect(() => {
+		if (typeof window === "undefined") return;
+		const mq = window.matchMedia("(max-width: 767px)");
+		isMobile = mq.matches;
+		const handler = (e: MediaQueryListEvent) => (isMobile = e.matches);
+		mq.addEventListener("change", handler);
+		return () => mq.removeEventListener("change", handler);
+	});
+
+	$effect(() => {
+		if (typeof window === "undefined") return;
+		const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		if (reducedMotion) return;
+		const ms = isMobile ? ROTATION_MS_MOBILE : ROTATION_MS_DESKTOP;
+		const id = setInterval(() => {
+			if (!paused) {
+				activeIndex = (activeIndex + 1) % features.length;
+			}
+		}, ms);
+		return () => clearInterval(id);
+	});
+
+	function setActive(i: number) {
+		activeIndex = i;
+		paused = true;
+	}
+
+	function next() {
+		activeIndex = (activeIndex + 1) % features.length;
+		paused = true;
+	}
+
+	function prev() {
+		activeIndex = (activeIndex - 1 + features.length) % features.length;
+		paused = true;
+	}
+
+	function resume() {
+		paused = false;
+	}
 
 	const fanCenter = (demoListings.length - 1) / 2;
 	let hovered = $state<number | null>(Math.floor(fanCenter));
@@ -228,21 +326,172 @@
 </section>
 
 <!-- Categorías -->
-<section class="mesh-original relative overflow-hidden border-y border-border/70 bg-muted/40">
-	<div class="mesh" aria-hidden="true">
-		<div class="mesh-a"></div>
-		<div class="mesh-b"></div>
+<section class="relative border-y border-tranquil-300 bg-tranquil-200 py-12 md:py-16">
+	<div class="relative mx-auto max-w-6xl px-4 md:px-6">
+		<div class="mb-6 text-center md:mb-8">
+			<p class="eyebrow">Categorías principales</p>
+			<h2 class="mt-2 text-4xl leading-tight text-still-950 md:text-5xl">Lo que encuentras en Botanic</h2>
+			<p class="mt-2 text-foreground">Plantas, semillas y todo lo que las cuida, entre particulares.</p>
+		</div>
+		<div class="flex flex-wrap items-center justify-center gap-2.5">
+			{#each categories as cat}
+				<span
+					class="eyebrow inline-flex items-center gap-2 rounded-full border border-tranquil-500 bg-tranquil-400 px-4 py-2 text-still-950 shadow-xs"
+				>
+					<cat.icon class="size-3 text-still-950" aria-hidden="true" />
+					{cat.name}
+				</span>
+			{/each}
+		</div>
 	</div>
-	<div
-		class="relative mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-2.5 px-4 py-6 md:px-6"
-	>
-		{#each categories as cat}
-			<span
-				class="eyebrow inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2"
+</section>
+
+<!-- Qué puedes hacer dentro -->
+<section
+	class="px-4 py-20 md:px-8 md:py-28"
+	onmouseenter={() => (paused = true)}
+	onmouseleave={resume}
+	aria-roledescription="carrusel"
+	aria-label="Funciones de Botanic"
+>
+	<div class="mx-auto mb-12 max-w-2xl text-center md:mb-16">
+		<p class="eyebrow">Botanic es más</p>
+		<h2 class="mt-2 text-4xl leading-tight text-still-950 md:text-5xl">Lo que vas a poder hacer cuando abramos Botanic</h2>
+		<p class="mt-3 text-foreground">Cuatro funciones para cubrir todas las necesidades de los amantes de las plantas y la huerta.</p>
+	</div>
+
+	<!-- Móvil: scroll horizontal con peek, full-bleed -->
+	<div class="md:hidden -mx-4">
+		<div class="flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+			{#each features as feature, i}
+				<button
+					type="button"
+					onclick={() => setActive(i)}
+					aria-expanded={i === activeIndex}
+					aria-label="{feature.title}: {feature.shortDescription}"
+					class="snap-center shrink-0 basis-[88%] relative aspect-[3/4] overflow-hidden rounded-2xl border text-left transition-all duration-300 hover:border-still-400 {i ===
+					activeIndex
+						? 'border-still-400 shadow-md'
+						: 'border-border'}"
+				>
+					<img
+						src={feature.image}
+						alt=""
+						aria-hidden="true"
+						class="absolute inset-0 h-full w-full object-cover"
+					/>
+					<div
+						class="absolute inset-0 bg-gradient-to-t from-still-950/80 via-still-950/30 to-transparent"
+						aria-hidden="true"
+					></div>
+					<div class="relative flex h-full flex-col justify-between p-5">
+						<div class="flex items-center justify-between gap-2">
+							<span class="eyebrow text-still-300">{feature.number}</span>
+							{#if feature.coming}
+								<span
+									class="eyebrow rounded-full bg-tranquil-400 px-2.5 py-0.5 text-still-950"
+								>
+									Próximamente
+								</span>
+							{/if}
+						</div>
+						<div>
+							<h3
+								class="text-center text-background leading-tight transition-all duration-300 {i ===
+								activeIndex
+									? 'text-3xl'
+									: 'text-xl'}"
+							>
+								{feature.title}
+							</h3>
+							{#if i === activeIndex}
+								<p class="mt-3 text-center text-sm text-linen-50/85">{feature.shortDescription}</p>
+								<p class="mt-2 text-center text-sm text-linen-50/85">{feature.longDescription}</p>
+								<ul class="mt-4 space-y-1">
+									{#each feature.bullets as bullet}
+										<li class="text-center text-sm text-linen-50/85">— {bullet}</li>
+									{/each}
+								</ul>
+							{/if}
+						</div>
+					</div>
+				</button>
+			{/each}
+		</div>
+	</div>
+
+	<!-- Desktop: grid 4 cols full-bleed, card activa expandida -->
+	<div class="hidden md:grid md:grid-cols-4 md:gap-4 items-start">
+		{#each features as feature, i}
+			<button
+				type="button"
+				onclick={() => setActive(i)}
+				aria-expanded={i === activeIndex}
+				aria-label="{feature.title}: {feature.shortDescription}"
+				class="relative aspect-[3/4] overflow-hidden rounded-2xl border text-left transition-all duration-300 hover:border-still-400 {i ===
+				activeIndex
+					? 'border-still-400 shadow-md'
+					: 'border-border'}"
 			>
-				<cat.icon class="size-3 text-still-600" aria-hidden="true" />
-				{cat.name}
-			</span>
+				<img
+					src={feature.image}
+					alt=""
+					aria-hidden="true"
+					class="absolute inset-0 h-full w-full object-cover"
+				/>
+				<div
+					class="absolute inset-0 bg-gradient-to-t from-still-950/80 via-still-950/30 to-transparent"
+					aria-hidden="true"
+				></div>
+				<div class="relative flex h-full flex-col justify-between p-5 md:p-6">
+					<div class="flex items-center justify-between gap-2">
+						<span class="eyebrow text-still-300">{feature.number}</span>
+						{#if feature.coming}
+							<span
+								class="eyebrow rounded-full bg-tranquil-400 px-2.5 py-0.5 text-still-950"
+							>
+								Próximamente
+							</span>
+						{/if}
+					</div>
+					<div>
+						<h3
+							class="text-center text-background leading-tight transition-all duration-300 {i ===
+							activeIndex
+								? 'text-3xl md:text-4xl'
+								: 'text-xl md:text-2xl'}"
+						>
+							{feature.title}
+						</h3>
+						{#if i === activeIndex}
+							<p class="mt-3 text-center text-sm text-linen-50/85">{feature.shortDescription}</p>
+							<p class="mt-2 text-center text-sm text-linen-50/85">{feature.longDescription}</p>
+							<ul class="mt-4 space-y-1">
+								{#each feature.bullets as bullet}
+									<li class="text-center text-sm text-linen-50/85">— {bullet}</li>
+								{/each}
+							</ul>
+						{/if}
+					</div>
+				</div>
+			</button>
+		{/each}
+	</div>
+
+	<!-- Pills de navegación -->
+	<div class="mt-8 flex flex-wrap items-center justify-center gap-2 px-4">
+		{#each features as feature, i}
+			<button
+				type="button"
+				onclick={() => setActive(i)}
+				aria-pressed={i === activeIndex}
+				class="rounded-full border px-4 py-2 text-sm transition-colors duration-200 {i ===
+				activeIndex
+					? 'border-still-400 bg-still-50 font-medium text-still-700'
+					: 'border-border text-muted-foreground hover:border-still-300 hover:text-foreground'}"
+			>
+				{feature.title}
+			</button>
 		{/each}
 	</div>
 </section>
@@ -424,286 +673,6 @@
 	@media (min-width: 768px) {
 		.fan-card {
 			margin-left: -11rem;
-		}
-	}
-
-	.mesh {
-		position: absolute;
-		inset: -30%;
-		pointer-events: none;
-		z-index: 0;
-		animation: mesh-drift 8s ease-in-out infinite alternate;
-	}
-
-	.mesh-a,
-	.mesh-b {
-		position: absolute;
-		inset: 0;
-		filter: saturate(1.5);
-		animation: mesh-breathe 3.5s ease-in-out infinite alternate;
-	}
-
-	.mesh-b {
-		animation-delay: -1.75s;
-	}
-
-	.mesh-a {
-		background:
-			radial-gradient(
-				55% 70% at 22% 38%,
-				oklch(0.931 0.026 145 / 1),
-				transparent 70%
-			),
-			radial-gradient(
-				48% 62% at 74% 28%,
-				oklch(0.863 0.047 146 / 0.95),
-				transparent 70%
-			),
-			radial-gradient(
-				60% 72% at 58% 78%,
-				oklch(0.768 0.075 147 / 0.9),
-				transparent 70%
-			),
-			radial-gradient(
-				42% 56% at 88% 62%,
-				oklch(0.91 0.014 85 / 0.9),
-				transparent 70%
-			);
-	}
-
-	.mesh-b {
-		background:
-			radial-gradient(
-				56% 66% at 68% 58%,
-				oklch(0.931 0.026 145 / 0.95),
-				transparent 70%
-			),
-			radial-gradient(
-				46% 62% at 28% 66%,
-				oklch(0.863 0.047 146 / 0.9),
-				transparent 70%
-			),
-			radial-gradient(
-				58% 70% at 82% 24%,
-				oklch(0.768 0.075 147 / 0.85),
-				transparent 70%
-			),
-			radial-gradient(
-				44% 56% at 14% 22%,
-				oklch(0.91 0.014 85 / 0.85),
-				transparent 70%
-			);
-	}
-
-	:global(.dark) .mesh-a {
-		background:
-			radial-gradient(
-				55% 70% at 22% 38%,
-				oklch(0.349 0.06 149 / 0.85),
-				transparent 70%
-			),
-			radial-gradient(
-				48% 62% at 74% 28%,
-				oklch(0.309 0.048 150 / 0.85),
-				transparent 70%
-			),
-			radial-gradient(
-				60% 72% at 58% 78%,
-				oklch(0.221 0.032 151 / 0.8),
-				transparent 70%
-			),
-			radial-gradient(
-				42% 56% at 88% 62%,
-				oklch(0.3 0.028 85 / 0.8),
-				transparent 70%
-			);
-	}
-
-	:global(.dark) .mesh-b {
-		background:
-			radial-gradient(
-				56% 66% at 68% 58%,
-				oklch(0.349 0.06 149 / 0.8),
-				transparent 70%
-			),
-			radial-gradient(
-				46% 62% at 28% 66%,
-				oklch(0.309 0.048 150 / 0.75),
-				transparent 70%
-			),
-			radial-gradient(
-				58% 70% at 82% 24%,
-				oklch(0.221 0.032 151 / 0.7),
-				transparent 70%
-			),
-			radial-gradient(
-				44% 56% at 14% 22%,
-				oklch(0.3 0.028 85 / 0.75),
-				transparent 70%
-			);
-	}
-
-	@keyframes mesh-drift {
-		from {
-			transform: translate3d(-12%, -10%, 0) rotate(-8deg);
-		}
-		to {
-			transform: translate3d(12%, 10%, 0) rotate(8deg);
-		}
-	}
-
-	@keyframes mesh-breathe {
-		from {
-			transform: scale(1) translate3d(0, 0, 0);
-			opacity: 0.2;
-		}
-		to {
-			transform: scale(1.4) translate3d(4%, 4%, 0);
-			opacity: 1;
-		}
-	}
-
-	.mesh-original .mesh {
-		position: absolute;
-		inset: -15%;
-		pointer-events: none;
-		z-index: 0;
-		animation: mesh-drift-original 40s ease-in-out infinite alternate;
-	}
-
-	.mesh-original .mesh-a,
-	.mesh-original .mesh-b {
-		position: absolute;
-		inset: 0;
-		animation: mesh-breathe-original 14s ease-in-out infinite alternate;
-	}
-
-	.mesh-original .mesh-b {
-		animation-delay: -7s;
-	}
-
-	.mesh-original .mesh-a {
-		background:
-			radial-gradient(
-				40% 55% at 22% 38%,
-				oklch(0.931 0.026 145 / 0.45),
-				transparent 70%
-			),
-			radial-gradient(
-				36% 48% at 74% 28%,
-				oklch(0.863 0.047 146 / 0.3),
-				transparent 70%
-			),
-			radial-gradient(
-				46% 60% at 58% 78%,
-				oklch(0.768 0.075 147 / 0.25),
-				transparent 70%
-			),
-			radial-gradient(
-				30% 42% at 88% 62%,
-				oklch(0.91 0.014 85 / 0.3),
-				transparent 70%
-			);
-	}
-
-	.mesh-original .mesh-b {
-		background:
-			radial-gradient(
-				42% 52% at 68% 58%,
-				oklch(0.931 0.026 145 / 0.4),
-				transparent 70%
-			),
-			radial-gradient(
-				34% 50% at 28% 66%,
-				oklch(0.863 0.047 146 / 0.28),
-				transparent 70%
-			),
-			radial-gradient(
-				44% 58% at 82% 24%,
-				oklch(0.768 0.075 147 / 0.22),
-				transparent 70%
-			),
-			radial-gradient(
-				32% 44% at 14% 22%,
-				oklch(0.91 0.014 85 / 0.28),
-				transparent 70%
-			);
-	}
-
-	:global(.dark) .mesh-original .mesh-a {
-		background:
-			radial-gradient(
-				40% 55% at 22% 38%,
-				oklch(0.349 0.06 149 / 0.32),
-				transparent 70%
-			),
-			radial-gradient(
-				36% 48% at 74% 28%,
-				oklch(0.309 0.048 150 / 0.3),
-				transparent 70%
-			),
-			radial-gradient(
-				46% 60% at 58% 78%,
-				oklch(0.221 0.032 151 / 0.28),
-				transparent 70%
-			),
-			radial-gradient(
-				30% 42% at 88% 62%,
-				oklch(0.3 0.028 85 / 0.3),
-				transparent 70%
-			);
-	}
-
-	:global(.dark) .mesh-original .mesh-b {
-		background:
-			radial-gradient(
-				42% 52% at 68% 58%,
-				oklch(0.349 0.06 149 / 0.28),
-				transparent 70%
-			),
-			radial-gradient(
-				34% 50% at 28% 66%,
-				oklch(0.309 0.048 150 / 0.26),
-				transparent 70%
-			),
-			radial-gradient(
-				44% 58% at 82% 24%,
-				oklch(0.221 0.032 151 / 0.24),
-				transparent 70%
-			),
-			radial-gradient(
-				32% 44% at 14% 22%,
-				oklch(0.3 0.028 85 / 0.28),
-				transparent 70%
-			);
-	}
-
-	@keyframes mesh-drift-original {
-		from {
-			transform: translate3d(-1.5%, -1%, 0) rotate(-1deg);
-		}
-		to {
-			transform: translate3d(1.5%, 1%, 0) rotate(1deg);
-		}
-	}
-
-	@keyframes mesh-breathe-original {
-		from {
-			opacity: 0.35;
-		}
-		to {
-			opacity: 1;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.mesh,
-		.mesh-a,
-		.mesh-b,
-		.mesh-original .mesh,
-		.mesh-original .mesh-a,
-		.mesh-original .mesh-b {
-			animation: none;
 		}
 	}
 </style>
