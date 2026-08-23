@@ -74,7 +74,7 @@ export const AUTHORS = ["Albert", "Domadora de Gatos", "Laia"] as const;
 - **OG image**: `image:` del frontmatter con URL absoluta (`base` + path); fallback a `og-image.jpg` de marca.
 - **CTA waitlist**: componente `BlogCta.svelte` reutiliza `<WaitlistForm />` al final de cada artículo + banner en el índice.
 - **Logo + footer**: `Logo.svelte` (SVG vectorial con texto trazado a paths + brote lucide) y `AppFooter.svelte` (nav Inicio·Blog) compartidos entre landing y `/blog`.
-- **Cards**: `BlogIndex.svelte` con imagen `aspect-square` (mismo tratamiento que las cards del hero: `p-3.5`, `rounded-xl`, `border`, `shadow-xs`).
+- **Cards**: `BlogIndex.svelte` con imagen `aspect-square` (`p-3.5`, `rounded-xl`, `border`, `shadow-xs`). Grid `2` columnas en móvil (`gap-1.5`) y `3` desde `lg` (`gap-6`); texto compacto en móvil (`p-3`, título `text-sm` con `.no-opsz`, descripción oculta) y completo desde `sm` (`p-5`, título `text-lg`). Tag de categoría en JetBrains Mono; fechas en formato `d/m/yy`.
 - **Artículo**: título + subtitle (description) + metadatos + `<hr>` separador + hero image `16/9` + prosa con lead destacado.
 - **Header sticky**: el navbar del blog (`+layout.svelte`) usa `sticky top-0` con `backdrop-blur` y `border-b`.
 

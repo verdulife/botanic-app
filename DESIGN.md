@@ -77,21 +77,21 @@ typography:
   display-headline:
     fontFamily: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, Times New Roman, serif"
     fontWeight: 400
-    fontSize: "2.25rem (text-4xl) → 3.75rem (md:text-6xl)"
+    fontSize: "3rem (text-5xl) → 4.5rem (md:text-7xl)"
     lineHeight: 1.05
     letterSpacing: "normal"
     textWrap: "balance"
   h2:
     fontFamily: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, Times New Roman, serif"
     fontWeight: 400
-    fontSize: "2.25rem (text-4xl) → 2.875rem (md)"
+    fontSize: "2.25rem (text-4xl) → 3.75rem (md:text-6xl)"
     lineHeight: 1.2
     letterSpacing: "normal"
     textWrap: "balance"
   h3:
-    fontFamily: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, Times New Roman, serif"
+    fontFamily: "Fraunces Variable, Fraunces, Times New Roman, serif (opsz natural; .display-opsz opt-in)"
     fontWeight: 400
-    fontSize: "1rem (text-base) – 1.125rem (text-lg)"
+    fontSize: "1rem (text-base) – 3rem (text-5xl) según contexto"
     textWrap: "balance"
   body:
     fontFamily: "Inter Variable, Inter, system-ui, -apple-system, sans-serif"
@@ -179,7 +179,7 @@ components:
 
 **Creative North Star: el estándar de categoría de marketplace, ejecutado impecablemente, con voz de economía circular.**
 
-Botanic es la landing de una comunidad de economía circular para plantas; el listón de acabado es Wallapop + Vinted + Airbnb. La página ejecuta la estructura clásica de la categoría — hero foto-liderado, categorías, manifiesto, por qué, waitlist prefooter y footer — a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk. El copy habla en el vocabulario de la economía circular ("vender, cambiar o regalar", "conocer a gente nueva", "las plantas se comparten y así conocen a gente nueva") y evita declarar como promesas permanentes los "sin envíos", "sin comisiones", "quedar en mano" ni "solo cerca de ti" — son decisiones del MVP, no verdades de marca (ver [PRODUCT.md](PRODUCT.md)).
+Botanic es la landing de una comunidad de economía circular para plantas; el listón de acabado es Wallapop + Vinted + Airbnb. La página ejecuta la estructura clásica de la categoría — hero foto-liderado, categorías, funcionalidades, por qué, waitlist prefooter y footer — a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk. El copy habla en el vocabulario de la economía circular ("vender, cambiar o regalar", "conocer a gente nueva") y evita declarar como promesas permanentes los "sin envíos", "sin comisiones", "quedar en mano" ni "solo cerca de ti" — son decisiones del MVP, no verdades de marca (ver [PRODUCT.md](PRODUCT.md)).
 
 El sistema es cálido y sobrio: un fondo de lino cálido, tinta cálida casi negra, Still Green (`#74AA7B`) para el CTA, el logo y los iconos, una rampa complementaria `tranquil` (amarillo) para romper la monotonía, y el ámbar `star` puntual para las estrellas. La fotografía real de plantas es protagonista en el hero (abanico de anuncios de ejemplo etiquetado como material sintético). La profundidad se construye con bordes finos, esquinas redondeadas (`rounded-2xl` en tarjetas, `rounded-full` en pills) y contraste tonal entre superficies; solo hay sombra puntual en la tarjeta del abanico elevada. Se evita explícitamente el `AI slop`: sin degradados de neón, sin glassmorphism, sin serif itálicos decorativos, sin métricas o testimonios inventados. Las animaciones del sistema son el mesh viento de las bandas de categorías y waitlist (The Wind Mesh Rule, con dos variantes de intensidad) y el abanico de anuncios del hero (The Fan Rule).
 
@@ -295,9 +295,11 @@ Text-wrap global en `src/app.css`: `h1/h2/h3 → text-wrap: balance`, `p → tex
 
 ### Jerarquía
 
-- **H1 / H2 / H3 — Fraunces Variable, weight 400, opsz 144 SOFT 30** (`font-variation-settings: "opsz" 144, "SOFT" 30`)
-  - H1 — `text-4xl` → `md:text-6xl`, `line-height: 1.05`, `tracking: normal`. Solo en el `h1` del hero.
-  - H2 — `text-4xl` → `md:text-[2.875rem]`, `line-height: 1.2`. Titulares de sección.
+- **H1 / H2 — Fraunces Variable, weight 400, opsz 144 SOFT 30** (`font-variation-settings: "opsz" 144, "SOFT" 30`)
+  - H1 — `text-5xl` → `md:text-7xl`, `line-height: 1.05`, `tracking: normal`. Solo en el `h1` del hero.
+  - H2 — `text-4xl` → `md:text-6xl`, `line-height: 1.2` (`leading-[1.2]`). Titulares de sección.
+- **H3 — Fraunces Variable, weight 400, tamaño óptico NATURAL** (la regla global ya no fuerza `opsz`/`SOFT`; el eje `opsz` auto-selecciona según cuerpo). Excepciones opt-in: los h3 grandes del carrusel de funcionalidades usan `.display-opsz`; los títulos de card del blog desactivan el forzado heredado de h2 con `.no-opsz`.
+  - Utilidades en `src/app.css`: `.display-opsz` (aplica `"opsz" 144, "SOFT" 30`) y `.no-opsz` (`font-variation-settings: normal`).
   - H3 (tarjeta) — `text-sm` / `text-base` / `text-lg` según tarjeta. Los nombres de listings de ejemplo se renderizan como `<p class="font-display ...">` (no `<h3>`) para no contaminar la jerarquía semántica del hero demo.
 
 - **Body / p — Inter Variable, weight 300**, `line-height: 1.5`, `text-wrap: pretty`. Tamaños: `text-sm` (0.875rem) en tarjetas, `text-base` (1rem) por defecto en párrafos de sección, `text-lg` cuando se quiere énfasis (ej. promesa del hero de la waitlist).
@@ -333,7 +335,7 @@ body strong, p strong {
 ### Reglas nombradas
 
 - **The Three Family Rule.** El sistema usa 3 familias (`Fraunces`, `Inter`, `JetBrains Mono`). Cada una tiene un rol estricto. No introducir serif decorativos adicionales, ni una segunda grotesk, ni otra mono.
-- **The Display Headline Rule.** Los h1/h2/h3 van en Fraunces 400 con opsz 144 + SOFT 30. Nunca peso 800 ni `tracking-tight` en titulares.
+- **The Display Headline Rule.** Los h1/h2 van en Fraunces 400 con opsz 144 + SOFT 30 forzados; los h3 usan tamaño óptico natural (utilidades `.display-opsz`/`.no-opsz` para excepciones puntuales). Nunca peso 800 ni `tracking-tight` en titulares.
 - **The Headline Strong Rule.** Los `<strong>` dentro de h1/h2/h3 son italic en Fraunces 400 + color `still-400`. No se añade otro peso ni decoración.
 - **The Body Strong Rule.** Los `<strong>` dentro de body/p suben de Inter 300 a Inter 600. Sin italic, sin color.
 - **The Eyebrow Rule.** Eyebrows, tags y pills-label usan JetBrains Mono 13px uppercase tracking 0.04em en `still-500`. No llevan `<strong>` adentro.
@@ -341,9 +343,9 @@ body strong, p strong {
 
 ## Layout
 
-Mobile-first y centrado. Secciones de anchura acotada (`max-w-6xl` para hero/listas, `max-w-3xl` para la waitlist) centradas, con padding lateral `px-4`/`px-6`/`px-8` y vertical `py-24` → `md:py-28` (las secciones de contenido) o `py-48` → `md:py-56` (la waitlist). El hero usa un grid `md:grid-cols-2` con `gap-12 md:gap-16` para colocar el copy a la izquierda y el abanico de anuncios a la derecha; en móvil cae debajo del copy.
+Mobile-first y centrado. Todas las bandas usan contenedor `max-w-7xl` centrado (landing, header y blog), con padding lateral `px-4`/`px-6`/`px-8` y vertical `py-20` → `md:py-28` en las secciones de contenido; la waitlist usa una banda compacta (`py-10`) con contenedor interno `max-w-6xl`. El hero usa un grid `md:grid-cols-2` con `gap-12 md:gap-16`; en móvil el copy se centra (`items-center text-center`) y respira con `pt-16`.
 
-Bandas alternas para separar secciones sin líneas extra: las secciones claras van sobre `background`, y la banda de categorías va sobre `muted/40` con `border-y`. La waitlist va sobre `secondary/70` como cierre cálido antes del footer.
+Bandas alternas para separar secciones sin líneas extra: las secciones claras van sobre `background`, y la banda de categorías va sobre `muted/40` con `border-y`. La waitlist cierra con la tarjeta cálida `bg-secondary/70` (`BlogCta`).
 
 ## Elevation & Depth
 
@@ -357,7 +359,7 @@ Profundidad por **bordes y radio**, con una excepción de sombra. Las tarjetas d
 
 - `rounded-sm` (0.5rem) en el `radius` base de shadcn.
 - `rounded-xl` (0.75rem) en la imagen dentro de las tarjetas del abanico.
-- `rounded-2xl` (1rem) en tarjetas del abanico, manifiesto y por-qué.
+- `rounded-2xl` (1rem) en tarjetas del abanico, carrusel de funcionalidades y por-qué.
 - `rounded-full` en botones (base), pills de categoría, input de la waitlist y el botón "Unirme" integrado en el input.
 
 ## Components
@@ -366,8 +368,8 @@ Profundidad por **bordes y radio**, con una excepción de sombra. Las tarjetas d
 No hay nav: el logo abre el hero a la izquierda. Wordmark `text-[2.5rem] font-bold tracking-tight text-still-800` donde el icono `Sprout` hace de letra "t": "Bo" + icono + "anic". Todo en unidades `em` para que escale con el font-size: icono `size-[0.9em]`, offsets `-mr-[0.125em]` (Bo), `-mt-[0.1em] ml-[0.05em]` (icono), `-ml-[0.125em]` (anic).
 
 ### Hero — left column
-- **Eyebrow** (clase `.eyebrow`): JetBrains Mono 13px uppercase tracking, color `still-500`. Texto actual: "Pensada para Plant Lovers".
-- **`h1` display** (Fraunces 400 + opsz 144 SOFT 30): `text-4xl` → `md:text-6xl`, `line-height: 1.05`, `text-wrap: balance`. Los `<strong>` dentro van en italic + `still-400`. Texto actual: "Donde las **plantas** y la **gente** se conocen".
+- **Eyebrow** (clase `.eyebrow`): JetBrains Mono 13px uppercase tracking, color `still-500`. Texto actual: "La app pensada para Plant Lovers".
+- **`h1` display** (Fraunces 400 + opsz 144 SOFT 30): `text-5xl` → `md:text-7xl`, `line-height: 1.05`, `text-wrap: balance`. Los `<strong>` dentro van en italic + `still-400`. Texto actual: "Donde las **plantas** y la **gente** se conocen". En móvil el bloque de copy va centrado (`items-center text-center md:items-start md:text-left`).
 - **Párrafo promesa** (Inter 300, `max-w-md`): "Como las apps de segunda mano que ya conoces, pero solo para plantas y todo lo relacionado con ellas: semillas, esquejes, plantas, tiestos y accesorios. Para Plant Lovers y tu huerta."
 - **CTA primary**: Inter 600, `size=lg` con `class="mt-2 h-12 px-8 text-base"`, label "Unirme a la lista de espera" (href `#waitlist`).
 - **Microcopy bajo CTA** (Inter 300, `text-sm`, `text-muted-foreground`): "Acceso anticipado. Apúntate y desbloquea acceso antes que nadie."
@@ -382,37 +384,43 @@ No hay nav: el logo abre el hero a la izquierda. Wordmark `text-[2.5rem] font-bo
 
 **Accesibilidad:** `role="group"`, cada tarjeta con `tabindex="0"` y `aria-label={name}`; `aria-hidden="true"` en iconos decorativos.
 
-Los tres anuncios de ejemplo (imágenes locales):
-- `static/images/monstera.jpg` → Monstera deliciosa · Olivella, Barcelona · 4.9 (38) · 12 €
-- `static/images/aloe.jpg` → Aloe vera en maceta · Sitges, Barcelona · 5.0 (12) · 6 €
-- `static/images/suculentas.jpg` → Suculentas variadas · Les Botigues de Sitges, Barcelona · 4.8 (25) · 9 €
+Los tres anuncios de ejemplo (imágenes locales, servidas en `.webp`):
+- `static/images/monstera.webp` → Monstera deliciosa · Olivella, Barcelona · 4.9 (38) · 12 €
+- `static/images/aloe.webp` → Aloe vera en maceta · Sitges, Barcelona · 5.0 (12) · 6 €
+- `static/images/suculentas.webp` → Suculentas variadas · Les Botigues de Sitges, Barcelona · 4.8 (25) · 9 €
 
 ### Categorías
-Banda `border-y border-border/70 bg-muted/40` (clase `mesh-original` para el mesh suave), contenedor `max-w-6xl` con `flex flex-wrap justify-center gap-2.5 py-6`. Pills `rounded-full border border-border bg-background px-4 py-2 text-sm font-medium` con icono `text-primary size-4`:
+Banda `border-y border-border/70 bg-muted/40` (clase `mesh-original` para el mesh suave), contenedor `max-w-7xl` con `flex flex-wrap justify-center gap-2.5 py-6`. Pills `rounded-full border border-border bg-background px-4 py-2 text-sm font-medium` con icono `text-primary size-4`:
 - Semillas · `Sprout`
 - Esquejes · `Scissors`
 - Plantas · `Leaf`
 - Tiestos · `ShoppingBasket`
 - Accesorios · `Shovel`
 
-### Manifiesto
-Sección centrada `max-w-6xl` con `pt-24 md:pt-28` (sin padding inferior), bloque de cabecera `max-w-2xl mx-auto text-center`. `h2` 300 con refuerzo 600 + subtítulo `text-muted-foreground`. Titular: "Las plantas se **comparten** y así **conocen a gente nueva**". Copy en el vocabulario de economía circular. Dos tarjetas `rounded-2xl border border-border bg-card p-4` en grid `md:grid-cols-2`, layout horizontal (imagen izquierda + texto derecha). Cada tarjeta lleva una imagen local `size-28 md:size-44 rounded-2xl object-cover` (`loading="lazy"`) a la izquierda y un `h3 text-lg font-semibold` + párrafo `text-sm text-muted-foreground` a la derecha. Vendedores: `static/images/vendedores.jpg` (persona sosteniendo una planta en maceta). Compradores: `static/images/compradores.jpg` (manos acercándose a una planta en maceta blanca).
+### Funcionalidades
+Contenedor `max-w-7xl`, cabecera con eyebrow + `h2` y subtítulo centrados. **Móvil**: carrusel horizontal (`snap-x snap-mandatory`, `scroll-pl-4`) de slides `w-[86%]` con espaciadores laterales `w-[7%]`; cada slide es una tarjeta `rounded-2xl` con imagen `aspect-[4/3] rounded-xl object-cover` y bloque de texto (tag mono, `h3.display-opsz text-3xl leading-tight`, descripción). Un divisor inferior anima el temporizador: la rotación avanza en `onanimationend` y se pausa con hover/focus. **Escritorio**: tarjeta contenedora en grid `md:grid-cols-[40fr_60fr] gap-12` — texto a la izquierda (`h3.display-opsz text-4xl md:text-5xl leading-tight`, descripción `max-w-xl`, chips de puntos) e imagen a la derecha.
+
+Las cuatro funcionalidades (`static/images/features/*.webp`):
+- P2P · `/images/features/p2p.webp`
+- Deseos · `/images/features/deseos.webp`
+- Comunidad · `/images/features/comunidad.webp`
+- El Market · `/images/features/market.webp`
 
 ### Por qué Botanic
-Sección centrada, `h2` + subtítulo centrados, y **sin cajas**: tres columnas separadas por dividers. En móvil, `divide-y divide-border`; en `md`, grid `md:grid-cols-3` con `border-l border-border` en las columnas 2 y 3 y padding `md:px-12`/`md:pl-12`/`md:pr-12` para que los dividers queden equidistantes del contenido (sin usar `gap` para no descentrar la columna central):
-- Pensado para plantas · `ShieldCheck`
+Sección `py-20 md:py-28`, `h2` + subtítulo centrados ("Porque no todas las apps de segunda mano entienden de plantas.") y **sin cajas**: tres columnas separadas por dividers. En móvil, `divide-y divide-border`; en `md`, grid `md:grid-cols-3` con `border-l border-border` en las columnas 2 y 3 y padding `md:px-12`/`md:pl-12`/`md:pr-12` para que los dividers queden equidistantes del contenido (sin usar `gap` para no descentrar la columna central):
+- Solo plantas, de verdad · `ShieldCheck`
 - Sostenible por naturaleza · `MapPin`
 - Comunidad de confianza · `Star`
 
-Cada columna: icon-tile `bg-secondary` `rounded-lg`, `h3 text-lg font-semibold`, párrafo `text-sm text-muted-foreground`, todo `text-center` con el tile `mx-auto`.
+Cada columna: icon-tile `bg-secondary` `rounded-lg`, `h3 text-lg font-semibold`, párrafo a cuerpo base (`text-muted-foreground`, sin `text-sm`), todo `text-center` con el tile `mx-auto`.
 
 ### Waitlist
-`id="waitlist"`, `scroll-mt-16`, banda `bg-secondary/70 px-8 py-48 md:py-56` con el mesh **intensificado**. Contenedor `max-w-3xl mx-auto` centrado:
-- `h2` `max-w-3xl text-4xl md:text-[2.875rem] font-light text-balance text-still-950`: "Únete a la **primera comunidad** donde las plantas **conocen a gente nueva**."
-- Párrafo `max-w-md mx-auto text-lg text-muted-foreground`: "Déjanos tu email y **entérate antes que nadie** del lanzamiento."
+Componente compartido `BlogCta.svelte` (props `title`/`subtitle`), usado al cierre de la landing y al final del blog. La landing lo envuelve en una sección exterior `max-w-7xl px-4 py-10`; el componente renderiza una **banda-tarjeta** `id="waitlist"`, `scroll-mt-16`, `rounded-3xl bg-secondary/70 px-6 py-16 md:py-20 overflow-hidden`. Contenedor interno `max-w-6xl mx-auto flex-col items-center gap-4 text-center` con logo (`h-7`):
+- `h2` `max-w-2xl text-4xl md:text-6xl font-light leading-tight text-balance text-still-950`. Por defecto: "Consigue tu pase para el día uno de Botanic"
+- Párrafo `max-w-xl text-pretty text-muted-foreground`: "Apúntate a la lista de espera y te avisamos en cuanto abramos: acceso anticipado y cero spam."
 - `WaitlistForm` (form `mx-auto w-full max-w-[31.5rem]`):
-  - **Input pill** `h-14 w-full rounded-full border border-border bg-background pl-12 pr-40 text-lg shadow-sm` con icono `Mail size-5` a la izquierda y `focus-visible:ring-2 ring-ring`.
-  - **Botón integrado en el input** (absolute `right-[3px] top-[3px] h-[calc(100%-6px)] rounded-full px-5`) con `Send` + "Unirme"; estados: `loading` deshabilitado "Enviando…", `success` mensaje en `text-foreground`, `error` mensaje en `text-destructive` con `aria-invalid`.
+  - **Input pill** `h-14 w-full rounded-full border border-border bg-background pl-12 pr-30 text-lg shadow-sm` con icono `Mail size-5` a la izquierda y `focus-visible:ring-2 ring-ring`.
+  - **Botón integrado en el input** (absolute `right-[3px] top-[3px] h-[calc(100%-6px)] rounded-full px-5`) con label "Unirme" (sin icono); estados: `loading` deshabilitado "Enviando…", `success` "Ya estás en la lista de espera de Botanic 🌿", `error` mensaje en `text-destructive` con `aria-invalid`.
   - **Checkbox de consentimiento GDPR**: `size-4 shrink-0 accent-[var(--color-still-400)]` con links a `/politica-de-privacidad` y `/aviso-legal`. Validación client-side + server-side.
   - Microcopy en `text-xs text-muted-foreground`: "Al unirte, usaremos tu email para mantenerte al día de todas las novedades, actualizaciones, contenido del blog y la fecha de lanzamiento. No somos pesados, pero podrás darte de baja cuando quieras."
 
@@ -425,27 +433,26 @@ Cada columna: icon-tile `bg-secondary` `rounded-lg`, `h3 text-lg font-semibold`,
 - `<meta name="description">` con la propuesta en una línea.
 - `og:title`, `og:description`, `og:type=website`.
 - `lang="es"` en `app.html`.
-- Una sola `<h1>`; las secciones usan `<h2>`; los nombres de los listings son `<h3>`.
+- Una sola `<h1>`; las secciones usan `<h2>`; los nombres de los listings del abanico son `<p class="font-display">` (no headings).
 - Todas las imágenes llevan `alt` real (nombre de la planta).
 - Iconos decorativos llevan `aria-hidden="true"`.
 
 ## Performance
 
-- Imágenes servidas localmente desde `static/images/` (640×640, JPEG) con `loading="lazy"`.
-- Tipografía self-hosted vía `@fontsource-variable/onest` (sin CDN externo).
+- Imágenes servidas localmente desde `static/images/` (640×640, `.webp` con gemela `.jpg` como máster; soft cap 100 KB por imagen vía `bun run img:optimize`) con `loading="lazy"`.
+- Tipografía self-hosted vía `@fontsource-variable` (`fraunces/opsz`, `inter`, `jetbrains-mono`; sin CDN externo).
 - Animaciones del sistema limitadas a: mesh viento (solo `transform` + `opacity`, composición GPU) y el abanico de anuncios (solo `transform` + `box-shadow` en la tarjeta enfocada). Desactivadas con `prefers-reduced-motion`.
 - `bun run check` y `bun run build` sin errores.
 
 ## Motion
 
 ### The Wind Mesh Rule
-Las bandas de **categorías** y **waitlist** llevan un mesh gradient que evoca el movimiento de las hojas al viento, con **dos variantes de intensidad**:
+La banda de **categorías** lleva un mesh gradient que evoca el movimiento de las hojas al viento (variante suave, `.mesh-original`):
 
 - **Variante suave (banda de categorías, `.mesh-original`)**: dos capas `mesh-a`/`mesh-b` de `radial-gradient` con la rampa Still/Lino a baja opacidad (22–45%), en crossfade de `opacity` 0.35→1 (14s, `alternate`, delay −7s en `mesh-b`), mientras el contenedor hace un drift de `translate3d` ±1.5% y `rotate` ±1deg (40s, `alternate`). `inset: -15%`.
-- **Variante intensificada (waitlist)**: mismas dos capas pero con `saturate(1.5)`, alphas 0.85–1.0, `mesh-breathe` con `scale` hasta 1.4 y `opacity` 0.2→1 (3.5s, `alternate`, delay −1.75s), y `mesh-drift` de `translate3d` ±12% y `rotate` ±8deg (8s, `alternate`). `inset: -30%`.
 - **Paleta**: tintes de Still (`still-100/200/300`) y lino cálido; en dark, la rampa oscura (`still-800/900`, `linen-900`). Nunca neón ni tonos fuera de rampa.
-- **Accesibilidad**: `aria-hidden="true"`, `pointer-events-none`, y `@media (prefers-reduced-motion: reduce)` deja ambos meshes estáticos.
-- **Restricción**: solo en esas dos bandas. No extender a tarjetas, hero, fondo de página ni secciones de contenido.
+- **Accesibilidad**: `aria-hidden="true"`, `pointer-events-none`, y `@media (prefers-reduced-motion: reduce)` deja el mesh estático.
+- **Restricción**: solo en la banda de categorías. No extender a tarjetas, hero, waitlist, fondo de página ni secciones de contenido.
 
 ### The Fan Rule
 El **abanico de anuncios** del hero rota el foco entre las tarjetas de ejemplo.
@@ -460,7 +467,7 @@ El **abanico de anuncios** del hero rota el foco entre las tarjetas de ejemplo.
 - Usar el Still Green con moderación: CTA, logo, iconos de chips, anillos de foco, color del eyebrow (`still-500`) y del headline-strong (`still-400`).
 - Aplicar las 3 familias según rol: Fraunces para titulares, Inter para body y botones, JetBrains Mono para eyebrows/tags/pills.
 - Respetar el comportamiento de `<strong>` por contexto: italic + `still-400` en headlines, peso 600 en body, prohibido en eyebrow.
-- Mantener los Fraunces con `opsz` 144 y `SOFT` 30 en h1/h2/h3 para preservar el carácter editorial.
+- Mantener los Fraunces con `opsz` 144 y `SOFT` 30 en h1/h2 (y opt-in con `.display-opsz`) para preservar el carácter editorial; los h3 usan tamaño óptico natural.
 - Etiquetar como "Anuncios de ejemplo" cualquier tarjeta que use material sintético.
 - Mantener la calidez de lino/tinta en todos los neutros.
 - Servir las imágenes desde `static/images/`; sustituir el stock por anuncios reales en cuanto estén disponibles.

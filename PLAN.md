@@ -223,7 +223,7 @@ Lista priorizada. Estado: `[ ]` pendiente · `[~]` en curso · `[x]` cerrado.
 
 ### Producto / Landing
 
-- [~] **Rework del copy de la landing** — dejar más clara la idea de la app, funcionalidades core, claim indirecto wallapop, FOMO lista de espera, sin anglicismos (waitlist → "lista de espera", etc.).
+- [x] **Rework del copy de la landing** — dejar más clara la idea de la app, funcionalidades core, claim indirecto wallapop, FOMO lista de espera, sin anglicismos (waitlist → "lista de espera", etc.).
 - [ ] **Lista de espera — expectativas claras** — al apuntarse, mensaje más explícito del estado de la lista.
 - [ ] **Reforzar "lista de espera"** — comunicar mejor que es una lista de espera y lo que implica.
 - [ ] **Botón/enlace de compartir** — facilitar que los fans compartan.
