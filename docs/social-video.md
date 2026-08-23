@@ -86,7 +86,7 @@ Cada estilo es un set de tokens (`video/src/styles/*.ts`): colores de marca (okl
 - **Renderer**: `video/src/BotanicReel.tsx` lee `inputProps` y compone `Sequence`s por escena.
 - **Studio**: `npx remotion studio` para preview en tiempo real y decidir entre librerías.
 - **Stills**: el carrusel de IG = los mismos componentes renderizados como PNG (`npx remotion still`), 1080×1350 (4:5) o 1080×1080.
-- **Estilos de marca**: reutiliza tokens de `scripts/generate-og.mjs` (gradient oklch + tipografías Fraunces/Inter/JetBrains Mono).
+- **Estilos de marca**: tokens oklch del design system (`src/app.css`, paletas Still Green y tranquil) + tipografías Fraunces e Inter; `scripts/generate-og.mjs` es la referencia de composición de marca estática.
 
 ### Estructura
 

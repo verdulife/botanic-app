@@ -10,11 +10,21 @@ const root = resolve(__dirname, "..");
 
 const WIDTH = 1200;
 const HEIGHT = 630;
-const FONT_SIZE = 144;
-const FONT_FILE = resolve(root, "node_modules/@fontsource/onest/files/onest-latin-700-normal.woff2");
-const FONT_FILE_REGULAR = resolve(root, "node_modules/@fontsource/onest/files/onest-latin-400-normal.woff2");
-const TAGLINE_SIZE = 44;
-const TAGLINE = oklchToCss(0.309, 0.048, 150);
+const FONT_SIZE = 150;
+
+// Fraunces 400 SIN opsz: instancia estática (@fontsource/fraunces).
+// Los ficheros variables de fontsource tienen wght default=900 y resvg
+// no aplica variaciones, por eso se usa el estático.
+const FONT_SERIF = resolve(
+	root,
+	"node_modules/@fontsource/fraunces/files/fraunces-latin-400-normal.woff2",
+);
+// Tagline en Inter (sans de apoyo, como en la landing); su VF tiene default wght=400
+const FONT_SANS = resolve(
+	root,
+	"node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
+);
+const TAGLINE_SIZE = 42;
 
 function oklchToRgb(L, C, hDeg) {
 	const h = (hDeg * Math.PI) / 180;
@@ -51,126 +61,95 @@ function oklchToCss(L, C, hDeg, alpha = 1) {
 	return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-const MESHES = {
-	band: {
-		base: [0.966, 0.01, 85],
-		saturate: 1,
-		g: [
-			["ga1", 22, 38, 40, 55, [0.931, 0.026, 145], 0.45],
-			["ga2", 74, 28, 36, 48, [0.863, 0.047, 146], 0.3],
-			["ga3", 58, 78, 46, 60, [0.768, 0.075, 147], 0.25],
-			["ga4", 88, 62, 30, 42, [0.91, 0.014, 85], 0.3],
-			["gb1", 68, 58, 42, 52, [0.931, 0.026, 145], 0.4],
-			["gb2", 28, 66, 34, 50, [0.863, 0.047, 146], 0.28],
-			["gb3", 82, 24, 44, 58, [0.768, 0.075, 147], 0.22],
-			["gb4", 14, 22, 32, 44, [0.91, 0.014, 85], 0.28],
-		],
-	},
-	waitlist: {
-		base: [0.931, 0.026, 145],
-		saturate: 1.5,
-		g: [
-			["ga1", 22, 38, 55, 70, [0.931, 0.026, 145], 1],
-			["ga2", 74, 28, 48, 62, [0.863, 0.047, 146], 0.95],
-			["ga3", 58, 78, 60, 72, [0.768, 0.075, 147], 0.9],
-			["ga4", 88, 62, 42, 56, [0.91, 0.014, 85], 0.9],
-			["gb1", 68, 58, 56, 66, [0.931, 0.026, 145], 0.95],
-			["gb2", 28, 66, 46, 62, [0.863, 0.047, 146], 0.9],
-			["gb3", 82, 24, 58, 70, [0.768, 0.075, 147], 0.85],
-			["gb4", 14, 22, 44, 56, [0.91, 0.014, 85], 0.85],
-		],
-	},
-};
+// Tokens del design system (src/app.css)
+const BG = oklchToCss(0.935, 0.128, 99); // tranquil-200
+const INK = oklchToCss(0.221, 0.032, 151); // still-950
+const TAGLINE_INK = oklchToCss(0.221, 0.032, 151, 0.72);
 
-const meshName = process.argv.includes("--mesh")
-	? process.argv[process.argv.indexOf("--mesh") + 1]
-	: "band";
-const MESH = MESHES[meshName] ?? MESHES.band;
+const serifFont = create(readFileSync(FONT_SERIF));
+const scale = FONT_SIZE / serifFont.unitsPerEm;
+const widthOf = (text) => serifFont.layout(text).advanceWidth * scale;
 
-const BASE = oklchToCss(...MESH.base);
-const GRADIENTS = MESH.g;
+const W_WORD = widthOf("Botanic");
 
-const SPRUT_PATHS = [
-	"M14 9.536V7a4 4 0 0 1 4-4h1.5a.5.5 0 0 1 .5.5V5a4 4 0 0 1-4 4 4 4 0 0 0-4 4c0 2 1 3 1 5a5 5 0 0 1-1 3",
-	"M4 9a5 5 0 0 1 8 4 5 5 0 0 1-8-4",
-	"M5 21h14",
-];
-
-const LOGO = oklchToCss(0.349, 0.06, 149);
-
-const font = create(readFileSync(FONT_FILE));
-const scale = FONT_SIZE / font.unitsPerEm;
-const widthOf = (text) => font.layout(text).advanceWidth * scale;
-
-const W_BO = widthOf("Bo");
-const W_ANIC = widthOf("anic");
-const ICON = 0.9 * FONT_SIZE;
-const iconLeft = W_BO - 0.125 * FONT_SIZE + 0.05 * FONT_SIZE;
-const anicLeft = iconLeft + ICON - 0.125 * FONT_SIZE;
-const TOTAL = W_BO + W_ANIC + 84;
-const groupX = (WIDTH - TOTAL) / 2;
-const baselineY = 355;
-const iconTop = baselineY - 0.1 * FONT_SIZE - ICON;
-
-function fontFaceCss() {
-	const b64 = readFileSync(FONT_FILE).toString("base64");
-	const b64r = readFileSync(FONT_FILE_REGULAR).toString("base64");
-	return `<style>
-		@font-face{font-family:'Onest';font-style:normal;font-weight:700;src:url(data:font/woff2;base64,${b64}) format('woff2')}
-		@font-face{font-family:'Onest';font-style:normal;font-weight:400;src:url(data:font/woff2;base64,${b64r}) format('woff2')}
-	</style>`;
+// Centrado óptico por caja de tinta (los advances ignoran los bearings
+// laterales del primer/último glifo y descentran el texto)
+function centeredTextX(font, text, fontSize) {
+	const s = fontSize / font.unitsPerEm;
+	const run = font.layout(text);
+	let inkMin = Infinity;
+	let inkMax = -Infinity;
+	let pen = 0;
+	run.glyphs.forEach((glyph, i) => {
+		const pos = run.positions[i];
+		if (glyph.bbox) {
+			inkMin = Math.min(inkMin, pen + pos.xOffset * s + glyph.bbox.minX * s);
+			inkMax = Math.max(inkMax, pen + pos.xOffset * s + glyph.bbox.maxX * s);
+		}
+		pen += pos.xAdvance * s;
+	});
+	const width = inkMax - inkMin;
+	return { x: (WIDTH - width) / 2 - inkMin, width };
 }
 
-function defs() {
-	return GRADIENTS.map(
-		([id, cx, cy, rx, ry, color, alpha]) => {
-			const stop = oklchToCss(color[0], color[1] * MESH.saturate, color[2]);
-			return `<radialGradient id="${id}" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(${(cx / 100) * WIDTH} ${(cy / 100) * HEIGHT}) scale(${(rx / 100) * WIDTH} ${(ry / 100) * HEIGHT})">
-				<stop offset="0" stop-color="${stop}" stop-opacity="${alpha}"/>
-				<stop offset="0.7" stop-color="${stop}" stop-opacity="0"/>
-			</radialGradient>`;
-		},
-	).join("");
-}
-
-function rects() {
-	const order = ["ga4", "ga3", "ga2", "ga1", "gb4", "gb3", "gb2", "gb1"];
-	return order
-		.map((id) => `<rect x="0" y="0" width="${WIDTH}" height="${HEIGHT}" fill="url(#${id})"/>`)
-		.join("");
-}
+let wordX = centeredTextX(serifFont, "Botanic", FONT_SIZE).x;
+const baselineY = 340;
 
 function wordmark() {
-	const sprout = `<svg x="${iconLeft}" y="${iconTop}" width="${ICON}" height="${ICON}" viewBox="0 0 24 24" fill="none" stroke="${LOGO}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${SPRUT_PATHS.map((d) => `<path d="${d}"/>`).join("")}</svg>`;
-	return `<g transform="translate(${groupX - 15} 0)">
-		<text x="0" y="${baselineY - 20}" font-family="Onest" font-size="${FONT_SIZE}" font-weight="700" fill="${LOGO}">Bo</text>
-		${sprout}
-		<text x="${anicLeft}" y="${baselineY - 20}" font-family="Onest" font-size="${FONT_SIZE}" font-weight="700" fill="${LOGO}">anic</text>
-	</g>
-	<text x="${WIDTH / 2}" y="${baselineY + 45}" font-family="Onest" font-size="${TAGLINE_SIZE}" font-weight="400" fill="${TAGLINE}" text-anchor="middle">Donde las plantas conocen a gente nueva</text>`;
+	return `<text x="${wordX.toFixed(2)}" y="${baselineY}" font-family="Fraunces" font-size="${FONT_SIZE}" font-weight="400" fill="${INK}">Botanic</text>
+	<text x="${WIDTH / 2}" y="${baselineY + 72}" font-family="Inter" font-size="${TAGLINE_SIZE}" font-weight="400" fill="${TAGLINE_INK}" letter-spacing="1" text-anchor="middle">Donde las plantas conocen a gente nueva</text>`;
 }
 
-function buildSvg(includeFont) {
+function buildSvg() {
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
-	${includeFont ? fontFaceCss() : ""}
-	<defs>${defs()}</defs>
-	<rect x="0" y="0" width="${WIDTH}" height="${HEIGHT}" fill="${BASE}"/>
-	${rects()}
+	<rect x="0" y="0" width="${WIDTH}" height="${HEIGHT}" fill="${BG}"/>
 	${wordmark()}
 </svg>`;
 }
 
-const svg = buildSvg(true);
-writeFileSync(resolve(root, "static/og-image.svg"), svg);
+const FONT_CFG = {
+	font: { fontFiles: [readFileSync(FONT_SERIF), readFileSync(FONT_SANS)], loadSystemFonts: false },
+};
 
-const resvg = new Resvg(buildSvg(false), {
-	font: { fontFiles: [FONT_FILE, FONT_FILE_REGULAR], loadSystemFonts: true },
-});
-const png = resvg.render().asPng();
+/**
+ * Autocalibración: el motor de texto de resvg mide distinto que fontkit,
+ * así que medimos la tinta REAL del PNG y corregimos el dx del wordmark.
+ */
+async function inkBounds(pngBuffer, yMin, yMax) {
+	const sharp = (await import("sharp")).default;
+	const { data, info } = await sharp(pngBuffer).raw().toBuffer({ resolveWithObject: true });
+	let minX = Infinity;
+	let maxX = -Infinity;
+	for (let y = yMin; y < Math.min(yMax, info.height); y++) {
+		for (let x = 0; x < info.width; x++) {
+			const i = (y * info.width + x) * info.channels;
+			if (data[i] < 100 && data[i + 1] < 100) {
+				if (x < minX) minX = x;
+				if (x > maxX) maxX = x;
+			}
+		}
+	}
+	return { minX, maxX, width: maxX - minX };
+}
+
+let png;
+{
+	// banda del wordmark solamente (la tagline empieza más abajo)
+	const WM_YMAX = 372;
+	for (let iter = 0; iter < 3; iter++) {
+		png = new Resvg(buildSvg(), FONT_CFG).render().asPng();
+		const { minX, width } = await inkBounds(png, 180, WM_YMAX);
+		const dx = (WIDTH - width) / 2 - minX;
+		if (Math.abs(dx) < 0.5) break;
+		wordX += dx; // muta la variable usada por wordmark()
+	}
+}
+
+writeFileSync(resolve(root, "static/og-image.svg"), buildSvg());
 writeFileSync(resolve(root, "static/og-image.png"), png);
 
 const jpg = await sharp(png).jpeg({ quality: 85, mozjpeg: true }).toBuffer();
 writeFileSync(resolve(root, "static/og-image.jpg"), jpg);
 
-console.log("W_BO:", W_BO.toFixed(1), "W_ANIC:", W_ANIC.toFixed(1), "TOTAL:", TOTAL.toFixed(1), "groupX:", groupX.toFixed(1));
+console.log("W_Botanic(fontkit):", W_WORD.toFixed(1), "| wordX calibrado:", wordX.toFixed(1));
 console.log("ok!", png.length, "bytes png /", jpg.length, "bytes jpg");
