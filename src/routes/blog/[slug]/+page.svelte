@@ -80,7 +80,7 @@
 	</a>
 
 	<header class="mt-6">
-		<p class="text-sm font-medium tracking-wide text-still-600 uppercase">
+		<p class="eyebrow tracking-wide text-still-600">
 			{categoryLabel(data.post.meta.category)}
 		</p>
 		<h1
@@ -135,13 +135,13 @@
 	<div class="mt-6 prose prose-botanic">{@html data.html}</div>
 </article>
 
-<section class="mx-auto max-w-6xl px-4 pt-4 pb-20 md:px-6">
+<section class="mx-auto max-w-7xl px-4 pt-4 pb-20 md:px-6">
 	<BlogCta />
 </section>
 
 {#if data.related.length > 0}
 	<section class="border-t border-border/70">
-		<div class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+		<div class="mx-auto max-w-7xl px-4 py-16 md:px-6">
 			<h2 class="mb-8 text-2xl font-light text-balance">Artículos relacionados</h2>
 			<BlogIndex posts={data.related} page={1} totalPages={1} />
 		</div>

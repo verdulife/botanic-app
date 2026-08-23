@@ -12,11 +12,6 @@
 		ShieldCheck,
 		ShoppingBasket,
 		Shovel,
-		Heart,
-		Recycle,
-		Users,
-		MessagesSquare,
-		Store,
 	} from "lucide-svelte/icons";
 
 	const demoListings = [
@@ -26,7 +21,7 @@
 			rating: "4.9",
 			reviews: "38",
 			price: "12 €",
-			img: "/images/monstera.jpg",
+			img: "/images/monstera.webp",
 		},
 		{
 			name: "Aloe vera en maceta",
@@ -34,7 +29,7 @@
 			rating: "5.0",
 			reviews: "12",
 			price: "6 €",
-			img: "/images/aloe.jpg",
+			img: "/images/aloe.webp",
 		},
 		{
 			name: "Suculentas variadas",
@@ -42,7 +37,7 @@
 			rating: "4.8",
 			reviews: "25",
 			price: "9 €",
-			img: "/images/suculentas.jpg",
+			img: "/images/suculentas.webp",
 		},
 	];
 
@@ -56,57 +51,45 @@
 
 	const features = [
 		{
-			number: "01",
-			icon: Users,
-			image: "/images/vendedores.jpg",
+			image: "/images/features/p2p.webp",
 			title: "Particular a particular",
-			shortDescription: "Entre personas, cerca de ti.",
+			shortDescription: "Entre personas, sin intermediarios.",
 			longDescription:
-				"Compra, vende, cambia o regala entre personas de tu zona. Sin intermediarios, sin comisiones, sin tiendas.",
-			bullets: ["Sin intermediarios", "Cerca de tu zona"],
-			coming: false,
+				"Compra, vende, cambia o regala plantas directamente entre personas. Sin tiendas de por medio ni comisiones ocultas: tú hablas con la otra persona, acordáis el trato y listo. Una forma cercana y honesta de dar nueva vida a las plantas.",
 		},
 		{
-			number: "02",
-			icon: Heart,
-			image: "/images/compradores.jpg",
+			image: "/images/features/deseos.webp",
 			title: "Deseos",
 			shortDescription: "Te avisamos cuando alguien la publique.",
 			longDescription:
-				"Dinos qué plantas buscas y te avisamos al instante cuando alguien las publique. Como una wishlist, pero supervitaminada.",
-			bullets: ["Avisos al instante", "Sin listas genéricas"],
-			coming: false,
+				"Crea tu lista con esas especies que llevas tiempo buscando y Botanic vigilará cada nuevo anuncio por ti. En cuanto alguien publique una planta que encaje con lo que buscas, recibirás un aviso para no quedarte sin ella. Sin búsquedas repetitivas ni anuncios que no te interesan.",
 		},
 		{
-			number: "03",
-			icon: MessagesSquare,
-			image: "/images/aloe.jpg",
+			image: "/images/features/comunidad.webp",
 			title: "Comunidad",
 			shortDescription: "Consejos reales entre Plant Lovers.",
 			longDescription:
-				"Un espacio para preguntar, compartir consejos y aprender de gente que cuida plantas como tú.",
-			bullets: ["Consejos reales", "De Plant Lovers para Plant Lovers"],
+				"Un espacio para preguntar dudas, compartir tus trucos de cuidado y aprender de otros Plant Lovers que ya han pasado por lo mismo. Desde cómo salvar una hoja amarilla hasta qué sustrato funciona mejor: entre todos sabemos más.",
 			coming: true,
 		},
 		{
-			number: "04",
-			icon: Store,
-			image: "/images/suculentas.jpg",
+			image: "/images/features/market.webp",
 			title: "El Market de Botanic",
 			shortDescription: "Profesionales y tiendas del sector.",
 			longDescription:
-				"Viveros, jardineros, iluminación, tiestos, abonos y todo lo que tu jardín necesita, en un solo catálogo.",
-			bullets: ["Viveros, jardineros, iluminación", "Un solo catálogo"],
+				"Además de particulares, en el Market encontrarás viveros, tiendas especializadas y profesionales del sector: tiestos, abonos, iluminación, herramientas y todo lo que tus plantas necesitan para crecer. Un único catálogo para completar tu colección.",
 			coming: true,
 		},
 	];
 
-	const ROTATION_MS_DESKTOP = 4000;
-	const ROTATION_MS_MOBILE = 5000;
+	const ROTATION_MS_DESKTOP = 6000;
+	const ROTATION_MS_MOBILE = 7000;
 
 	let activeIndex = $state(0);
 	let paused = $state(false);
 	let isMobile = $state(false);
+
+	const rotationMs = $derived(isMobile ? ROTATION_MS_MOBILE : ROTATION_MS_DESKTOP);
 
 	$effect(() => {
 		if (typeof window === "undefined") return;
@@ -117,31 +100,8 @@
 		return () => mq.removeEventListener("change", handler);
 	});
 
-	$effect(() => {
-		if (typeof window === "undefined") return;
-		const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-		if (reducedMotion) return;
-		const ms = isMobile ? ROTATION_MS_MOBILE : ROTATION_MS_DESKTOP;
-		const id = setInterval(() => {
-			if (!paused) {
-				activeIndex = (activeIndex + 1) % features.length;
-			}
-		}, ms);
-		return () => clearInterval(id);
-	});
-
 	function setActive(i: number) {
 		activeIndex = i;
-		paused = true;
-	}
-
-	function next() {
-		activeIndex = (activeIndex + 1) % features.length;
-		paused = true;
-	}
-
-	function prev() {
-		activeIndex = (activeIndex - 1 + features.length) % features.length;
 		paused = true;
 	}
 
@@ -247,10 +207,10 @@
 <AppHeader />
 
 <!-- Hero -->
-<section class="mx-auto grid max-w-6xl items-center gap-12 px-6 pt-24 pb-32 md:grid-cols-2 md:gap-16 md:px-8 md:pt-36 md:pb-40">
-	<div class="flex flex-col items-start gap-5">
-		<p class="eyebrow tracking-wide">Pensada para Plant Lovers</p>
-		<h1 class="text-4xl leading-[1.05] text-balance md:text-6xl">
+<section class="mx-auto grid max-w-7xl items-center gap-12 px-6 pt-16 pb-32 md:grid-cols-2 md:gap-16 md:px-8 md:pt-36 md:pb-40">
+	<div class="flex flex-col items-center gap-5 text-center md:items-start md:text-left">
+		<p class="eyebrow tracking-wide">La app pensada para Plant Lovers</p>
+		<h1 class="text-5xl leading-[1.05] text-balance md:text-7xl">
 			Donde las <strong>plantas</strong> y la <strong>gente</strong> se conocen
 		</h1>
 		<p class="max-w-md text-muted-foreground">
@@ -327,10 +287,10 @@
 
 <!-- Categorías -->
 <section class="relative border-y border-tranquil-300 bg-tranquil-200 py-12 md:py-16">
-	<div class="relative mx-auto max-w-6xl px-4 md:px-6">
+	<div class="relative mx-auto max-w-7xl px-4 md:px-6">
 		<div class="mb-6 text-center md:mb-8">
 			<p class="eyebrow">Categorías principales</p>
-			<h2 class="mt-2 text-4xl leading-tight text-still-950 md:text-5xl">Lo que encuentras en Botanic</h2>
+			<h2 class="mt-2 text-4xl leading-[1.2] text-still-950 md:text-6xl">Lo que encuentras en Botanic</h2>
 			<p class="mt-2 text-foreground">Plantas, semillas y todo lo que las cuida, entre particulares.</p>
 		</div>
 		<div class="flex flex-wrap items-center justify-center gap-2.5">
@@ -349,254 +309,156 @@
 <!-- Qué puedes hacer dentro -->
 <section
 	class="px-4 py-20 md:px-8 md:py-28"
-	onmouseenter={() => (paused = true)}
-	onmouseleave={resume}
-	aria-roledescription="carrusel"
 	aria-label="Funciones de Botanic"
 >
-	<div class="mx-auto mb-12 max-w-2xl text-center md:mb-16">
+	<div class="mx-auto mb-10 max-w-2xl text-center md:mb-12">
 		<p class="eyebrow">Botanic es más</p>
-		<h2 class="mt-2 text-4xl leading-tight text-still-950 md:text-5xl">Lo que vas a poder hacer cuando abramos Botanic</h2>
-		<p class="mt-3 text-foreground">Cuatro funciones para cubrir todas las necesidades de los amantes de las plantas y la huerta.</p>
+		<h2 class="mt-2 text-4xl leading-[1.2] text-still-950 md:text-6xl">Lo que vas a poder hacer cuando abramos Botanic</h2>
+		<p class="mt-3 text-foreground">Mientras construimos Botanic, esto es lo que estamos preparando: cuatro funcionalidades para cubrir todas las necesidades de tus plantas y tu huerta.</p>
 	</div>
 
-	<!-- Móvil: scroll horizontal con peek, full-bleed -->
-	<div class="md:hidden -mx-4">
-		<div class="flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-			{#each features as feature, i}
-				<button
-					type="button"
-					onclick={() => setActive(i)}
-					aria-expanded={i === activeIndex}
-					aria-label="{feature.title}: {feature.shortDescription}"
-					class="snap-center shrink-0 basis-[88%] relative aspect-[3/4] overflow-hidden rounded-2xl border text-left transition-all duration-300 hover:border-still-400 {i ===
-					activeIndex
-						? 'border-still-400 shadow-md'
-						: 'border-border'}"
+	<div
+		class="relative mx-auto max-w-7xl"
+		onmouseenter={() => (paused = true)}
+		onmouseleave={resume}
+		role="region"
+		aria-roledescription="carrusel"
+	>
+		<!-- Móvil: slider scroll-snap con peek -->
+		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+		<div
+			class="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-1 md:hidden"
+			tabindex="0"
+			role="group"
+			aria-label="Funciones de Botanic"
+		>
+			<div class="w-[7%] shrink-0" aria-hidden="true"></div>
+			{#each features as feature}
+				<article
+					class="w-[86%] shrink-0 snap-center rounded-2xl border border-border bg-card p-4 shadow-sm"
 				>
+					<div class="aspect-[4/3] overflow-hidden rounded-xl border border-border shadow-sm">
+						<img
+							src={feature.image}
+							alt={feature.title}
+							loading="lazy"
+							class="h-full w-full object-cover"
+						/>
+					</div>
+
+					{#if feature.coming}
+						<span
+							class="eyebrow mt-4 inline-block rounded-full bg-tranquil-400 px-2.5 py-0.5 text-tranquil-950"
+						>
+							Próximamente
+						</span>
+					{:else}
+						<span
+							class="eyebrow mt-4 inline-block rounded-full bg-still-400 px-2.5 py-0.5 text-still-50"
+						>
+							Día uno
+						</span>
+					{/if}
+
+					<h3 class="display-opsz mt-3 text-3xl leading-tight text-balance text-still-950">
+						{feature.title}
+					</h3>
+					<p class="mt-3 text-base font-medium">{feature.shortDescription}</p>
+					<p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+						{feature.longDescription}
+					</p>
+				</article>
+			{/each}
+			<div class="w-[7%] shrink-0" aria-hidden="true"></div>
+		</div>
+
+		<!-- Escritorio: card contenedora -->
+		<div class="hidden rounded-2xl border border-border bg-card p-4 shadow-sm md:block md:p-6">
+			<div class="grid items-center gap-12 md:grid-cols-[40fr_60fr]">
+				<div class="relative aspect-video overflow-hidden rounded-xl border border-border shadow-sm md:aspect-square">
+				<!-- Imágenes apiladas con cross-fade -->
+				{#each features as feature, i}
 					<img
 						src={feature.image}
 						alt=""
 						aria-hidden="true"
-						class="absolute inset-0 h-full w-full object-cover"
+						class="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out motion-reduce:duration-0 {i ===
+						activeIndex
+							? 'opacity-100'
+							: 'opacity-0'}"
 					/>
-					<div
-						class="absolute inset-0 bg-gradient-to-t from-still-950/80 via-still-950/30 to-transparent"
-						aria-hidden="true"
-					></div>
-					<div class="relative flex h-full flex-col justify-between p-5">
-						<div class="flex items-center justify-between gap-2">
-							<span class="eyebrow text-still-300">{feature.number}</span>
-							{#if feature.coming}
-								<span
-									class="eyebrow rounded-full bg-tranquil-400 px-2.5 py-0.5 text-still-950"
-								>
-									Próximamente
-								</span>
-							{/if}
-						</div>
-						<div>
-							<h3
-								class="text-center text-background leading-tight transition-all duration-300 {i ===
-								activeIndex
-									? 'text-3xl'
-									: 'text-xl'}"
-							>
-								{feature.title}
-							</h3>
-							{#if i === activeIndex}
-								<p class="mt-3 text-center text-sm text-linen-50/85">{feature.shortDescription}</p>
-								<p class="mt-2 text-center text-sm text-linen-50/85">{feature.longDescription}</p>
-								<ul class="mt-4 space-y-1">
-									{#each feature.bullets as bullet}
-										<li class="text-center text-sm text-linen-50/85">— {bullet}</li>
-									{/each}
-								</ul>
-							{/if}
-						</div>
-					</div>
+				{/each}
+			</div>
+
+			<!-- Texto con fade suave al cambiar -->
+			{#key activeIndex}
+				<div class="fade-swap flex flex-col items-start px-1 text-left md:px-4">
+					{#if features[activeIndex].coming}
+						<span class="eyebrow rounded-full bg-tranquil-400 px-2.5 py-0.5 text-tranquil-950">
+							Próximamente
+						</span>
+					{:else}
+						<span class="eyebrow rounded-full bg-still-400 px-2.5 py-0.5 text-still-50">
+							Día uno
+						</span>
+					{/if}
+
+					<h3 class="display-opsz mt-3 max-w-xl text-4xl leading-tight text-still-950 text-balance md:text-5xl">
+						{features[activeIndex].title}
+					</h3>
+
+					<p class="mt-4 text-lg font-medium">{features[activeIndex].shortDescription}</p>
+					<p class="mt-2 max-w-xl text-base leading-relaxed text-muted-foreground">
+						{features[activeIndex].longDescription}
+					</p>
+				</div>
+			{/key}
+		</div>
+
+		<!-- Divider con progreso de vista (solo escritorio) -->
+		<div class="mt-5 hidden h-1 overflow-hidden rounded-full bg-border md:block md:mt-6" aria-hidden="true">
+			{#key activeIndex}
+				<span
+					class="pill-progress block h-full w-full bg-still-600"
+					style:animation-duration="{rotationMs}ms"
+					style:animation-play-state={paused ? "paused" : "running"}
+					onanimationend={() => {
+						activeIndex = (activeIndex + 1) % features.length;
+						paused = false;
+					}}
+				></span>
+			{/key}
+		</div>
+
+		<!-- Pills de navegación (solo escritorio) -->
+		<div class="hidden flex-wrap items-center justify-center gap-2 pt-4 md:flex">
+			{#each features as feature, i}
+				<button
+					type="button"
+					onclick={() => setActive(i)}
+					aria-pressed={i === activeIndex}
+					aria-label="Ver {feature.title}"
+					class="rounded-full border px-4 py-2 text-sm transition-colors duration-200 {i ===
+					activeIndex
+						? 'border-still-400 bg-still-50 font-medium text-still-700'
+						: 'border-border bg-background text-muted-foreground hover:border-still-400 hover:bg-still-50/50 hover:text-still-700'}"
+				>
+					{feature.title}
 				</button>
 			{/each}
 		</div>
-	</div>
-
-	<!-- Desktop: grid 4 cols full-bleed, card activa expandida -->
-	<div class="hidden md:grid md:grid-cols-4 md:gap-4 items-start">
-		{#each features as feature, i}
-			<button
-				type="button"
-				onclick={() => setActive(i)}
-				aria-expanded={i === activeIndex}
-				aria-label="{feature.title}: {feature.shortDescription}"
-				class="relative aspect-[3/4] overflow-hidden rounded-2xl border text-left transition-all duration-300 hover:border-still-400 {i ===
-				activeIndex
-					? 'border-still-400 shadow-md'
-					: 'border-border'}"
-			>
-				<img
-					src={feature.image}
-					alt=""
-					aria-hidden="true"
-					class="absolute inset-0 h-full w-full object-cover"
-				/>
-				<div
-					class="absolute inset-0 bg-gradient-to-t from-still-950/80 via-still-950/30 to-transparent"
-					aria-hidden="true"
-				></div>
-				<div class="relative flex h-full flex-col justify-between p-5 md:p-6">
-					<div class="flex items-center justify-between gap-2">
-						<span class="eyebrow text-still-300">{feature.number}</span>
-						{#if feature.coming}
-							<span
-								class="eyebrow rounded-full bg-tranquil-400 px-2.5 py-0.5 text-still-950"
-							>
-								Próximamente
-							</span>
-						{/if}
-					</div>
-					<div>
-						<h3
-							class="text-center text-background leading-tight transition-all duration-300 {i ===
-							activeIndex
-								? 'text-3xl md:text-4xl'
-								: 'text-xl md:text-2xl'}"
-						>
-							{feature.title}
-						</h3>
-						{#if i === activeIndex}
-							<p class="mt-3 text-center text-sm text-linen-50/85">{feature.shortDescription}</p>
-							<p class="mt-2 text-center text-sm text-linen-50/85">{feature.longDescription}</p>
-							<ul class="mt-4 space-y-1">
-								{#each feature.bullets as bullet}
-									<li class="text-center text-sm text-linen-50/85">— {bullet}</li>
-								{/each}
-							</ul>
-						{/if}
-					</div>
-				</div>
-			</button>
-		{/each}
-	</div>
-
-	<!-- Pills de navegación -->
-	<div class="mt-8 flex flex-wrap items-center justify-center gap-2 px-4">
-		{#each features as feature, i}
-			<button
-				type="button"
-				onclick={() => setActive(i)}
-				aria-pressed={i === activeIndex}
-				class="rounded-full border px-4 py-2 text-sm transition-colors duration-200 {i ===
-				activeIndex
-					? 'border-still-400 bg-still-50 font-medium text-still-700'
-					: 'border-border text-muted-foreground hover:border-still-300 hover:text-foreground'}"
-			>
-				{feature.title}
-			</button>
-		{/each}
-	</div>
-</section>
-
-<!-- ¿Qué es Botanic? -->
-<section class="mx-auto max-w-6xl px-4 pt-32 pb-16 md:px-6 md:pt-36 md:pb-20">
-	<div
-		class="rounded-3xl border border-border bg-secondary/40 px-6 py-14 md:px-12 md:py-16"
-	>
-		<div class="mx-auto max-w-2xl text-center">
-			<p class="eyebrow tracking-wide">¿Qué es Botanic?</p>
-			<h2 class="mt-2 text-4xl leading-tight text-balance md:text-[2.875rem]">
-				La app donde las plantas <strong>conocen a gente nueva</strong>
-			</h2>
-			<p class="mt-3 text-pretty text-muted-foreground">
-				Botanic es una aplicación para la comunidad de Plant Lovers. Publica tus plantas,
-				esquejes, semillas o tiestos y encuentra a quien los quiera: para venderlos,
-				cambiarlos o regalarlos.
-			</p>
 		</div>
-		<div class="mt-10 flex flex-wrap items-center justify-center gap-2.5">
-			<span
-				class="eyebrow inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2"
-			>
-				<Leaf class="size-3 text-still-600" aria-hidden="true" />
-				Solo plantas — pensado para el mundo vegetal
-			</span>
-			<span
-				class="eyebrow inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2"
-			>
-				<Heart class="size-3 text-still-600" aria-hidden="true" />
-				Comunidad — entre gente que cuida plantas
-			</span>
-			<span
-				class="eyebrow inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2"
-			>
-				<Recycle class="size-3 text-still-600" aria-hidden="true" />
-				Segunda vida — la economía circular, hecha fácil
-			</span>
-		</div>
-	</div>
-</section>
-
-<!-- Manifiesto -->
-<section class="mx-auto max-w-6xl px-4 pt-24 md:px-6 md:pt-28">
-	<div class="mx-auto mb-10 max-w-2xl text-center">
-		<h2 class="text-4xl leading-tight text-balance md:text-[2.875rem]">
-			Las plantas se <strong>comparten</strong> y así
-			<strong>conocen a gente nueva</strong>
-		</h2>
-		<p class="mt-3 text-pretty text-muted-foreground">
-			Botanic conecta a <strong>Plant Lovers</strong> que quieren presentar sus plantas a gente que las quiera
-			con quien está buscando su próxima favorita. La economía circular, hecha fácil.
-		</p>
-	</div>
-	<div class="grid gap-4 md:grid-cols-2">
-		<article
-			class="flex items-center gap-5 rounded-2xl border border-border bg-card p-4"
-		>
-			<img
-				src="/images/vendedores.jpg"
-				alt="Una persona sosteniendo una planta en maceta"
-				width="640"
-				height="640"
-				loading="lazy"
-				class="size-28 shrink-0 rounded-2xl object-cover md:size-44"
-			/>
-			<div class="min-w-0">
-				<h3 class="text-lg">Para vendedores</h3>
-				<p class="mt-1.5 text-sm text-muted-foreground">
-					Da a tus plantas la oportunidad de conocer a quien las va a cuidar. Publica en
-					minutos.
-				</p>
-			</div>
-		</article>
-		<article
-			class="flex items-center gap-5 rounded-2xl border border-border bg-card p-4"
-		>
-			<img
-				src="/images/compradores.jpg"
-				alt="Manos acercándose a una planta en maceta blanca"
-				width="640"
-				height="640"
-				loading="lazy"
-				class="size-28 shrink-0 rounded-2xl object-cover md:size-44"
-			/>
-			<div class="min-w-0">
-				<h3 class="text-lg">Para compradores</h3>
-				<p class="mt-1.5 text-sm text-muted-foreground">
-					Encuentra plantas únicas que no verás en tiendas y trátalas directamente con quien
-					las cuida.
-				</p>
-			</div>
-		</article>
 	</div>
 </section>
 
 <!-- Por qué Botanic -->
-<section class="mx-auto max-w-6xl px-4 py-24 md:px-6 md:py-28">
+<section class="mx-auto max-w-7xl px-4 py-20 md:px-6 md:py-28">
 	<div class="mx-auto mb-10 max-w-2xl text-center">
-		<h2 class="text-4xl leading-tight text-balance md:text-[2.875rem]">
+		<h2 class="text-4xl leading-[1.2] text-balance md:text-6xl">
 			¿Por qué <strong>Botanic</strong>?
 		</h2>
 		<p class="mt-3 text-pretty text-muted-foreground">
-			Pensado para la comunidad <strong>Plant Lovers</strong>
+			Porque no todas las apps de segunda mano entienden de plantas.
 		</p>
 	</div>
 	<div class="divide-y divide-border md:grid md:grid-cols-3 md:divide-y-0">
@@ -604,10 +466,10 @@
 			<div class="mx-auto mb-3 grid size-10 place-items-center rounded-lg bg-secondary text-secondary-foreground">
 				<ShieldCheck class="size-5" aria-hidden="true" />
 			</div>
-			<h3 class="text-lg">Pensado para plantas</h3>
-			<p class="mt-1.5 text-sm text-muted-foreground">
-				Categorías, filtros y lenguaje propios del mundo vegetal. Nada de subcategorías
-				perdidas.
+			<h3 class="text-lg">Solo plantas, de verdad</h3>
+			<p class="mt-1.5 text-muted-foreground">
+				Categorías, filtros y lenguaje propios del mundo vegetal. Nada de buscar tus
+				esquejes entre bicis y móviles.
 			</p>
 		</div>
 		<div class="py-6 text-center md:border-l md:border-border md:px-12 md:py-0">
@@ -615,9 +477,9 @@
 				<MapPin class="size-5" aria-hidden="true" />
 			</div>
 			<h3 class="text-lg">Sostenible por naturaleza</h3>
-			<p class="mt-1.5 text-sm text-muted-foreground">
-				Segunda mano, menos transporte, menos residuos: hacer que las plantas sigan
-				creciendo en nuevos hogares es el gesto más verde.
+			<p class="mt-1.5 text-muted-foreground">
+				Cada planta que cambia de casa es un gesto verde: segunda mano, menos transporte,
+				menos residuos.
 			</p>
 		</div>
 		<div class="py-6 text-center md:border-l md:border-border md:py-0 md:pl-12">
@@ -625,15 +487,16 @@
 				<Star class="size-5" aria-hidden="true" />
 			</div>
 			<h3 class="text-lg">Comunidad de confianza</h3>
-			<p class="mt-1.5 text-sm text-muted-foreground">
-				Valoraciones de 1 a 5 estrellas. Perfiles públicos para que sepas con quién tratas.
+			<p class="mt-1.5 text-muted-foreground">
+				Valoraciones de 1 a 5 estrellas y perfiles públicos, para saber con quién tratas
+				antes de quedar.
 			</p>
 		</div>
 	</div>
 </section>
 
 <!-- Waitlist -->
-<section class="mx-auto max-w-6xl px-4 py-24 md:px-6">
+<section class="mx-auto max-w-7xl px-4 py-10 md:px-6">
 	<BlogCta />
 </section>
 
@@ -674,5 +537,56 @@
 		.fan-card {
 			margin-left: -11rem;
 		}
+	}
+
+	.fade-swap {
+		animation: feature-fade 300ms ease both;
+	}
+
+	@keyframes feature-fade {
+		from {
+			opacity: 0;
+			transform: translateY(4px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.fade-swap {
+			animation: none;
+		}
+	}
+
+	.pill-progress {
+		animation-name: pill-progress;
+		animation-timing-function: linear;
+		animation-fill-mode: forwards;
+		transform-origin: left center;
+	}
+
+	@keyframes pill-progress {
+		from {
+			transform: scaleX(0);
+		}
+		to {
+			transform: scaleX(1);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.pill-progress {
+			display: none;
+		}
+	}
+
+	.no-scrollbar {
+		scrollbar-width: none;
+	}
+
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
 	}
 </style>

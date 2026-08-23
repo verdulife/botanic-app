@@ -172,20 +172,43 @@ p strong {
 }
 
 h1,
-h2,
-h3 {
+h2 {
 	font-family: var(--font-display);
 	font-weight: 400;
 	font-variation-settings: "opsz" 144, "SOFT" 30;
 	text-wrap: balance;
 }
 
+/* Como los títulos de las cards del hero: Fraunces 400 sin forzar opsz/SOFT.
+   Añade .display-opsz a un heading para activar el tratamiento óptico de display. */
+h3 {
+	font-family: var(--font-display);
+	font-weight: 400;
+	text-wrap: balance;
+}
+
+.display-opsz,
+.display-opsz strong {
+	font-variation-settings: "opsz" 144, "SOFT" 30;
+}
+
+/* Lo contrario: desactiva el forzado óptico en un h1/h2 */
+.no-opsz,
+.no-opsz strong {
+	font-variation-settings: normal;
+}
+
 h1 strong,
-h2 strong,
-h3 strong {
+h2 strong {
 	font-style: italic;
 	font-weight: 400;
 	font-variation-settings: "opsz" 144, "SOFT" 30;
+	color: var(--color-still-400);
+}
+
+h3 strong {
+	font-style: italic;
+	font-weight: 400;
 	color: var(--color-still-400);
 }
 
@@ -193,16 +216,16 @@ p {
 	text-wrap: pretty;
 }
 
-.eyebrow {
-	font-family: var(--font-mono);
-	font-weight: 400;
-	font-size: 0.8125rem; /* 13px */
-	color: var(--color-still-500);
-	text-transform: uppercase;
-	letter-spacing: 0.04em;
-}
-
 @layer components {
+	.eyebrow {
+		font-family: var(--font-mono);
+		font-weight: 400;
+		font-size: 0.8125rem; /* 13px */
+		color: var(--color-still-500);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
 	.prose-botanic {
 		--tw-prose-body: var(--foreground);
 		--tw-prose-headings: var(--foreground);

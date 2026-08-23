@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from "$lib/components/ui/button";
 	import { Input } from "$lib/components/ui/input";
-	import { Mail, Send } from "lucide-svelte/icons";
+	import { Mail } from "lucide-svelte/icons";
 
 	type Status = "idle" | "loading" | "success" | "error";
 
@@ -63,7 +63,7 @@
 			placeholder="tu@email.com"
 			aria-label="Tu email"
 			aria-invalid={status === "error"}
-			class="h-14 w-full rounded-full border border-border bg-background pl-12 pr-40 text-lg shadow-sm placeholder:text-muted-foreground/60 focus-visible:ring-2 focus-visible:ring-ring"
+			class="h-14 w-full rounded-full border border-border bg-background pl-12 pr-30 text-lg shadow-sm placeholder:text-muted-foreground/60 focus-visible:ring-2 focus-visible:ring-ring"
 		/>
 		<Button
 			type="submit"
@@ -74,7 +74,6 @@
 			{#if status === "loading"}
 				Enviando…
 			{:else}
-				<Send />
 				Unirme
 			{/if}
 		</Button>
@@ -83,7 +82,7 @@
 		{#if status === "success"}
 			<span class="text-foreground">
 				{alreadyRegistered
-					? "Ya estás en la waitlist de Botanic 🌿"
+					? "Ya estás en la lista de espera de Botanic 🌿"
 					: "¡Pase reservado! Te avisaremos antes que a nadie."}
 			</span>
 		{:else if status === "error"}

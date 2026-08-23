@@ -26,7 +26,7 @@
 	{/if}
 </svelte:head>
 
-<section class="mx-auto max-w-6xl px-4 pt-6 pb-20 md:px-6">
+<section class="mx-auto max-w-7xl px-4 pt-6 pb-20 md:px-6">
 	<BlogIndex posts={data.posts} page={data.page} totalPages={data.totalPages} />
 
 	<div class="mt-20">

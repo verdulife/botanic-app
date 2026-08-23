@@ -21,7 +21,7 @@
 		Aún no hay artículos publicados. Vuelve pronto.
 	</p>
 {:else}
-	<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+	<div class="grid grid-cols-2 gap-1.5 sm:gap-6 lg:grid-cols-3">
 		{#each posts as post}
 			<a
 				href={`/blog/${post.slug}`}
@@ -51,16 +51,18 @@
 						</div>
 					{/if}
 				</div>
-				<div class="flex flex-1 flex-col gap-2 p-5">
-					<p class="text-xs font-medium tracking-wide text-still-600 uppercase">
+				<div class="flex flex-1 flex-col gap-1.5 p-3 sm:p-5">
+					<p class="font-mono text-xs font-medium tracking-wide text-still-600 uppercase">
 						{categoryLabel(post.meta.category)}
 					</p>
 					<h2
-						class="text-lg leading-snug font-semibold text-balance transition-colors group-hover:text-still-600"
+						class="no-opsz text-sm leading-snug font-semibold text-balance transition-colors group-hover:text-still-600 sm:text-lg"
 					>
 						{post.meta.title}
 					</h2>
-					<p class="text-sm text-pretty text-muted-foreground">{post.meta.description}</p>
+					<p class="hidden text-sm text-pretty text-muted-foreground sm:block">
+						{post.meta.description}
+					</p>
 					<div
 						class="mt-auto flex items-center justify-between gap-2 pt-3 text-xs text-muted-foreground"
 					>

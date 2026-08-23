@@ -6,15 +6,10 @@ const CATEGORY_LABELS: Record<Category, string> = {
 	comunidad: "Comunidad",
 };
 
-const dateFormatter = new Intl.DateTimeFormat("es-ES", {
-	day: "numeric",
-	month: "long",
-	year: "numeric",
-});
-
 export function formatDate(date: string): string {
 	const d = new Date(date);
-	return Number.isNaN(d.getTime()) ? "" : dateFormatter.format(d);
+	if (Number.isNaN(d.getTime())) return "";
+	return `${d.getDate()}/${d.getMonth() + 1}/${String(d.getFullYear()).slice(-2)}`;
 }
 
 export function categoryLabel(category: Category): string {
