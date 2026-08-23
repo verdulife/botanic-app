@@ -22,7 +22,7 @@ Botanic es la app donde las plantas conocen a gente. Plataforma de compra, venta
 Módulos adyacentes al particular-a-particular:
 
 - **Deseos** — wishlist supervitaminada: dices qué plantas buscas y te avisamos cuando alguien las publique.
-- **Comunidad** — *Próximamente*: preguntar, compartir consejos y aprender entre Plant Lovers.
+- **Comunidad** — preguntar, compartir consejos y aprender entre Plant Lovers.
 - **El Market de Botanic** — *Próximamente*: profesionales y tiendas del sector en un solo catálogo.
 
 ## Problema y solución

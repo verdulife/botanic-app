@@ -70,7 +70,6 @@
 			shortDescription: "Consejos reales entre Plant Lovers.",
 			longDescription:
 				"Un espacio para preguntar dudas, compartir tus trucos de cuidado y aprender de otros Plant Lovers que ya han pasado por lo mismo. Desde cómo salvar una hoja amarilla hasta qué sustrato funciona mejor: entre todos sabemos más.",
-			coming: true,
 		},
 		{
 			image: "/images/features/market.webp",
