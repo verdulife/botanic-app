@@ -54,7 +54,7 @@ Pre-Sprint + 6 sprints (~8-10 semanas). Hito por sprint marcado en negrita al fi
 - [x] Respuesta en la web al enviar un email — flip de confirmación con copys y aviso de spam
 - [x] Email enviado — email transaccional al apuntarse (vía Resend, ya operativo)
 - [x] Sistema para compartir desde la web — tarjeta «Semilla fundadora» + Web Share API en la confirmación de la waitlist
-- [ ] Sistema para compartir desde los emails — enlaces de compartir incluidos en los emails
+- [x] Sistema para compartir desde los emails — enlaces de compartir incluidos en los emails
 
 **Hito**: Flujo de lista de espera completo end-to-end y compartición activa.
 
@@ -73,7 +73,7 @@ Pre-Sprint + 6 sprints (~8-10 semanas). Hito por sprint marcado en negrita al fi
 - [ ] @vite-pwa/sveltekit + manifest básico
 - [ ] Auth (email + Google OAuth)
 - [ ] RLS en profiles
-- [ ] Layout global (Navbar, Footer, MobileNav)
+- [x] Layout global (Navbar, Footer, MobileNav)
 - [ ] Login + Register
 - [ ] Manejo de sesión
 
@@ -131,8 +131,8 @@ Pre-Sprint + 6 sprints (~8-10 semanas). Hito por sprint marcado en negrita al fi
 - [ ] Service worker + precaching
 - [ ] Manifest completo + iconos
 - [ ] Prompt de instalación
-- [ ] OG tags para compartir
-- [ ] Sitemap.xml + robots.txt
+- [x] OG tags para compartir
+- [x] Sitemap.xml + robots.txt
 - [ ] Páginas 404, error, empty, offline
 - [ ] Testing manual móvil/desktop
 
