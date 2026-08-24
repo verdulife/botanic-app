@@ -24,9 +24,6 @@ App donde las plantas conocen a gente. Marketplace P2P de plantas entre particul
 
 - [docs/pwa.md](docs/pwa.md) — configuración PWA
 - [docs/blog.md](docs/blog.md) — guía del blog
-- [docs/social-video.md](docs/social-video.md) — reels IG + TikTok (Remotion)
-- [docs/social-post.md](docs/social-post.md) — posts IG + carruseles (Remotion)
-- [docs/social-eval.md](docs/social-eval.md) — subagente `visual-eval`
 - [docs/email-deliverability.md](docs/email-deliverability.md) — auditoría de emails
 
 ### Prensa

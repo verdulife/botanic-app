@@ -43,7 +43,7 @@
   3. Alta del contacto en el **Audience "waitlist"** de Resend (para el broadcast de lanzamiento).
 - **Posición en la lista**: RPC `get_waitlist_position(email)` en Supabase (`SECURITY DEFINER`, `EXECUTE` solo a `anon`; la tabla tiene RLS solo-insert) devuelve el puesto del email (`row_number()` por `created_at, email`). La API responde `{ ok, position }` en alta nueva y `{ ok, alreadyRegistered, position }` en duplicado — alimenta la tarjeta compartible "Semilla fundadora" del front.
 - **Duplicado** (`23505`): respuesta `alreadyRegistered` + `position` → el form voltea la tarjeta de confirmación sin enviar emails (evita spam al admin).
-- **Plantillas**: HTML con la marca de Botanic en `src/lib/emails/` (`layout.ts` + `confirmation.ts` + `adminNotify.ts`), estilos inline, tablas 600px. Header con `og-image.jpg` (banner de marca ~25 KB, `static/og-image.jpg` generado por `scripts/generate-og.mjs` — fondo plano tranquil-200, wordmark Fraunces 400, autocalibrado por tinta; mismo asset usado en `og:image`/`twitter:image`). Cada email lleva también su `text` como fallback.
+- **Plantillas**: HTML con la marca de Botanic en `src/lib/emails/` (`layout.ts` + `confirmation.ts` + `adminNotify.ts`), estilos inline, tablas 600px. Header con `og-image.jpg` (banner de marca ~100 KB, `static/og-image.jpg` generado con `bun run og` desde `scripts/generate-og.mjs` — fondo tranquil-200 con textura de hojas en cover al 50% y wordmark vectorial del logo incrustado desde `Logo.svelte`; mismo asset usado en `og:image`/`twitter:image`). Cada email lleva también su `text` como fallback.
 - **Baja/unsubscribe**: diferido. Resend gestionará la baja automáticamente en broadcasts (`{{{RESEND_UNSUBSCRIBE_URL}}}`); página propia de baja pendiente de decidir.
 
 ## Límites Supabase Free
@@ -161,17 +161,11 @@ CREATE POLICY "messages_insert" ON messages FOR INSERT WITH CHECK (
 );
 ```
 
-## Repo: carpeta autónoma `video/` (Remotion)
-
-- **Proyecto Remotion independiente** para reels IG/TikTok y carruseles IG (generación de vídeo 9:16 y stills 4:5). Tiene su **propio `package.json` y `node_modules`** y queda **fuera de workspaces** y fuera de la build de Vercel: `bun install` en raíz no lo toca ni el deploy lo builda (build SvelteKit ~30s).
-- Browser de render: **Chrome Headless Shell** descargado por Remotion (`npx remotion browser ensure`) — versión pinned determinista.
-- Render local: `npx remotion render` (mp4) y `npx remotion still` (PNG carrusel), leyendo el guion como inputProps.
-- Guion agéntico `script.json` en `src/lib/social/`; assets Pexels bajo `static/social/<slug>/` vía `scripts/stock.mjs`.
-- Detalle completo en [`docs/social-video.md`](docs/social-video.md) y [`docs/social-post.md`](docs/social-post.md).
-
 ## Design system cross-surface
 
-[`DESIGN.md`](DESIGN.md) (impeccable) es la autoridad global de tokens y reglas de marca (paleta Still/Lino, sistema de 3 familias — Fraunces + Inter + JetBrains Mono — motion, Do's & Don'ts). Cada superficie mantiene su propio surface brief (p. ej. [`video/DESIGN.reels.md`](video/DESIGN.reels.md) para reels y carruseles). El script `bun run tokens` regenera `video/src/brand.generated.ts` desde el frontmatter de `DESIGN.md`; `bun run fonts` copia los woff2 de Fraunces/Inter/JetBrains Mono a `static/fonts/`; `bun run lint:brand` audita `video/src/**` contra tokens. Ver `AGENTS.md` → Reglas de trabajo.
+[`DESIGN.md`](DESIGN.md) (impeccable) es la autoridad global de tokens y reglas de marca (paleta Still/Lino, sistema de 3 familias — Fraunces + Inter + JetBrains Mono — motion, Do's & Don'ts). Ver `AGENTS.md` → Reglas de trabajo.
+
+> Nota: el carril social (Remotion/Pexels) y el póster A3 se retiraron en ago 2026 junto con sus scripts de apoyo (`tokens`, `fonts`, `lint:brand`, `stock`, `frames`, `logo:gen`, `copy-fonts`, `sync-brand-tokens`, `email-test-hito1`). El wordmark del logo vive únicamente en `src/lib/components/Logo.svelte` (consumido por header, CTA del blog y founder-card vía `?raw`).
 
 ## Estructura del proyecto SvelteKit
 

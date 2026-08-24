@@ -2,7 +2,6 @@
 name: Botanic
 description: Botanic — la app donde las plantas conocen a gente. Marketplace P2P de plantas entre particulares.
 surface_briefs:
-  - video/DESIGN.reels.md
 colors:
   background: "oklch(0.977 0.008 85)"
   foreground: "oklch(0.28 0.02 55)"

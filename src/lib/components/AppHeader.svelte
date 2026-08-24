@@ -16,7 +16,7 @@
 		class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 md:px-6"
 	>
 		<a href="/" class="inline-flex items-center">
-			<Logo class="h-7" />
+			<Logo class="h-6" />
 		</a>
 		<div class="flex items-center gap-7">
 			<nav class="flex items-center gap-2" aria-label="Navegación principal">

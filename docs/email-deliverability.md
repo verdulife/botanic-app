@@ -163,7 +163,7 @@ Re-test con el código del Hito 2 (form re-registro real con el email personal d
 **Decisión**: no abrir investigación adicional de momento. Cuando el dominio acumule volumen y reputación (post-lanzamiento), re-testar Outlook.
 
 Pasos cuando se re-testee:
-1. Re-enviar email con `bun run scripts/email-test-hito1.ts`.
+1. Re-enviar email con `bun run scripts/email-send.mjs confirmation <destinatario>`.
 2. Verificar bandeja de entrada en Gmail + Outlook.
 3. Capturar Authentication-Results de ambos para confirmar SPF pass.
 4. Si Outlook pasa: SPF era el problema principal. Si sigue en Junk, abrir sub-hito para investigar contenido/puntuación de Outlook.

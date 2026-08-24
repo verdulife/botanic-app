@@ -14,7 +14,7 @@ Página simple apuntando a la lista de espera. **Objetivo: 1.000 suscriptores** 
 ### Instagram + TikTok
 Cuenta `@botanic.app`. Contenido 3-4x/semana (reels) + 2-3x/semana (posts/carruseles). Construir audiencia **Plant Lovers** sin vender la app todavía.
 
-**Estado**: pipeline Remotion a nivel PoC (reel mp4 + carrusel renderizados). Generación agéntica con guiones `script.json` + B-roll/fotos de Pexels (`scripts/stock.mjs`) → `mp4` 9:16 y carruseles 4:5; publicación manual en batch semanal (Meta Business Suite + TikTok Studio). Detalle en [docs/social-video.md](social-video.md) y [docs/social-post.md](social-post.md).
+**Estado**: sin pipeline de generación (el PoC Remotion/Pexels se retiró en ago 2026). Publicación manual si se retoma el canal; el subagente `@visual-eval` queda disponible para auditar assets de stock.
 
 ### Comunidades
 Unirse y participar genuinamente en:

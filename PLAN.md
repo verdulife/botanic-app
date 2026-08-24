@@ -41,8 +41,7 @@ Detalle de checkboxes por sprint debajo.
 ## Carriles paralelos (no bloquean MVP)
 
 - **Blog** (SEO + lead gen): ✅ implementado. Ver [docs/blog.md](docs/blog.md).
-- **Redes sociales** (reels + posts IG): 🚧 PoC. Ver [docs/social-video.md](docs/social-video.md) y [docs/social-post.md](docs/social-post.md).
-- **Poster A3** (captación offline): ✅ implementado. Ver [poster/README.md](poster/README.md).
+- **Redes sociales** (reels + posts IG): retirado en ago 2026 (PoC Remotion/Pexels desmantelado; ver historial en git).
 
 ---
 
@@ -257,7 +256,7 @@ Lista priorizada. Estado: `[ ]` pendiente · `[~]` en curso · `[x]` cerrado.
 ### Arquitectura / DX
 
 - [ ] **Convertir en monorepo** — definir bien cada parte y separar responsabilidades. Hacer **antes** que el siguiente porque define las carpetas de cada subagente.
-- [ ] **Optimizar documentos para agentes IA** — agent global + agents por sección (web, database/backend, app, video/social) para consumir menos tokens.
+- [ ] **Optimizar documentos para agentes IA** — agent global + agents por sección (web, database/backend, app) para consumir menos tokens.
 
 ### Multiidioma
 
@@ -268,7 +267,7 @@ Lista priorizada. Estado: `[ ]` pendiente · `[~]` en curso · `[x]` cerrado.
 - [x] **Emails en spam** — auditoría y fixes aplicados. Re-test Outlook post-lanzamiento. Detalle en [docs/email-deliverability.md](docs/email-deliverability.md).
 - [x] **Cron keep-alive de Supabase Free** — implementado.
 - [x] **Revisar `waitlist_count` para paridad con la realidad** — confirmado en vivo.
-- [x] **Documentos para impresión** — poster A3 implementado en [poster/](poster/).
+- [x] **Documentos para impresión** — poster A3 implementado y retirado en ago 2026 (fuente en git).
 
 ---
 

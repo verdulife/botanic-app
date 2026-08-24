@@ -1,21 +1,27 @@
-import { emailLayout, ctaButton, EMAIL_COLORS, EMAIL_FONT } from "./layout";
+import {
+	emailLayout,
+	ctaButton,
+	EMAIL_COLORS,
+	EMAIL_FONT,
+} from "./layout";
 
 export function confirmationHtml(): string {
-	const { accentDark, tint } = EMAIL_COLORS;
+	const { accentDark, muted } = EMAIL_COLORS;
+	const shareText = encodeURIComponent(
+		"Acabo de apuntarme a Botanic, donde las plantas y la gente se conocen. Únete: https://botanicapp.es/?utm_source=waitlist_share",
+	);
 	const body = `
-<h1 style="margin:0 0 16px 0;font-family:${EMAIL_FONT};font-size:24px;line-height:32px;color:${accentDark};text-align:center;">Tus plantas quieren conocer a gente nueva</h1>
-<p style="margin:0 0 16px 0;font-family:${EMAIL_FONT};font-size:16px;line-height:24px;text-align:center;">Te has apuntado a la <strong>primera comunidad</strong> donde las plantas conocen a gente nueva. Vender, cambiar o regalar plantas, semillas, esquejes y tiestos con gente de tu zona: así tus plantas conocen a quien las va a cuidar.</p>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0;">
-<tr>
-<td bgcolor="${tint}" style="background-color:${tint};border-radius:12px;padding:20px;font-family:${EMAIL_FONT};font-size:16px;line-height:24px;color:${EMAIL_COLORS.ink};text-align:center;">
-<strong>Te avisaremos antes que nadie</strong> del lanzamiento, para que seas de los primeros en estrenar Botanic.
-</td>
-</tr>
-</table>
-<p style="margin:0 0 16px 0;font-family:${EMAIL_FONT};font-size:16px;line-height:24px;text-align:center;">Mientras tanto, puedes echar un vistazo y preparar a tus plantas.</p>
-${ctaButton("https://botanicapp.es", "Conocer Botanic")}
-<p style="margin:24px 0 0 0;font-family:${EMAIL_FONT};font-size:14px;line-height:21px;color:${EMAIL_COLORS.muted};text-align:center;">Hecho con 💚 para la comunidad Plant Lovers.</p>`;
-	return emailLayout("Te has apuntado a la primera comunidad donde las plantas conocen a gente nueva.", body);
+<h1 style="margin:0 0 24px 0;font-family:Georgia,'Times New Roman',serif;font-size:30px;line-height:40px;color:${accentDark};text-align:center;font-weight:500;">¡Gracias por sumarte a Botanic!</h1>
+<p style="margin:0 0 28px 0;font-family:${EMAIL_FONT};font-size:17px;line-height:28px;text-align:center;">Ya formas parte de Botanic, donde las plantas y la gente se conocen: el lugar para dar nueva vida a esquejes, semillas y plantas, y para encontrar los que buscas.</p>
+<p style="margin:0 0 0 0;font-family:${EMAIL_FONT};font-size:17px;line-height:28px;text-align:center;">Te avisaremos cuando abramos la app y también te contaremos las novedades por el camino. Sin spam, solo lo esencial.</p>
+<p style="margin:24px 0 0 0;font-family:${EMAIL_FONT};font-size:15px;line-height:24px;color:${muted};text-align:center;">Nos ayudaría mucho si compartes Botanic con los tuyos.</p>
+${ctaButton(`https://wa.me/?text=${shareText}`, "Compartir en WhatsApp")}`;
+	const signoff = "Hecho con 💚 para la comunidad Plant Lovers.";
+	return emailLayout(
+		"Te has apuntado a Botanic. Te avisaremos antes que nadie cuando abramos la app.",
+		body,
+		signoff,
+	);
 }
 
 export function confirmationText(): string {

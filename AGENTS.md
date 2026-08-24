@@ -30,16 +30,11 @@ Técnico (operativo):
 
 - [docs/pwa.md](docs/pwa.md) — PWA
 - [docs/blog.md](docs/blog.md) — blog (carril SEO)
-- [docs/social-video.md](docs/social-video.md) — reels (Remotion)
-- [docs/social-post.md](docs/social-post.md) — posts IG (Remotion)
-- [docs/social-eval.md](docs/social-eval.md) — subagente `visual-eval`
 - [docs/email-deliverability.md](docs/email-deliverability.md) — auditoría email
 - [docs/images-credits.md](docs/images-credits.md) — atribución de fotos
 
 Autónomos:
 
-- [poster/README.md](poster/README.md) — póster A3
-- [video/](video/) — proyecto Remotion
 - [press/README.md](press/README.md) — dossier de prensa (*pendiente de regeneración*)
 
 ## Reglas de trabajo
@@ -48,8 +43,8 @@ Autónomos:
 - **Hitos verificables**: en tareas grandes, trabajar por hitos y **parar tras cada uno** para reportar. No iniciar el siguiente sin confirmación del usuario.
 - **Antes de commit/push**: actualizar docs ([PLAN.md](PLAN.md), [PRODUCT.md](PRODUCT.md), [AGENTS.md](AGENTS.md), [DESIGN.md](DESIGN.md)) si el cambio de código los ha dejado desactualizados. El usuario debe pedir el commit explícitamente.
 - **Engram** (memoria del agente): complementario a los docs. Los docs son fuente de verdad canónica; Engram guarda contexto privado de sesión (gotchas, decisiones informales) entre sesiones.
-- **Sistema de diseño**: [DESIGN.md](DESIGN.md) es autoridad global. Todo contenido visual (landing, blog, emails, reels, posters, assets Pexels) debe respetarlo. Antes de renderizar social: `bun run tokens && bun run fonts && bun run lint:brand`.
+- **Sistema de diseño**: [DESIGN.md](DESIGN.md) es autoridad global. Todo contenido visual (landing, blog, emails, og-image) debe respetarlo.
 
 ## Subagentes
 
-- **`@visual-eval`** (`.opencode/agents/visual-eval.md`, modelo `opencode-go/qwen3.7-plus`): solo audita assets de stock Pexels (fotos o clips) — verifica que encajan con el contexto de la escena. Invocar tras `bun run stock fetch` sobre un asset destinado a `script.json` como `media`. Para clips de stock, generar contact-sheet con `bun run frames <mp4> <out.png>` antes de invocar `@visual-eval`. **Nunca** auditar renders propios (reel/still/carrusel): la verificación de calidad de lo generado es humana (parar y preguntar).
+- **`@visual-eval`** (`.opencode/agents/visual-eval.md`, modelo `opencode-go/qwen3.7-plus`): audita assets de stock (fotos o clips) — verifica que encajan con el contexto de la escena. El pipeline social que lo usaba (Remotion/Pexels) fue retirado en ago 2026; el agente se conserva para futuro uso con stock. **Nunca** auditar renders propios: la verificación de calidad de lo generado es humana (parar y preguntar).

@@ -1,7 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { create } from "fontkit";
 import { Resvg } from "@resvg/resvg-js";
 import sharp from "sharp";
 
@@ -10,28 +9,13 @@ const root = resolve(__dirname, "..");
 
 const WIDTH = 1200;
 const HEIGHT = 630;
-const FONT_SIZE = 150;
-
-// Fraunces 400 SIN opsz: instancia estática (@fontsource/fraunces).
-// Los ficheros variables de fontsource tienen wght default=900 y resvg
-// no aplica variaciones, por eso se usa el estático.
-const FONT_SERIF = resolve(
-	root,
-	"node_modules/@fontsource/fraunces/files/fraunces-latin-400-normal.woff2",
-);
-// Tagline en Inter (sans de apoyo, como en la landing); su VF tiene default wght=400
-const FONT_SANS = resolve(
-	root,
-	"node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
-);
-const TAGLINE_SIZE = 42;
 
 function oklchToRgb(L, C, hDeg) {
 	const h = (hDeg * Math.PI) / 180;
 	const a = C * Math.cos(h);
 	const b = C * Math.sin(h);
 	const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
-	const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+	const m_ = L - 0.105563456 * a - 0.0638541728 * b;
 	const s_ = L - 0.0894841775 * a - 1.291485548 * b;
 	const l = l_ ** 3;
 	const m = m_ ** 3;
@@ -66,90 +50,70 @@ const BG = oklchToCss(0.935, 0.128, 99); // tranquil-200
 const INK = oklchToCss(0.221, 0.032, 151); // still-950
 const TAGLINE_INK = oklchToCss(0.221, 0.032, 151, 0.72);
 
-const serifFont = create(readFileSync(FONT_SERIF));
-const scale = FONT_SIZE / serifFont.unitsPerEm;
-const widthOf = (text) => serifFont.layout(text).advanceWidth * scale;
+// Tagline en Inter (sans de apoyo); su VF tiene default wght=400
+const FONT_SANS = resolve(
+	root,
+	"node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
+);
+const TAGLINE_SIZE = 42;
+const TAGLINE_Y = 412;
 
-const W_WORD = widthOf("Botanic");
+// Wordmark vectorial desde la única fuente de verdad: Logo.svelte.
+// Los paths se centran con matemática exacta del viewBox: sin autocalibración.
+const logoRaw = readFileSync(resolve(root, "src/lib/components/Logo.svelte"), "utf8");
+const vbMatch = logoRaw.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
+if (!vbMatch) throw new Error("No se encontró viewBox en Logo.svelte");
 
-// Centrado óptico por caja de tinta (los advances ignoran los bearings
-// laterales del primer/último glifo y descentran el texto)
-function centeredTextX(font, text, fontSize) {
-	const s = fontSize / font.unitsPerEm;
-	const run = font.layout(text);
-	let inkMin = Infinity;
-	let inkMax = -Infinity;
-	let pen = 0;
-	run.glyphs.forEach((glyph, i) => {
-		const pos = run.positions[i];
-		if (glyph.bbox) {
-			inkMin = Math.min(inkMin, pen + pos.xOffset * s + glyph.bbox.minX * s);
-			inkMax = Math.max(inkMax, pen + pos.xOffset * s + glyph.bbox.maxX * s);
-		}
-		pen += pos.xAdvance * s;
-	});
-	const width = inkMax - inkMin;
-	return { x: (WIDTH - width) / 2 - inkMin, width };
-}
+const WM_W = 495;
+const WM_H = (WM_W * Number(vbMatch[2])) / Number(vbMatch[1]);
+const WM_X = (WIDTH - WM_W) / 2;
+const WM_Y = 225;
 
-let wordX = centeredTextX(serifFont, "Botanic", FONT_SIZE).x;
-const baselineY = 340;
+const WORDMARK = logoRaw
+	.match(/<svg[\s\S]*<\/svg>/)[0]
+	.replace(/\s+class=\{[^}]*\}/, "")
+	.replace(/fill="currentColor"/, `fill="${INK}"`)
+	.replace(/<svg\b/, `<svg x="${WM_X}" y="${WM_Y}" width="${WM_W}" height="${WM_H.toFixed(2)}"`);
 
-function wordmark() {
-	return `<text x="${wordX.toFixed(2)}" y="${baselineY}" font-family="Fraunces" font-size="${FONT_SIZE}" font-weight="400" fill="${INK}">Botanic</text>
-	<text x="${WIDTH / 2}" y="${baselineY + 72}" font-family="Inter" font-size="${TAGLINE_SIZE}" font-weight="400" fill="${TAGLINE_INK}" letter-spacing="1" text-anchor="middle">Donde las plantas conocen a gente nueva</text>`;
-}
+// Textura de hojas blancas como fondo con cover al 50%.
+// OJO con resvg y svg anidado: aplica DOBLE la opacity del <svg>, ancla mal el
+// slice Y RECORTA el contenido (~80% del alto) aunque se le dé un viewBox
+// explícito (todo verificado empíricamente). Solución: nada de svg anidado;
+// un <g> con transform scale+translate que reproduce el cover a mano.
+const LEAVES_SRC = resolve(root, "static/images/leaves-texture.svg");
+const leavesRaw = readFileSync(LEAVES_SRC, "utf8");
+const LV = leavesRaw.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
+if (!LV) throw new Error("No se encontró viewBox en leaves-texture.svg");
+
+const coverScale = WIDTH / Number(LV[1]);
+const winY = (Number(LV[2]) - HEIGHT / coverScale) / 2;
+
+const LEAVES =
+	`<g opacity="0.5" transform="scale(${coverScale.toFixed(4)}) translate(0 ${(-winY).toFixed(2)})">` +
+	leavesRaw
+		.match(/<g[\s\S]*<\/g>/)[0]
+		.replace(/class="cls-1"/g, `fill="#ffffff" fill-rule="evenodd"`) +
+	"</g>";
 
 function buildSvg() {
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
 	<rect x="0" y="0" width="${WIDTH}" height="${HEIGHT}" fill="${BG}"/>
-	${wordmark()}
+	${LEAVES}
+	${WORDMARK}
+	<text x="${WIDTH / 2}" y="${TAGLINE_Y}" font-family="Inter" font-size="${TAGLINE_SIZE}" font-weight="400" fill="${TAGLINE_INK}" letter-spacing="1" text-anchor="middle">Donde las plantas conocen a gente nueva</text>
 </svg>`;
 }
 
-const FONT_CFG = {
-	font: { fontFiles: [readFileSync(FONT_SERIF), readFileSync(FONT_SANS)], loadSystemFonts: false },
-};
-
-/**
- * Autocalibración: el motor de texto de resvg mide distinto que fontkit,
- * así que medimos la tinta REAL del PNG y corregimos el dx del wordmark.
- */
-async function inkBounds(pngBuffer, yMin, yMax) {
-	const sharp = (await import("sharp")).default;
-	const { data, info } = await sharp(pngBuffer).raw().toBuffer({ resolveWithObject: true });
-	let minX = Infinity;
-	let maxX = -Infinity;
-	for (let y = yMin; y < Math.min(yMax, info.height); y++) {
-		for (let x = 0; x < info.width; x++) {
-			const i = (y * info.width + x) * info.channels;
-			if (data[i] < 100 && data[i + 1] < 100) {
-				if (x < minX) minX = x;
-				if (x > maxX) maxX = x;
-			}
-		}
-	}
-	return { minX, maxX, width: maxX - minX };
-}
-
-let png;
-{
-	// banda del wordmark solamente (la tagline empieza más abajo)
-	const WM_YMAX = 372;
-	for (let iter = 0; iter < 3; iter++) {
-		png = new Resvg(buildSvg(), FONT_CFG).render().asPng();
-		const { minX, width } = await inkBounds(png, 180, WM_YMAX);
-		const dx = (WIDTH - width) / 2 - minX;
-		if (Math.abs(dx) < 0.5) break;
-		wordX += dx; // muta la variable usada por wordmark()
-	}
-}
+const png = new Resvg(buildSvg(), {
+	font: { fontFiles: [readFileSync(FONT_SANS)], loadSystemFonts: false },
+}).render().asPng();
 
 writeFileSync(resolve(root, "static/og-image.svg"), buildSvg());
 writeFileSync(resolve(root, "static/og-image.png"), png);
 
-const jpg = await sharp(png).jpeg({ quality: 85, mozjpeg: true }).toBuffer();
+const jpg = await sharp(png)
+	.jpeg({ quality: 85, mozjpeg: true, chromaSubsampling: "4:4:4" })
+	.toBuffer();
 writeFileSync(resolve(root, "static/og-image.jpg"), jpg);
 
-console.log("W_Botanic(fontkit):", W_WORD.toFixed(1), "| wordX calibrado:", wordX.toFixed(1));
 console.log("ok!", png.length, "bytes png /", jpg.length, "bytes jpg");

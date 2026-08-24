@@ -5,6 +5,11 @@ declare module "*.md?raw" {
 	export default content;
 }
 
+declare module "*.svelte?raw" {
+	const content: string;
+	export default content;
+}
+
 declare global {
 	namespace App {
 		// interface Error {}

@@ -1,4 +1,4 @@
-import { logoSvg } from "$lib/logo-svg";
+import logoRaw from "$lib/components/Logo.svelte?raw";
 
 export const FOUNDER_CARD_WIDTH = 1080;
 export const FOUNDER_CARD_HEIGHT = 1350;
@@ -11,6 +11,11 @@ const COLORS = {
 	tagline: "#32693C",
 	footer: "#285431",
 } as const;
+
+const LOGO_SVG = logoRaw
+	.slice(logoRaw.indexOf("<svg"), logoRaw.lastIndexOf("</svg>") + 6)
+	.replace(/\s+class=\{[^}]*\}/, "")
+	.replaceAll("currentColor", COLORS.logo);
 
 function loadImage(src: string): Promise<HTMLImageElement> {
 	return new Promise((resolve, reject) => {
@@ -27,7 +32,7 @@ function loadAssets(): Promise<[HTMLImageElement, HTMLImageElement]> {
 	assetsPromise ??= Promise.all([
 		loadImage("/images/leaves-texture.svg"),
 		loadImage(
-			`data:image/svg+xml;charset=utf-8,${encodeURIComponent(logoSvg({ fill: COLORS.logo }))}`
+			`data:image/svg+xml;charset=utf-8,${encodeURIComponent(LOGO_SVG)}`
 		),
 	]);
 	return assetsPromise;
@@ -162,7 +167,7 @@ export async function renderFounderCard(position: number): Promise<Blob | null> 
 
 	drawGoldFrame(ctx, FOUNDER_CARD_WIDTH, FOUNDER_CARD_HEIGHT);
 
-	const logoWidth = 476;
+	const logoWidth = 410;
 	const logoHeight = logoWidth * (logo.height / logo.width);
 	ctx.drawImage(logo, cx - logoWidth / 2, 110, logoWidth, logoHeight);
 

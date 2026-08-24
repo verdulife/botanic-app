@@ -28,18 +28,9 @@ vite.config.ts.timestamp-*
 # Impeccable skill artifacts
 .impeccable/
 
-# Logo generator previews
+# Caché de búsqueda de imágenes (scripts/images.mjs)
 /scripts/.tmp/
 
-# Social media assets (Pexels) - regenerados con `bun run stock fetch`
+# Assets sociales (Pexels) — residuo del pipeline retirado en ago 2026
 /static/social/
 
-# Fuentes Onest copiadas por `bun run fonts` (legacy — regeneradas con las 3 familias del sistema)
-/static/fonts/
-
-# Tokens de marca autogeados desde DESIGN.md (regenerados con `bun run tokens`)
-/video/src/brand.generated.ts
-
-# Poster A3 — logs residuales del servidor `bun run poster`
-/poster.log
-/poster.err.log

@@ -197,7 +197,7 @@
 			inert={flipped}
 		>
 			<div bind:this={frontInner} class="relative mx-auto flex max-w-4xl flex-col items-center gap-4 text-center">
-				<Logo class="h-7" />
+				<Logo class="h-6" />
 				<h2 class="text-4xl leading-tight font-light text-balance text-still-950 md:text-6xl">
 					{title}
 				</h2>
