@@ -22,7 +22,7 @@ async function sendConfirmation(email: string) {
 			from: FROM,
 			replyTo: [REPLY_TO],
 			to: [email],
-			subject: "¡Gracias por apuntarte a la waitlist de Botanic!",
+			subject: "¡Gracias por apuntarte a la lista de espera de Botanic!",
 			html: confirmationHtml(),
 			text: confirmationText(),
 			headers: LIST_UNSUBSCRIBE_HEADERS,
@@ -44,7 +44,7 @@ async function sendAdminNotification(email: string, now: string, total: number) 
 				from: FROM,
 				replyTo: [REPLY_TO],
 				to: [recipient],
-				subject: "Nuevo en la waitlist",
+				subject: "Nueva alta en la lista de espera",
 				html: adminNotifyHtml(email, now, total),
 				text: adminNotifyText(email, now, total),
 				headers: LIST_UNSUBSCRIBE_HEADERS,
@@ -64,6 +64,19 @@ async function getWaitlistTotal(): Promise<number> {
 	} catch (err) {
 		console.warn("[waitlist] Error al obtener total:", err);
 		return 0;
+	}
+}
+
+async function getWaitlistPosition(email: string): Promise<number | null> {
+	try {
+		const { data, error } = await supabase.rpc("get_waitlist_position", {
+			target_email: email,
+		});
+		if (error) throw error;
+		return typeof data === "number" ? data : null;
+	} catch (err) {
+		console.warn("[waitlist] Error al obtener posición:", err);
+		return null;
 	}
 }
 
@@ -108,7 +121,8 @@ export const POST: RequestHandler = async ({ request }) => {
 	const { error } = await supabase.from("waitlist").insert({ email });
 	if (error) {
 		if (error.code === "23505") {
-			return json({ ok: true, alreadyRegistered: true });
+			const position = await getWaitlistPosition(email);
+			return json({ ok: true, alreadyRegistered: true, position });
 		}
 		console.error("[waitlist] insert error", error);
 		return json({ error: "Error al guardar" }, { status: 500 });
@@ -127,5 +141,6 @@ export const POST: RequestHandler = async ({ request }) => {
 		);
 	}
 
-	return json({ ok: true });
+	const position = await getWaitlistPosition(email);
+	return json({ ok: true, position });
 };

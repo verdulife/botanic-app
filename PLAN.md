@@ -11,7 +11,7 @@ Tagline canónico y brand voice: [PRODUCT.md](PRODUCT.md).
 ## Estado actual
 
 **Fase**: MVP PWA (Fase 0) · pre-desarrollo · landing, lista de espera y blog operativos.
-**Siguiente**: Sprint 1 — Setup + Auth (registro email + Google OAuth, schema `profiles` + `categories`).
+**Siguiente**: Pre-Sprint 1 — Lista de espera + Compartir; después Sprint 1 — Setup + Auth (registro email + Google OAuth, schema `profiles` + `categories`).
 
 Detalle de checkboxes por sprint debajo.
 
@@ -48,7 +48,16 @@ Detalle de checkboxes por sprint debajo.
 
 ## Sprints del MVP
 
-6 sprints (~8-10 semanas). Hito por sprint marcado en negrita al final.
+Pre-Sprint + 6 sprints (~8-10 semanas). Hito por sprint marcado en negrita al final.
+
+### Pre-Sprint 1 — Lista de espera + Compartir
+
+- [x] Respuesta en la web al enviar un email — flip de confirmación con copys y aviso de spam
+- [x] Email enviado — email transaccional al apuntarse (vía Resend, ya operativo)
+- [x] Sistema para compartir desde la web — tarjeta «Semilla fundadora» + Web Share API en la confirmación de la waitlist
+- [ ] Sistema para compartir desde los emails — enlaces de compartir incluidos en los emails
+
+**Hito**: Flujo de lista de espera completo end-to-end y compartición activa.
 
 ### Sprint 1 — Setup + Auth (Semana 1)
 
@@ -223,12 +232,11 @@ Lista priorizada. Estado: `[ ]` pendiente · `[~]` en curso · `[x]` cerrado.
 
 ### Producto / Landing
 
-- [x] **Rework del copy de la landing** — dejar más clara la idea de la app, funcionalidades core, claim indirecto wallapop, FOMO lista de espera, sin anglicismos (waitlist → "lista de espera", etc.).
-- [ ] **Lista de espera — expectativas claras** — al apuntarse, mensaje más explícito del estado de la lista.
+- [x] **Rework del copy y la estética de la landing** — dejar más clara la idea de la app, funcionalidades core, claim indirecto wallapop, FOMO lista de espera, sin anglicismos (waitlist → "lista de espera", etc.).
 - [ ] **Reforzar "lista de espera"** — comunicar mejor que es una lista de espera y lo que implica.
-- [ ] **Botón/enlace de compartir** — facilitar que los fans compartan.
 - [ ] **Buzón de ideas / canal de feedback** — además de la lista de espera.
-- [ ] **Badge "fundador"** — recompensa para los 100 primeros usuarios de la lista de espera (email de pre-lanzamiento).
+- [x] **Tarjeta "Semilla fundadora"** — recompensa visual para la lista de espera (hasta el puesto #999): PNG 1080×1350 generado en cliente, compartible (Web Share API) y descargable. Detalle en [DESIGN.md](DESIGN.md).
+- [ ] **Email de pre-lanzamiento para las Semillas fundadoras** — comunicación especial a los primeros registrados.
 
 ### Email / comunidad
 

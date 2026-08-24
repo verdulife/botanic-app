@@ -93,6 +93,7 @@ Análisis comparativo con la competencia en [docs/mercado.md](docs/mercado.md).
 - **Estilo por defecto**: estándar de categoría ejecutado impecablemente (elegido en el flujo new-work, seed 77b83067); sin quirk ni sobre-decoración.
 - **Tono**: cercano y de comunidad **Plant Lovers**.
 - **Terminología**: lenguaje cercano de comunidad y economía circular ("conocer a gente nueva", "vender, cambiar o regalar", "segunda mano") frente a anglicismos como "marketplace" (que suena técnico y frío); "vender, cambiar o regalar" como tríada de acciones.
+- **Semilla fundadora**: título de quienes se apuntan a la lista de espera antes del lanzamiento. Se materializa como una tarjeta compartible con su número de puesto (p. ej. #037) que se genera al confirmar el registro. No se comunica el tamaño total del grupo — solo el número propio.
 - **Restricción de copy**: el copy no declara como promesas permanentes "sin envíos", "sin comisiones", "quedar en mano", "solo cerca de ti" ni "de tu barrio". Son decisiones del MVP, no verdades de marca, para no condicionar la monetización ni los cambios de rumbo.
 - **Sustituciones inglés → español**: "waitlist" → "lista de espera"; "match" → "Deseos"; "marketplace profesional" → "El Market de Botanic"; "feedback" → "consejos"/"novedades"; "release/launch" → "lanzamiento"/"estreno"; "signup" → "apuntarse"/"registrarse".
 

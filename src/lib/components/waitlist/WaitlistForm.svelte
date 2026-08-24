@@ -4,14 +4,20 @@
 	import { Mail } from "lucide-svelte/icons";
 
 	type Status = "idle" | "loading" | "success" | "error";
+	let {
+		onsuccess,
+	}: {
+		onsuccess?: (payload: {
+			alreadyRegistered: boolean;
+			email: string;
+			position?: number;
+		}) => void;
+	} = $props();
 
 	let email = $state("");
 	let consent = $state(false);
 	let status = $state<Status>("idle");
 	let errorMessage = $state("");
-	let alreadyRegistered = $state(false);
-
-	const CONFETTI_COLORS = ["#74AA7B", "#45844F", "#32693C", "#285431", "#7C766A", "#4A4238"];
 
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
@@ -37,20 +43,16 @@
 			errorMessage = "Algo salió mal. Inténtalo de nuevo.";
 			return;
 		}
-		const data = (await res.json().catch(() => null)) as { alreadyRegistered?: boolean } | null;
+		const data = (await res.json().catch(() => null)) as {
+			alreadyRegistered?: boolean;
+			position?: number;
+		} | null;
+		const registeredEmail = trimmed;
+		const alreadyRegistered = Boolean(data?.alreadyRegistered);
+		const position = typeof data?.position === "number" ? data.position : undefined;
 		email = "";
-		alreadyRegistered = Boolean(data?.alreadyRegistered);
 		status = "success";
-		if (!alreadyRegistered && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-			const confetti = (await import("canvas-confetti")).default;
-			confetti({
-				particleCount: 280,
-				spread: 90,
-				startVelocity: 50,
-				origin: { y: 0.7 },
-				colors: CONFETTI_COLORS,
-			});
-		}
+		onsuccess?.({ alreadyRegistered, email: registeredEmail, position });
 	}
 </script>
 
@@ -79,13 +81,7 @@
 		</Button>
 	</div>
 	<p aria-live="polite" class="min-h-[1.25rem] pt-2 text-center text-sm">
-		{#if status === "success"}
-			<span class="text-foreground">
-				{alreadyRegistered
-					? "Ya estás en la lista de espera de Botanic 🌿"
-					: "¡Pase reservado! Te avisaremos antes que a nadie."}
-			</span>
-		{:else if status === "error"}
+		{#if status === "error"}
 			<span class="text-destructive">{errorMessage}</span>
 		{/if}
 	</p>

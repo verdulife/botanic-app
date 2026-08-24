@@ -25,7 +25,7 @@ async function send(to: string, subject: string, html: string, text: string) {
 for (const to of RECIPIENTS) {
 	await send(
 		to,
-		"¡Gracias por apuntarte a la waitlist de Botanic!",
+		"¡Gracias por apuntarte a la lista de espera de Botanic!",
 		confirmationHtml(),
 		confirmationText(),
 	);
