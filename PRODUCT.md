@@ -45,7 +45,7 @@ Módulos adyacentes al particular-a-particular:
 
 Única comunidad de España dedicada por completo al mundo vegetal, con lenguaje y categorías propias de plantas. Las plataformas generalistas (Wallapop, Vinted, Milanuncios) tratan las plantas como subcategoría; Botanic ofrece especialización vegetal + cercanía + comunidad de confianza.
 
-Análisis comparativo con la competencia en [docs/mercado.md](docs/mercado.md).
+Análisis comparativo con la competencia en [docs/product/mercado.md](docs/product/mercado.md).
 
 ## Operating Context
 
@@ -100,8 +100,7 @@ Análisis comparativo con la competencia en [docs/mercado.md](docs/mercado.md).
 ## Evidence on Hand
 
 - Documentación canónica: [PRODUCT.md](PRODUCT.md), [PLAN.md](PLAN.md), [DESIGN.md](DESIGN.md), [architecture.md](architecture.md)
-- Análisis de mercado con datos secundarios en [docs/mercado.md](docs/mercado.md)
-- Dossier de prensa en [press/](press/) — *pendiente de regeneración*
+- Análisis de mercado con datos secundarios en [docs/product/mercado.md](docs/product/mercado.md)
 - Sin usuarios, testimonios, métricas ni capturas reales todavía: no fabricar cifras
 
 ## Product Principles

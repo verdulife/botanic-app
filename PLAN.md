@@ -1,21 +1,10 @@
 # PLAN — Botanic
 
-> Documento único de planificación. Fusiona el antiguo `roadmap.md`, `ideas.md`, `plan-desarrollo.md` y `mvp-scope.md`. Una sola fuente de verdad para: fases, sprints, KPIs, categorías y backlog.
-
-## Visión
-
-Botanic es la app P2P de plantas entre particulares, con **Deseos** (wishlist supervitaminada), **Comunidad** y **El Market de Botanic** como módulos adyacentes. Lanzamiento como PWA; coste objetivo 0 €.
-
-Tagline canónico y brand voice: [PRODUCT.md](PRODUCT.md).
+Documento único de planificación: fases, sprints, alcance y backlog, todo en formato checklist. Marca `[x]` al completar una tarea; no muevas texto de aquí a otro doc salvo que deje de ser una tarea (ver [AGENTS.md](AGENTS.md) para reglas de actualización). Producto y brand voice en [PRODUCT.md](PRODUCT.md); no se repiten aquí.
 
 ## Estado actual
 
-**Fase**: MVP PWA (Fase 0) · pre-desarrollo · landing, lista de espera y blog operativos.
-**Siguiente**: Pre-Sprint 1 — Lista de espera + Compartir; después Sprint 1 — Setup + Auth (registro email + Google OAuth, schema `profiles` + `categories`).
-
-Detalle de checkboxes por sprint debajo.
-
----
+**Fase 0 — MVP PWA** · landing, lista de espera y blog operativos. Siguiente: Sprint 1 — Setup + Auth (schema `profiles` + `categories`, registro email + Google OAuth).
 
 ## Fases (2026-2028)
 
@@ -23,11 +12,9 @@ Detalle de checkboxes por sprint debajo.
 |---|---|---|---|
 | 0 — MVP PWA | Jul–Ago 2026 | Lanzar PWA funcional con coste 0 | En curso |
 | 1 — Validación | Q4 2026 | 1.000 usuarios activos, iteración con feedback | Pendiente |
-| 2 — App nativa | Q1 2027 | React Native, notificaciones, cámara | Pendiente |
+| 2 — App nativa | Q1 2027 | Flutter, notificaciones, cámara | Pendiente |
 | 3 — Monetización | Q2–Q3 2027 | Plan Pro, destacados, suscripciones profesionales | Pendiente |
 | 4 — Expansión | 2028 | Latam, identificación por foto (IA), foro, ronda seed | Pendiente |
-
-### Criterios para pasar de fase
 
 | Transición | Condición |
 |---|---|
@@ -36,18 +23,14 @@ Detalle de checkboxes por sprint debajo.
 | App nativa → Monetización | 500 transacciones/mes |
 | Monetización → Expansión | Ingresos > costes + tracción sostenida |
 
----
+## Carriles paralelos (no bloquean el MVP)
 
-## Carriles paralelos (no bloquean MVP)
-
-- **Blog** (SEO + lead gen): ✅ implementado. Ver [docs/blog.md](docs/blog.md).
-- **Redes sociales** (reels + posts IG): retirado en ago 2026 (PoC Remotion/Pexels desmantelado; ver historial en git).
-
----
+- **Blog** (SEO + lead gen): ✅ implementado. Ver [docs/web/blog.md](docs/web/blog.md).
+- **Campaña de difusión** (waitlist, redes, contenido): ver [docs/product/difusion.md](docs/product/difusion.md). La ejecución táctica de redes sociales vive en un proyecto aparte — aquí solo entra como mención de contexto general.
 
 ## Sprints del MVP
 
-Pre-Sprint + 6 sprints (~8-10 semanas). Hito por sprint marcado en negrita al final.
+Pre-Sprint + 6 sprints (~8-10 semanas).
 
 ### Pre-Sprint 1 — Lista de espera + Compartir
 
@@ -68,12 +51,12 @@ Pre-Sprint + 6 sprints (~8-10 semanas). Hito por sprint marcado en negrita al fi
 - [x] `src/lib/supabase.ts` con `createClient`
 - [x] Integrar en `WaitlistForm.svelte`: `insert` + tratar duplicado (`23505`) como éxito con feedback `alreadyRegistered`
 - [x] Verificar: `bun run check` y prueba manual
+- [x] Layout global (Navbar, Footer, MobileNav)
 - [ ] Prettier, ESLint
 - [ ] Schema: profiles, categories + seed
 - [ ] @vite-pwa/sveltekit + manifest básico
 - [ ] Auth (email + Google OAuth)
 - [ ] RLS en profiles
-- [x] Layout global (Navbar, Footer, MobileNav)
 - [ ] Login + Register
 - [ ] Manejo de sesión
 
@@ -128,37 +111,25 @@ Pre-Sprint + 6 sprints (~8-10 semanas). Hito por sprint marcado en negrita al fi
 ### Sprint 6 — PWA + SEO + Polish (Semana 7-8)
 
 - [x] Landing teaser + lista de espera (UI, sin backend)
+- [x] OG tags para compartir
+- [x] Sitemap.xml + robots.txt
 - [ ] Service worker + precaching
 - [ ] Manifest completo + iconos
 - [ ] Prompt de instalación
-- [x] OG tags para compartir
-- [x] Sitemap.xml + robots.txt
 - [ ] Páginas 404, error, empty, offline
 - [ ] Testing manual móvil/desktop
 
 **Hito**: MVP listo para lanzar.
 
----
-
-## Categorías
-
-- Semillas
-- Esquejes
-- Plantas
-- Tiestos
-- Accesorios
-
----
-
 ## Alcance MVP
 
-### IN MVP (core)
+### IN (core)
 
 - [x] Waitlist: captura de email pre-auth (conectada a Supabase)
 - [ ] Registro (email + Google OAuth)
 - [ ] Perfil básico (username, avatar, ubicación)
 - [ ] Publicar anuncio con fotos (1-5)
-- [ ] Categorías: semilla, esqueje, planta, tiesto, accesorio
+- [ ] Categorías (ver [PRODUCT.md](PRODUCT.md) → Capabilities and Constraints)
 - [ ] Nombre + descripción + precio + ubicación
 - [ ] Búsqueda por texto
 - [ ] Filtros: categoría, precio, ubicación
@@ -186,23 +157,10 @@ Pre-Sprint + 6 sprints (~8-10 semanas). Hito por sprint marcado en negrita al fi
 | Identificación por foto (IA) | Fase 4 |
 | Foro / comunidad social | Fase 4 |
 | Cuentas para profesionales | Fase 3 |
-| App nativa (React Native) | Fase 2 |
+| App nativa (Flutter) | Fase 2 |
 | Notificaciones push nativas | Fase 2 |
 
----
-
-## User stories
-
-```
-Como usuario quiero registrarme para acceder a la plataforma.
-Como usuario quiero publicar un anuncio con fotos para vender mi planta.
-Como usuario quiero buscar plantas cerca de mí para encontrar lo que necesito.
-Como usuario quiero chatear con el vendedor para acordar la entrega.
-Como usuario quiero valorar a otros para construir confianza.
-Como usuario quiero guardar favoritos para volver después.
-```
-
----
+User stories de referencia: [PRODUCT.md](PRODUCT.md) → User stories.
 
 ## KPIs por fase
 
@@ -211,7 +169,6 @@ Como usuario quiero guardar favoritos para volver después.
 | Métrica | Objetivo |
 |---|---|
 | Suscriptores lista de espera | 1.000 |
-| Seguidores IG | 1.000 |
 | Posts blog publicados | 16-20 (colchón) |
 
 ### Validación (Fase 1)
@@ -223,24 +180,22 @@ Como usuario quiero guardar favoritos para volver después.
 | Transacciones | 50 |
 | Retención semanal | >30% |
 
----
-
 ## Backlog de ideas
 
-Lista priorizada. Estado: `[ ]` pendiente · `[~]` en curso · `[x]` cerrado.
+Estado: `[ ]` pendiente · `[~]` en curso · `[x]` cerrado.
 
 ### Producto / Landing
 
-- [x] **Rework del copy y la estética de la landing** — dejar más clara la idea de la app, funcionalidades core, claim indirecto wallapop, FOMO lista de espera, sin anglicismos (waitlist → "lista de espera", etc.).
-- [ ] **Reforzar "lista de espera"** — comunicar mejor que es una lista de espera y lo que implica.
+- [x] **Rework del copy y la estética de la landing** — claim indirecto Wallapop, FOMO lista de espera, sin anglicismos.
+- [ ] **Reforzar "lista de espera"** — comunicar mejor qué implica.
 - [ ] **Buzón de ideas / canal de feedback** — además de la lista de espera.
-- [x] **Tarjeta "Semilla fundadora"** — recompensa visual para la lista de espera (hasta el puesto #999): PNG 1080×1350 generado en cliente, compartible (Web Share API) y descargable. Detalle en [DESIGN.md](DESIGN.md).
-- [ ] **Email de pre-lanzamiento para las Semillas fundadoras** — comunicación especial a los primeros registrados.
+- [x] **Tarjeta "Semilla fundadora"** — PNG 1080×1350 generado en cliente, compartible y descargable. Detalle en [docs/web/design-components.md](docs/web/design-components.md).
+- [ ] **Email de pre-lanzamiento para las Semillas fundadoras**.
 
 ### Email / comunidad
 
-- [ ] **Email semanal con blog** — programar envío con las 2 publicaciones de la semana.
-- [ ] **Emails de comunidad** — sensación de comunidad ("ya somos X", "te explicamos X funcionalidad").
+- [ ] **Email semanal con blog** — ver [docs/email/AGENTS.md](docs/email/AGENTS.md).
+- [ ] **Emails de comunidad** ("ya somos X", explicación de funcionalidades).
 
 ### Contenido
 
@@ -251,26 +206,20 @@ Lista priorizada. Estado: `[ ]` pendiente · `[~]` en curso · `[x]` cerrado.
 
 - [ ] **Rediseño de logotipo**.
 - [ ] **Rediseño de paleta de colores** (parcialmente cubierto por [DESIGN.md](DESIGN.md)).
-- [ ] **Crear design system** (en curso; [DESIGN.md](DESIGN.md) autoridad global).
+- [x] **Crear design system** — [DESIGN.md](DESIGN.md), autoridad global.
 
 ### Arquitectura / DX
 
-- [ ] **Convertir en monorepo** — definir bien cada parte y separar responsabilidades. Hacer **antes** que el siguiente porque define las carpetas de cada subagente.
-- [ ] **Optimizar documentos para agentes IA** — agent global + agents por sección (web, database/backend, app) para consumir menos tokens.
+- [ ] **Convertir en monorepo** — separar responsabilidades por carpeta antes de escalar subagentes.
+- [x] **Optimizar documentos para agentes IA** — AGENTS.md global + por módulo.
 
 ### Multiidioma
 
-- [ ] **Web multiidioma (catalán, gallego, euskera)** — Fase 2 (post-validación). Decisiones pendientes: routing, i18n framework, SEO/hreflang, traducción profesional vs IA.
+- [ ] **Web multiidioma (catalán, gallego, euskera)** — Fase 2. Pendiente: routing, i18n framework, SEO/hreflang, traducción profesional vs IA.
 
 ### Cerradas ✅
 
-- [x] **Emails en spam** — auditoría y fixes aplicados. Re-test Outlook post-lanzamiento. Detalle en [docs/email-deliverability.md](docs/email-deliverability.md).
+- [x] **Emails en spam** — auditoría y fixes aplicados. Detalle en [docs/email/deliverability.md](docs/email/deliverability.md).
 - [x] **Cron keep-alive de Supabase Free** — implementado.
 - [x] **Revisar `waitlist_count` para paridad con la realidad** — confirmado en vivo.
 - [x] **Documentos para impresión** — poster A3 implementado y retirado en ago 2026 (fuente en git).
-
----
-
-## Programación de difusión
-
-Detalle táctico (canales, cadencia, KPIs específicos por canal) en [docs/difusion.md](docs/difusion.md).
