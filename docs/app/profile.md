@@ -1,15 +1,25 @@
-# Module — Profile
+# Módulo — Perfil
 
-## Views
+## Vistas
 
-- mi perfil;
-- editar perfil;
-- perfil público de otro usuario.
+- `/app/perfil` — mi perfil (autenticado).
+- `/app/perfil/editar` — editar mi perfil.
+- `/app/perfil/:usuarioId` — perfil público de otro usuario.
 
-## P2P relation
+Inventario completo en [ROUTES.md](ROUTES.md).
 
-El perfil público debe poder abrirse desde una publicación o desde una conversación.
+## Relación con P2P
 
-## Scope
+El perfil público debe poder abrirse desde un anuncio (tocar el nombre del vendedor) o desde una conversación.
 
-El MVP necesita identidad básica del usuario y navegación hacia sus áreas propias. Reputación avanzada y valoraciones pueden quedar fuera del core inicial.
+## Alcance
+
+El MVP necesita identidad básica del usuario (avatar, nombre, ubicación aproximada, anuncios activos) y navegación hacia sus áreas propias. Reputación avanzada, valoraciones y badges pueden quedar fuera del core inicial.
+
+## Responsive
+
+Aplica [cross-cutting.md § Responsive](cross-cutting.md#responsive). Perfil propio y público deben funcionar en escritorio y móvil.
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

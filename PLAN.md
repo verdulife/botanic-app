@@ -4,7 +4,9 @@ Documento único de planificación: fases, sprints, alcance y backlog, todo en f
 
 ## Estado actual
 
-**Fase 0 — MVP PWA** · landing, lista de espera y blog operativos. Siguiente: Sprint 1 — Setup + Auth (schema `profiles` + `categories`, registro email + Google OAuth).
+**Fase 0 — MVP PWA** · landing, lista de espera y blog operativos. Siguiente: Sprint 1 — Setup + Auth (schema `profiles` + `categories`, registro email + Google OAuth). 
+
+**Alcance funcional ampliado (ago 2026)**: la web app marketplace incluye ahora además del P2P: **Deseos** (wishlist + alertas) y **Comunidad** (publicaciones e hilos). El wireframe funcional de toda la web app vive en [docs/app/](docs/app/README.md) y se construye con shadcn-svelte base antes de aplicar [DESIGN.md](DESIGN.md).
 
 ## Fases (2026-2028)
 
@@ -127,18 +129,23 @@ Pre-Sprint + 6 sprints (~8-10 semanas).
 
 - [x] Waitlist: captura de email pre-auth (conectada a Supabase)
 - [ ] Registro (email + Google OAuth)
+- [ ] Verificación de cuenta y bienvenida/onboarding
 - [ ] Perfil básico (username, avatar, ubicación)
 - [ ] Publicar anuncio con fotos (1-5)
+- [ ] Editar anuncio propio
 - [ ] Categorías (ver [PRODUCT.md](PRODUCT.md) → Capabilities and Constraints)
 - [ ] Nombre + descripción + precio + ubicación
 - [ ] Búsqueda por texto
 - [ ] Filtros: categoría, precio, ubicación
 - [ ] Mapa Leaflet + OpenStreetMap
 - [ ] Detalle de anuncio con galería
-- [ ] Favoritos
+- [ ] Favoritos (anuncios guardados)
 - [ ] Chat en tiempo real (Supabase Realtime)
+- [ ] Compartir anuncio en chat
 - [ ] Perfiles público/privado
 - [ ] Valoraciones (1-5 estrellas)
+- [ ] **Deseos**: lista, crear, detalle, coincidencias y alertas
+- [ ] **Comunidad**: feed, hilo, responder, mis publicaciones
 - [ ] PWA instalable
 
 ### Nice to have
@@ -155,10 +162,12 @@ Pre-Sprint + 6 sprints (~8-10 semanas).
 | Envíos con etiquetas | Fase 2 |
 | Live shopping / subastas | Fase 4 |
 | Identificación por foto (IA) | Fase 4 |
-| Foro / comunidad social | Fase 4 |
+| Marketplace profesional Botanic Market | Fase 3 |
 | Cuentas para profesionales | Fase 3 |
 | App nativa (Flutter) | Fase 2 |
 | Notificaciones push nativas | Fase 2 |
+
+> Comunidad Q&A y Deseos/alertas, antes listados como Fase 4, entran en MVP tras la ampliación de alcance (ago 2026). Su definición funcional vive en [docs/app/community.md](docs/app/community.md) y [docs/app/wishlist.md](docs/app/wishlist.md).
 
 User stories de referencia: [PRODUCT.md](PRODUCT.md) → User stories.
 

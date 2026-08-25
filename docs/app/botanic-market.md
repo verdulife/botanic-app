@@ -1,19 +1,29 @@
-# Module — Botanic Market
+# Módulo — Botanic Market
 
-## Status
+## Estado
 
-**MVP: false**
+**MVP: false**. Reservado para fase futura. Slug reservado: `/app/market`.
 
-## Purpose
+## Propósito
 
-Marketplace profesional de productos relacionados con plantas y huerto, con una experiencia similar a un marketplace de catálogo.
+Marketplace profesional de productos relacionados con plantas y huerto, con experiencia similar a un marketplace de catálogo.
 
-## Prepared views
+## Vistas preparadas
 
-- landing / portada de Botanic Market;
-- búsqueda de productos;
-- detalle de producto profesional.
+- `/app/market` — landing / portada.
+- `/app/market/buscar` — búsqueda de productos.
+- `/app/market/producto/:id` — detalle de producto profesional.
 
-## Current behavior
+Inventario completo en [ROUTES.md](ROUTES.md).
 
-La sección debe aparecer en el wireframe como parte del producto futuro, pero puede mostrar `Próximamente` y placeholders.
+## Comportamiento actual
+
+La sección debe aparecer en el wireframe como parte del producto futuro, con un placeholder "Próximamente" y enlaces no funcionales.
+
+## Relación con P2P
+
+Cuando Botanic Market esté activo, convivirá con el marketplace P2P como un destino independiente en la navegación principal. Los dos usan **anuncios** como unidad de catálogo (anuncios P2P de particulares / anuncios profesionales de tiendas).
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

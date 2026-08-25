@@ -1,37 +1,49 @@
-# Botanic — Functional Entities
+# Botanic — Entidades funcionales
 
-## User
+## Usuario
 
-Cuenta que participa en el marketplace, deseos, comunidad y chat.
+Cuenta que participa en el marketplace P2P, deseos, comunidad y chat. Identidad transversal para autenticación, perfil, ubicación y notificaciones.
 
-## P2P Listing
+## Anuncio P2P
 
-Publicación de un usuario para vender, intercambiar o poner a disposición una planta/producto relacionado.
+Publicación de un usuario para vender, intercambiar o regalar una planta o producto relacionado. Campos principales: título, descripción, imágenes, precio (opcional), categoría, ubicación.
 
-## Wish
+## Deseo
 
-Objeto de búsqueda creado por un usuario. Puede tener criterios y activar una alerta.
+Búsqueda activa creada por un usuario. Contiene criterios (ver más abajo) y puede activar una alerta. Cuando un anuncio nuevo encaja con un deseo existente, se genera una coincidencia.
 
-## Wish Match
+### Criterios del deseo
 
-Publicación P2P que encaja con un deseo existente.
+- **Palabras clave** (texto libre).
+- **Categoría** (semillas, esquejes, plantas, tiestos, accesorios).
+- **Rango de precio** (mínimo y máximo, opcional).
+- **Ubicación** (radio o zona).
+- **Estado** (activo / en pausa).
 
-## Community Post
+## Coincidencia
 
-Publicación de la comunidad. Puede ser una pregunta o una aportación.
+Relación entre un deseo y un anuncio P2P que encaja con sus criterios. Sirve para notificar al usuario y para alimentar el listado de coincidencias.
 
-## Community Thread
+## Publicación de comunidad
 
-Vista agrupada de una publicación y sus respuestas.
+Aportación de un usuario en la sección de comunidad. Puede ser una pregunta, un consejo o una experiencia. Tiene respuestas (ver hilo).
 
-## Chat Conversation
+## Hilo
 
-Conversación entre usuarios. En el MVP se enfoca en comunicación relacionada con P2P.
+Vista agrupada de una publicación de comunidad y todas sus respuestas. Formato estilo Reddit: publicación raíz + respuestas (anidadas o lineales en MVP).
 
-## Notification
+## Conversación
 
-Evento mostrado al usuario: coincidencia de deseo, actividad de chat, actividad de comunidad u otros eventos relevantes.
+Conversación entre dos usuarios. En el MVP se enfoca en comunicación relacionada con el P2P (interés sobre un anuncio). Puede incluir referencias compartidas a anuncios.
 
-## Professional Product
+## Notificación
+
+Evento mostrado al usuario: coincidencia de deseo, mensaje nuevo, actividad de comunidad, alerta del sistema. Debe poder abrir el recurso asociado cuando exista.
+
+## Producto profesional
 
 Producto del futuro Botanic Market. Se documenta para preparar la navegación, pero no pertenece al MVP.
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

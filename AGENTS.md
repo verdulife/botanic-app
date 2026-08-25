@@ -18,7 +18,8 @@ Cada AGENTS.md de módulo es autocontenido, enlaza de vuelta aquí y a PRODUCT/D
 
 | Módulo | Ámbito | AGENTS.md |
 |---|---|---|
-| web | Landing + blog (hecho) + web app marketplace (pendiente) — SvelteKit | [docs/web/AGENTS.md](docs/web/AGENTS.md) |
+| web | Landing + blog (hecho) + web app marketplace (wireframe en curso) — SvelteKit | [docs/web/AGENTS.md](docs/web/AGENTS.md) |
+| app | Wireframe funcional de la web app (rutas, entidades, navegación, UX cross-cutting) | [docs/app/AGENTS.md](docs/app/AGENTS.md) |
 | email | Transaccionales (waitlist, hecho) + campaña (pendiente) — Resend | [docs/email/AGENTS.md](docs/email/AGENTS.md) |
 | db | Supabase — waitlist (hecho) + schema app (pendiente) | [docs/db/AGENTS.md](docs/db/AGENTS.md) |
 | flutter | App nativa (fase 2, pendiente) | [docs/flutter/AGENTS.md](docs/flutter/AGENTS.md) |
@@ -73,3 +74,17 @@ Cada AGENTS.md de módulo es autocontenido, enlaza de vuelta aquí y a PRODUCT/D
 - **Re-autenticar** en cada clon / cambio de máquina (`/supabase auth login`). Nunca copies `*-auth.json` entre máquinas.
 - **¿Credencial filtrada?** → revocar el grant en el dashboard del proveedor. Revocación server-side invalida cualquier copia.
 - `opencode.json` contiene config del tool (URLs MCP, plugins), **no secretos**. Si ves secretos ahí, muévelos al `*-auth.json` correspondiente.
+
+## Seguridad — protección de `/app` en producción
+
+- Las rutas bajo `/app/*` están protegidas por **HTTP Basic Auth** en `src/hooks.server.ts`.
+- Password: variable de entorno privada **`APP_PASSWORD`** (en `.env.local` local, en el dashboard del host en producción). **Sin fallback en código** — si no está definida, `/app*` redirige a `/` (fail-closed).
+- Comportamiento:
+  - Fuera de `/app*` → sin cambios.
+  - Dentro de `/app*` sin `APP_PASSWORD` → redirect 307 a `/`.
+  - Dentro de `/app*` con `APP_PASSWORD` pero sin auth válida → `401 Unauthorized` con `WWW-Authenticate: Basic realm="Botanic"`.
+  - Dentro de `/app*` con auth correcta → resuelve la request.
+- SEO: cualquier respuesta de `/app*` lleva la cabecera `X-Robots-Tag: noindex, nofollow` (los motores no indexan).
+- **Rotación**: cambiar `APP_PASSWORD` y redeploy. Los navegadores cachean Basic Auth por sesión; al cambiar la password los usuarios vuelven a prompt.
+- **Alcance del password**: pre-lanzamiento. Para beta abierta o auth diferenciada por usuario, migrar a Supabase Auth (ver [docs/db/AGENTS.md](docs/db/AGENTS.md)) —届时 el `handle` pasa de "comparar header" a "validar sesión".
+- **Nunca commitear** `.env*` con valores reales (`.gitignore` debe incluirlos). El password real solo vive en `.env.local` (local) y en el dashboard del host (producción).

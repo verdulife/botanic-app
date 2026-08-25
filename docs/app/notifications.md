@@ -1,23 +1,29 @@
-# Module — Notifications
+# Módulo — Notificaciones
 
-## Purpose
+## Propósito
 
 Centralizar eventos relevantes para el usuario.
 
-## MVP sources
+## Fuentes MVP
 
-- coincidencia con un deseo;
-- nuevo mensaje de chat;
-- actividad relacionada con una interacción de comunidad.
+- Coincidencia con un deseo.
+- Nuevo mensaje de chat.
+- Actividad relacionada con una interacción de comunidad (respuesta a una publicación propia).
 
-## Behavior
+## Comportamiento
 
-La notificación debe poder abrir el recurso asociado cuando exista.
+La notificación debe poder abrir el recurso asociado cuando exista:
 
-Ejemplos:
+- Deseo → coincidencia → detalle del anuncio.
+- Chat → conversación directa.
+- Comunidad → hilo.
 
-- deseo -> coincidencia;
-- chat -> conversación;
-- comunidad -> hilo.
+El centro de notificaciones (`/app/notificaciones`) es una vista independiente y accesible desde cualquier área.
 
-El centro de notificaciones es una vista independiente y accesible desde cualquier área.
+## Responsive
+
+Aplica [cross-cutting.md § Responsive](cross-cutting.md#responsive). Lista de notificaciones debe funcionar en escritorio y móvil.
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

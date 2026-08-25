@@ -1,28 +1,29 @@
-# Botanic — Scope Roadmap
+# Botanic — Alcance y roadmap
 
 ## Core MVP
 
 | Área | MVP |
 |---|---|
-| Registro / login | true |
-| Feed P2P | true |
-| Búsqueda P2P | true |
-| Filtros P2P | true |
-| Búsqueda P2P por mapa | true |
-| Detalle de publicación | true |
-| Crear publicación | true |
-| Mis publicaciones | true |
-| Deseos | true |
+| Registro / login / recuperación | true |
+| Verificación de cuenta | true |
+| Bienvenida / onboarding | true |
+| Feed P2P (raíz `/app`, browse sin login) | true |
+| Búsqueda P2P (texto + filtros) | true |
+| Mapa P2P | true |
+| Detalle de anuncio | true |
+| Crear anuncio | true |
+| Editar anuncio | true |
+| Mis anuncios | true |
+| Anuncios guardados | true |
+| Deseos (lista, crear, detalle) | true |
 | Coincidencias de deseos | true |
 | Alertas de deseos | true |
-| Comunidad | true |
-| Crear pregunta | true |
-| Ver hilo | true |
-| Responder en hilo | true |
+| Comunidad (feed, hilo, responder) | true |
 | Chat P2P | true |
+| Compartir anuncio en chat | true |
 | Notificaciones | true |
-| Perfil | true |
-| Ajustes básicos | true |
+| Perfil propio y público | true |
+| Ajustes básicos + ubicación | true |
 | Botanic Market profesional | false |
 
 ## MVP / MPL
@@ -31,4 +32,14 @@ El producto puede incluir más pantallas que funcionalidades realmente conectada
 
 ## Futuro
 
-Se considera fuera del core inicial cualquier evolución profesional de Botanic Market, automatizaciones avanzadas y capacidades no necesarias para demostrar el valor principal.
+Quedan fuera del MVP:
+
+- Compras y ventas como flujos cerrados (Botanic no incluye pagos integrados en MVP — ver [PRODUCT.md](../../PRODUCT.md)).
+- Marketplace profesional Botanic Market.
+- Cuentas para profesionales, monetización.
+- Moderación avanzada y automatizaciones.
+- Notificaciones push nativas (fase Flutter).
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).
