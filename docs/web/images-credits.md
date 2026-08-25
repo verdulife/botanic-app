@@ -49,10 +49,13 @@ Registro automático de las imágenes descargadas de Wikimedia Commons para el b
 - `images/blog/propagar-en-agua-o-tierra-1.jpg` — Rose cuttings with plastic bottle greenhouse — Autor: Abrahami — Licencia: CC BY-SA 4.0 — [Fuente](https://commons.wikimedia.org/wiki/File:Rose_cuttings_with_plastic_bottle_greenhouse.JPG)
 - `images/blog/propagar-en-agua-o-tierra-2.jpg` — Basilikum (Ocimum basilicum) Stecklinge -- Josef Schlaghecken — Autor: Schlaghecken Josef — Licencia: CC BY-SA 4.0 — [Fuente](https://commons.wikimedia.org/wiki/File:Basilikum_(Ocimum_basilicum)_Stecklinge_--_Josef_Schlaghecken.jpg)
 - `images/blog/propagar-en-agua-o-tierra-3.jpg` — Pomelo stem cutting with growth — Autor: Dr. Chinchu C. — Licencia: CC BY-SA 3.0 — [Fuente](https://commons.wikimedia.org/wiki/File:Pomelo_stem_cutting_with_growth.jpg)
-- `images/blog/plantas-para-poca-luz-1.jpg` — Sansevieria in pot — Autor: Mokkie — Licencia: Public domain — [Fuente](https://commons.wikimedia.org/wiki/File:Sansevieria_in_pot.jpg)
 
 ## Música (reels)
 
 - static/social/coleccionistas-de-esquejes/music.mp3 — Pista brasileña libre — Pixabay Music — Licencia: Pixabay License (comercial OK, sin atribución) — URL pendiente de registrar (el usuario descargó el track manualmente desde pixabay.com/music).
 
 > **Convenio**: cualquier MP3 descargado a static/social/<slug>/ se lista aquí con fuente y licencia. Pixabay, Mixkit y FMA CC0 son las fuentes aceptadas (sin atribución obligatoria). Uppbeat queda excluido (free tier requiere atribución).
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

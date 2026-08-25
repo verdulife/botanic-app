@@ -134,7 +134,7 @@ Outlook es más estricto con SPF, confirma la hipótesis principal.
   - `verdukactus@gmail.com` → Resend ID `58fee599-c4b0-49d0-94e8-826fdb61cf8e` (200 OK)
   - `verdu@live.com` → Resend ID `791d5683-15b3-442e-9d55-40d4f429d4ca` (200 OK)
 
-### � Acción pendiente en Vercel DNS (CRÍTICO, no automatizable desde aquí)
+### ⚠️ Acción pendiente en Vercel DNS (CRÍTICO, no automatizable desde aquí)
 
 Outlook seguirá marcando spam hasta que se añada el registro SPF. El usuario debe añadir en Vercel → DNS Records para `botanicapp.es`:
 
@@ -189,3 +189,7 @@ Pasos cuando se re-testee:
 - [Resend — How to avoid Outlook's spam folder](https://resend.com/docs/knowledge-base/how-do-i-avoid-outlooks-spam-folder)
 - [Resend — Implementing DMARC](https://resend.com/docs/dashboard/domains/dmarc)
 - [Resend — Add an unsubscribe link to transactional emails](https://resend.com/docs/dashboard/emails/add-unsubscribe-to-transactional-emails)
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

@@ -42,3 +42,7 @@ Esta comunidad **ya existe, está activa y está dispersa**. Botanic les da un h
 | Idioma | Español (cat/gl/eu en fase 2) | ES | ES | EN | ES |
 
 Botanic es la única plataforma española que combina: enfoque exclusivo en plantas + P2P entre particulares + categorías vegetales propias + comunidad de Plant Lovers. Los módulos adyacentes (Deseos, Comunidad, El Market) cubren wishlist, social y B2B sin necesidad de cambiar de app.
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

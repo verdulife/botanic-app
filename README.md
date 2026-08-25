@@ -1,37 +1,19 @@
 # Botanic
 
-App donde las plantas conocen a gente. Marketplace P2P de plantas entre particulares, con Deseos, Comunidad y El Market como módulos adyacentes.
+App donde las plantas conocen a gente.
 
-**Fase actual**: MVP PWA (pre-desarrollo · landing, lista de espera y blog operativos).  
-**Siguiente**: Sprint 1 — Setup + Auth. Detalle en [PLAN.md](PLAN.md).
+Marketplace P2P de plantas entre particulares — [botanicapp.es](https://botanicapp.es).
 
-## Documentación
+> **Agentes IA**: este README es para visitantes humanos. Para contexto operativo, ver [AGENTS.md](AGENTS.md).
 
-### Producto y plan
+## Docs
 
-- [PRODUCT.md](PRODUCT.md) — descripción canónica del producto
-- [PLAN.md](PLAN.md) — fases, sprints, KPIs, categorías y backlog
-- [DESIGN.md](DESIGN.md) — design system canónico (autoridad global)
-- [architecture.md](architecture.md) — stack, DB schema, estructura
+- [PRODUCT.md](PRODUCT.md) · [PLAN.md](PLAN.md) · [DESIGN.md](DESIGN.md) · [architecture.md](architecture.md)
 
-### Producto (detalle)
+## Licencia
 
-- [docs/mercado.md](docs/mercado.md) — datos de mercado y competencia
-- [docs/monetizacion.md](docs/monetizacion.md) — modelo de negocio
-- [docs/difusion.md](docs/difusion.md) — plan de difusión pre y post lanzamiento
+No open-source. Ver [LICENSE](LICENSE).
 
-### Técnico (operativo)
+---
 
-- [docs/pwa.md](docs/pwa.md) — configuración PWA
-- [docs/blog.md](docs/blog.md) — guía del blog
-- [docs/email-deliverability.md](docs/email-deliverability.md) — auditoría de emails
-
-### Prensa
-
-- [press/README.md](press/README.md) — dossier de prensa (*pendiente de regeneración*)
-
-## Para empezar a desarrollar
-
-1. `bun install`
-2. `bun run dev`
-3. Seguir [PLAN.md](PLAN.md) — sprint actual.
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](AGENTS.md#cómo-mantener-los-docs).

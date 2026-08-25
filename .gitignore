@@ -15,11 +15,15 @@ Thumbs.db
 # Env
 .env
 .env.*
-!.env.example
 !.env.test
 
-# OpenCode MCP auth
+# OpenCode MCP auth (per-machine, never commit)
 .opencode/*-auth.json
+.opencode/supabase-auth.json  # explícito (defensa en profundidad)
+
+# Tailwind 4 docs snapshot (source-available, no commitear)
+.opencode/skills/tailwind-4-docs/references/docs/
+.opencode/skills/tailwind-4-docs/references/docs-index.tsx
 
 # Vite
 vite.config.js.timestamp-*

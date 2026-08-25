@@ -2,14 +2,14 @@
 
 Inversión en marketing: **0 €**. Crecimiento orgánico vía comunidad y contenido.
 
-Mensajes clave y brand voice en [PRODUCT.md](../PRODUCT.md). KPIs por fase en [PLAN.md](../PLAN.md).
+Mensajes clave y brand voice en [PRODUCT.md](../../PRODUCT.md). KPIs por fase en [PLAN.md](../../PLAN.md).
 
 ## Pre-lanzamiento
 
 ### Landing teaser + lista de espera
-Página simple apuntando a la lista de espera. **Objetivo: 1.000 suscriptores** (ver [PLAN.md](../PLAN.md)).
+Página simple apuntando a la lista de espera. **Objetivo: 1.000 suscriptores** (ver [PLAN.md](../../PLAN.md)).
 
-**Estado**: landing + lista de espera operativas (Supabase + emails vía Resend). Ver [PLAN.md](../PLAN.md) — sprint 6.
+**Estado**: landing + lista de espera operativas (Supabase + emails vía Resend). Ver [PLAN.md](../../PLAN.md) — sprint 6.
 
 ### Instagram + TikTok
 Cuenta `@botanic.app`. Contenido 3-4x/semana (reels) + 2-3x/semana (posts/carruseles). Construir audiencia **Plant Lovers** sin vender la app todavía.
@@ -47,3 +47,7 @@ Artículos en Substack/Medium:
 - **UGC**: Pedir a usuarios que compartan sus listings
 - **Micro-influencers**: Trueque visibilidad por promoción
 - **Bucle viral**: OG tags en cada listing (foto + precio + enlace)
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

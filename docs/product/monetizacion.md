@@ -1,6 +1,6 @@
 # Monetización
 
-Botanic arranca 100% gratuita para particulares. Los ingresos se activan cuando hay masa crítica y se centran en **El Market de Botanic** (módulo de profesionales y tiendas del sector — viveros, iluminación, tiestos, jardinería, abonos, etc.), pospuesto a fase 3. Brand voice y posicionamiento de producto en [PRODUCT.md](../PRODUCT.md).
+Botanic arranca 100% gratuita para particulares. Los ingresos se activan cuando hay masa crítica y se centran en **El Market de Botanic** (módulo de profesionales y tiendas del sector — viveros, iluminación, tiestos, jardinería, abonos, etc.), pospuesto a fase 3. Brand voice y posicionamiento de producto en [PRODUCT.md](../../PRODUCT.md).
 
 ## Planes
 
@@ -39,3 +39,7 @@ Fase 3 (12m+):        Comisiones + Profesionales en El Market
 | 500 | 5% | ~100 € | 5 | ~150 € | ~250 € |
 | 2.000 | 5% | ~400 € | 15 | ~450 € | ~850 € |
 | 10.000 | 8% | ~3.200 € | 50 | ~1.500 € | ~4.700 € |
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

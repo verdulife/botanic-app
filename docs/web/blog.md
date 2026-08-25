@@ -1,6 +1,6 @@
-# Blog Botanic — Guía y arquitectura
+# Blog — Guía y arquitectura
 
-Blog estático basado en Markdown, sin CMS. Carril paralelo de SEO + lead gen: **no bloquea el MVP**. Objetivo: ganar autoridad entre los Plant Lovers y alimentar la lista de espera desde cada artículo.
+Estático (Markdown, sin CMS). Carril paralelo SEO + lead gen: autoridad entre Plant Lovers + alimentar la lista de espera. **No bloquea el MVP**.
 
 ## Decisiones tomadas
 
@@ -8,7 +8,7 @@ Blog estático basado en Markdown, sin CMS. Carril paralelo de SEO + lead gen: *
 |---|---|---|
 | CMS | Sin CMS, Markdown estático | Coste 0, cero infra, ideal para contenido generado por IA |
 | Árbol de URLs | Plano: `/blog/[slug]` | Corto, renombrable. Categoría solo como metadato |
-| Programación | `date` del frontmatter como programador + cron | Publicación automática sin mover archivos |
+| Programación | `date` del frontmatter + cron | Publicación automática sin mover archivos |
 | Borradores | Carpeta `_drafts/` (fuera del glob) | No puede filtrarse a sitemap/feed/rutas; publicar = mover |
 | Cadencia | 2/semana en arranque, 1-2/semana en régimen | Dominio nuevo necesita indexación rápida; calidad revisada |
 | Batch inicial | 16-20 artículos antes de publicar | ~2-3 meses de colchón a 2/semana |
@@ -163,3 +163,7 @@ src/lib/components/AppFooter.svelte # compartido landing + blog
 - [x] WebP automático en artículos (renderer de `marked` + hero/cards) y créditos visibles (`docs/images-credits.md`)
 - [x] Post de prueba con imágenes reales de Commons (hero + 3 inline, créditos OK) → en `_drafts/`
 - [ ] Batch 16-20 artículos en `_drafts/`
+
+---
+
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).
