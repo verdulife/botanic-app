@@ -226,6 +226,30 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` cerrado.
 
 - [ ] **Web multiidioma (catalán, gallego, euskera)** — Fase 2. Pendiente: routing, i18n framework, SEO/hreflang, traducción profesional vs IA.
 
+### Pre-requisitos para feed adaptativo (banners + personalización)
+
+> **Estado**: pendiente. **Cleanup**: este bloque se elimina completo cuando ambas
+> tareas estén cerradas. No es un sprint — son preparativos para una feature futura
+> (módulos horizontales del feed en [docs/ux/FEED_UX.md](docs/ux/FEED_UX.md)).
+
+- [ ] **Schema de personalización del feed** — migración `add_feed_personalization_schema`
+  con 4 tablas nuevas (`user_events`, `user_category_interests`, `feed_banners`,
+  `feed_banner_views`, `user_banner_dismissals`) + RLS desde día 1.
+  `profiles` se queda como está (identidad). Tracking DB desde día 1; contenido
+  de banners hardcoded en `src/lib/feed/banners.ts` por ahora, migrable a DB
+  sin perder históricos. Detalle del SQL y RLS en `docs/db/schema-app.md`.
+- [x] **Imágenes reales de plantas** — descargar set provisional desde Pexels
+  (`PEXELS_API_KEY` ya en `.env.local`) o DuckDuckGo / Wikimedia Commons.
+  Reemplazar el mock del cliente (`src/lib/mock/listings.ts` con URLs de picsum)
+  por imágenes reales subidas a Supabase Storage bucket `listing-images` (al
+  menos un set provisional de ~20 fotos). Regenerar tipos TS.
+
+  > Descarga + optimización hechas (~3 MB webp, 71/72 ≤50KB, lado mayor
+  > ≤720 px). Pendiente para cuando se decida usar UGC: cablear
+  > `src/lib/mock/listings.ts` para que apunte a las rutas locales en
+  > `/images/seed/` y, opcionalmente, ejecutar `bun run seed:apply` para
+  > subirlas a Supabase Storage.
+
 ### Cerradas ✅
 
 - [x] **Emails en spam** — auditoría y fixes aplicados. Detalle en [docs/email/deliverability.md](docs/email/deliverability.md).

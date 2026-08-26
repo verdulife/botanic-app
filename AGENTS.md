@@ -75,16 +75,15 @@ Cada AGENTS.md de módulo es autocontenido, enlaza de vuelta aquí y a PRODUCT/D
 - **¿Credencial filtrada?** → revocar el grant en el dashboard del proveedor. Revocación server-side invalida cualquier copia.
 - `opencode.json` contiene config del tool (URLs MCP, plugins), **no secretos**. Si ves secretos ahí, muévelos al `*-auth.json` correspondiente.
 
-## Seguridad — protección de `/app` en producción
+## Seguridad — autenticación y autorización en `/app`
 
-- Las rutas bajo `/app/*` están protegidas por **HTTP Basic Auth** en `src/hooks.server.ts`.
-- Password: variable de entorno privada **`APP_PASSWORD`** (en `.env.local` local, en el dashboard del host en producción). **Sin fallback en código** — si no está definida, `/app*` redirige a `/` (fail-closed).
-- Comportamiento:
-  - Fuera de `/app*` → sin cambios.
-  - Dentro de `/app*` sin `APP_PASSWORD` → redirect 307 a `/`.
-  - Dentro de `/app*` con `APP_PASSWORD` pero sin auth válida → `401 Unauthorized` con `WWW-Authenticate: Basic realm="Botanic"`.
-  - Dentro de `/app*` con auth correcta → resuelve la request.
+- `/app/*` usa **Supabase Auth** (email+password + magic link recovery) integrado vía `@supabase/ssr` en `src/hooks.server.ts`. No hay Basic Auth gate.
+- Cada request crea `event.locals.supabase` (cliente SSR con cookies). `event.locals.safeGetSession()` valida sesión contra el servidor (`getUser()`) tras leer las cookies (`getSession()`); nunca se confía solo en cookies para auth checks.
 - SEO: cualquier respuesta de `/app*` lleva la cabecera `X-Robots-Tag: noindex, nofollow` (los motores no indexan).
-- **Rotación**: cambiar `APP_PASSWORD` y redeploy. Los navegadores cachean Basic Auth por sesión; al cambiar la password los usuarios vuelven a prompt.
-- **Alcance del password**: pre-lanzamiento. Para beta abierta o auth diferenciada por usuario, migrar a Supabase Auth (ver [docs/db/AGENTS.md](docs/db/AGENTS.md)) —届时 el `handle` pasa de "comparar header" a "validar sesión".
-- **Nunca commitear** `.env*` con valores reales (`.gitignore` debe incluirlos). El password real solo vive en `.env.local` (local) y en el dashboard del host (producción).
+- **Browse sin login**: `/app`, `/app/anuncios`, `/app/comunidad`, `/app/mapa`, `/app/anuncio/:id` son públicos (espec del wireframe). Las acciones de escritura (publicar, chatear, crear deseo, guardar) requieren sesión y deben redirigir a `/app/login?next=...` cuando el `safeGetSession()` devuelve `user: null`.
+- **RLS**: cada tabla (`profiles`, `categories`, `listings`, `listing_images`) lleva RLS desde la migración que la crea. Storage `listing-images` con policies que validan `auth.uid()::text = (storage.foldername(name))[1]`. Ver [docs/db/AGENTS.md](docs/db/AGENTS.md) y [docs/db/schema-app.md](docs/db/schema-app.md).
+- **Resend SMTP pre-prod** (checklist cuando abramos beta):
+  - [ ] Supabase `Authentication` → `Providers` → `Email` → **Enable Custom SMTP** con credenciales Resend (`smtp.resend.com:465`)
+  - [ ] Personalizar `Confirm signup`, `Magic link`, `Reset password` templates con branding Botanic
+  - [ ] Sender email: `noreply@botanicapp.es` (DNS DKIM ya configurado en Resend)
+- **Nunca commitear** `.env*` con valores reales (`.gitignore` debe incluirlos). Las claves Supabase viven en `.env.local` (local) y en el dashboard del host (producción).

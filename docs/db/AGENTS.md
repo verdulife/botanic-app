@@ -7,14 +7,18 @@ PostgreSQL + Auth + Storage + Realtime, tier Free. Proyecto `botanic` (eu-centra
 | Área | Estado |
 |---|---|
 | Tabla `waitlist` + RLS + RPC posición | ✅ Hecho |
-| Schema app (`profiles`, `listings`, `categories`, `favorites`, `conversations`, `messages`, `reviews`) | 🔶 Pendiente (Sprints 1-5 de PLAN.md) |
+| Schema Hito 1 (`profiles` + `categories` + `listings` + `listing_images`) + Storage `listing-images` + RLS | ✅ Hecho |
+| Auth: `@supabase/ssr` cookies + form actions (login, registro, magic link, recuperar, signOut) + `/auth/callback` | ✅ Hecho |
+| Seed mock generoso + wipe pre-prod (`scripts/seed-mock.ts`, `scripts/wipe-mock.ts`) | ✅ Hecho |
+| Schema futuro: `favorites`, `wishes`, `wish_alerts`, `wish_matches`, `community_posts`, `community_replies`, `conversations`, `messages`, `notifications` | 🔶 Pendiente (siguientes hitos) |
+| **Schema de personalización del feed**: `user_events`, `user_category_interests`, `feed_banners`, `feed_banner_views`, `user_banner_dismissals` (RLS desde día 1, aplicado **antes de implementar banners** del feed) | 🔶 Pendiente (próxima tarea) |
 
 ## Documentación del módulo
 
 | Doc | Contenido | Ubicación |
 |---|---|---|
 | schema-waitlist | Tabla `waitlist`, RLS, vista de conteo y RPC de posición (ya implementado) | [schema-waitlist.md](schema-waitlist.md) |
-| schema-app | Schema completo objetivo de la web app: tablas, RLS policies, Realtime (pendiente de crear) | [schema-app.md](schema-app.md) |
+| schema-app | Schema del marketplace + auth: tablas implementadas, RLS, storage policies, plus pendientes para siguientes hitos | [schema-app.md](schema-app.md) |
 
 ## Límites Supabase Free
 

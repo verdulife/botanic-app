@@ -37,7 +37,7 @@ Documentación funcional y de navegación de la webapp de Botanic. Fuente canón
 - **Wireframe primero, estilos después.** Esta fase usa shadcn-svelte base sin estilos custom. El design system global se aplica en una fase posterior sin modificar la estructura.
 - **Todas las rutas con prefijo `/app/`** y slugs en español (sin tildes, sin eñes, sin artículos). Excepciones universales: `login`, `chat`, `market` (Botanic Market).
 - **Browse sin login en `/app`.** La raíz del marketplace, anuncios, comunidad, mapa y detalle son públicos. Las acciones de escritura requieren autenticación y deben mostrar el estado "no autenticado" cuando aplique.
-- **Acceso en producción**: en `src/hooks.server.ts` hay un gate de **Basic Auth** que protege `/app/*` con la variable `APP_PASSWORD` (fallback hardcodeado). Ver [AGENTS.md § Seguridad — protección de `/app` en producción](../../AGENTS.md#seguridad--protección-de-app-en-producción) para rotación y comportamiento SEO.
+- **Acceso**: `/app/*` se sirve bajo Supabase Auth (email+password + magic link) sin gate adicional. Browse público para listings, comunidad y mapa; acciones de escritura (publicar, chatear, crear deseo, guardar, responder) requieren sesión y deben redirigir a `/app/login?next=...` cuando no hay usuario. Ver [AGENTS.md § Seguridad — autenticación y autorización en `/app`](../../AGENTS.md#seguridad--autenticación-y-autorización-en-app).
 - **UX sobre UI.** Adaptación impecable a escritorio y móvil (estilo Wallapop). Detalle en [cross-cutting.md § Responsive](cross-cutting.md#responsive).
 - **Scroll horizontal sin barra visible.** Flechas en escritorio, gesto natural en móvil. Detalle en [cross-cutting.md § Scroll horizontal sin barra visible](cross-cutting.md#scroll-horizontal-sin-barra-visible).
 
