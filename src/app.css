@@ -342,3 +342,81 @@ p {
 [data-slot="sheet-overlay"][data-state="closed"] {
 	animation: sheet-fade-out 150ms ease-in;
 }
+
+/* Scrollbar oculta (móvil, filter overlay, etc.) */
+.scrollbar-hide {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
+
+/* Mapa: cursor pointer en markers interactivos */
+.botanic-marker {
+	cursor: pointer;
+	transition: fill-opacity 150ms ease;
+}
+
+/* Marker estilo Airbnb: pill blanco con thumbnail + título + precio */
+.botanic-label-marker {
+	background: transparent;
+	border: none;
+}
+.botanic-label-marker .botanic-label {
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+	background: white;
+	color: var(--foreground);
+	font-family: var(--font-sans);
+	padding: 0.3125rem 0.875rem 0.3125rem 0.1875rem;
+	border-radius: 9999px;
+	border: 1px solid oklch(0.82 0.014 85);
+	box-shadow:
+		0 2px 4px rgb(0 0 0 / 0.16),
+		0 6px 14px rgb(0 0 0 / 0.10);
+	cursor: pointer;
+	transition: transform 120ms ease, box-shadow 120ms ease;
+	min-width: 80px;
+	max-width: 220px;
+}
+.botanic-label-marker .botanic-label .thumb {
+	width: 40px;
+	height: 40px;
+	border-radius: 9999px;
+	object-fit: cover;
+	background-color: var(--muted);
+	flex-shrink: 0;
+}
+.botanic-label-marker .botanic-label .text {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 1px;
+	min-width: 0;
+	padding-right: 0.25rem;
+}
+.botanic-label-marker .botanic-label .title {
+	font-size: 0.75rem;
+	font-weight: 500;
+	line-height: 1.15;
+	color: var(--foreground);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+}
+.botanic-label-marker .botanic-label .price {
+	font-size: 0.8125rem;
+	font-weight: 700;
+	line-height: 1.15;
+	color: var(--color-still-700);
+}
+.botanic-label-marker:hover .botanic-label {
+	transform: translateY(-1px);
+	box-shadow:
+		0 3px 6px rgb(0 0 0 / 0.20),
+		0 8px 18px rgb(0 0 0 / 0.12);
+}

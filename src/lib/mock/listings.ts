@@ -7,7 +7,7 @@ export type Listing = {
 	category: string;
 	location: string;
 	seller: string;
-	avatar: string;
+	images: string[];
 	type: ListingType;
 	coordinates: { lat: number; lng: number };
 	datePosted: Date;
@@ -30,15 +30,15 @@ const names = [
 
 const sellers = ["Maria", "Carlos", "Ana", "Luis", "Elena", "David", "Sofía", "Pablo"];
 
-const avatars = [
-	"bg-rose-400",
-	"bg-sky-400",
-	"bg-amber-400",
-	"bg-emerald-400",
-	"bg-violet-400",
-	"bg-teal-400",
-	"bg-pink-400",
-	"bg-lime-400"
+const images = [
+	'https://picsum.photos/seed/botanic-img-1/120/120',
+	'https://picsum.photos/seed/botanic-img-2/120/120',
+	'https://picsum.photos/seed/botanic-img-3/120/120',
+	'https://picsum.photos/seed/botanic-img-4/120/120',
+	'https://picsum.photos/seed/botanic-img-5/120/120',
+	'https://picsum.photos/seed/botanic-img-6/120/120',
+	'https://picsum.photos/seed/botanic-img-7/120/120',
+	'https://picsum.photos/seed/botanic-img-8/120/120'
 ];
 
 const categoryNames = ["Semillas", "Esquejes", "Plantas", "Tiestos", "Accesorios"];
@@ -81,6 +81,13 @@ export const mockListings: Listing[] = Array.from({ length: 12 }, (_, i) => {
 		lat: baseCoords.lat + (Math.random() - 0.5) * 0.05,
 		lng: baseCoords.lng + (Math.random() - 0.5) * 0.05
 	};
+	// 3, 4 o 5 imágenes por listing (rotación desde el pool de 8)
+	const imageCount = 3 + (i % 3);
+	const start = i % images.length;
+	const listingImages = Array.from(
+		{ length: imageCount },
+		(_, k) => images[(start + k) % images.length]
+	);
 	return {
 		id: `listing-${i + 1}`,
 		title: names[i % names.length],
@@ -88,7 +95,7 @@ export const mockListings: Listing[] = Array.from({ length: 12 }, (_, i) => {
 		category: categoryNames[i % categoryNames.length],
 		location,
 		seller: sellers[i % sellers.length],
-		avatar: avatars[i % avatars.length],
+		images: listingImages,
 		type: typeNames[i % typeNames.length],
 		coordinates,
 		datePosted: new Date(now - randomOffset())

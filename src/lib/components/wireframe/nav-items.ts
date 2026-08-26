@@ -1,4 +1,4 @@
-import { Heart, Plus, Sprout, Store, Users } from "lucide-svelte/icons";
+import { Heart, Sprout, Store, User, Users } from 'lucide-svelte/icons';
 
 export type NavItem = {
 	label: string;
@@ -9,61 +9,69 @@ export type NavItem = {
 	action?: boolean;
 };
 
+const MI_BOTANIC_PREFIXES = [
+	'/app/mi-botanic',
+	'/app/perfil',
+	'/app/notificaciones',
+	'/app/mis-anuncios',
+	'/app/guardados',
+	'/app/compras',
+	'/app/ventas',
+	'/app/chat',
+	'/app/deseos',
+	'/app/deseo',
+	'/app/mis-publicaciones',
+	'/app/ajustes'
+];
+
 export const primaryNavItems: NavItem[] = [
 	{
-		label: "Inicio",
-		href: "/app",
+		label: 'Inicio',
+		href: '/app',
 		icon: Sprout,
 		match: (p) =>
-			p === "/app" ||
-			p === "/app/" ||
-			p.startsWith("/app/anuncios") ||
-			p.startsWith("/app/anuncio") ||
-			p.startsWith("/app/publicar") ||
-			p.startsWith("/app/mis-anuncios") ||
-			p.startsWith("/app/guardados") ||
-			p.startsWith("/app/compras") ||
-			p.startsWith("/app/ventas") ||
-			p.startsWith("/app/buscar") ||
-			p.startsWith("/app/mapa")
+			p === '/app' ||
+			p === '/app/' ||
+			p.startsWith('/app/anuncios') ||
+			p.startsWith('/app/anuncio') ||
+			p.startsWith('/app/publicar') ||
+			p.startsWith('/app/buscar') ||
+			p.startsWith('/app/mapa') ||
+			p.startsWith('/app/match')
 	},
 	{
-		label: "Deseos",
-		href: "/app/deseos",
-		icon: Heart,
-		match: (p) => p.startsWith("/app/deseo")
-	},
-	{
-		label: "Anunciar",
-		href: "/app/publicar",
-		icon: Plus,
-		match: () => false,
-		action: true
-	},
-	{
-		label: "Comunidad",
-		href: "/app/comunidad",
+		label: 'Comunidad',
+		href: '/app/comunidad',
 		icon: Users,
 		match: (p) =>
-			p.startsWith("/app/comunidad") ||
-			p.startsWith("/app/hilo") ||
-			p.startsWith("/app/mis-publicaciones")
+			p.startsWith('/app/comunidad') ||
+			p.startsWith('/app/hilo') ||
+			p.startsWith('/app/mis-publicaciones')
 	},
 	{
-		label: "Market",
-		href: "/app/market",
+		label: 'Market',
+		href: '/app/market',
 		icon: Store,
-		match: (p) => p.startsWith("/app/market"),
+		match: (p) => p.startsWith('/app/market'),
 		soon: true
+	},
+	{
+		label: 'Mi Botanic',
+		href: '/app/mi-botanic',
+		icon: User,
+		match: (p) => MI_BOTANIC_PREFIXES.some((prefix) => p.startsWith(prefix))
 	}
 ];
 
 /**
  * Tabs que aparecen en el header (desktop).
  * Excluye "Inicio" porque el logo y la búsqueda ya llevan a `/app`.
- * Excluye items con `action: true` (Anunciar) porque en desktop vive como botón CTA propio.
- * El bottom nav móvil sí muestra los 5 items.
+ * En esta versión el header NO muestra tabs (UX § 3 — el header solo lleva Logo + Search + 🔔).
+ * Se conserva la constante por si en futuro se reintroducen tabs desktop.
  */
 export const headerNavItems: NavItem[] = primaryNavItems.filter(
-	(item) => item.label !== "Inicio" && !item.action
+	(item) => item.label !== 'Inicio' && !item.action
 );
+
+// Re-export para evitar import muerto
+export { Heart };

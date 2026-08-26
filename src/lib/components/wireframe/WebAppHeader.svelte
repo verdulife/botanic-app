@@ -1,16 +1,18 @@
 <script lang="ts">
-	import { page } from "$app/state";
+	import { page } from '$app/state';
 	import { Input } from "$lib/components/ui/input";
 	import { Button } from "$lib/components/ui/button";
-	import { Bell, Plus, Search, User, Sprout } from "lucide-svelte/icons";
-	import { headerNavItems } from "./nav-items";
+	import { Bell, Search, Sprout } from "lucide-svelte/icons";
 
 	let isAppArea = $derived(page.url.pathname.startsWith("/app"));
-	let current = $derived(page.url.pathname);
+	let user = $derived(page.data.user);
+
+	// TODO: Hito 8 — sustituir por query real a notifications
+	let unreadCount = $derived(0);
 </script>
 
 <header
-	class="border-border bg-card sticky top-0 z-20 flex h-14 items-center gap-2 border-b px-3 sm:gap-3 sm:px-4 md:h-16 md:gap-3 md:px-6"
+	class="border-border bg-card/80 sticky top-0 z-20 flex h-16 items-center gap-2 border-b p-3 backdrop-blur-md sm:gap-3 sm:p-4 md:h-24 md:gap-3 md:p-6"
 >
 	<a
 		href="/app"
@@ -18,9 +20,9 @@
 		aria-label="Ir al inicio de la app"
 	>
 		<div
-			class="bg-primary/10 text-primary flex size-8 items-center justify-center rounded-md md:size-9"
+			class="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-md md:size-11"
 		>
-			<Sprout class="size-5" />
+			<Sprout class="size-6" />
 		</div>
 		<span class="hidden text-base font-medium md:inline">Botanic</span>
 	</a>
@@ -32,58 +34,41 @@
 			class="relative flex-1"
 		>
 			<Search
-				class="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2"
+				class="text-muted-foreground absolute top-1/2 left-3.5 size-5 -translate-y-1/2"
 			/>
 			<Input
 				type="text"
 				inputmode="search"
 				name="q"
 				placeholder="Busca esquejes, semillas, plantas..."
-				class="h-9 pl-9 text-sm md:h-10 md:text-base"
+				class="h-10 pl-11 text-sm md:h-11 md:text-base"
 			/>
 		</form>
 	{/if}
 
-	{#if isAppArea}
-		<nav
-			aria-label="Navegación principal"
-			class="hidden shrink-0 items-center gap-0.5 md:flex"
-		>
-			{#each headerNavItems as item}
-				{@const active = item.match(current)}
-				<a
-					href={item.href}
-					class="relative inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors"
-					class:bg-muted={active}
-					class:text-foreground={active}
-					class:hover:bg-muted={!active}
-					class:text-muted-foreground={!active}
-					aria-current={active ? "page" : undefined}
-				>
-					<span>{item.label}</span>
-				</a>
-			{/each}
-		</nav>
-	{/if}
-
 	<nav class="ml-auto flex shrink-0 items-center gap-1 md:gap-2">
-		<Button href="/app/publicar" size="default" class="hidden md:inline-flex">
-			<Plus class="size-4" />
-			Anunciar
-		</Button>
-		<a
-			href="/app/notificaciones"
-			class="hover:bg-muted text-muted-foreground hover:text-foreground flex size-9 items-center justify-center rounded-md transition-colors"
-			aria-label="Notificaciones"
-		>
-			<Bell class="size-5" />
-		</a>
-		<a
-			href="/app/perfil"
-			class="hover:bg-muted text-muted-foreground hover:text-foreground flex size-9 items-center justify-center rounded-md transition-colors"
-			aria-label="Mi perfil"
-		>
-			<User class="size-5" />
-		</a>
+		{#if user}
+			<a
+				href="/app/notificaciones"
+				class="hover:bg-muted text-muted-foreground hover:text-foreground relative flex size-10 items-center justify-center rounded-md transition-colors md:size-11"
+				aria-label={unreadCount > 0
+					? `Notificaciones (${unreadCount} sin leer)`
+					: 'Notificaciones'}
+			>
+				<Bell class="size-5" />
+				{#if unreadCount > 0}
+					<span
+						class="bg-destructive text-destructive-foreground absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-medium leading-none"
+						aria-hidden="true"
+					>
+						{unreadCount > 9 ? '9+' : unreadCount}
+					</span>
+				{/if}
+			</a>
+		{:else}
+			<Button href="/app/login" size="sm" class="h-10 md:h-11 inline-flex">
+				Entrar
+			</Button>
+		{/if}
 	</nav>
 </header>

@@ -20,6 +20,39 @@ const validPublished: PublishedOption[] = ["hoy", "semana", "mes", "cualquiera"]
 
 const validTypes: ListingType[] = ["vender", "cambiar", "regalar"];
 
+// ──────────────────────────────────────────────────────────
+// Vista (modo de presentación del P2P)
+// ──────────────────────────────────────────────────────────
+
+export type Vista = "lista" | "mapa" | "match";
+
+export const VISTA_DEFAULT: Vista = "lista";
+
+const validVistas: Vista[] = ["lista", "mapa", "match"];
+
+function isVista(v: string | null): v is Vista {
+	return v !== null && validVistas.includes(v as Vista);
+}
+
+/**
+ * Resuelve la vista activa. La ruta es la fuente de verdad; el URL param `?vista=`
+ * solo se consulta como fallback para links antiguos.
+ */
+export function readVista(searchParams: URLSearchParams, pathname?: string): Vista {
+	if (pathname) {
+		const normalized = pathname.replace(/\/+$/, "") || "/";
+		if (normalized === "/app") return "lista";
+		if (normalized.startsWith("/app/mapa")) return "mapa";
+		if (normalized.startsWith("/app/match")) return "match";
+	}
+	const v = searchParams.get("vista");
+	return isVista(v) ? v : VISTA_DEFAULT;
+}
+
+// ──────────────────────────────────────────────────────────
+// Filters
+// ──────────────────────────────────────────────────────────
+
 function isSort(v: string | null): v is SortOption {
 	return v !== null && validSorts.includes(v as SortOption);
 }
@@ -97,7 +130,29 @@ export function buildFiltersURL(filters: Filters, base = "/app"): string {
 	return qs ? `${base}?${qs}` : base;
 }
 
-export function pushFiltersToURL(filters: Filters, base = "/app"): Promise<void> {
-	const url = buildFiltersURL(filters, base);
+/**
+ * Push filters preserving current path. Si no se pasa `base`, usa
+ * `window.location.pathname` para mantener la ruta del P2P (lista/mapa/match).
+ */
+export function pushFiltersToURL(filters: Filters, base?: string): Promise<void> {
+	const route =
+		base ?? (typeof window !== "undefined" ? window.location.pathname : "/app");
+	const url = buildFiltersURL(filters, route);
 	return goto(url, { replaceState: true, keepFocus: true, noScroll: true });
+}
+
+/**
+ * Navega a la ruta de la vista preservando los filtros activos.
+ * La vista ya queda implícita en la ruta (`/app`, `/app/mapa`, `/app/match`).
+ */
+export function pushVistaToURL(targetRoute: string): Promise<void> {
+	const current = new URLSearchParams(
+		typeof window !== "undefined" ? window.location.search : ""
+	);
+	const filters = readFiltersFromSearchParams(current);
+	return goto(buildFiltersURL(filters, targetRoute), {
+		replaceState: true,
+		keepFocus: true,
+		noScroll: true
+	});
 }
