@@ -5,9 +5,13 @@
 
 	let current = $derived(page.url.pathname);
 
-	let visible = $state(true);
+	let compact = $state(false);
 	let reducedMotion = $state(false);
 	let lastScrollY = 0;
+
+	let activeIdx = $derived(
+		primaryNavItems.findIndex((item) => item.match(current))
+	);
 
 	const SCROLL_TOP_THRESHOLD = 80;
 	const SCROLL_DELTA = 8;
@@ -26,16 +30,16 @@
 			const currentY = window.scrollY;
 
 			if (currentY < SCROLL_TOP_THRESHOLD || reducedMotion) {
-				visible = true;
+				compact = false;
 				lastScrollY = currentY;
 				return;
 			}
 
 			const delta = currentY - lastScrollY;
 			if (delta > SCROLL_DELTA) {
-				visible = false;
+				compact = true;
 			} else if (delta < -SCROLL_DELTA) {
-				visible = true;
+				compact = false;
 			}
 			lastScrollY = currentY;
 		};
@@ -50,22 +54,54 @@
 
 <nav
 	aria-label="Navegación principal"
-	class="border-border bg-card/80 fixed right-0 bottom-0 left-0 z-10 border-t backdrop-blur-md transition-transform duration-200 ease-out md:hidden"
+	class="pointer-events-none fixed inset-x-0 bottom-4 z-10 flex justify-center px-4 md:hidden"
 >
-	<ul class="mx-auto grid h-16 max-w-2xl grid-cols-4 items-stretch px-1">
+	<ul
+		class="border-border bg-card/80 pointer-events-auto relative grid max-w-md grid-cols-5 items-center gap-0.5 rounded-full border px-4 backdrop-blur-md transition-all duration-300 ease-out"
+		class:h-14={!compact}
+		class:h-12={compact}
+		class:py-1.5={!compact}
+		class:py-1={compact}
+		style:--col-w="calc((100% - 2rem) / 5)"
+		style:--active-idx={activeIdx}
+	>
+		{#if activeIdx >= 0}
+			<div
+				aria-hidden="true"
+				class="bg-still-500/15 pointer-events-none absolute inset-y-1 left-0 z-0 rounded-full transition-all duration-300 ease-out"
+				style="width: calc(var(--col-w) - 0.5rem); transform: translateX(calc(1rem + var(--col-w) * var(--active-idx)))"
+			></div>
+		{/if}
+
 		{#each primaryNavItems as item}
 			{@const Icon = item.icon}
 			{@const active = item.match(current)}
-			<li class="flex">
+			<li class="relative z-10 flex justify-center">
 				<a
 					href={item.href}
-					class="flex flex-1 flex-col items-center justify-center gap-1 px-1 text-xs font-medium transition-colors"
+					class="flex flex-col items-center justify-center rounded-full px-2.5 font-medium transition-all duration-300 ease-out"
+					class:gap-1={!compact}
+					class:gap-0={compact}
+					class:h-11={!compact}
+					class:h-9={compact}
+					class:text-xs={!compact}
 					class:text-foreground={active}
 					class:text-muted-foreground={!active}
 					aria-current={active ? 'page' : undefined}
+					aria-label={item.label}
 				>
-					<Icon class="size-6" />
-					<span class="text-[10px]">{item.label}</span>
+					<Icon class="size-5" />
+					<span
+						class="block overflow-hidden text-center text-[10px] leading-none whitespace-nowrap transition-all duration-300 ease-out"
+						class:h-2.5={!compact}
+						class:h-0={compact}
+						class:max-w-[80px]={!compact}
+						class:max-w-0={compact}
+						class:opacity-100={!compact}
+						class:opacity-0={compact}
+					>
+						{item.label}
+					</span>
 				</a>
 			</li>
 		{/each}

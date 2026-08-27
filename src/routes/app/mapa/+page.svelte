@@ -127,7 +127,7 @@
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
-<div class="flex h-dvh w-full flex-col pb-16 md:pb-0">
+<div class="flex h-dvh w-full flex-col pb-24 md:pb-0">
 	<div class="grid min-h-0 flex-1 lg:grid-cols-[18rem_1fr]">
 		<aside class="hidden overflow-y-auto lg:block lg:border-r">
 			<div class="p-4">
