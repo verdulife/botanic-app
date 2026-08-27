@@ -13,7 +13,7 @@
 	};
 
 	type Props = {
-		variant?: 'standalone' | 'inline';
+		variant?: 'standalone' | 'inline' | 'icon';
 	};
 
 	let { variant = 'standalone' }: Props = $props();
@@ -21,7 +21,7 @@
 	let options: VistaOption[] = [
 		{ value: 'lista', label: 'Lista', icon: List, route: '/app' },
 		{ value: 'mapa', label: 'Mapa', icon: MapIcon, route: '/app/mapa' },
-		{ value: 'match', label: 'Match', icon: Sparkles, route: '/app/match' }
+		{ value: 'scroll', label: 'Scroll', icon: Sparkles, route: '/app/scroll' }
 	];
 
 	let current = $derived(readVista(page.url.searchParams, page.url.pathname));
@@ -51,17 +51,23 @@
 	let triggerClass = $derived(
 		variant === 'inline'
 			? 'inline-flex cursor-pointer list-none items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-muted [&::-webkit-details-marker]:hidden'
-			: 'border-border bg-background hover:bg-muted inline-flex cursor-pointer list-none items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors [&::-webkit-details-marker]:hidden'
+			: variant === 'icon'
+				? 'hover:bg-muted text-muted-foreground hover:text-foreground inline-flex size-10 cursor-pointer list-none items-center justify-center gap-1 rounded-md transition-colors md:size-11 [&::-webkit-details-marker]:hidden'
+				: 'border-border bg-background hover:bg-muted inline-flex cursor-pointer list-none items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors [&::-webkit-details-marker]:hidden'
 	);
 </script>
 
 <details bind:this={detailsEl} class="group relative">
 	<summary class={triggerClass}>
-		<active.icon class="size-4" />
-		<span>{active.label}</span>
-		<ChevronDown
-			class="text-muted-foreground size-3.5 transition-transform group-open:rotate-180"
-		/>
+		{#if variant === 'icon'}
+			<active.icon class="size-5" />
+		{:else}
+			<active.icon class="size-4" />
+			<span>{active.label}</span>
+			<ChevronDown
+				class="text-muted-foreground size-3.5 transition-transform group-open:rotate-180"
+			/>
+		{/if}
 	</summary>
 
 	<div
