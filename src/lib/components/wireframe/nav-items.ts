@@ -1,4 +1,4 @@
-import { Heart, Sprout, Store, User, Users } from 'lucide-svelte/icons';
+import { Bell, Heart, Plus, Sprout, User } from 'lucide-svelte/icons';
 
 export type NavItem = {
 	label: string;
@@ -12,9 +12,7 @@ export type NavItem = {
 const MI_BOTANIC_PREFIXES = [
 	'/app/mi-botanic',
 	'/app/perfil',
-	'/app/notificaciones',
 	'/app/mis-anuncios',
-	'/app/guardados',
 	'/app/compras',
 	'/app/ventas',
 	'/app/chat',
@@ -34,26 +32,27 @@ export const primaryNavItems: NavItem[] = [
 			p === '/app/' ||
 			p.startsWith('/app/anuncios') ||
 			p.startsWith('/app/anuncio') ||
-			p.startsWith('/app/publicar') ||
 			p.startsWith('/app/buscar') ||
 			p.startsWith('/app/mapa') ||
-			p.startsWith('/app/match')
+			p.startsWith('/app/scroll')
 	},
 	{
-		label: 'Comunidad',
-		href: '/app/comunidad',
-		icon: Users,
-		match: (p) =>
-			p.startsWith('/app/comunidad') ||
-			p.startsWith('/app/hilo') ||
-			p.startsWith('/app/mis-publicaciones')
+		label: 'Favoritos',
+		href: '/app/guardados',
+		icon: Heart,
+		match: (p) => p.startsWith('/app/guardados')
 	},
 	{
-		label: 'Market',
-		href: '/app/market',
-		icon: Store,
-		match: (p) => p.startsWith('/app/market'),
-		soon: true
+		label: 'Anunciar',
+		href: '/app/publicar',
+		icon: Plus,
+		match: (p) => p.startsWith('/app/publicar')
+	},
+	{
+		label: 'Buzón',
+		href: '/app/notificaciones',
+		icon: Bell,
+		match: (p) => p.startsWith('/app/notificaciones')
 	},
 	{
 		label: 'Mi Botanic',
@@ -72,6 +71,3 @@ export const primaryNavItems: NavItem[] = [
 export const headerNavItems: NavItem[] = primaryNavItems.filter(
 	(item) => item.label !== 'Inicio' && !item.action
 );
-
-// Re-export para evitar import muerto
-export { Heart };

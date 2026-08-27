@@ -13,7 +13,7 @@
 		readFiltersFromSearchParams,
 		pushFiltersToURL
 	} from '$lib/mock/url-filters';
-	import MatchCard from '$lib/components/wireframe/MatchCard.svelte';
+	import ScrollCard from '$lib/components/wireframe/ScrollCard.svelte';
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Bookmark, ExternalLink, SkipForward, X } from 'lucide-svelte/icons';
@@ -73,7 +73,7 @@
 </script>
 
 <svelte:head>
-	<title>Match · Botanic</title>
+	<title>Scroll · Botanic</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
@@ -110,7 +110,7 @@
 	</div>
 {:else if listings.length === 0}
 	<div class="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
-		<p class="text-lg font-medium">No hay anuncios para Match</p>
+		<p class="text-lg font-medium">No hay anuncios para Scroll</p>
 		<p class="text-muted-foreground max-w-sm text-sm">
 			Ajusta los filtros o vuelve a la Lista para explorar todos los anuncios.
 		</p>
@@ -128,7 +128,7 @@
 		class="snap-y snap-mandatory h-full w-full overflow-y-scroll"
 	>
 		{#each listings as listing, i (listing.id)}
-			<MatchCard {listing} index={i} total={listings.length} />
+			<ScrollCard {listing} index={i} total={listings.length} />
 		{/each}
 	</div>
 
