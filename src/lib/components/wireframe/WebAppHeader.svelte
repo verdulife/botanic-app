@@ -2,9 +2,12 @@
 	import { page } from '$app/state';
 	import Logo from "$lib/components/Logo.svelte";
 	import VistaSelector from "$lib/components/wireframe/VistaSelector.svelte";
+	import { readVista } from "$lib/mock/url-filters";
 	import { Bell, Search } from "lucide-svelte/icons";
 
 	let isAppArea = $derived(page.url.pathname.startsWith("/app"));
+	let currentVista = $derived(readVista(page.url.searchParams, page.url.pathname));
+	let isMainView = $derived(['lista', 'mapa', 'scroll'].includes(currentVista));
 	let user = $derived(page.data.user);
 
 	// TODO: Hito 8 — sustituir por query real a notifications
@@ -12,7 +15,7 @@
 </script>
 
 <header
-	class="border-border bg-card sticky top-0 z-20 flex h-16 items-center gap-2 border-b p-3 sm:gap-3 sm:p-4 md:h-20 md:gap-3 md:p-6"
+	class="border-border bg-card sticky top-0 z-[500] flex h-16 items-center gap-2 border-b p-3 sm:gap-3 sm:p-4 md:h-20 md:gap-3 md:p-6"
 >
 	<a
 		href="/app"
@@ -24,15 +27,17 @@
 
 	{#if isAppArea}
 		<nav class="ml-auto flex shrink-0 items-center gap-1 md:gap-2" aria-label="Acciones">
-			<a
-				href="/app/buscar"
-				class="hover:bg-muted text-muted-foreground hover:text-foreground flex size-10 items-center justify-center rounded-md transition-colors md:size-11"
-				aria-label="Buscar"
-			>
-				<Search class="size-5" />
-			</a>
+			{#if isMainView}
+				<a
+					href="/app/buscar"
+					class="hover:bg-muted text-muted-foreground hover:text-foreground flex size-10 items-center justify-center rounded-md transition-colors md:size-11"
+					aria-label="Buscar"
+				>
+					<Search class="size-5" />
+				</a>
 
-			<VistaSelector variant="icon" />
+				<VistaSelector variant="icon" />
+			{/if}
 
 			{#if user}
 				<a

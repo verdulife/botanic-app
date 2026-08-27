@@ -83,7 +83,7 @@
 		class="bg-card fixed inset-0 z-40 flex flex-col"
 	>
 		<div class="flex items-center justify-between border-b p-3 sm:p-4">
-			<h2 class="font-display text-lg">Filtrar</h2>
+			<h2 class="text-lg">Filtrar</h2>
 			<button
 				type="button"
 				onclick={() => (filterOpen = false)}
@@ -122,52 +122,54 @@
 		</a>
 	</div>
 {:else}
-	<div
-		bind:this={scrollerEl}
-		onscroll={onScroll}
-		class="snap-y snap-mandatory h-full w-full overflow-y-scroll"
-	>
-		{#each listings as listing, i (listing.id)}
-			<ScrollCard {listing} index={i} total={listings.length} />
-		{/each}
-	</div>
-
-	<div
-		class="absolute right-0 bottom-0 left-0 z-30 flex items-center justify-center gap-6 p-6 pb-8 sm:gap-10 sm:pb-10"
-	>
-		<div class="flex flex-col items-center gap-1.5">
-			<button
-				type="button"
-				onclick={gotoNext}
-				class="bg-card/80 text-foreground hover:bg-card flex size-14 items-center justify-center rounded-full border border-foreground/10 backdrop-blur-md transition-colors"
-				aria-label="Saltar anuncio"
-			>
-				<SkipForward class="size-6" />
-			</button>
-			<span class="text-muted-foreground text-xs">Saltar</span>
+	<div class="relative flex-1 w-full">
+		<div
+			bind:this={scrollerEl}
+			onscroll={onScroll}
+			class="snap-y snap-mandatory absolute inset-0 overflow-y-scroll"
+		>
+			{#each listings as listing, i (listing.id)}
+				<ScrollCard {listing} index={i} total={listings.length} />
+			{/each}
 		</div>
 
-		<div class="flex flex-col items-center gap-1.5">
-			<button
-				type="button"
-				onclick={gotoNext}
-				class="bg-primary text-primary-foreground hover:bg-primary/90 flex size-14 items-center justify-center rounded-full transition-colors"
-				aria-label="Guardar anuncio y continuar"
-			>
-				<Bookmark class="size-6" />
-			</button>
-			<span class="text-muted-foreground text-xs">Guardar</span>
-		</div>
+		<div
+			class="absolute right-3 bottom-24 z-30 flex flex-col items-center gap-4"
+		>
+			<div class="flex flex-col items-center gap-0.5">
+				<button
+					type="button"
+					onclick={gotoNext}
+					class="text-white/60 hover:text-white flex size-10 items-center justify-center rounded-full transition-colors md:size-11"
+					aria-label="Saltar anuncio"
+				>
+					<SkipForward class="size-5" />
+				</button>
+				<span class="text-white/60 text-[10px]">Saltar</span>
+			</div>
 
-		<div class="flex flex-col items-center gap-1.5">
-			<a
-				href="/app/anuncio/{listings[currentIndex]?.id ?? ''}"
-				class="bg-card/80 text-foreground hover:bg-card flex size-14 items-center justify-center rounded-full border border-foreground/10 backdrop-blur-md transition-colors"
-				aria-label="Ver detalle del anuncio"
-			>
-				<ExternalLink class="size-6" />
-			</a>
-			<span class="text-muted-foreground text-xs">Detalle</span>
+			<div class="flex flex-col items-center gap-0.5">
+				<button
+					type="button"
+					onclick={gotoNext}
+					class="text-white/60 hover:text-white flex size-10 items-center justify-center rounded-full transition-colors md:size-11"
+					aria-label="Guardar anuncio y continuar"
+				>
+					<Bookmark class="size-5" />
+				</button>
+				<span class="text-white/60 text-[10px]">Guardar</span>
+			</div>
+
+			<div class="flex flex-col items-center gap-0.5">
+				<a
+					href="/app/anuncio/{listings[currentIndex]?.id ?? ''}"
+					class="text-white/60 hover:text-white flex size-10 items-center justify-center rounded-full transition-colors md:size-11"
+					aria-label="Ver detalle del anuncio"
+				>
+					<ExternalLink class="size-5" />
+				</a>
+				<span class="text-white/60 text-[10px]">Detalle</span>
+			</div>
 		</div>
 	</div>
 {/if}

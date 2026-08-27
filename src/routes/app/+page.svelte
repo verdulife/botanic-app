@@ -161,7 +161,7 @@
 		class="bg-card fixed inset-0 z-40 flex flex-col lg:hidden"
 	>
 		<div class="flex items-center justify-between border-b p-3 sm:p-4">
-			<h2 class="font-display text-lg">Filtrar</h2>
+			<h2 class="text-lg">Filtrar</h2>
 			<button
 				type="button"
 				onclick={() => (mobileFiltersOpen = false)}

@@ -300,7 +300,8 @@ body strong, p strong {
 ### Reglas nombradas
 
 - **The Three Family Rule.** El sistema usa 3 familias (`Fraunces`, `Inter`, `JetBrains Mono`). Cada una tiene un rol estricto. No introducir serif decorativos adicionales, ni una segunda grotesk, ni otra mono.
-- **The Display Headline Rule.** Los h1/h2 van en Fraunces 400 con opsz 144 + SOFT 30 forzados; los h3 usan tamaño óptico natural (utilidades `.display-opsz`/`.no-opsz` para excepciones puntuales). Nunca peso 800 ni `tracking-tight` en titulares.
+- **The Surface Scope Rule.** Fraunces (display) vive solo en superficies de marketing y comunicación —landing, banners, hero, emails, og-image, tarjeta fundadora del waitlist, futuros assets impresos. La UI de la app (`/app/**`) usa Inter (sans) para TODO: titulares, body, botones, cards. JetBrains Mono se reserva a eyebrows/tags/pills. Cualquier h2/h3 de un componente dentro de `/app` que aparezca con `font-display` es un bug.
+- **The Display Headline Rule.** En superficies de marketing (landing), los h1/h2 van en Fraunces 400 con opsz 144 + SOFT 30 forzados; los h3 usan tamaño óptico natural (utilidades `.display-opsz`/`.no-opsz` para excepciones puntuales). Nunca peso 800 ni `tracking-tight` en titulares. Esta regla NO aplica a la UI de la app.
 - **The Headline Strong Rule.** Los `<strong>` dentro de h1/h2/h3 son italic en Fraunces 400 + color `still-400`. No se añade otro peso ni decoración.
 - **The Body Strong Rule.** Los `<strong>` dentro de body/p suben de Inter 300 a Inter 600. Sin italic, sin color.
 - **The Eyebrow Rule.** Eyebrows, tags y pills-label usan JetBrains Mono 13px uppercase tracking 0.04em en `still-500`. No llevan `<strong>` adentro.

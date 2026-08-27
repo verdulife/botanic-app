@@ -212,6 +212,25 @@ h3 strong {
 	color: var(--color-still-400);
 }
 
+/* UI de la app: Fraunces no aplica. Solo Inter (sans). Sobre-escribe
+   font-family y los tratamientos específicos de display (variation, italic,
+   still-400) para mantener la UI editorialmente neutra. Ver The Surface
+   Scope Rule en DESIGN.md. */
+.app-ui h1,
+.app-ui h2,
+.app-ui h3 {
+	font-family: var(--font-sans);
+	font-variation-settings: normal;
+}
+
+.app-ui h1 strong,
+.app-ui h2 strong,
+.app-ui h3 strong {
+	font-style: normal;
+	font-variation-settings: normal;
+	color: inherit;
+}
+
 p {
 	text-wrap: pretty;
 }

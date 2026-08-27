@@ -5,10 +5,10 @@
 	let { children } = $props();
 </script>
 
-<div class="bg-background text-foreground flex min-h-dvh flex-col">
+<div class="app-ui bg-background text-foreground flex min-h-dvh flex-col">
 	<WebAppHeader />
 
-	<main class="flex-1 pb-24 md:pb-0">
+	<main class="flex flex-1 flex-col bg-black text-white">
 		{@render children?.()}
 	</main>
 

@@ -2,16 +2,57 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/state';
 	import { primaryNavItems } from './nav-items';
+	import { pushVistaToURL } from '$lib/mock/url-filters';
 
 	let current = $derived(page.url.pathname);
 
-	let compact = $state(false);
+	function handleInicioClick(e: MouseEvent) {
+		const path = page.url.pathname;
+		const isLista =
+			path === '/app' ||
+			path === '/app/' ||
+			path.startsWith('/app/anuncios') ||
+			path.startsWith('/app/anuncio') ||
+			path.startsWith('/app/buscar');
+		const isMapa = path.startsWith('/app/mapa');
+		const isScroll = path.startsWith('/app/scroll');
+
+		if (!isLista && !isMapa && !isScroll) return;
+
+		e.preventDefault();
+		const next = isLista ? '/app/mapa' : isMapa ? '/app/scroll' : '/app';
+		pushVistaToURL(next);
+	}
+
+	let scrollCompact = $state(false);
 	let reducedMotion = $state(false);
 	let lastScrollY = 0;
 
-	let activeIdx = $derived(
-		primaryNavItems.findIndex((item) => item.match(current))
+	let isCompactRoute = $derived(
+		current.startsWith('/app/mapa') || current.startsWith('/app/scroll')
 	);
+	let compact = $derived(isCompactRoute || scrollCompact);
+
+	let activeIdx = $derived(primaryNavItems.findIndex((i) => i.match(current)));
+
+	let ulEl: HTMLUListElement | undefined = $state();
+	let cellWidth = $state(0);
+	let cellStart = $state(0);
+
+	$effect(() => {
+		if (!browser || !ulEl) return;
+		const measure = () => {
+			const firstLi = ulEl!.querySelector('li');
+			if (firstLi) {
+				cellWidth = firstLi.offsetWidth;
+				cellStart = firstLi.offsetLeft;
+			}
+		};
+		measure();
+		const ro = new ResizeObserver(measure);
+		ro.observe(ulEl);
+		return () => ro.disconnect();
+	});
 
 	const SCROLL_TOP_THRESHOLD = 80;
 	const SCROLL_DELTA = 8;
@@ -29,17 +70,17 @@
 		const onScroll = () => {
 			const currentY = window.scrollY;
 
-			if (currentY < SCROLL_TOP_THRESHOLD || reducedMotion) {
-				compact = false;
+			if (currentY < SCROLL_TOP_THRESHOLD || reducedMotion || isCompactRoute) {
+				scrollCompact = false;
 				lastScrollY = currentY;
 				return;
 			}
 
 			const delta = currentY - lastScrollY;
 			if (delta > SCROLL_DELTA) {
-				compact = true;
+				scrollCompact = true;
 			} else if (delta < -SCROLL_DELTA) {
-				compact = false;
+				scrollCompact = false;
 			}
 			lastScrollY = currentY;
 		};
@@ -54,22 +95,19 @@
 
 <nav
 	aria-label="Navegación principal"
-	class="pointer-events-none fixed inset-x-0 bottom-4 z-10 flex justify-center px-4 md:hidden"
+	class="pointer-events-none fixed inset-x-0 bottom-5 z-[9999] flex justify-center px-5 md:hidden"
 >
 	<ul
-		class="border-border bg-card/80 pointer-events-auto relative grid max-w-md grid-cols-5 items-center gap-0.5 rounded-full border px-4 backdrop-blur-md transition-all duration-300 ease-out"
-		class:h-14={!compact}
-		class:h-12={compact}
-		class:py-1.5={!compact}
-		class:py-1={compact}
-		style:--col-w="calc((100% - 2rem) / 5)"
-		style:--active-idx={activeIdx}
+		bind:this={ulEl}
+		class="border-border bg-card/80 pointer-events-auto relative mx-auto grid grid-cols-5 items-center gap-0 rounded-full border p-1.5 backdrop-blur-md transition-all duration-300 ease-out"
+		class:w-full={!compact}
+		class:w-[85%]={compact}
 	>
-		{#if activeIdx >= 0}
+		{#if activeIdx >= 0 && cellWidth > 0}
 			<div
 				aria-hidden="true"
-				class="bg-still-500/15 pointer-events-none absolute inset-y-1 left-0 z-0 rounded-full transition-all duration-300 ease-out"
-				style="width: calc(var(--col-w) - 0.5rem); transform: translateX(calc(1rem + var(--col-w) * var(--active-idx)))"
+				class="bg-still-500/15 pointer-events-none absolute inset-y-1.5 left-0 z-0 rounded-full transition-transform duration-300 ease-out"
+				style="width: {cellWidth}px; transform: translateX({cellStart + cellWidth * activeIdx}px);"
 			></div>
 		{/if}
 
@@ -79,14 +117,10 @@
 			<li class="relative z-10 flex justify-center">
 				<a
 					href={item.href}
-					class="flex flex-col items-center justify-center rounded-full px-2.5 font-medium transition-all duration-300 ease-out"
+					onclick={item.label === 'Inicio' ? handleInicioClick : undefined}
+					class="flex flex-col items-center justify-center rounded-full px-3 py-2.5 font-medium transition-all duration-300 ease-out text-muted-foreground"
 					class:gap-1={!compact}
 					class:gap-0={compact}
-					class:h-11={!compact}
-					class:h-9={compact}
-					class:text-xs={!compact}
-					class:text-foreground={active}
-					class:text-muted-foreground={!active}
 					aria-current={active ? 'page' : undefined}
 					aria-label={item.label}
 				>

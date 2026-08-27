@@ -9,7 +9,7 @@
 	import { readFiltersFromSearchParams, pushFiltersToURL } from '$lib/mock/url-filters';
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { X } from 'lucide-svelte/icons';
+	import { LocateFixed, X } from 'lucide-svelte/icons';
 	import { MAP_TILE_URL, MAP_ATTRIBUTION } from '$lib/map/tiles';
 
 	function escapeHtml(s: string): string {
@@ -97,7 +97,6 @@
 		}).setView([userCoords.lat, userCoords.lng], 12);
 
 		L.tileLayer(MAP_TILE_URL, { attribution: MAP_ATTRIBUTION }).addTo(map);
-		L.control.zoom({ position: 'bottomright' }).addTo(map);
 
 		// El $effect de abajo dispara renderMarkers() cuando `map` y `LRef` estén listos.
 	});
@@ -127,7 +126,7 @@
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
-<div class="flex h-dvh w-full flex-col pb-24 md:pb-0">
+<div class="flex flex-1 flex-col">
 	<div class="grid min-h-0 flex-1 lg:grid-cols-[18rem_1fr]">
 		<aside class="hidden overflow-y-auto lg:block lg:border-r">
 			<div class="p-4">
@@ -142,19 +141,9 @@
 				type="button"
 				onclick={recenterOnUser}
 				aria-label="Mostrar mi ubicación"
-				class="bg-card text-foreground hover:bg-background/90 absolute top-3 right-3 z-[400] flex size-9 items-center justify-center rounded-md border border-border shadow-sm transition-colors"
+				class="bg-card text-muted-foreground hover:text-foreground hover:bg-background/90 absolute top-3 right-3 z-[400] flex size-9 items-center justify-center rounded-md border border-border shadow-sm transition-colors"
 			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="1.75"
-					class="size-4"
-				>
-					<circle cx="12" cy="12" r="3" />
-					<path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
-				</svg>
+				<LocateFixed class="size-5" />
 			</button>
 		</div>
 	</div>
@@ -166,7 +155,7 @@
 		class="bg-card fixed inset-0 z-[1100] flex flex-col lg:hidden"
 	>
 		<div class="flex items-center justify-between border-b p-3 sm:p-4">
-			<h2 class="font-display text-lg">Filtrar</h2>
+			<h2 class="text-lg">Filtrar</h2>
 			<button
 				type="button"
 				onclick={() => (mobileFiltersOpen = false)}
