@@ -122,7 +122,7 @@
 		</a>
 	</div>
 {:else}
-	<div class="relative flex-1 w-full">
+	<div class="bg-black relative flex-1 w-full">
 		<div
 			bind:this={scrollerEl}
 			onscroll={onScroll}

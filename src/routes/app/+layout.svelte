@@ -8,7 +8,7 @@
 <div class="app-ui bg-background text-foreground flex min-h-dvh flex-col">
 	<WebAppHeader />
 
-	<main class="flex flex-1 flex-col bg-black text-white">
+	<main class="flex flex-1 flex-col">
 		{@render children?.()}
 	</main>
 
