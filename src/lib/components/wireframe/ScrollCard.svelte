@@ -20,8 +20,8 @@
 	>
 	<img
 		src={listing.images[0]}
-		alt={`${listing.title} — imagen`}
-		class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+		alt={`${listing.title} - imagen`}
+		class="pointer-events-none absolute inset-0 h-full w-full max-w-full object-cover"
 		style="mask-image: linear-gradient(to bottom, black 0%, black 25%, rgba(0,0,0,0.1) 100%)"
 		loading="lazy"
 		onerror={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}

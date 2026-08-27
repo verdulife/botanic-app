@@ -109,7 +109,12 @@
 						>
 							<div class="flex flex-col">
 								<div class="border-border bg-muted relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border transition-opacity group-hover:opacity-90">
-									<span class="text-muted-foreground text-xs">Imagen</span>
+									<img
+										src={listing.images[0]}
+										alt={listing.title}
+										loading="lazy"
+										class="absolute inset-0 h-full w-full object-cover"
+									/>
 									{#if listing.type === 'regalar'}
 										<Badge
 											variant="default"
