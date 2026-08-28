@@ -1,6 +1,7 @@
 <script lang="ts">
 	import WebAppHeader from "$lib/components/wireframe/WebAppHeader.svelte";
 	import WebAppPrimaryNav from "$lib/components/wireframe/WebAppPrimaryNav.svelte";
+	import SearchOverlay from "$lib/components/wireframe/SearchOverlay.svelte";
 
 	let { children } = $props();
 </script>
@@ -13,4 +14,5 @@
 	</main>
 
 	<WebAppPrimaryNav />
+	<SearchOverlay />
 </div>

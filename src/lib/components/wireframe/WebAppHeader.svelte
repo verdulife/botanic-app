@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import Logo from "$lib/components/Logo.svelte";
-	import VistaSelector from "$lib/components/wireframe/VistaSelector.svelte";
 	import { readVista } from "$lib/mock/url-filters";
-	import { Bell, Search } from "lucide-svelte/icons";
+	import { searchOverlay } from "../../stores/search-overlay.svelte.ts";
+	import { Bell, Search, X } from "lucide-svelte/icons";
 
 	let isAppArea = $derived(page.url.pathname.startsWith("/app"));
 	let currentVista = $derived(readVista(page.url.searchParams, page.url.pathname));
@@ -28,15 +28,18 @@
 	{#if isAppArea}
 		<nav class="ml-auto flex shrink-0 items-center gap-1 md:gap-2" aria-label="Acciones">
 			{#if isMainView}
-				<a
-					href="/app/buscar"
+				<button
+					type="button"
+					onclick={searchOverlay.toggleSearch}
 					class="hover:bg-muted text-muted-foreground hover:text-foreground flex size-10 items-center justify-center rounded-md transition-colors md:size-11"
-					aria-label="Buscar"
+					aria-label={searchOverlay.open ? 'Cerrar búsqueda' : 'Buscar'}
 				>
-					<Search class="size-5" />
-				</a>
-
-				<VistaSelector variant="icon" />
+					{#if searchOverlay.open}
+						<X class="size-5" />
+					{:else}
+						<Search class="size-5" />
+					{/if}
+				</button>
 			{/if}
 
 			{#if user}

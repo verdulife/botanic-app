@@ -10,6 +10,7 @@ import {
 } from "./listings";
 
 export type Filters = {
+	termino: string;
 	categoria: string;
 	ubicacion: string;
 	publicado: PublishedOption;
@@ -21,6 +22,7 @@ export type Filters = {
 };
 
 export const defaultFilters: Filters = {
+	termino: "",
 	categoria: "Todas las categorías",
 	ubicacion: "",
 	publicado: "cualquiera",
@@ -85,10 +87,21 @@ function matchesType(listing: Listing, tipos: ListingType[]): boolean {
 	return tipos.includes(listing.type);
 }
 
+function matchesTerm(listing: Listing, termino: string): boolean {
+	const q = termino.trim().toLowerCase();
+	if (!q) return true;
+	return (
+		listing.title.toLowerCase().includes(q) ||
+		listing.location.toLowerCase().includes(q) ||
+		listing.category.toLowerCase().includes(q)
+	);
+}
+
 export function filterListings(listings: Listing[], filters: Filters): Listing[] {
 	const now = Date.now();
 	return listings.filter(
 		(l) =>
+			matchesTerm(l, filters.termino) &&
 			matchesCategory(l, filters.categoria) &&
 			matchesLocation(l, filters.ubicacion) &&
 			matchesPublished(l, filters.publicado, now) &&

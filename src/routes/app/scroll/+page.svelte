@@ -16,6 +16,7 @@
 	import ScrollCard from '$lib/components/wireframe/ScrollCard.svelte';
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import { searchOverlay } from '../../../lib/stores/search-overlay.svelte.ts';
 	import { Bookmark, ExternalLink, SkipForward, X } from 'lucide-svelte/icons';
 
 	let filters = $derived<Filters>(
@@ -25,6 +26,10 @@
 
 	let scrollerEl: HTMLDivElement | undefined = $state();
 	let currentIndex = $state(0);
+
+	$effect(() => {
+		searchOverlay.registerScroller(scrollerEl ?? null);
+	});
 
 	let filterOpen = $state(false);
 	let draft = $state<Filters>(defaultFilters);

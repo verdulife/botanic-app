@@ -75,6 +75,7 @@ export function readFiltersFromSearchParams(
 	searchParams: URLSearchParams
 ): Filters {
 	const categoria = searchParams.get("categoria") ?? defaultFilters.categoria;
+	const termino = searchParams.get("termino") ?? "";
 	const ubicacion = searchParams.get("ubicacion") ?? "";
 	const publicadoRaw = searchParams.get("publicado");
 	const publicado: PublishedOption = isPublished(publicadoRaw)
@@ -95,6 +96,7 @@ export function readFiltersFromSearchParams(
 	const sort: SortOption = isSort(sortRaw) ? sortRaw : defaultFilters.sort;
 
 	return {
+		termino,
 		categoria,
 		ubicacion,
 		publicado,
@@ -108,6 +110,7 @@ export function readFiltersFromSearchParams(
 
 function toSearchParams(filters: Filters): URLSearchParams {
 	const sp = new URLSearchParams();
+	if (filters.termino.trim()) sp.set("termino", filters.termino);
 	if (filters.categoria !== defaultFilters.categoria)
 		sp.set("categoria", filters.categoria);
 	if (filters.ubicacion.trim()) sp.set("ubicacion", filters.ubicacion);

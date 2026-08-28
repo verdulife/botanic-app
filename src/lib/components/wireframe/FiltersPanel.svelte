@@ -25,9 +25,10 @@
 	type Props = {
 		filters: Filters;
 		onChange: (next: Filters) => void;
+		showSort?: boolean;
 	};
 
-	let { filters, onChange }: Props = $props();
+	let { filters, onChange, showSort = true }: Props = $props();
 
 	function patch(partial: Partial<Filters>) {
 		onChange({ ...filters, ...partial });
@@ -48,36 +49,40 @@
 <div class="flex flex-col">
 	<Accordion.Root
 		type="multiple"
-		value={["sort", "tipo", "categoria", "ubicacion", "precio", "publicado"]}
+		value={showSort
+			? ["sort", "tipo", "categoria", "ubicacion", "precio", "publicado"]
+			: ["tipo", "categoria", "ubicacion", "precio", "publicado"]}
 		class="flex flex-col pb-6"
 	>
 		<!-- Ordenar por -->
-		<Accordion.Item value="sort">
-			<Accordion.Trigger class="text-sm font-medium">
-				Ordenar por
-			</Accordion.Trigger>
-			<Accordion.Content>
-				<Select.Root
-					type="single"
-					value={filters.sort}
-					onValueChange={(v) => patch({ sort: v as SortOption })}
-				>
-					<Select.Trigger class="w-full">
-						<Select.Value class="capitalize" />
-					</Select.Trigger>
-					<Select.Content>
-						{#each sortOptions as opt}
-							<Select.Item value={opt.value} label={opt.label} />
-						{/each}
-					</Select.Content>
-				</Select.Root>
-			</Accordion.Content>
-			<Separator class="my-4" />
-		</Accordion.Item>
+		{#if showSort}
+			<Accordion.Item value="sort">
+				<Accordion.Trigger class="text-base font-medium">
+					Ordenar por
+				</Accordion.Trigger>
+				<Accordion.Content>
+					<Select.Root
+						type="single"
+						value={filters.sort}
+						onValueChange={(v) => patch({ sort: v as SortOption })}
+					>
+						<Select.Trigger class="w-full">
+							<Select.Value class="capitalize" />
+						</Select.Trigger>
+						<Select.Content>
+							{#each sortOptions as opt}
+								<Select.Item value={opt.value} label={opt.label} />
+							{/each}
+						</Select.Content>
+					</Select.Root>
+				</Accordion.Content>
+				<Separator class="my-4" />
+			</Accordion.Item>
+		{/if}
 
 		<!-- Tipo de anuncio -->
 		<Accordion.Item value="tipo">
-			<Accordion.Trigger class="text-sm font-medium">
+			<Accordion.Trigger class="text-base font-medium">
 				Tipo de anuncio
 			</Accordion.Trigger>
 			<Accordion.Content>
@@ -98,7 +103,7 @@
 
 		<!-- Categoría -->
 		<Accordion.Item value="categoria">
-			<Accordion.Trigger class="text-sm font-medium">
+			<Accordion.Trigger class="text-base font-medium">
 				Categoría
 			</Accordion.Trigger>
 			<Accordion.Content>
@@ -124,7 +129,7 @@
 
 		<!-- Ubicación -->
 		<Accordion.Item value="ubicacion">
-			<Accordion.Trigger class="text-sm font-medium">
+			<Accordion.Trigger class="text-base font-medium">
 				Ubicación
 			</Accordion.Trigger>
 			<Accordion.Content>
@@ -155,7 +160,7 @@
 
 		<!-- Precio -->
 		<Accordion.Item value="precio">
-			<Accordion.Trigger class="text-sm font-medium">
+			<Accordion.Trigger class="text-base font-medium">
 				Precio
 			</Accordion.Trigger>
 			<Accordion.Content>
@@ -215,7 +220,7 @@
 
 		<!-- Publicado -->
 		<Accordion.Item value="publicado">
-			<Accordion.Trigger class="text-sm font-medium">
+			<Accordion.Trigger class="text-base font-medium">
 				Publicado
 			</Accordion.Trigger>
 			<Accordion.Content>
