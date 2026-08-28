@@ -43,7 +43,7 @@
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
-<div class="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8 sm:px-6 sm:py-12">
+<div class="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 pt-8 pb-28 sm:px-6 sm:pt-12 sm:pb-32">
 	<header class="flex flex-col gap-3">
 		<div class="flex flex-wrap items-center gap-2">
 			<Badge variant="outline" class="font-mono text-[10px] tracking-wider uppercase">

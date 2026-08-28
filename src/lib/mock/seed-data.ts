@@ -53,29 +53,31 @@ export type UserSeed = {
 	full_name: string;
 	bio: string;
 	city: string;
+	rating: number;
+	reviewCount: number;
 };
 
 export const USERS: UserSeed[] = [
-	{ username: 'mock_ana', full_name: 'Ana Ruiz', bio: 'Coleccionista de pothos y monsteras. Intercambia esquejes en Madrid.', city: 'Madrid, Malasaña' },
-	{ username: 'mock_luis', full_name: 'Luis Ortega', bio: 'Vendo plantas de mi terraza en Barcelona. Buenos precios.', city: 'Barcelona, Gràcia' },
-	{ username: 'mock_maria', full_name: 'María Sánchez', bio: 'Semillas de huerta urbana. Experimentos con tomates y albahaca.', city: 'Valencia, Ruzafa' },
-	{ username: 'mock_carlos', full_name: 'Carlos Mendoza', bio: 'Suculentas y cactus. Tengo de todo, desde pequeños hasta grandes.', city: 'Sevilla, Triana' },
-	{ username: 'mock_elena', full_name: 'Elena Vega', bio: 'Me encantan las calatheas y las plantas tropicales raras.', city: 'Madrid, Chamberí' },
-	{ username: 'mock_diego', full_name: 'Diego Marín', bio: 'Herramientas de jardinería restauradas. Tijeras, regaderas, palas.', city: 'Bilbao, Indautxu' },
-	{ username: 'mock_sofia', full_name: 'Sofía Castro', bio: 'Tiestos de cerámica hechos a mano en el barrio.', city: 'Barcelona, Poblenou' },
-	{ username: 'mock_javier', full_name: 'Javier Romero', bio: 'Libros y guías sobre plantas. También vendo revistas especializadas.', city: 'Madrid, Centro' },
-	{ username: 'mock_lucía', full_name: 'Lucía Navarro', bio: 'Hierbas aromáticas y plantas culinarias. Menta, romero, albahaca.', city: 'Málaga, Centro' },
-	{ username: 'mock_pablo', full_name: 'Pablo Iglesias', bio: 'Tiestos grandes para terrazas y patios. Varias medidas.', city: 'Valencia, El Carme' },
-	{ username: 'mock_carmen', full_name: 'Carmen Reyes', bio: 'Plantas de interior fáciles de cuidar. Ideal para principiantes.', city: 'Sevilla, Centro' },
-	{ username: 'mock_andres', full_name: 'Andrés Gil', bio: 'Sustratos y abonos. Mezclas especiales para cactus y orquídeas.', city: 'Zaragoza, Centro' },
-	{ username: 'mock_paula', full_name: 'Paula Vidal', bio: 'Helechos y plantas de sombra. Tengo un patio inglés y me sobran.', city: 'Granada, Albayzín' },
-	{ username: 'mock_miguel', full_name: 'Miguel Ángel Santos', bio: 'Esquejes de plantas aromáticas y culinarias. Precios populares.', city: 'Madrid, Centro' },
-	{ username: 'mock_rosa', full_name: 'Rosa Moya', bio: 'Compro y vendo plantas. Especialidad: pothos y tradescantias.', city: 'Barcelona, Eixample' },
-	{ username: 'mock_jorge', full_name: 'Jorge Belmonte', bio: 'Pequeño vivero urbano. Vendo lo que voy reproduciendo.', city: 'Madrid, Chamberí' },
-	{ username: 'mock_inés', full_name: 'Inés Pino', bio: 'Plantas de regalo. Preparo sets para cumpleaños y eventos.', city: 'Valencia, Ruzafa' },
-	{ username: 'mock_raul', full_name: 'Raúl Bravo', bio: 'Kokedamas y arreglos con musgo. Aprendí en Japón.', city: 'Sevilla, Centro' },
-	{ username: 'mock_clara', full_name: 'Clara Rubio', bio: 'Plantas carnívoras. Tengo droseras, nepentes y venus atrapamoscas.', city: 'Bilbao, Indautxu' },
-	{ username: 'mock_david', full_name: 'David Pascual', bio: 'Regalo esquejes a quien venga a recogerlos. Solo materiales de poda.', city: 'Madrid, Malasaña' }
+	{ username: 'mock_ana', full_name: 'Ana Ruiz', bio: 'Coleccionista de pothos y monsteras. Intercambia esquejes en Madrid.', city: 'Madrid, Malasaña', rating: 4.9, reviewCount: 38 },
+	{ username: 'mock_luis', full_name: 'Luis Ortega', bio: 'Vendo plantas de mi terraza en Barcelona. Buenos precios.', city: 'Barcelona, Gràcia', rating: 4.6, reviewCount: 21 },
+	{ username: 'mock_maria', full_name: 'María Sánchez', bio: 'Semillas de huerta urbana. Experimentos con tomates y albahaca.', city: 'Valencia, Ruzafa', rating: 4.7, reviewCount: 15 },
+	{ username: 'mock_carlos', full_name: 'Carlos Mendoza', bio: 'Suculentas y cactus. Tengo de todo, desde pequeños hasta grandes.', city: 'Sevilla, Triana', rating: 4.5, reviewCount: 9 },
+	{ username: 'mock_elena', full_name: 'Elena Vega', bio: 'Me encantan las calatheas y las plantas tropicales raras.', city: 'Madrid, Chamberí', rating: 5.0, reviewCount: 12 },
+	{ username: 'mock_diego', full_name: 'Diego Marín', bio: 'Herramientas de jardinería restauradas. Tijeras, regaderas, palas.', city: 'Bilbao, Indautxu', rating: 4.4, reviewCount: 7 },
+	{ username: 'mock_sofia', full_name: 'Sofía Castro', bio: 'Tiestos de cerámica hechos a mano en el barrio.', city: 'Barcelona, Poblenou', rating: 4.8, reviewCount: 25 },
+	{ username: 'mock_javier', full_name: 'Javier Romero', bio: 'Libros y guías sobre plantas. También vendo revistas especializadas.', city: 'Madrid, Centro', rating: 4.6, reviewCount: 18 },
+	{ username: 'mock_lucía', full_name: 'Lucía Navarro', bio: 'Hierbas aromáticas y plantas culinarias. Menta, romero, albahaca.', city: 'Málaga, Centro', rating: 4.3, reviewCount: 6 },
+	{ username: 'mock_pablo', full_name: 'Pablo Iglesias', bio: 'Tiestos grandes para terrazas y patios. Varias medidas.', city: 'Valencia, El Carme', rating: 4.7, reviewCount: 11 },
+	{ username: 'mock_carmen', full_name: 'Carmen Reyes', bio: 'Plantas de interior fáciles de cuidar. Ideal para principiantes.', city: 'Sevilla, Centro', rating: 4.8, reviewCount: 30 },
+	{ username: 'mock_andres', full_name: 'Andrés Gil', bio: 'Sustratos y abonos. Mezclas especiales para cactus y orquídeas.', city: 'Zaragoza, Centro', rating: 4.4, reviewCount: 5 },
+	{ username: 'mock_paula', full_name: 'Paula Vidal', bio: 'Helechos y plantas de sombra. Tengo un patio inglés y me sobran.', city: 'Granada, Albayzín', rating: 4.9, reviewCount: 44 },
+	{ username: 'mock_miguel', full_name: 'Miguel Ángel Santos', bio: 'Esquejes de plantas aromáticas y culinarias. Precios populares.', city: 'Madrid, Centro', rating: 4.1, reviewCount: 3 },
+	{ username: 'mock_rosa', full_name: 'Rosa Moya', bio: 'Compro y vendo plantas. Especialidad: pothos y tradescantias.', city: 'Barcelona, Eixample', rating: 4.5, reviewCount: 16 },
+	{ username: 'mock_jorge', full_name: 'Jorge Belmonte', bio: 'Pequeño vivero urbano. Vendo lo que voy reproduciendo.', city: 'Madrid, Chamberí', rating: 4.7, reviewCount: 22 },
+	{ username: 'mock_inés', full_name: 'Inés Pino', bio: 'Plantas de regalo. Preparo sets para cumpleaños y eventos.', city: 'Valencia, Ruzafa', rating: 4.6, reviewCount: 8 },
+	{ username: 'mock_raul', full_name: 'Raúl Bravo', bio: 'Kokedamas y arreglos con musgo. Aprendí en Japón.', city: 'Sevilla, Centro', rating: 5.0, reviewCount: 63 },
+	{ username: 'mock_clara', full_name: 'Clara Rubio', bio: 'Plantas carnívoras. Tengo droseras, nepentes y venus atrapamoscas.', city: 'Bilbao, Indautxu', rating: 4.8, reviewCount: 27 },
+	{ username: 'mock_david', full_name: 'David Pascual', bio: 'Regalo esquejes a quien venga a recogerlos. Solo materiales de poda.', city: 'Madrid, Malasaña', rating: 4.2, reviewCount: 4 }
 ];
 
 export function mockEmailFor(username: string): string {

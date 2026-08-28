@@ -32,6 +32,9 @@ vite.config.ts.timestamp-*
 # Impeccable skill artifacts
 .impeccable/
 
+# Mock auth state (modo wireframe, no commitear)
+.mock-auth/
+
 # Caché de búsqueda de imágenes (scripts/images.mjs)
 /scripts/.tmp/
 

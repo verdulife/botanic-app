@@ -29,6 +29,8 @@ export type SellerInfo = {
 	bio: string;
 	city: string;
 	email: string;
+	rating: number;
+	reviewCount: number;
 };
 
 export type Listing = {
@@ -197,7 +199,9 @@ function buildListings(): Listing[] {
 					full_name: user.full_name,
 					bio: user.bio,
 					city: user.city,
-					email: mockEmailFor(user.username)
+					email: mockEmailFor(user.username),
+					rating: user.rating,
+					reviewCount: user.reviewCount
 				},
 				images,
 				type,

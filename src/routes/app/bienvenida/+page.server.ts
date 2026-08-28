@@ -1,6 +1,8 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { Database } from '$lib/supabase/types';
+import { isMockAuth } from '$lib/auth-mode';
+import { getMockProfile, updateProfile, usernameExists } from '$lib/mock/auth-server';
 
 const USERNAME_RE = /^[a-z0-9_]{3,20}$/;
 
@@ -8,18 +10,24 @@ export const load: PageServerLoad = async ({ locals: { safeGetSession, supabase 
 	const { user } = await safeGetSession();
 	if (!user) throw redirect(303, '/app/login?next=/app/bienvenida');
 
-	const { data, error } = await supabase
-		.from('profiles')
-		.select('*')
-		.eq('id', user.id)
-		.maybeSingle();
+	let profile: Database['public']['Tables']['profiles']['Row'] | null;
+	if (isMockAuth()) {
+		profile = getMockProfile(user.id);
+	} else {
+		const { data, error } = await supabase
+			.from('profiles')
+			.select('*')
+			.eq('id', user.id)
+			.maybeSingle();
 
-	if (error) {
-		console.error('[bienvenida] load profile:', error);
-		throw error;
+		if (error) {
+			console.error('[bienvenida] load profile:', error);
+			throw error;
+		}
+		profile = data;
 	}
 
-	return { profile: data };
+	return { profile };
 };
 
 export const actions: Actions = {
@@ -60,6 +68,17 @@ export const actions: Actions = {
 		}
 
 		const echoValues = { username, full_name: fullName, location_label: locationLabel, bio };
+
+		if (isMockAuth()) {
+			if (username && usernameExists(username, user.id)) {
+				return fail(400, {
+					error: 'Ese nombre de usuario ya está en uso.',
+					values: echoValues
+				});
+			}
+			updateProfile(user.id, values);
+			throw redirect(303, '/app');
+		}
 
 		const { error } = await supabase
 			.from('profiles')

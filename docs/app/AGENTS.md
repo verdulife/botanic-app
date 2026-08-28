@@ -9,6 +9,7 @@ Documentación funcional y de navegación de la webapp de Botanic. Fuente canón
 | Wireframe neutro | 🔶 En construcción | Hito actual: rutas navegables con shadcn-svelte base |
 | Design system | 🔶 Pendiente | Se aplica después sobre el wireframe sin tocar estructura |
 | Lógica de negocio | 🔴 Pendiente | No implementar en esta fase |
+| Auth | 🟢 Mock funcional | Sesión/registro simulados (sin Supabase), conmutable en `auth-mode.ts` |
 
 ## Documentación del módulo
 
@@ -38,6 +39,7 @@ Documentación funcional y de navegación de la webapp de Botanic. Fuente canón
 - **Todas las rutas con prefijo `/app/`** y slugs en español (sin tildes, sin eñes, sin artículos). Excepciones universales: `login`, `chat`, `market` (Botanic Market).
 - **Browse sin login en `/app`.** La raíz del marketplace, anuncios, comunidad, mapa y detalle son públicos. Las acciones de escritura requieren autenticación y deben mostrar el estado "no autenticado" cuando aplique.
 - **Acceso**: `/app/*` se sirve bajo Supabase Auth (email+password + magic link) sin gate adicional. Browse público para listings, comunidad y mapa; acciones de escritura (publicar, chatear, crear deseo, guardar, responder) requieren sesión y deben redirigir a `/app/login?next=...` cuando no hay usuario. Ver [AGENTS.md § Seguridad — autenticación y autorización en `/app`](../../AGENTS.md#seguridad--autenticación-y-autorización-en-app).
+- **Auth mock (fase wireframe)**: mientras no se conecte Supabase, la sesión es simulada (cookie `botanic_mock_session` + `.mock-auth/users.json`). Los formularios de login/registro y las redirecciones protegidas se comportan igual que con Supabase. Conmutar en `src/lib/auth-mode.ts` (`AUTH_MODE`). Detalle en [auth.md](auth.md).
 - **UX sobre UI.** Adaptación impecable a escritorio y móvil (estilo Wallapop). Detalle en [cross-cutting.md § Responsive](cross-cutting.md#responsive).
 - **Scroll horizontal sin barra visible.** Flechas en escritorio, gesto natural en móvil. Detalle en [cross-cutting.md § Scroll horizontal sin barra visible](cross-cutting.md#scroll-horizontal-sin-barra-visible).
 

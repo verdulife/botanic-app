@@ -312,9 +312,6 @@
 							Chat
 						</Button>
 					</div>
-					{#if listing.sellerInfo.bio}
-						<p class="text-muted-foreground text-xs">{listing.sellerInfo.bio}</p>
-					{/if}
 				</div>
 
 				<Separator />

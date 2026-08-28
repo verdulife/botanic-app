@@ -83,7 +83,7 @@
 	</aside>
 
 	<!-- Contenido principal -->
-	<div class="flex flex-col gap-6 px-4 pt-4 sm:px-6 sm:pt-6 md:pt-8 lg:flex-row lg:px-8">
+	<div class="flex flex-col gap-6 px-4 pt-4 pb-28 sm:px-6 sm:pt-6 sm:pb-32 md:pt-8 lg:flex-row lg:px-8">
 		<div class="flex flex-1 flex-col gap-6 lg:ml-80">
 			<!-- GRID -->
 			{#if listings.length === 0}

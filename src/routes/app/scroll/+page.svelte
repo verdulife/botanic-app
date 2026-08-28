@@ -17,7 +17,7 @@
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { searchOverlay } from '../../../lib/stores/search-overlay.svelte.ts';
-	import { Bookmark, ExternalLink, SkipForward, X } from 'lucide-svelte/icons';
+	import { X } from 'lucide-svelte/icons';
 
 	let filters = $derived<Filters>(
 		readFiltersFromSearchParams(page.url.searchParams)
@@ -47,15 +47,6 @@
 		}
 		prevFilterOpen = filterOpen;
 	});
-
-	function gotoNext() {
-		if (currentIndex < listings.length - 1) {
-			const next = currentIndex + 1;
-			currentIndex = next;
-			const child = scrollerEl?.children[next] as HTMLElement | undefined;
-			child?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-		}
-	}
 
 	function onScroll() {
 		if (!scrollerEl) return;
@@ -134,47 +125,8 @@
 			class="snap-y snap-mandatory absolute inset-0 overflow-y-scroll"
 		>
 			{#each listings as listing, i (listing.id)}
-				<ScrollCard {listing} index={i} total={listings.length} />
+				<ScrollCard {listing} active={i === currentIndex} />
 			{/each}
-		</div>
-
-		<div
-			class="absolute right-3 bottom-24 z-30 flex flex-col items-center gap-4"
-		>
-			<div class="flex flex-col items-center gap-0.5">
-				<button
-					type="button"
-					onclick={gotoNext}
-					class="text-white/60 hover:text-white flex size-10 items-center justify-center rounded-full transition-colors md:size-11"
-					aria-label="Saltar anuncio"
-				>
-					<SkipForward class="size-5" />
-				</button>
-				<span class="text-white/60 text-[10px]">Saltar</span>
-			</div>
-
-			<div class="flex flex-col items-center gap-0.5">
-				<button
-					type="button"
-					onclick={gotoNext}
-					class="text-white/60 hover:text-white flex size-10 items-center justify-center rounded-full transition-colors md:size-11"
-					aria-label="Guardar anuncio y continuar"
-				>
-					<Bookmark class="size-5" />
-				</button>
-				<span class="text-white/60 text-[10px]">Guardar</span>
-			</div>
-
-			<div class="flex flex-col items-center gap-0.5">
-				<a
-					href="/app/anuncio/{listings[currentIndex]?.id ?? ''}"
-					class="text-white/60 hover:text-white flex size-10 items-center justify-center rounded-full transition-colors md:size-11"
-					aria-label="Ver detalle del anuncio"
-				>
-					<ExternalLink class="size-5" />
-				</a>
-				<span class="text-white/60 text-[10px]">Detalle</span>
-			</div>
 		</div>
 	</div>
 {/if}

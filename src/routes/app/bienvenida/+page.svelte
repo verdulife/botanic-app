@@ -24,7 +24,7 @@
 	<title>Bienvenida · Botanic</title>
 </svelte:head>
 
-<div class="bg-background flex min-h-dvh flex-col items-center justify-center px-4 py-8 sm:px-6">
+<div class="bg-background flex min-h-dvh flex-col items-center justify-center px-4 pt-8 pb-28 sm:px-6 sm:pb-32">
 	<div class="w-full max-w-md">
 		<div class="mb-8 flex flex-col items-center gap-3 text-center">
 			<div

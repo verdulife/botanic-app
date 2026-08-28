@@ -8,6 +8,8 @@ import {
 	validatePassword
 } from '$lib/supabase/auth-utils';
 import { mapAuthError } from '$lib/supabase/auth-errors';
+import { isMockAuth } from '$lib/auth-mode';
+import { setSessionCookie, signUp } from '$lib/mock/auth-server';
 
 export const load: PageServerLoad = async ({ locals: { safeGetSession } }) => {
 	const { user } = await safeGetSession();
@@ -16,7 +18,7 @@ export const load: PageServerLoad = async ({ locals: { safeGetSession } }) => {
 
 export const actions: Actions = {
 	default: async (event) => {
-		const { request, locals: { supabase }, url } = event;
+		const { request, locals, url } = event;
 		const formData = await request.formData();
 
 		const email = field(formData, 'email');
@@ -28,7 +30,17 @@ export const actions: Actions = {
 		const passwordErr = validatePassword(password);
 		if (passwordErr) return fail(400, { email, error: passwordErr });
 
-		const { data, error } = await supabase.auth.signUp({
+		if (isMockAuth()) {
+			const result = signUp(email, password);
+			if ('error' in result) {
+				return fail(400, { email, error: result.error });
+			}
+			// Auto-confirmado (no hay email en el mock): sesión directa + onboarding.
+			setSessionCookie(event.cookies, result.user.id);
+			throw redirect(303, '/app/bienvenida');
+		}
+
+		const { data, error } = await locals.supabase.auth.signUp({
 			email,
 			password,
 			options: {

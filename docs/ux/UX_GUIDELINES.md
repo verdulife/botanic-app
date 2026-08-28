@@ -206,7 +206,7 @@ MAPA    → descubrimiento geográfico
 MATCH   → descubrimento relajado, "enamorate de esa planta"
 ```
 
-> **Por qué "Match"**: el nombre carga la idea de enamorarse de una planta concreta, no de compatibilizar con una persona. La interacción híbrida (full-screen vertical con botones Guardar/Saltar, sin swipe L/R) hace honor a esa lectura.
+> **Por qué "Match"**: el nombre carga la idea de enamorarse de una planta concreta, no de compatibilizar con una persona. La interacción híbrida (full-screen vertical con botones Compartir/Guardar/Ver ahora, sin swipe L/R) hace honor a esa lectura.
 
 Deben agruparse bajo un único control **Vista**, en lugar de presentar tres botones permanentes separados.
 
@@ -259,6 +259,8 @@ Ideal para:
 
 El mapa debe respetar las reglas de privacidad de ubicación que se definan en otra documentación.
 
+**Ante saturación**: el mapa muestra markers de **vendedor** (avatar, nombre, nº de plantas según filtros y rating ★). Si hay más vendedores visibles de los que caben, se priorizan los **mejor valorados** con un máximo por nivel de zoom; el resto se agrupa en chips que se abren al acercar (refresco en zoom/pan, estilo Airbnb). Las chips nunca quedan apiladas entre sí ni sobre los markers: se separan por colisión en espacio de píxel al renderizar.
+
 ### Match
 
 Ideal para:
@@ -274,9 +276,18 @@ Concepto:
 
 ```text
 Tarjeta del anuncio
-   ├── Guardar / conservar
-   └── Descartar
+   ├── Compartir
+   ├── Guardar (corazón = favoritos)
+   └── Ver ahora (detalle)
 ```
+
+Interacción de la tarjeta:
+
+- Cada anuncio lleva sus propios botones en la columna derecha, **en flujo** junto al texto (sin solapes): **Compartir** (Web Share), **Guardar** (corazón, misma funcionalidad que favoritos) y **Ver ahora** (abre el detalle).
+- **Doble tap en la imagen** equivale a Guardar.
+- La imagen de fondo **cambia cada 3 s con un fade suave** entre las fotos del anuncio, en bucle infinito (solo en la tarjeta activa).
+- Bajo el precio se muestra la **información del vendedor**: ★ rating (1 decimal) y nombre.
+- El contenido inferior de la tarjeta **respeta la nav inferior móvil** (padding inferior amplio en móvil, reducido en escritorio donde la nav no existe).
 
 ---
 

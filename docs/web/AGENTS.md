@@ -29,7 +29,7 @@ Frontend único en SvelteKit 5: **landing** (hecha), **blog** (hecho), **web app
 - Tailwind v4 (CSS-first, `@import "tailwindcss"`, sin `tailwind.config.js`): skill `tailwind-4-docs` (snapshot local, no se commitea).
 - Svelte 5: runes (`$state`, `$derived`, `$props`) — skills `svelte-core-bestpractices` / `svelte-code-writer`.
 - Logo vectorial vive solo en `src/lib/components/Logo.svelte` (consumido vía `?raw`).
-- **Web app (`/app/**`)**: raíz browseable sin login en `/app`. Detalle funcional en [../app/README.md](../app/README.md); reglas de UX cross-cutting (responsive + scroll horizontal) en [../app/cross-cutting.md](../app/cross-cutting.md).
+- **Web app (`/app/**`)**: raíz browseable sin login en `/app`. Detalle funcional en [../app/README.md](../app/README.md); reglas de UX cross-cutting (responsive + scroll horizontal) en [../app/cross-cutting.md](../app/cross-cutting.md). **Auth mock** activo durante el wireframe: sesión local simulada (cookie `botanic_mock_session`), conmutable a Supabase con `AUTH_MODE` en `src/lib/auth-mode.ts`. Ver [../app/auth.md](../app/auth.md).
 
 ---
 

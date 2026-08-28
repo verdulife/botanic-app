@@ -26,9 +26,27 @@ El usuario explora anuncios ordenados por proximidad o por el criterio seleccion
 
 ### Mapa
 
-El usuario explora geográficamente los anuncios disponibles y puede tocar uno para abrir su detalle.
+El usuario explora geográficamente los anuncios disponibles (Leaflet). El mapa está agrupado **por vendedor**, no por anuncio, para no saturar la vista:
 
-El wireframe representa el mapa mediante un placeholder ("Aquí irá el mapa"). No implementar integración cartográfica en esta fase.
+- Cada marker muestra el **avatar** (iniciales), el **nombre**, el **nº de plantas**
+  (según los filtros activos) y la **puntuación** del vendedor (★ 1–5, 1 decimal,
+  estilo valoraciones de Google).
+- Los vendedores se ordenan por **rating descendente** (empate por nº de reviews).
+- Si hay más vendedores visibles de los que caben, se muestra un **máximo por nivel
+  de zoom** (los mejor valorados) y el resto se agrupa en **chips de vendedores
+  ocultos** por zona. El nº de chips también tiene tope; los sobrantes se fusionan
+  en el chip vecino más cercano. Al hacer zoom, el mapa se refresca y se revelan
+  más vendedores (hasta mostrar todos a zoom alto).
+- **Anti-apilado**: las chips no quedan apiladas entre sí ni pegadas a los markers
+  de vendedor — al renderizar se resuelven las colisiones en espacio de píxel
+  (fusión del par más cercano que `minDistance`) y el chip se aparta del marker con
+  un empuje mínimo por el eje de menor penetración (AABB, desplazamiento
+  `transform` determinista).
+- **Clic en un vendedor** → su perfil público (`/app/perfil/:username`).
+- **Clic en un chip** → zoom al grupo (los vendedores se muestran individuales).
+
+El rating es **mock-only** (no persiste en Supabase) mientras no exista el sistema
+de reviews real.
 
 ## Browse sin login
 

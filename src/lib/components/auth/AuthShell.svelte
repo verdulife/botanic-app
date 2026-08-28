@@ -12,7 +12,7 @@
 </script>
 
 <div
-	class="bg-background flex min-h-dvh flex-col items-center justify-center px-4 py-8 sm:px-6"
+	class="bg-background flex min-h-dvh flex-col items-center justify-center px-4 pt-8 pb-28 sm:px-6 sm:pb-32"
 >
 	<a href="/" class="mb-6 flex items-center gap-2 sm:mb-8" aria-label="Volver al inicio">
 		<div class="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-lg">

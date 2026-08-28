@@ -4,12 +4,13 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import AuthShell from '$lib/components/auth/AuthShell.svelte';
-	import { KeyRound, Mail } from 'lucide-svelte/icons';
+	import { KeyRound, Mail, Sprout } from 'lucide-svelte/icons';
 
 	let { form } = $props();
 
 	let passwordPending = $state(false);
 	let magicPending = $state(false);
+	let demoPending = $state(false);
 	let magicSent = $derived(form?.mode === 'magic' && form?.sent === true);
 	let passwordError = $derived(form?.mode === 'password' ? form?.error : undefined);
 	let magicError = $derived(form?.mode === 'magic' && !form?.sent ? form?.error : undefined);
@@ -17,7 +18,7 @@
 
 <AuthShell
 	title="Inicia sesión"
-	subtitle="Entra con tu email y contraseña, o usa un enlace mágico."
+	subtitle="Prueba la cuenta demo o entra con tu email y contraseña."
 >
 	{#if magicSent}
 		<div
@@ -41,6 +42,32 @@
 			</a>
 		</div>
 	{:else}
+		<form
+			method="POST"
+			action="?/demo"
+			use:enhance={() => {
+				demoPending = true;
+				return async ({ update }) => {
+					await update();
+					demoPending = false;
+				};
+			}}
+			class="flex flex-col gap-2"
+		>
+			<Button type="submit" variant="outline" disabled={demoPending} class="w-full">
+				<Sprout class="size-4" />
+				{demoPending ? 'Entrando como demo…' : 'Entrar con cuenta demo'}
+			</Button>
+			<p class="text-muted-foreground text-center text-xs">
+				Modo demo: sin registro ni email. Entras como Ana Ruiz.
+			</p>
+		</form>
+
+		<div class="relative my-6 flex items-center" aria-hidden="true">
+			<div class="border-border w-full border-t"></div>
+			<span class="text-muted-foreground bg-background absolute px-3 text-xs uppercase">o</span>
+		</div>
+
 		<form
 			method="POST"
 			action="?/password"

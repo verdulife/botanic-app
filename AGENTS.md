@@ -77,7 +77,8 @@ Cada AGENTS.md de módulo es autocontenido, enlaza de vuelta aquí y a PRODUCT/D
 
 ## Seguridad — autenticación y autorización en `/app`
 
-- `/app/*` usa **Supabase Auth** (email+password + magic link recovery) integrado vía `@supabase/ssr` en `src/hooks.server.ts`. No hay Basic Auth gate.
+- **Modo mock (fase wireframe, activo)**: `/app/*` usa **autenticación simulada** — sesión local por cookie `botanic_mock_session` y cuentas registradas en `.mock-auth/users.json` (gitignored, no commitear). Sin tokens ni llamadas a Supabase. Registro con auto-confirmación (no hay email) y recuperación de contraseña inerte. Conmutar a Supabase real con el flag `AUTH_MODE` en `src/lib/auth-mode.ts`; al conectarlo, retirar el módulo `src/lib/mock/auth-server.ts` y sus ramas `isMockAuth()`.
+- **Con Supabase (`AUTH_MODE = 'supabase'`)**: `/app/*` usa **Supabase Auth** (email+password + magic link recovery) integrado vía `@supabase/ssr` en `src/hooks.server.ts`. No hay Basic Auth gate.
 - Cada request crea `event.locals.supabase` (cliente SSR con cookies). `event.locals.safeGetSession()` valida sesión contra el servidor (`getUser()`) tras leer las cookies (`getSession()`); nunca se confía solo en cookies para auth checks.
 - SEO: cualquier respuesta de `/app*` lleva la cabecera `X-Robots-Tag: noindex, nofollow` (los motores no indexan).
 - **Browse sin login**: `/app`, `/app/anuncios`, `/app/comunidad`, `/app/mapa`, `/app/anuncio/:id` son públicos (espec del wireframe). Las acciones de escritura (publicar, chatear, crear deseo, guardar) requieren sesión y deben redirigir a `/app/login?next=...` cuando el `safeGetSession()` devuelve `user: null`.

@@ -137,7 +137,7 @@ Pre-Sprint + 6 sprints (~8-10 semanas).
 - [ ] Nombre + descripción + precio + ubicación
 - [ ] Búsqueda por texto
 - [ ] Filtros: categoría, precio, ubicación
-- [ ] Mapa Leaflet + OpenStreetMap
+- [ ] Mapa Leaflet + OpenStreetMap (markers por vendedor con rating; chips de ocultos al saturar)
 - [ ] Detalle de anuncio con galería
 - [ ] Favoritos (anuncios guardados)
 - [ ] Chat en tiempo real (Supabase Realtime)
