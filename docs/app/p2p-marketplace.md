@@ -48,6 +48,40 @@ Debe representar, como mínimo:
 - Acción para iniciar contacto por chat.
 - Acción para guardar / quitar de guardados (requiere login).
 
+### Cuidados de la planta
+
+Cuando el anuncio es de una planta con especie identificada, el detalle muestra una
+caja de cuidados (entre la ubicación y el vendedor) con 3 celdas:
+
+- **Riego** y **Luz**: 1/2/3 iconos (gotas / soles) rellenos según el nivel, con el resto
+  de iconos en gris sutil.
+- **Toxicidad**: solo texto neutro (sin color) con 3 posibilidades: `No`, `Sí`, `Mascotas`.
+
+El dataset de cuidados vive en `src/lib/mock/plant-care.ts` y, post-wireframe, en la tabla
+`plant_care` de Supabase (ver [architecture.md](../../architecture.md) "Identificación y
+cuidados de plantas"). Si no hay datos para la especie, la caja se oculta.
+
+### Ayuda (IA + comunidad)
+
+Debajo de la descripción hay una caja "¿Dudas? Resuélvelas al momento" con dos botones en
+línea y neutros (sin preferencia visual), comunidad primero:
+
+- **Comunidad** → `/app/comunidad`.
+- **Preguntar a la IA** → abre Perplexity con un **prompt contextual** prehhecho: incluye
+  precio (regalo/cambio/precio), ubicación y categoría, pide a la IA evaluar si es una buena
+  compra (contrastando precios habituales, qué revisar antes) y, en plantas, añade una guía
+  breve de cuidados.
+
+### Acciones sobre la imagen
+
+Sobre la galería (fija, no se desplaza con el slider) dos botones apilados a la derecha:
+
+- **Guardar en favoritos** (corazón, toggle) — requiere login post-wireframe.
+- **Compartir** — Web Share API, con fallback a portapapeles.
+
+El galería es un carrusel deslizable (imagen 4:5, dots como indicador no-navegación).
+
+
 ## Crear anuncio
 
 Debe contener los campos necesarios para representar una futura publicación:

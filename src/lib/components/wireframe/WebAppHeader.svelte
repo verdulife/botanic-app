@@ -1,14 +1,24 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 	import Logo from "$lib/components/Logo.svelte";
 	import { readVista } from "$lib/mock/url-filters";
 	import { searchOverlay } from "../../stores/search-overlay.svelte.ts";
-	import { Bell, Search, X } from "lucide-svelte/icons";
+	import { ArrowLeft, Bell, Search, X } from "lucide-svelte/icons";
 
 	let isAppArea = $derived(page.url.pathname.startsWith("/app"));
 	let currentVista = $derived(readVista(page.url.searchParams, page.url.pathname));
 	let isMainView = $derived(['lista', 'mapa', 'scroll'].includes(currentVista));
+	let isListingDetail = $derived(page.url.pathname.startsWith('/app/anuncio/'));
 	let user = $derived(page.data.user);
+
+	function goBack() {
+		if (window.history.length > 1) {
+			window.history.back();
+		} else {
+			goto('/app');
+		}
+	}
 
 	// TODO: Hito 8 — sustituir por query real a notifications
 	let unreadCount = $derived(0);
@@ -27,18 +37,35 @@
 
 	{#if isAppArea}
 		<nav class="ml-auto flex shrink-0 items-center gap-1 md:gap-2" aria-label="Acciones">
-			{#if isMainView}
+			{#if searchOverlay.open}
 				<button
 					type="button"
 					onclick={searchOverlay.toggleSearch}
-					class="hover:bg-muted text-muted-foreground hover:text-foreground flex size-10 items-center justify-center rounded-md transition-colors md:size-11"
-					aria-label={searchOverlay.open ? 'Cerrar búsqueda' : 'Buscar'}
+					class="text-muted-foreground hover:text-foreground hover:bg-muted border-border flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm font-medium transition-colors"
+					aria-label="Cerrar búsqueda"
 				>
-					{#if searchOverlay.open}
-						<X class="size-5" />
-					{:else}
-						<Search class="size-5" />
-					{/if}
+					<X class="size-4" />
+					<span>Cerrar</span>
+				</button>
+			{:else if isListingDetail}
+				<button
+					type="button"
+					onclick={goBack}
+					class="text-muted-foreground hover:text-foreground hover:bg-muted border-border flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm font-medium transition-colors"
+					aria-label="Volver"
+				>
+					<ArrowLeft class="size-4" />
+					<span>Volver</span>
+				</button>
+			{:else if isMainView}
+				<button
+					type="button"
+					onclick={searchOverlay.toggleSearch}
+					class="text-muted-foreground hover:text-foreground hover:bg-muted border-border flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm font-medium transition-colors"
+					aria-label="Buscar"
+				>
+					<Search class="size-4" />
+					<span>Buscar</span>
 				</button>
 			{/if}
 

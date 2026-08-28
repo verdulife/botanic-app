@@ -8,19 +8,21 @@
 
 	function handleInicioClick(e: MouseEvent) {
 		const path = page.url.pathname;
-		const isLista =
-			path === '/app' ||
-			path === '/app/' ||
-			path.startsWith('/app/anuncios') ||
-			path.startsWith('/app/anuncio') ||
-			path.startsWith('/app/buscar');
-		const isMapa = path.startsWith('/app/mapa');
-		const isScroll = path.startsWith('/app/scroll');
-
-		if (!isLista && !isMapa && !isScroll) return;
+		const normalized = path.replace(/\/+$/, "") || "/";
+		const isLista = normalized === "/app";
+		const isMapa = normalized.startsWith("/app/mapa");
+		const isScroll = normalized.startsWith("/app/scroll");
 
 		e.preventDefault();
-		const next = isLista ? '/app/mapa' : isMapa ? '/app/scroll' : '/app';
+
+		// Fuera de las 3 vistas (listing, perfil, chat, etc.) → siempre lista
+		if (!isLista && !isMapa && !isScroll) {
+			pushVistaToURL("/app");
+			return;
+		}
+
+		// Dentro de una vista → siguiente: lista → mapa → scroll → lista
+		const next = isLista ? "/app/mapa" : isMapa ? "/app/scroll" : "/app";
 		pushVistaToURL(next);
 	}
 

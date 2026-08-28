@@ -45,6 +45,7 @@ export type Listing = {
 	coordinates: { lat: number; lng: number };
 	datePosted: Date;
 	description: string;
+	species?: string;
 };
 
 // ──────────────────────────────────────────────────────────
@@ -111,9 +112,9 @@ function rand(): number {
 function pick<T>(arr: T[]): T {
 	return arr[Math.floor(rand() * arr.length)];
 }
-function fillTemplate(tpl: string): string {
+function fillTemplate(tpl: string, plant?: string): string {
 	return tpl
-		.replace('{plant}', pick(PLANT_TERMS))
+		.replace('{plant}', plant ?? pick(PLANT_TERMS))
 		.replace('{color}', pick(COLORS))
 		.replace('{size}', pick(Object.keys(SIZES)));
 }
@@ -162,7 +163,8 @@ function buildListings(): Listing[] {
 		for (let i = 0; i < numListings; i++) {
 			const category = pick(CATEGORIES);
 			const tpl = pick(LISTING_TEMPLATES[category.slug]);
-			const title = fillTemplate(tpl);
+			const species = tpl.includes('{plant}') ? pick(PLANT_TERMS) : undefined;
+			const title = fillTemplate(tpl, species);
 			const location = LOCATIONS.find((l) => l.label === user.city) ?? pick(LOCATIONS);
 
 			// 3-5 imágenes desde el pool de la categoría (puede repetir si hay pocas).
@@ -201,7 +203,8 @@ function buildListings(): Listing[] {
 				type,
 				coordinates,
 				datePosted: new Date(now - randomOffset()),
-				description: describe(category, title)
+				description: describe(category, title),
+				species
 			});
 		}
 	}
@@ -217,4 +220,10 @@ export const seedListings: Listing[] = buildListings();
 
 export function getListingById(id: string): Listing | undefined {
 	return seedListings.find((l) => l.id === id);
+}
+
+export function getListingsBySeller(username: string, excludeId?: string, limit = 4): Listing[] {
+	return seedListings
+		.filter((l) => l.sellerInfo.username === username && l.id !== excludeId)
+		.slice(0, limit);
 }

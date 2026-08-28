@@ -8,6 +8,7 @@
 export {
 	seedListings,
 	getListingById,
+	getListingsBySeller,
 	userCoords,
 	type Listing,
 	type ListingType,
@@ -15,6 +16,7 @@ export {
 } from './seed';
 export { seedListings as mockListings } from './seed';
 export { type Listing as ClientListing } from './seed';
+export { getPlantCare, type PlantCare } from './plant-care';
 import type { ListingType } from './seed';
 
 export const categories = [

@@ -108,7 +108,7 @@
 							class="group focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-2xl"
 						>
 							<div class="flex flex-col">
-								<div class="border-border bg-muted relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border transition-opacity group-hover:opacity-90">
+								<div class="border-border bg-muted relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-2xl border transition-opacity group-hover:opacity-90">
 									<img
 										src={listing.images[0]}
 										alt={listing.title}
@@ -132,22 +132,17 @@
 									{/if}
 								</div>
 								<div class="flex flex-col gap-1 px-1 pt-2.5 pb-4">
-									<div class="flex items-center justify-between">
-										<span class="text-muted-foreground text-[10px] tracking-wider uppercase">
-											{listing.category}
-										</span>
-										<span class="text-foreground text-sm font-semibold">
-											{listing.price} €
-										</span>
-									</div>
 									<span class="text-sm leading-snug font-medium">
 										{listing.title}
 									</span>
-									<div class="text-muted-foreground flex items-center gap-1.5 text-xs">
-										<span class="truncate">{listing.seller}</span>
-										<span aria-hidden="true">·</span>
-										<MapPin class="size-3" />
-										<span class="truncate">{listing.location}</span>
+									<div class="text-muted-foreground flex items-center justify-between gap-2 text-xs">
+										<span class="flex min-w-0 items-center gap-1.5">
+											<MapPin class="size-3 shrink-0" />
+											<span class="truncate">{listing.location}</span>
+										</span>
+										<span class="text-foreground shrink-0 text-sm font-semibold">
+											{listing.price} €
+										</span>
 									</div>
 								</div>
 							</div>
