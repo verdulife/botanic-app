@@ -38,6 +38,3 @@ vite.config.ts.timestamp-*
 # Caché de búsqueda de imágenes (scripts/images.mjs)
 /scripts/.tmp/
 
-# Assets sociales (Pexels) — residuo del pipeline retirado en ago 2026
-/static/social/
-
