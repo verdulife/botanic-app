@@ -8,6 +8,7 @@ Documentación de contexto de negocio que respalda decisiones de producto. No es
 |---|---|---|
 | mercado | Datos de mercado y análisis de competencia (Wallapop, Vinted, Milanuncios) | [mercado.md](mercado.md) |
 | monetizacion | Modelo de negocio y planes (Gratis / Pro / Profesionales) | [monetizacion.md](monetizacion.md) |
+| afiliados | Programas de afiliados de plantas/jardinería (Amazon, ManoMano, Leroy Merlin…), niveles de implementación y schema del catálogo afiliado de El Market | [afiliados.md](afiliados.md) |
 | difusion | Plan de difusión pre y post lanzamiento, canales y cadencia | [difusion.md](difusion.md) |
 
 ---

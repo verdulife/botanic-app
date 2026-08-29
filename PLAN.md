@@ -250,6 +250,21 @@ Estado: `[ ]` pendiente · `[~]` en curso · `[x]` cerrado.
   > `/images/seed/` y, opcionalmente, ejecutar `bun run seed:apply` para
   > subirlas a Supabase Storage.
 
+### El Market vía afiliados (adelantar lanzamiento)
+
+> **Estado**: pendiente. Detalle y schema en [docs/product/afiliados.md](docs/product/afiliados.md).
+
+- [ ] **Alta en los programas** — cuenta Amazon Afiliados + solicitud en Awin
+      (programas Leroy Merlin ES y ManoMano ES). PA-API v5 requiere 3 ventas
+      en 180 días para activarse.
+- [ ] **Mock de catálogo afiliado en el wireframe** — `src/lib/mock/market-products.ts`
+      + cablear las rutas placeholder `/app/market/*` (hoy `RoutePlaceholder`).
+- [ ] **Migración del schema** (`affiliate_providers`, `affiliate_products`,
+      `affiliate_category_map`, `affiliate_clicks`) con RLS desde día 1.
+- [ ] **Importador de feeds + curaduría agéntica** (Nivel 2) — feeds Awin/Amazon,
+      mapeo de categorías externas → taxonomía Botanic y revisión IA.
+- [ ] **Proxy de clicks `/out`** + analítica propia y automatización completa (Nivel 3).
+
 ### Cerradas ✅
 
 - [x] **Emails en spam** — auditoría y fixes aplicados. Detalle en [docs/email/deliverability.md](docs/email/deliverability.md).

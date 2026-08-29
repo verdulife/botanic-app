@@ -22,6 +22,7 @@ Botanic arranca 100% gratuita para particulares. Los ingresos se activan cuando 
 2. **Comisión por transacción** (Fase 3): 3-5% en pagos integrados
 3. **Publicidad en El Market de Botanic** (Fase 3): aparecer en búsquedas de zona
 4. **Suscripción Profesionales** (Fase 3): plan mensual para viveros, iluminación, tiestos, jardinería y empresas del sector presentes en El Market
+5. **Comisiones de afiliados** (temprana, antes de Fase 3): catálogo afiliado curado (Amazon, ManoMano, Leroy Merlin, etc.) como vía de entrada de El Market. Detalle en [afiliados.md](afiliados.md).
 
 ## Prioridad
 
