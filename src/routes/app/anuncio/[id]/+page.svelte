@@ -5,6 +5,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
 	import { getListingById, getListingsBySeller, getPlantCare } from '$lib/mock/listings';
+	import { favorites } from '$lib/stores/favorites.svelte';
 	import {
 		ChevronRight,
 		MapPin,
@@ -20,9 +21,9 @@
 
 	let activeImage = $state(0);
 
-	let isFavorited = $state(false);
-
 	const listing = $derived(getListingById(page.params.id ?? ''));
+
+	const isFavorited = $derived(listing ? favorites.isFavorite(listing.id) : false);
 
 	const care = $derived(listing?.species ? getPlantCare(listing.species) : undefined);
 
@@ -193,7 +194,7 @@
 							size="icon"
 							class="size-11 shadow-sm"
 							aria-label={isFavorited ? 'Quitar de favoritos' : 'Guardar en favoritos'}
-							onclick={() => (isFavorited = !isFavorited)}
+							onclick={() => favorites.toggle(listing.id)}
 							onpointerdown={(e) => e.stopPropagation()}
 						>
 							<Heart

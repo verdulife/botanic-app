@@ -30,7 +30,7 @@ SECUNDARIO / PERSONAL
 ├── Perfil
 ├── Notificaciones
 ├── Mis anuncios
-├── Guardados
+├── Favoritos
 ├── Conversaciones
 ├── Deseos / alertas
 └── Ajustes
@@ -84,7 +84,7 @@ Mi Botanic
 ├── Perfil
 ├── Notificaciones
 ├── Mis anuncios
-├── Guardados
+├── Favoritos
 ├── Conversaciones
 ├── Deseos / alertas
 ├── Ajustes
@@ -181,15 +181,15 @@ Así la funcionalidad sigue siendo accesible sin darle el mismo peso visual que 
 
 ---
 
-## 6. Anuncios guardados
+## 6. Anuncios favoritos
 
-Los anuncios guardados son útiles, pero no necesitan permanecer visibles junto a todos los controles del marketplace.
+Los anuncios favoritos son útiles, pero no necesitan permanecer visibles junto a todos los controles del marketplace.
 
 Ubicación preferida:
 
 ```text
 Mi Botanic
-   └── Guardados
+   └── Favoritos
 ```
 
 La acción de guardar sí debe permanecer próxima a cada anuncio/tarjeta.

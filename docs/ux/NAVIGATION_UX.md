@@ -46,7 +46,7 @@ Match
 
 Esto sustituye al concepto anterior de mostrar un botón permanente separado para cada vista.
 
-Los anuncios guardados pueden consultarse desde `Mi Botanic`.
+Los anuncios favoritos pueden consultarse desde `Mi Botanic`.
 
 ---
 
@@ -64,7 +64,7 @@ El objetivo es centrar la navegación permanente en las áreas principales + el 
 Inicio     → descubrimiento principal / P2P
 Comunidad  → capa social y de conocimiento
 Market     → marketplace profesional/comercial futuro de Botanic
-Mi Botanic → área personal (perfil, notifs, mis anuncios, guardados, chat, deseos, ajustes, anunciar)
+Mi Botanic → área personal (perfil, notifs, mis anuncios, favoritos, chat, deseos, ajustes, anunciar)
 ```
 
 ### Excluido del bottom nav
@@ -85,7 +85,7 @@ Mi Botanic
 ├── Perfil
 ├── Notificaciones
 ├── Mis anuncios
-├── Guardados
+├── Favoritos
 ├── Conversaciones
 ├── Deseos / Alertas
 ├── Ajustes

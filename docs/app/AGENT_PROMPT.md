@@ -52,7 +52,7 @@ El flag **no elimina la pantalla**. Solo determina si pertenece al alcance funci
 Al finalizar debe poderse navegar por:
 
 - autenticación (login, registro, recuperar contraseña, verificar cuenta, bienvenida);
-- marketplace P2P (raíz `/app`, anuncios, detalle, crear, editar, mis anuncios, guardados, mapa, búsqueda);
+- marketplace P2P (raíz `/app`, anuncios, detalle, crear, editar, mis anuncios, favoritos, mapa, búsqueda);
 - deseos (lista, crear, detalle, coincidencias, alerta);
 - comunidad (lista, hilo, responder, mis publicaciones);
 - chat;

@@ -14,11 +14,11 @@ Búsqueda activa creada por un usuario. Contiene criterios (ver más abajo) y pu
 
 ### Criterios del deseo
 
-- **Palabras clave** (texto libre).
-- **Categoría** (semillas, esquejes, plantas, tiestos, accesorios).
-- **Rango de precio** (mínimo y máximo, opcional).
-- **Ubicación** (radio o zona).
-- **Estado** (activo / en pausa).
+- **Palabras clave** (texto libre, único obligatorio).
+- **Categoría** (opcional, "Cualquiera" por defecto).
+- **Presupuesto** ("hasta X €", opcional).
+- **Ubicación** por alcance jerárquico: `pais` / `comunidad` / `provincia` / `ciudad`.
+- **Estado** (activo / en pausa) — todo deseo nuevo nace activo; se pausa desde la lista.
 
 ## Coincidencia
 

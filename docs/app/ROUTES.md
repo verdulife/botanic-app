@@ -17,7 +17,7 @@ Todas las rutas tienen el prefijo `/app/`. Slugs en espa√±ol (sin tildes, sin e√
 | P2P-05 | `/app/publicar` | Crear anuncio | true |
 | P2P-06 | `/app/anuncio/:id/editar` | Editar anuncio | true |
 | P2P-07 | `/app/mis-anuncios` | Mis anuncios | true |
-| P2P-08 | `/app/guardados` | Anuncios guardados | true |
+| P2P-08 | `/app/favoritos` | Favoritos | true |
 | P2P-09 | `/app/compras` | Mis compras | false |
 | P2P-10 | `/app/ventas` | Mis ventas | false |
 | WISH-01 | `/app/deseos` | Lista de deseos | true |

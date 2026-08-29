@@ -38,9 +38,9 @@ export const primaryNavItems: NavItem[] = [
 	},
 	{
 		label: 'Favoritos',
-		href: '/app/guardados',
+		href: '/app/favoritos',
 		icon: Heart,
-		match: (p) => p.startsWith('/app/guardados')
+		match: (p) => p.startsWith('/app/favoritos')
 	},
 	{
 		label: 'Anunciar',

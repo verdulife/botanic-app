@@ -14,7 +14,7 @@
 | Crear anuncio | true |
 | Editar anuncio | true |
 | Mis anuncios | true |
-| Anuncios guardados | true |
+| Anuncios favoritos | true |
 | Deseos (lista, crear, detalle) | true |
 | Coincidencias de deseos | true |
 | Alertas de deseos | true |

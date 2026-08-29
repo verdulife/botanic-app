@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { page } from '$app/state';
-	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import { X } from 'lucide-svelte/icons';
@@ -17,7 +16,7 @@
 		pushFiltersToURL
 	} from '$lib/mock/url-filters';
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
-	import { MapPin } from 'lucide-svelte/icons';
+	import ListingCard from '$lib/components/wireframe/ListingCard.svelte';
 
 	let filters = $derived<Filters>(
 		readFiltersFromSearchParams(page.url.searchParams)
@@ -103,50 +102,7 @@
 					class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4"
 				>
 					{#each listings as listing (listing.id)}
-						<a
-							href="/app/anuncio/{listing.id}"
-							class="group focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-2xl"
-						>
-							<div class="flex flex-col">
-								<div class="border-border bg-muted relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-2xl border transition-opacity group-hover:opacity-90">
-									<img
-										src={listing.images[0]}
-										alt={listing.title}
-										loading="lazy"
-										class="absolute inset-0 h-full w-full object-cover"
-									/>
-									{#if listing.type === 'regalar'}
-										<Badge
-											variant="default"
-											class="absolute top-2 left-2 text-[10px] tracking-wider uppercase"
-										>
-											Regalo
-										</Badge>
-									{:else if listing.type === 'cambiar'}
-										<Badge
-											variant="secondary"
-											class="absolute top-2 left-2 text-[10px] tracking-wider uppercase"
-										>
-											Cambio
-										</Badge>
-									{/if}
-								</div>
-								<div class="flex flex-col gap-1 px-1 pt-2.5 pb-4">
-									<span class="text-sm leading-snug font-medium">
-										{listing.title}
-									</span>
-									<div class="text-muted-foreground flex items-center justify-between gap-2 text-xs">
-										<span class="flex min-w-0 items-center gap-1.5">
-											<MapPin class="size-3 shrink-0" />
-											<span class="truncate">{listing.location}</span>
-										</span>
-										<span class="text-foreground shrink-0 text-sm font-semibold">
-											{listing.price} €
-										</span>
-									</div>
-								</div>
-							</div>
-						</a>
+						<ListingCard {listing} />
 					{/each}
 				</section>
 			{/if}

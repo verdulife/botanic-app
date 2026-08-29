@@ -25,7 +25,7 @@ Todas las rutas tienen el prefijo `/app/`. Los slugs van **en español, sin tild
 | Listado (plural) | `/app/anuncios`, `/app/deseos`, `/app/comunidad` |
 | Detalle (singular) | `/app/anuncio/:id`, `/app/deseo/:id`, `/app/hilo/:id` |
 | Acciones | Verbo en infinitivo: `/app/publicar`, `/app/registro`, `/app/bienvenida` |
-| Mi cuenta | `/app/mis-anuncios`, `/app/mis-publicaciones`, `/app/guardados` |
+| Mi cuenta | `/app/mis-anuncios`, `/app/mis-publicaciones`, `/app/favoritos` |
 
 Inventario completo y definitivo en [ROUTES.md](ROUTES.md).
 

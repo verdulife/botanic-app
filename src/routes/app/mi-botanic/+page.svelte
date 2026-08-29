@@ -50,7 +50,7 @@
 				{ label: 'Mi perfil', href: '/app/perfil', icon: Sparkles },
 				{ label: 'Notificaciones', href: '/app/notificaciones', icon: Bell },
 				{ label: 'Mis anuncios', href: '/app/mis-anuncios', icon: Package },
-				{ label: 'Guardados', href: '/app/guardados', icon: Bookmark },
+				{ label: 'Favoritos', href: '/app/favoritos', icon: Bookmark },
 				{ label: 'Conversaciones', href: '/app/chat', icon: MessageCircle },
 				{
 					label: 'Deseos y alertas',

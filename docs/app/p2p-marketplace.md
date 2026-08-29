@@ -14,7 +14,7 @@ Permitir la compra, venta, intercambio y regalo de plantas y productos relaciona
 - `/app/publicar` — crear anuncio.
 - `/app/anuncio/:id/editar` — editar anuncio.
 - `/app/mis-anuncios` — anuncios propios.
-- `/app/guardados` — anuncios guardados.
+- `/app/favoritos` — anuncios marcados como favoritos, con búsqueda en vivo por término (título, ubicación, categoría, vendedor).
 
 Inventario completo en [ROUTES.md](ROUTES.md).
 
@@ -64,7 +64,7 @@ Debe representar, como mínimo:
 - Precio (cuando aplique).
 - Información básica del vendedor.
 - Acción para iniciar contacto por chat.
-- Acción para guardar / quitar de guardados (requiere login).
+- Acción para guardar / quitar de favoritos (requiere login).
 
 ### Cuidados de la planta
 

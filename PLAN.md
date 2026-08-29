@@ -139,7 +139,7 @@ Pre-Sprint + 6 sprints (~8-10 semanas).
 - [ ] Filtros: categoría, precio, ubicación
 - [ ] Mapa Leaflet + OpenStreetMap (markers por vendedor con rating; chips de ocultos al saturar)
 - [ ] Detalle de anuncio con galería
-- [ ] Favoritos (anuncios guardados)
+- [ ] Favoritos (guardar anuncios)
 - [ ] Chat en tiempo real (Supabase Realtime)
 - [ ] Compartir anuncio en chat
 - [ ] Perfiles público/privado

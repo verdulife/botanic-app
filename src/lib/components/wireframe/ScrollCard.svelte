@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Listing } from '$lib/mock/listings';
+	import { favorites } from '$lib/stores/favorites.svelte';
 	import { ArrowRight, Heart, Share2 } from 'lucide-svelte/icons';
 
 	type Props = {
@@ -9,7 +10,7 @@
 
 	let { listing, active = false }: Props = $props();
 
-	let saved = $state(false);
+	let favorited = $derived(favorites.isFavorite(listing.id));
 	let imgIndex = $state(0);
 
 	let priceLabel = $derived(
@@ -21,7 +22,7 @@
 	let images = $derived(listing.images);
 
 	function toggleSave() {
-		saved = !saved;
+		favorites.toggle(listing.id);
 	}
 
 	// Ciclo de imágenes: cada 3s avanza con fade, solo mientras la tarjeta es la activa.
@@ -138,9 +139,9 @@
 					type="button"
 					onclick={toggleSave}
 					class="text-white/60 hover:text-white flex size-10 items-center justify-center rounded-full transition-colors md:size-11"
-					aria-label={saved ? 'Quitar de favoritos' : 'Guardar en favoritos'}
+					aria-label={favorited ? 'Quitar de favoritos' : 'Guardar en favoritos'}
 				>
-					<Heart class={['size-5', saved ? 'fill-current text-white' : ''].join(' ')} />
+					<Heart class={['size-5', favorited ? 'fill-current text-white' : ''].join(' ')} />
 				</button>
 				<span class="text-white/60 text-[10px]">Guardar</span>
 			</div>

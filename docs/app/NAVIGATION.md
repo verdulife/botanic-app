@@ -7,7 +7,7 @@ La navegación permanente se compone de:
 1. **Marketplace P2P** (raíz `/app`) — anuncios, búsqueda, filtros, modos de vista (Lista / Mapa / Match).
 2. **Comunidad** (`/app/comunidad`) — publicaciones e hilos.
 3. **Botanic Market** (`/app/market`) — futuro; en el wireframe se muestra con placeholder "Próximamente".
-4. **Mi Botanic** (`/app/mi-botanic`) — área personal: perfil, notificaciones, mis anuncios, guardados, conversaciones, deseos/alertas, ajustes, anunciar.
+4. **Mi Botanic** (`/app/mi-botanic`) — área personal: perfil, notificaciones, mis anuncios, favoritos, conversaciones, deseos/alertas, ajustes, anunciar.
 
 La forma visual concreta (bottom nav móvil, header, drawer lateral…) está definida en detalle en [docs/ux/NAVIGATION_UX.md](../ux/NAVIGATION_UX.md).
 

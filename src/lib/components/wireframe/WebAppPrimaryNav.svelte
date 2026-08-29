@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 	import { primaryNavItems } from './nav-items';
 	import { pushVistaToURL } from '$lib/mock/url-filters';
 
@@ -24,6 +25,27 @@
 		// Dentro de una vista → siguiente: lista → mapa → scroll → lista
 		const next = isLista ? "/app/mapa" : isMapa ? "/app/scroll" : "/app";
 		pushVistaToURL(next);
+	}
+
+	function handleFavoritosClick(e: MouseEvent) {
+		const path = page.url.pathname;
+
+		e.preventDefault();
+
+		// En Favoritos → siguiente: Deseos.
+		if (path.startsWith('/app/favoritos')) {
+			goto('/app/deseos');
+			return;
+		}
+
+		// En el módulo de Deseos → vuelve a Favoritos.
+		if (path.startsWith('/app/deseo')) {
+			goto('/app/favoritos');
+			return;
+		}
+
+		// En el resto → siempre Favoritos (la lista).
+		goto('/app/favoritos');
 	}
 
 	let scrollCompact = $state(false);
@@ -119,7 +141,13 @@
 			<li class="relative z-10 flex justify-center">
 				<a
 					href={item.href}
-					onclick={item.label === 'Inicio' ? handleInicioClick : undefined}
+					onclick={
+						item.label === 'Inicio'
+							? handleInicioClick
+							: item.label === 'Favoritos'
+								? handleFavoritosClick
+								: undefined
+					}
 					class="flex flex-col items-center justify-center rounded-full px-3 py-2.5 font-medium transition-all duration-300 ease-out text-muted-foreground"
 					class:gap-1={!compact}
 					class:gap-0={compact}

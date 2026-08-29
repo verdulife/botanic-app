@@ -21,17 +21,36 @@ Permitir que el usuario indique qué está buscando y convertir esa necesidad en
 - `/app/deseo/:id/coincidencias` — anuncios que encajan.
 - `/app/deseo/:id/alerta` — configuración de alerta (on/off, frecuencia, canales).
 
+La lista de deseos vive en `/app/deseos` (única fuente de verdad). Se accede
+desde la navegación y desde la sección Favoritos (`/app/favoritos`). Incluye
+búsqueda en vivo por término (palabras clave, categoría, ubicación).
+
+El detalle (`/app/deseo/:id`) muestra criterios (categoría, presupuesto, dónde),
+estado, nº de coincidencias y un toggle funcional de alerta (store `wishes`),
+con accesos a coincidencias y configuración de alerta.
+
 Inventario completo en [ROUTES.md](ROUTES.md).
 
 ## Criterios del deseo
 
-Al crear un deseo se pueden definir:
+Al crear un deseo (`/app/deseos/nuevo`) el formulario pide lo mínimo y prellena el resto:
 
-- **Palabras clave** (texto libre).
-- **Categoría** (semillas, esquejes, plantas, tiestos, accesorios).
-- **Rango de precio** (mínimo y máximo, opcional).
-- **Ubicación** (radio o zona).
-- **Estado** (activo / en pausa).
+- **Palabras clave** (texto libre, único obligatorio) con autocomplete de `PLANT_TERMS`.
+- **Ubicación** en un único autocomplete que cubre todo el alcance jerárquico:
+  **todo el país / comunidad autónoma / provincia / ciudad** (datos estáticos en
+  `src/lib/mock/locations.ts`). Sin valor prerellenado; vacío = "Todo el país".
+- **Avisarme** (toggle, default ON) — el fin del deseo es notificar.
+- **Categoría** (opcional, "Cualquiera" por defecto) y **Presupuesto** ("hasta X €", opcional)
+  colapsados en "Más opciones".
+- **Estado** no se pide: todo deseo nuevo nace `activo`; se pausa desde la lista.
+
+Ambos autocompletes (`AutocompleteInput.svelte`) son **flotantes** (dropdown que no
+empuja el contenido, con chevron) y excluyen el **match exacto**: una opción ya
+escogida no vuelve a aparecer como sugerencia.
+
+Los deseos se guardan en memoria en `src/lib/stores/wishes.svelte.ts` (patrón
+`favorites`); al crear, se prepone y se vuelve a `/app/deseos`. Con Supabase
+esto pasa a ser un `insert` real.
 
 Detalle de la entidad en [ENTITIES.md](ENTITIES.md#deseo).
 

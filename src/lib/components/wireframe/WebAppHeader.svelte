@@ -4,12 +4,14 @@
 	import Logo from "$lib/components/Logo.svelte";
 	import { readVista } from "$lib/mock/url-filters";
 	import { searchOverlay } from "../../stores/search-overlay.svelte.ts";
-	import { ArrowLeft, Search, X } from "lucide-svelte/icons";
+	import { ArrowLeft, Heart, Search, Sparkles, X } from "lucide-svelte/icons";
 
 	let isAppArea = $derived(page.url.pathname.startsWith("/app"));
 	let currentVista = $derived(readVista(page.url.searchParams, page.url.pathname));
 	let isMainView = $derived(['lista', 'mapa', 'scroll'].includes(currentVista));
 	let isListingDetail = $derived(page.url.pathname.startsWith('/app/anuncio/'));
+	let isFavoritos = $derived(page.url.pathname.startsWith('/app/favoritos'));
+	let isDeseos = $derived(page.url.pathname.startsWith('/app/deseo'));
 
 	function goBack() {
 		if (window.history.length > 1) {
@@ -53,6 +55,39 @@
 					<ArrowLeft class="size-4" />
 					<span>Volver</span>
 				</button>
+			{:else if isFavoritos || isDeseos}
+				<div
+					class="border-border flex items-center gap-0.5 rounded-full border p-0.5"
+					role="tablist"
+					aria-label="Favoritos y deseos"
+				>
+					<button
+						type="button"
+						onclick={() => goto('/app/favoritos')}
+						class="flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-colors"
+						class:bg-muted={isFavoritos}
+						class:text-foreground={isFavoritos}
+						class:text-muted-foreground={!isFavoritos}
+						class:hover:text-foreground={!isFavoritos}
+						aria-current={isFavoritos ? 'page' : undefined}
+					>
+						<Heart class="size-4" />
+						<span>Favoritos</span>
+					</button>
+					<button
+						type="button"
+						onclick={() => goto('/app/deseos')}
+						class="flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-colors"
+						class:bg-muted={isDeseos}
+						class:text-foreground={isDeseos}
+						class:text-muted-foreground={!isDeseos}
+						class:hover:text-foreground={!isDeseos}
+						aria-current={isDeseos ? 'page' : undefined}
+					>
+						<Sparkles class="size-4" />
+						<span>Deseos</span>
+					</button>
+				</div>
 			{:else if isMainView}
 				<button
 					type="button"
