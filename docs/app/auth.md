@@ -36,6 +36,15 @@ El wireframe usa **autenticación mock** (sin Supabase): sesión local por cooki
 - El resto de rutas y acciones protegidas (publicar, guardar, chat, crear deseo…)
   funcionan igual: redirigen a `/app/login?next=...` cuando no hay sesión.
 
+**Persistencia (dev vs prod):** en desarrollo el store se persiste en
+`.mock-auth/users.json` (sobrevive reinicios). En producción (Vercel serverless)
+el filesystem es de solo lectura y las instancias efímeras, así que el mock pasa
+a ser **stateless y determinista**: los usuarios seed se derivan de `USERS` en
+cada instancia con salt y timestamps fijos (`src/lib/mock/auth-server.ts`,
+flag `IS_PROD`), por lo que la cuenta demo y los seeds siempre funcionan; los
+registros nuevos y los cambios de perfil viven solo en la caché del proceso
+(efímeros en serverless). No hay writes de filesystem en producción.
+
 ### Al conectar Supabase
 
 Cambiar `AUTH_MODE` a `'supabase'`. Los server files ramifican con

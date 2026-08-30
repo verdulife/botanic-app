@@ -1,6 +1,14 @@
 // Autenticación mock (server-only) para la fase de wireframe/UI.
-// Simula sesión, registro y login sin depender de Supabase. El estado se
-// persiste en `.mock-auth/users.json` (gitignored) para sobrevivir reinicios.
+// Simula sesión, registro y login sin depender de Supabase.
+//
+// Persistencia:
+// - Desarrollo: se persiste en `.mock-auth/users.json` (gitignored) para que
+//   las cuentas sobrevivan reinicios.
+// - Producción (Vercel serverless): filesystem de solo lectura + instancias
+//   efímeras → el store es stateless y determinista. Los usuarios seed se
+//   derivan de `USERS` en cada instancia con salt y timestamps fijos, así la
+//   cuenta demo y el login con seeds funcionan sin estado. Los registros y
+//   cambios de perfil viven solo en la caché del proceso (efímeros).
 //
 // Los usuarios devueltos por `getSessionData` son estructuralmente compatibles
 // con los tipos de Supabase (`User`/`Session`), así que los consumidores de
@@ -36,10 +44,19 @@ type StoredUser = {
 const STORE_DIR = join(process.cwd(), '.mock-auth');
 const STORE_FILE = join(STORE_DIR, 'users.json');
 
+// En producción (Vercel serverless) el filesystem es de solo lectura y las
+// instancias efímeras: el mock pasa a ser stateless y determinista, sin tocar
+// `.mock-auth/users.json`. En desarrollo se mantiene la persistencia a archivo.
+const IS_PROD = process.env.NODE_ENV === 'production';
+
+// Salt fijo (sin dos puntos: `verifyPassword` divide por `:`) para que en
+// producción los hashes de los seeds sean deterministas y la cuenta demo
+// funcione en cualquier instancia sin estado persistido.
+const MOCK_SEED_SALT = 'botanic-mock-seed';
+
 let cache: StoredUser[] | null = null;
 
-function hashPassword(password: string): string {
-	const salt = randomBytes(8).toString('hex');
+function hashPassword(password: string, salt = randomBytes(8).toString('hex')): string {
 	const hash = createHash('sha256').update(`${salt}:${password}`).digest('hex');
 	return `${salt}:${hash}`;
 }
@@ -53,6 +70,12 @@ function verifyPassword(password: string, stored: string): boolean {
 
 function loadUsers(): StoredUser[] {
 	if (cache) return cache;
+	if (IS_PROD) {
+		// Stateless: seeds deterministas en memoria, sin tocar el filesystem
+		// (Vercel serverless: fs de solo lectura + instancias efímeras).
+		cache = seedUsers();
+		return cache;
+	}
 	if (existsSync(STORE_FILE)) {
 		try {
 			const raw = readFileSync(STORE_FILE, 'utf8');
@@ -81,11 +104,15 @@ function nowIso(): string {
 }
 
 function seedUsers(): StoredUser[] {
-	const createdAt = nowIso();
+	// En producción usamos salt y timestamp fijos para que el resultado sea
+	// determinista (stateless). En dev, salt aleatorio + momento actual (se
+	// persiste luego en `.mock-auth/users.json`).
+	const createdAt = IS_PROD ? '2026-01-01T00:00:00.000Z' : nowIso();
+	const salt = IS_PROD ? MOCK_SEED_SALT : undefined;
 	return USERS.map((u) => ({
 		id: `user_${u.username}`,
 		email: mockEmailFor(u.username),
-		passwordHash: hashPassword(MOCK_DEMO_PASSWORD),
+		passwordHash: hashPassword(MOCK_DEMO_PASSWORD, salt),
 		email_confirmed_at: createdAt,
 		profile: {
 			id: `user_${u.username}`,
