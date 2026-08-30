@@ -13,9 +13,9 @@ Todas las rutas tienen el prefijo `/app/`. Slugs en español (sin tildes, sin e�
 | P2P-01 | `/app/anuncios` | Listado de anuncios | true |
 | P2P-02 | `/app/buscar` | Resultados de búsqueda | true |
 | P2P-03 | `/app/mapa` | Búsqueda por mapa | true |
-| P2P-04 | `/app/anuncio/:id` | Detalle de anuncio | true |
+| P2P-04 | `/app/anuncio/:slug` | Detalle de anuncio (slug-token estilo Wallapop) | true |
 | P2P-05 | `/app/publicar` | Crear anuncio | true |
-| P2P-06 | `/app/anuncio/:id/editar` | Editar anuncio | true |
+| P2P-06 | `/app/anuncio/:slug/editar` | Editar anuncio | true |
 | P2P-07 | `/app/mis-anuncios` | Mis anuncios | true |
 | P2P-08 | `/app/favoritos` | Favoritos | true |
 | P2P-09 | `/app/compras` | Mis compras | false |

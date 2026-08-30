@@ -13,7 +13,8 @@
 		Plus,
 		LogOut,
 		ChevronRight,
-		Sparkles
+		Sparkles,
+		FileText
 	} from 'lucide-svelte/icons';
 
 	let { data } = $props();
@@ -50,6 +51,7 @@
 				{ label: 'Mi perfil', href: '/app/perfil', icon: Sparkles },
 				{ label: 'Notificaciones', href: '/app/notificaciones', icon: Bell },
 				{ label: 'Mis anuncios', href: '/app/mis-anuncios', icon: Package },
+				{ label: 'Borradores', href: '/app/borradores', icon: FileText },
 				{ label: 'Favoritos', href: '/app/favoritos', icon: Bookmark },
 				{ label: 'Conversaciones', href: '/app/chat', icon: MessageCircle },
 				{

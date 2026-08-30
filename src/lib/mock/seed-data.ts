@@ -6,10 +6,10 @@ export type CategorySlug =
 	| 'semillas'
 	| 'esquejes'
 	| 'plantas'
+	| 'bulbos'
 	| 'tiestos'
 	| 'accesorios'
 	| 'herramientas'
-	| 'libros'
 	| 'otros';
 
 export type Category = {
@@ -22,10 +22,10 @@ export const CATEGORIES: Category[] = [
 	{ slug: 'semillas', name: 'Semillas', position: 0 },
 	{ slug: 'esquejes', name: 'Esquejes', position: 1 },
 	{ slug: 'plantas', name: 'Plantas', position: 2 },
-	{ slug: 'tiestos', name: 'Tiestos', position: 3 },
-	{ slug: 'accesorios', name: 'Accesorios', position: 4 },
-	{ slug: 'herramientas', name: 'Herramientas', position: 5 },
-	{ slug: 'libros', name: 'Libros y guías', position: 6 },
+	{ slug: 'bulbos', name: 'Bulbos', position: 3 },
+	{ slug: 'tiestos', name: 'Tiestos', position: 4 },
+	{ slug: 'accesorios', name: 'Accesorios', position: 5 },
+	{ slug: 'herramientas', name: 'Herramientas', position: 6 },
 	{ slug: 'otros', name: 'Otros', position: 7 }
 ];
 
@@ -112,6 +112,12 @@ export const LISTING_TEMPLATES: Record<CategorySlug, string[]> = {
 		'{plant} en tiesto de barro · recién trasplantada',
 		'{plant} pequeña · ideal para escritorio'
 	],
+	bulbos: [
+		'Bulbos de tulipán · pack de 6',
+		'Bulbos de jacinto para forzar en interior',
+		'Bulbos de azucena · mezcla de colores',
+		'Bulbos de narciso · floración de primavera'
+	],
 	tiestos: [
 		'Tiesto de cerámica {color} · {size}cm de diámetro',
 		'Maceta de barro {size}cm · con plato',
@@ -130,12 +136,6 @@ export const LISTING_TEMPLATES: Record<CategorySlug, string[]> = {
 		'Pulverizador {size}ml · para humidificar',
 		'Pala de mano y rastrillo · set de 2'
 	],
-	libros: [
-		'Libro: "Plantas de interior para principiantes"',
-		'Guía práctica de propagación · 120 páginas',
-		'Manual de suculentas · tapa blanda',
-		'Revista "Verde es vida" · números sueltos'
-	],
 	otros: [
 		'Kokedama de {plant} · con musgo sphagnum',
 		'Tutor de musgo para plantas trepadoras',
@@ -148,7 +148,6 @@ export const SIZES = { small: 8, medium: 12, large: 16, xl: 20 };
 export const COLORS = ['terracota', 'blanco mate', 'verde salvia', 'gris antracita', 'beig cálido'];
 
 export function priceFor(category: CategorySlug): number {
-	if (category === 'libros') return Math.round((Math.random() * 12 + 5) * 100) / 100;
 	if (category === 'semillas') return Math.round((Math.random() * 4 + 1.5) * 100) / 100;
 	if (category === 'herramientas') return Math.round((Math.random() * 20 + 8) * 100) / 100;
 	if (category === 'tiestos') return Math.round((Math.random() * 15 + 5) * 100) / 100;
@@ -161,10 +160,10 @@ export function describe(category: Category, title: string): string {
 		semillas: 'Recogidas a mano. Germinación probada en mi jardín.',
 		esquejes: 'Proceden de una planta madre sana. Enraizan en 2-3 semanas en agua.',
 		plantas: 'Cuidados fáciles. Incluye instrucciones básicas de riego y luz.',
+		bulbos: 'Bulbos frescos, listos para plantar. Variedades con floración probada.',
 		tiestos: 'Esmaltado a mano. Aguanta heladas suaves.',
 		accesorios: 'Producto sin abrir, comprado en vivero local.',
 		herramientas: 'Acero inoxidable, ergonómicas.',
-		libros: 'Como nuevo, sin marcas.',
 		otros: 'Hecho a mano en mi taller.'
 	};
 	return `${intros[category.slug] ?? 'Buen estado general.'} ${title}.`;

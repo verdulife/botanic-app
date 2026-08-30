@@ -2,6 +2,7 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
 	import { favorites } from '$lib/stores/favorites.svelte';
+	import { listingHref } from '$lib/listing-url';
 	import { Heart, MapPin } from 'lucide-svelte/icons';
 	import type { Listing } from '$lib/mock/listings';
 
@@ -14,7 +15,7 @@
 
 <div class="group relative rounded-2xl">
 	<a
-		href="/app/anuncio/{listing.id}"
+		href={listingHref(listing)}
 		class="block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 	>
 		<div class="flex flex-col">
@@ -27,21 +28,23 @@
 					loading="lazy"
 					class="absolute inset-0 h-full w-full object-cover"
 				/>
-				{#if listing.type === 'regalar'}
-					<Badge
-						variant="default"
-						class="absolute top-2 left-2 text-[10px] tracking-wider uppercase"
-					>
-						Regalo
-					</Badge>
-				{:else if listing.type === 'cambiar'}
-					<Badge
-						variant="secondary"
-						class="absolute top-2 left-2 text-[10px] tracking-wider uppercase"
-					>
-						Cambio
-					</Badge>
-				{/if}
+				{#each listing.type as t (t)}
+					{#if t === 'regalar'}
+						<Badge
+							variant="default"
+							class="absolute top-2 left-2 text-[10px] tracking-wider uppercase"
+						>
+							Regalo
+						</Badge>
+					{:else if t === 'cambiar'}
+						<Badge
+							variant="secondary"
+							class="absolute top-2 left-2 text-[10px] tracking-wider uppercase"
+						>
+							Cambio
+						</Badge>
+					{/if}
+				{/each}
 			</div>
 			<div class="flex flex-col gap-1 px-1 pt-2.5 pb-4">
 				<span class="text-sm leading-snug font-medium">{listing.title}</span>
@@ -53,7 +56,7 @@
 						<span class="truncate">{listing.location}</span>
 					</span>
 					<span class="text-foreground shrink-0 text-sm font-semibold">
-						{listing.price} €
+						{listing.type.includes('regalar') ? 'Gratis' : `${listing.price} €`}
 					</span>
 				</div>
 			</div>

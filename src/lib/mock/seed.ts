@@ -20,8 +20,21 @@ import {
 	mockEmailFor,
 	type CategorySlug
 } from './seed-data';
+import { listingToken } from '$lib/listing-url';
 
 export type ListingType = 'vender' | 'cambiar' | 'regalar';
+
+// Especie identificada (manual o vía Pl@ntNet). `name` es el nombre de display
+// (nombre común si existe, si no científico) y la clave usada por plant-care.
+// Refleja la futura tabla `species` + plant_care en Supabase.
+export type PlantSpecies = {
+	name: string;
+	scientific?: string;
+	genus?: string;
+	family?: string;
+	confidence?: number;
+	source?: 'manual' | 'plantnet';
+};
 
 export type SellerInfo = {
 	username: string;
@@ -43,11 +56,13 @@ export type Listing = {
 	seller: string;
 	sellerInfo: SellerInfo;
 	images: string[];
-	type: ListingType;
+	type: ListingType[];
 	coordinates: { lat: number; lng: number };
 	datePosted: Date;
 	description: string;
-	species?: string;
+	species?: PlantSpecies;
+	size?: string;
+	wishId?: string;
 };
 
 // ──────────────────────────────────────────────────────────
@@ -69,10 +84,10 @@ const IMAGES_BY_CATEGORY: Record<CategorySlug, string[]> = {
 	semillas: [],
 	esquejes: [],
 	plantas: [],
+	bulbos: [],
 	tiestos: [],
 	accesorios: [],
 	herramientas: [],
-	libros: [],
 	otros: []
 };
 
@@ -85,7 +100,6 @@ const PREFIX_TO_SLUG: Record<string, CategorySlug> = {
 	accesorios: 'accesorios',
 	sustratos: 'accesorios',
 	herramientas: 'herramientas',
-	libros: 'libros',
 	otros: 'otros'
 };
 
@@ -104,8 +118,16 @@ export const userCoords = { lat: 40.4168, lng: -3.7038 };
 // RNG determinista (misma semilla que el script)
 // ──────────────────────────────────────────────────────────
 
-const LISTING_TYPES: ListingType[] = ['vender', 'cambiar', 'regalar'];
-
+// Conjuntos de tipos posibles: Vender y Cambiar son combinables; Regalar siempre
+// exclusivo. Un solo rand() selecciona el conjunto para no romper la determinidad
+// del resto de campos del seed.
+const TYPE_SETS: ListingType[][] = [
+	['vender'],
+	['cambiar'],
+	['regalar'],
+	['vender', 'cambiar'],
+	['vender', 'cambiar']
+];
 let rngSeed = 1234;
 function rand(): number {
 	rngSeed = (rngSeed * 9301 + 49297) % 233280;
@@ -124,10 +146,10 @@ const PRICE_RANGES: Record<CategorySlug, number[]> = {
 	semillas: [1.5, 4],
 	esquejes: [3, 15],
 	plantas: [3, 18],
+	bulbos: [3, 9],
 	tiestos: [5, 15],
 	accesorios: [2, 8],
 	herramientas: [8, 20],
-	libros: [5, 12],
 	otros: [3, 18]
 };
 
@@ -165,8 +187,8 @@ function buildListings(): Listing[] {
 		for (let i = 0; i < numListings; i++) {
 			const category = pick(CATEGORIES);
 			const tpl = pick(LISTING_TEMPLATES[category.slug]);
-			const species = tpl.includes('{plant}') ? pick(PLANT_TERMS) : undefined;
-			const title = fillTemplate(tpl, species);
+			const speciesName = tpl.includes('{plant}') ? pick(PLANT_TERMS) : undefined;
+			const title = fillTemplate(tpl, speciesName);
 			const location = LOCATIONS.find((l) => l.label === user.city) ?? pick(LOCATIONS);
 
 			// 3-5 imágenes desde el pool de la categoría (puede repetir si hay pocas).
@@ -176,7 +198,7 @@ function buildListings(): Listing[] {
 			const count = Math.min(pool.length, 3 + Math.floor(rand() * 3));
 			const images = Array.from({ length: count }, () => pick(pool));
 
-			const type = pick(LISTING_TYPES);
+			const type = TYPE_SETS[Math.floor(rand() * TYPE_SETS.length)]!;
 
 			// Pequeña variación determinista para que los markers del mapa no se
 			// solapen en el punto exacto del barrio.
@@ -187,7 +209,7 @@ function buildListings(): Listing[] {
 			};
 
 			listings.push({
-				id: `listing-${++id}`,
+				id: listingToken(++id),
 				title,
 				price: priceFor(category.slug),
 				category: category.name,
@@ -208,7 +230,7 @@ function buildListings(): Listing[] {
 				coordinates,
 				datePosted: new Date(now - randomOffset()),
 				description: describe(category, title),
-				species
+				species: speciesName ? { name: speciesName, source: 'manual' } : undefined
 			});
 		}
 	}
@@ -217,6 +239,12 @@ function buildListings(): Listing[] {
 }
 
 export const seedListings: Listing[] = buildListings();
+
+// Pool de imágenes locales del seed por categoría, para el wireframe del
+// selector de fotos del formulario de publicación (no hay subida real).
+export function seedImagesByCategory(slug: CategorySlug): string[] {
+	return IMAGES_BY_CATEGORY[slug];
+}
 
 // ──────────────────────────────────────────────────────────
 // Lookup para el detalle del anuncio

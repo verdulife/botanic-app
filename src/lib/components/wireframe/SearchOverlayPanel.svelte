@@ -5,6 +5,8 @@
 	import { Button } from "$lib/components/ui/button";
 	import * as Select from "$lib/components/ui/select";
 	import { mockListings, sortOptions, type SortOption } from "$lib/mock/listings";
+	import { USERS } from "$lib/mock/seed-data";
+	import { listingHref } from "$lib/listing-url";
 	import { type Filters } from "$lib/mock/filters";
 	import { readVista, pushVistaToURL, type Vista } from "$lib/mock/url-filters";
 	import { searchOverlay } from "../../stores/search-overlay.svelte.ts";
@@ -29,6 +31,7 @@
 
 	type Suggestion =
 		| { kind: "listing"; id: string; title: string; price: number; image: string }
+		| { kind: "perfil"; username: string; fullName: string; city: string; initial: string }
 		| { kind: "categoria"; label: string }
 		| { kind: "ubicacion"; label: string };
 
@@ -57,6 +60,18 @@
 				image: l.images[0]
 			});
 		};
+		const pushPerfil = (u: (typeof USERS)[number]) => {
+			if (out.some((s) => s.kind === "perfil" && s.username === u.username)) return;
+			if (q && !`${u.full_name} ${u.username} ${u.city} ${u.bio}`.toLowerCase().includes(q))
+				return;
+			out.push({
+				kind: "perfil",
+				username: u.username,
+				fullName: u.full_name,
+				city: u.city,
+				initial: (u.full_name.trim()?.[0] ?? "?").toUpperCase()
+			});
+		};
 		const pushCategoria = (label: string) => {
 			if (out.some((s) => s.kind === "categoria" && s.label === label)) return;
 			if (q && !label.toLowerCase().includes(q)) return;
@@ -68,11 +83,24 @@
 			out.push({ kind: "ubicacion", label });
 		};
 
-		for (const l of mockListings) {
+		const relevant = q
+			? mockListings.filter((l) => l.title.toLowerCase().includes(q))
+			: mockListings;
+
+		for (const l of relevant) {
 			pushListing(l);
+			if (out.length >= 4) break;
+		}
+
+		for (const u of USERS) {
+			pushPerfil(u);
+			if (out.length >= 7) break;
+		}
+
+		for (const l of relevant) {
 			pushUbicacion(l.location);
 			pushCategoria(l.category);
-			if (out.length >= 6) return out;
+			if (out.length >= 10) break;
 		}
 		return out;
 	});
@@ -89,7 +117,11 @@
 	function applySuggestion(s: Suggestion) {
 		searchOverlay.closeSearch();
 		if (s.kind === "listing") {
-			goto(`/app/anuncio/${s.id}`);
+			goto(listingHref({ id: s.id, title: s.title }));
+			return;
+		}
+		if (s.kind === "perfil") {
+			goto(`/app/perfil/${s.username}`);
 			return;
 		}
 		if (s.kind === "categoria") {
@@ -135,7 +167,7 @@
 			<Input
 				class="h-12 pl-10"
 				type="search"
-				placeholder="Buscar plantas, esquejes, ubicaciones…"
+				placeholder="Buscar plantas, perfiles, ubicaciones…"
 				value={filters.termino}
 				oninput={(e) =>
 					patch({ termino: (e.currentTarget as HTMLInputElement).value })}
@@ -150,7 +182,7 @@
 		{#if suggestions.length > 0}
 			<div class="relative mt-1 flex min-h-0 flex-1 flex-col">
 				<ul class="scrollbar-hide flex min-h-0 flex-1 flex-col overflow-y-auto">
-					{#each suggestions as s (s.kind === "listing" ? s.id : s.label)}
+					{#each suggestions as s (s.kind === "listing" ? s.id : s.kind === "perfil" ? s.username : s.label)}
 						<li>
 							<button
 								type="button"
@@ -164,6 +196,12 @@
 										class="bg-muted size-11 shrink-0 rounded-md object-cover"
 										loading="lazy"
 									/>
+								{:else if s.kind === "perfil"}
+									<span
+										class="bg-primary/15 text-primary flex size-11 shrink-0 items-center justify-center rounded-full text-sm font-medium"
+									>
+										{s.initial}
+									</span>
 								{:else if s.kind === "categoria"}
 									<span
 										class="bg-muted text-muted-foreground flex size-11 shrink-0 items-center justify-center rounded-md"
@@ -179,11 +217,15 @@
 								{/if}
 								<span class="flex min-w-0 flex-1 flex-col">
 									<span class="truncate text-sm font-medium">
-										{s.kind === "listing" ? s.title : s.label}
+										{s.kind === "listing" ? s.title : s.kind === "perfil" ? s.fullName : s.label}
 									</span>
 									{#if s.kind === "listing"}
 										<span class="text-muted-foreground text-xs tabular-nums">
 											{s.price} €
+										</span>
+									{:else if s.kind === "perfil"}
+										<span class="text-muted-foreground truncate text-xs">
+											{s.city}
 										</span>
 									{:else if s.kind === "categoria"}
 										<span class="text-muted-foreground text-xs">Categoría</span>

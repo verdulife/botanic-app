@@ -23,7 +23,7 @@ Todas las rutas tienen el prefijo `/app/`. Los slugs van **en español, sin tild
 | Tipo | Forma |
 |---|---|
 | Listado (plural) | `/app/anuncios`, `/app/deseos`, `/app/comunidad` |
-| Detalle (singular) | `/app/anuncio/:id`, `/app/deseo/:id`, `/app/hilo/:id` |
+| Detalle (singular) | `/app/anuncio/:slug` (slug-token estilo Wallapop), `/app/deseo/:id`, `/app/hilo/:id` |
 | Acciones | Verbo en infinitivo: `/app/publicar`, `/app/registro`, `/app/bienvenida` |
 | Mi cuenta | `/app/mis-anuncios`, `/app/mis-publicaciones`, `/app/favoritos` |
 

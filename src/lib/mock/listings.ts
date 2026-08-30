@@ -12,11 +12,12 @@ export {
 	userCoords,
 	type Listing,
 	type ListingType,
-	type SellerInfo
+	type SellerInfo,
+	type PlantSpecies
 } from './seed';
 export { seedListings as mockListings } from './seed';
 export { type Listing as ClientListing } from './seed';
-export { getPlantCare, type PlantCare } from './plant-care';
+export { getPlantCare, getPlantCareForSpecies, type PlantCare } from './plant-care';
 import { LOCATIONS } from './seed-data';
 import { userCoords, type Listing } from './seed';
 import type { ListingType } from './seed';
@@ -26,10 +27,10 @@ export const categories = [
 	'Semillas',
 	'Esquejes',
 	'Plantas',
+	'Bulbos',
 	'Tiestos',
 	'Accesorios',
 	'Herramientas',
-	'Libros y guías',
 	'Otros'
 ];
 

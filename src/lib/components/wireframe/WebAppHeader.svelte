@@ -12,6 +12,7 @@
 	let isListingDetail = $derived(page.url.pathname.startsWith('/app/anuncio/'));
 	let isFavoritos = $derived(page.url.pathname.startsWith('/app/favoritos'));
 	let isDeseos = $derived(page.url.pathname.startsWith('/app/deseo'));
+	let isPublicar = $derived(page.url.pathname.startsWith('/app/publicar'));
 
 	function goBack() {
 		if (window.history.length > 1) {
@@ -88,7 +89,17 @@
 						<span>Deseos</span>
 					</button>
 				</div>
-			{:else if isMainView}
+			{:else if isPublicar}
+					<button
+						type="button"
+						onclick={goBack}
+						class="text-muted-foreground hover:text-foreground hover:bg-muted border-border flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm font-medium transition-colors"
+						aria-label="Cancelar"
+					>
+						<X class="size-4" />
+						<span>Cancelar</span>
+					</button>
+				{:else if isMainView}
 				<button
 					type="button"
 					onclick={searchOverlay.toggleSearch}

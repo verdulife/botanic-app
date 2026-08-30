@@ -75,6 +75,39 @@ export const plantCareBySpecies: Record<string, PlantCare> = {
 	}
 };
 
+// Alias (nombres científicos/comunes que devuelve Pl@ntNet) → clave de
+// `plantCareBySpecies`, para que una especie detectada resuelva cuidados.
+const ALIASES: Record<string, string> = {
+	'epipremnum aureum': 'pothos',
+	'epipremnum pinnatum': 'pothos',
+	'golden pothos': 'pothos',
+	'devil\'s ivy': 'pothos',
+	'monstera deliciosa': 'monstera deliciosa',
+	'swiss cheese plant': 'monstera deliciosa',
+	'snake plant': 'sansevieria trifasciata',
+	'sansevieria': 'sansevieria trifasciata',
+	'ficus lyrata': 'ficus lyrata',
+	'fiddle leaf fig': 'ficus lyrata',
+	'calathea orbifolia': 'calathea orbifolia',
+	'echeveria': 'suculenta echeveria',
+	'suculenta': 'suculenta echeveria',
+	'salvia rosmarinus': 'romero',
+	'nephrolepis exaltata': 'helecho boston',
+	'phalaenopsis': 'orquídea phalaenopsis',
+	'orquídea': 'orquídea phalaenopsis'
+};
+
 export function getPlantCare(species: string): PlantCare | undefined {
-	return plantCareBySpecies[species?.toLowerCase().trim()];
+	const key = species?.toLowerCase().trim();
+	if (!key) return undefined;
+	return plantCareBySpecies[key] ?? plantCareBySpecies[ALIASES[key]];
+}
+
+// Resuelve cuidados desde una especie estructurada (PlantSpecies): prueba el
+// nombre de display y, si no, el científico (lo que devuelve Pl@ntNet).
+export function getPlantCareForSpecies(
+	species: { name: string; scientific?: string } | undefined
+): PlantCare | undefined {
+	if (!species) return undefined;
+	return getPlantCare(species.name) ?? getPlantCare(species.scientific ?? '');
 }

@@ -13,6 +13,7 @@ const MI_BOTANIC_PREFIXES = [
 	'/app/mi-botanic',
 	'/app/perfil',
 	'/app/mis-anuncios',
+	'/app/borradores',
 	'/app/compras',
 	'/app/ventas',
 	'/app/chat',

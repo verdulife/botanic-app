@@ -10,9 +10,9 @@ Permitir la compra, venta, intercambio y regalo de plantas y productos relaciona
 - `/app/anuncios` — listado completo.
 - `/app/buscar` — resultados de búsqueda.
 - `/app/mapa` — exploración geográfica.
-- `/app/anuncio/:id` — detalle.
+- `/app/anuncio/:slug` — detalle (slug del título + token, estilo Wallapop).
 - `/app/publicar` — crear anuncio.
-- `/app/anuncio/:id/editar` — editar anuncio.
+- `/app/anuncio/:slug/editar` — editar anuncio.
 - `/app/mis-anuncios` — anuncios propios.
 - `/app/favoritos` — anuncios marcados como favoritos, con búsqueda en vivo por término (título, ubicación, categoría, vendedor).
 
@@ -99,6 +99,20 @@ Sobre la galería (fija, no se desplaza con el slider) dos botones apilados a la
 
 El galería es un carrusel deslizable (imagen 4:5, dots como indicador no-navegación).
 
+### Deseos del vendedor (anuncios de cambio)
+
+Si el anuncio es de **cambio**, el detalle muestra el bloque **"Está buscando"**
+(antes de "Este vendedor también tiene"): scroll horizontal con peek de
+los deseos del vendedor, cards **solo texto** (keywords, ubicación, presupuesto;
+los deseos no tienen imagen) que enlazan al **perfil del vendedor**. El deseo
+elegido como "cambio por" (`listing.wishId`) va primero con el badge "Deseado".
+
+El **perfil público** tiene la sección **"Sus deseos"** (filas de texto con
+estado activo/pausado): si es el usuario actual se muestran sus deseos
+(`wishes.list`), si no los deseos mock por vendedor en
+`src/lib/mock/seller-wishes.ts` (solo algunos vendedores — el resto no muestra
+sección). En el perfil propio hay un enlace "Gestionar deseos" → `/app/deseos`.
+
 
 ## Crear anuncio
 
@@ -111,7 +125,89 @@ Debe contener los campos necesarios para representar una futura publicación:
 - Precio (opcional, puede ser gratuito / intercambio).
 - Ubicación.
 
-La implementación inicial puede ser visual y no persistir datos.
+**Implementación (wireframe)**: formulario en `/app/publicar` (P2P-05, reemplaza
+el placeholder) en **4 fases** con botones Continuar/Volver y **sin indicador de
+progreso**. Al enviar guarda en memoria en
+`src/lib/stores/user-listings.svelte.ts` (patrón `wishes`) y muestra una
+**pantalla de éxito** ("¡Anuncio publicado!") dentro de la misma ruta con preview
+en miniatura y acciones: **Ver mi anuncio**, **Compartir** (Web Share API),
+**Publicar otro anuncio** (resetea el formulario) y "Ir a Mis anuncios". El
+detalle (`/app/anuncio/:slug`) resuelve primero desde ese store y cae al seed.
+
+1. **Categoría** — título "¿Qué quieres publicar?", grid de las 8 categorías (se
+   eliminó "Libros y guías": con "Otros" basta). Si se elige **Plantas** aparece
+   el selector de **tamaño** (3 cards: Pequeña/Mediana/Grande) para tenerlo antes
+   de crear la descripción. Si la categoría es `plantas` o `esquejes` se activa
+   la fase 3 (análisis); si no, se omite (Fotos → Detalles).
+2. **Fotos** — `PhotoPicker.svelte` (1–5) del pool local de la categoría
+   (`/images/seed/`), primera = portada. Solo representación, sin subida real
+   (spec [cross-cutting.md § Imágenes](cross-cutting.md#imágenes)).
+3. **Análisis** (solo plantas/esquejes) — `PhotoAnalysis.svelte` muestra la
+   portada con una línea de escaneo y "Analizando fotografía…" (spinner centrado)
+   durante un **mínimo de 2 s** mientras llama a Pl@ntNet. Resultado: hasta **4
+   candidatas** con score (mejor preseleccionada) en una lista estilo Mi Botanic
+   + opción "Ninguna de estas"; error → Reintentar + Continuar sin identificar.
+   Una vez por portada; volver y cambiar la foto re-lanza.
+4. **Detalles** — categoría (recap con "Cambiar") y preview de fotos (carrusel
+   swipe con dots, sin contador ni flechas ni thumbnails; borde sutil ring) en
+   bloques de bg blanco. Un bloque aparte agrupa **título + descripción** con el
+   botón conjunto **"Sugerir con IA"** (rellena ambos en una llamada). La Card
+   siguiente: **tipo** multi-select (Vender y Cambiar combinables; Regalar
+   exclusivo; precio oculto en Regalar y opcional en Cambiar), **especie**
+   (opcional) y **ubicación**. Si el tipo incluye **cambiar**, aparece al final
+   el bloque **"¿Qué quieres a cambio?"**: un **acordeón** con "Elegir de mis
+   deseos" y "Crear un nuevo deseo" (abrir uno colapsa el otro; bordes sutiles).
+   El mini-form del deseo incluye keywords, ubicación, categoría, presupuesto y
+   avisarme. El intercambio se guarda en `listing.wishId` y el detalle lo muestra
+   ("Cambio por: …").
+
+- **Especie** (`PlantSpecies`, opcional): modelo estructurado mínimo
+  (`name` display + `scientific`/`genus`/`family`/`confidence`/`source`) que
+  refleja la futura tabla `species`. Autocomplete de `PLANT_TERMS` (manual) o
+  rellenada por la fase de análisis.
+- **Identificación por IA (Pl@ntNet)**: el análisis autocompleta **título** (si
+  vacío), **categoría → Plantas** (solo si no estaba elegida) y **especie**;
+  todo es editable. La **descripción no se autocompleta** (decisión: la redacta
+  el vendedor o se sugiere con IA). Las fotos webp se convierten a jpeg **en el
+  cliente** (Canvas); la clave vive solo en el servidor
+  (`src/routes/api/identify-plant/+server.ts`). Detalle del flujo y cuotas en
+  [architecture.md § Identificación y cuidados](../../architecture.md#identificación-y-cuidados-de-plantas-híbrido--post-wireframe).
+- **Título + descripción con IA (botón conjunto)**: en la fase 4, "Sugerir con IA"
+  llama a `src/routes/api/suggest-description/+server.ts`, que genera **título y
+  descripción en una sola llamada** con un LLM de tier gratis — **Groq**
+  (`GROQ_API_KEY`, modelo `openai/gpt-oss-20b`, `temperature 0.4`,
+  `max_completion_tokens 300`, `reasoning_effort: low`, y `response_format:
+  json_schema` estricto `{title, description}`) o **Gemini**
+  (`GEMINI_API_KEY`, `gemini-2.0-flash`) como fallback. La clave vive solo en el
+  servidor. El prompt (plantilla fija) redacta de forma **natural y orgánica**
+  usando solo los datos proporcionados (categoría, especie, tamaño si plantas,
+  tipo, precio, ubicación, cuidados si los hay): **no inventar**, español
+  natural de España, tono cálido sin sonar a tienda, título claro ≤80 caracteres,
+  sin emojis/hashtags y sin los caracteres «—» ni «–». El resultado es editable.
+- **Categoría Bulbos**: añadida al catálogo mock (`seed-data.ts` + filtros +
+  seed). Sin pool de imágenes propio → usa el fallback a `plantas`. El analizador
+  no se aplica a bulbos (foto de un bulbo identifica mal); la especie se rellena
+  a mano.
+- **Borradores**: `src/lib/stores/listing-draft.svelte.ts` persiste **varios
+  borradores** en `localStorage` (`botanic_publicar_draft`). En la fase 4 el botón
+  "Guardar borrador" guarda y **navega a `/app/borradores`** (sin pasar por el
+  diálogo de salida); al volver a `/app/publicar` con borradores aparece un
+  banner para **Continuar** (el más reciente), **Descartar** o **Ver todos**.
+  La ruta `/app/borradores` lista los borradores (continuar → `/app/publicar?draft=id`,
+  eliminar); también hay una entrada "Borradores" en Mi Botanic. Si se intenta
+  salir con datos sin guardar (navegación interna o el "Cancelar" del header) se
+  abre un diálogo: **Guardar borrador y salir** / **Salir sin guardar** /
+  **Seguir editando**; además `beforeunload` avisa al recargar o cerrar. Al
+  publicar se elimina el borrador activo y se omite el aviso. Post-wireframe los
+  borradores migrarán a Supabase (tabla `drafts` + storage de imágenes).
+- **Header**: en `/publicar` el botón de acciones del header pasa de "Buscar" a
+  **Cancelar** (hace `history.back()`).
+- **Ubicación**: autocomplete de barrios (`LOCATIONS`), prellenada desde
+  `profile.location_label` y editable por anuncio. En producción la fuente
+  principal es la ubicación guardada en el perfil (editable por anuncio), con
+  GPS como atajo opcional — nunca es el mecanismo obligatorio.
+- **Vendedor**: `sellerInfo` se construye desde el perfil del usuario
+  autenticado (`data.profile` + `data.user.email`); rating/reviews en 0.
 
 ## Ubicación
 

@@ -84,7 +84,8 @@ function matchesPrice(listing: Listing, min: number, max: number): boolean {
 
 function matchesType(listing: Listing, tipos: ListingType[]): boolean {
 	if (tipos.length === 0) return true;
-	return tipos.includes(listing.type);
+	// OR: el anuncio encaja si soporta cualquiera de los tipos filtrados.
+	return tipos.some((t) => listing.type.includes(t));
 }
 
 function matchesTerm(listing: Listing, termino: string): boolean {

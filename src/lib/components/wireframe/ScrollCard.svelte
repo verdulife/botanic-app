@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Listing } from '$lib/mock/listings';
 	import { favorites } from '$lib/stores/favorites.svelte';
+	import { listingHref } from '$lib/listing-url';
 	import { ArrowRight, Heart, Share2 } from 'lucide-svelte/icons';
 
 	type Props = {
@@ -148,7 +149,7 @@
 
 			<div class="flex flex-col items-center gap-0.5">
 				<a
-					href="/app/anuncio/{listing.id}"
+					href={listingHref(listing)}
 					class="text-white/60 hover:text-white flex size-10 items-center justify-center rounded-full transition-colors md:size-11"
 					aria-label="Ver ahora"
 				>

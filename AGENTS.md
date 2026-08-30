@@ -64,6 +64,7 @@ Cada AGENTS.md de módulo es autocontenido, enlaza de vuelta aquí y a PRODUCT/D
 ## Reglas de trabajo (globales)
 
 - **Paso a paso + hitos verificables**: en tareas grandes, parar tras cada hito y reportar. No iniciar el siguiente sin OK.
+- **NUNCA arrancar servidores de desarrollo** (`bun run dev`, `vite dev`, etc.) salvo que el usuario lo pida EXPLÍCITAMENTE: no dan output y el agente se queda bloqueado. En su lugar, pedir al usuario que lo lance y que dé feedback.
 - **Antes de commit/push** (explícito del usuario): docs afectados actualizados (raíz + módulo + PLAN/PRODUCT/DESIGN si aplica). El usuario pide el commit; nunca automático.
 - **Engram** complementa docs: docs = verdad canónica; Engram = contexto privado entre sesiones.
 - **Sistema de diseño**: [DESIGN.md](DESIGN.md) es autoridad visual global — landing, blog, webapp, emails, og-image, futura app Flutter.

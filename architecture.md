@@ -65,6 +65,21 @@ Perenual es el cuello de botella → se consulta solo la 1ª vez por especie; si
 - Pl@ntNet: https://my.plantnet.org/doc/getting-started/introduction
 - Perenual: https://perenual.com/docs/api
 
+**Estado (ago 2026) — prototipo en el wireframe**: `/app/publicar` identifica la
+especie desde la portada vía `src/routes/api/identify-plant/+server.ts` (key solo
+en servidor; Pl@ntNet rechaza webp → las fotos se convierten a jpeg **en el
+cliente** con Canvas). Autocompleta título/descripción/categoría de forma
+editable y guarda una `PlantSpecies` estructurada (`name` + científico/familia/
+confianza/origen). Perenual se integrará con la caché DB (post-wireframe).
+
+**Evolución a detección propia a coste 0**: cuando acumulemos fotos UGC con
+especie confirmada (el aviso "¿Es esta tu planta?" genera etiquetas positivas),
+se puede entrenar un clasificador ligero (MobileNet/EfficientNet-lite → ONNX)
+para las top-N especies del marketplace, servido en cliente (onnxruntime-web) o
+en edge gratis — la imagen nunca sale del dispositivo. Pl@ntNet quedaría como
+fallback para la cola larga y cross-check (su cuota free ~500/día cubre el
+fallback). Encaja con PLAN.md Fase 4 ("Identificación por foto IA").
+
 **Credenciales:** `PLANTNET_API_KEY` y `PERENUAL_API_KEY` en `.env.local` (no versionado).
 
 ---

@@ -1,11 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
+	import { listingHref, parseAnuncioParam } from '$lib/listing-url';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
-	import { getListingById, getListingsBySeller, getPlantCare } from '$lib/mock/listings';
+	import { getListingById, getListingsBySeller, getPlantCareForSpecies } from '$lib/mock/listings';
+	import { sellerWishesByUsername } from '$lib/mock/seller-wishes';
+	import { wishPriceLabel } from '$lib/mock/wishes';
 	import { favorites } from '$lib/stores/favorites.svelte';
+	import { wishes } from '$lib/stores/wishes.svelte';
+	import { userListings } from '$lib/stores/user-listings.svelte';
 	import {
 		ChevronRight,
 		MapPin,
@@ -16,16 +22,48 @@
 		Users,
 		User,
 		Heart,
-		Share2
+		Share2,
+		Star
 	} from 'lucide-svelte/icons';
+
+	let { data } = $props();
 
 	let activeImage = $state(0);
 
-	const listing = $derived(getListingById(page.params.id ?? ''));
+	const parsed = $derived(parseAnuncioParam(page.params.slug ?? ''));
+	const listing = $derived(
+		userListings.getById(parsed.id) ?? getListingById(parsed.id)
+	);
+
+	// Redirige a la URL canónica (slug correcto del título) con replaceState.
+	$effect(() => {
+		if (!listing) return;
+		const canonical = listingHref(listing);
+		if (page.url.pathname !== canonical) {
+			goto(canonical, { replaceState: true });
+		}
+	});
 
 	const isFavorited = $derived(listing ? favorites.isFavorite(listing.id) : false);
 
-	const care = $derived(listing?.species ? getPlantCare(listing.species) : undefined);
+	// Deseos del vendedor (solo en anuncios de cambio): los suyos si es el usuario
+	// actual, si no los del seed por vendedor. El elegido ("cambio por") primero.
+	const sellerWishes = $derived.by(() => {
+		if (!listing || !listing.type.includes('cambiar')) return [];
+		const username = listing.sellerInfo.username;
+		return data.profile?.username === username
+			? wishes.list
+			: (sellerWishesByUsername[username] ?? []);
+	});
+
+	const displayWishes = $derived.by(() => {
+		if (!listing?.wishId) return sellerWishes;
+		const selected = sellerWishes.find((w) => w.id === listing.wishId);
+		if (!selected) return sellerWishes;
+		return [selected, ...sellerWishes.filter((w) => w.id !== selected.id)];
+	});
+
+	const care = $derived(getPlantCareForSpecies(listing?.species));
 
 	const wateringLevel = $derived(
 		care ? ({ Baja: 1, Media: 2, Alta: 3 }[care.watering] ?? 0) : 0
@@ -48,15 +86,15 @@
 		if (!listing) return '';
 		const { title, price, location, category, categorySlug, type, species } = listing;
 		const priceText =
-			type === 'regalar' || price === 0
+			type.includes('regalar') || price === 0
 				? 'es un regalo (gratis)'
 				: `cuesta ${price} €`;
 		const dealCtx =
 			`Encuentro este anuncio de Botanic: "${title}" (categoría ${category}). ` +
-			`El precio es: ${priceText}. Se encuentra en ${location}. Tipo de operación: ${type}.`;
+			`El precio es: ${priceText}. Se encuentra en ${location}. Tipo de operación: ${type.join(' / ')}.`;
 
 		let specific: string;
-		const s = species?.trim();
+		const s = species?.name?.trim();
 		if (s) {
 			if (care) {
 				specific =
@@ -79,7 +117,6 @@
 				tiestos: `Explica para qué es ideal "${title}", qué tamaño y material conviene, y evalúa si es una buena compra: qué cuesta un tiesto similar, si el precio es justo y si merece la pena.`,
 				accesorios: `Explica para qué sirve "${title}", cómo usarlo, y evalúa si es una buena compra: compara con opciones similares y di si el precio es justo.`,
 				herramientas: `Explica cómo usar "${title}", para qué tareas sirve, y evalúa si es una buena compra: qué cuesta una herramienta así, si el precio es justo y si merece la pena.`,
-				libros: `Cuéntame qué aprenderé con "${title}", a quién va dirigido, y evalúa si es una buena compra: contrasta con el precio de ediciones nuevas o usadas y di si el precio es justo.`,
 				otros: `Explica qué es "${title}", para qué sirve, y evalúa si es una buena compra: qué suele costar algo así, si el precio es justo y qué revisar antes.`
 			};
 			specific =
@@ -240,11 +277,13 @@
 						<span class="text-muted-foreground text-[10px] tracking-wider uppercase">
 							{listing.category}
 						</span>
-						{#if listing.type === 'regalar'}
+						{#each listing.type as t (t)}
+						{#if t === 'regalar'}
 							<Badge variant="default" class="text-[10px] tracking-wider uppercase">Regalo</Badge>
-						{:else if listing.type === 'cambiar'}
+						{:else if t === 'cambiar'}
 							<Badge variant="secondary" class="text-[10px] tracking-wider uppercase">Cambio</Badge>
 						{/if}
+					{/each}
 					</div>
 					<h1 class="text-2xl leading-tight font-medium sm:text-3xl">{listing.title}</h1>
 					<div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
@@ -254,6 +293,10 @@
 							<MapPin class="size-3.5" />
 							{listing.location}
 						</span>
+						{#if listing.size}
+							<span aria-hidden="true" class="text-muted-foreground">·</span>
+							<span class="text-muted-foreground">{listing.size}</span>
+						{/if}
 					</div>
 				</div>
 
@@ -301,6 +344,15 @@
 							<div class="flex min-w-0 flex-col">
 								<span class="text-sm font-medium">{listing.seller}</span>
 								<span class="text-muted-foreground text-xs">{listing.sellerInfo.city}</span>
+								<span class="flex items-center gap-1 text-xs">
+									<Star class="text-amber-500 size-3.5 fill-current" />
+									<span class="text-foreground font-medium">
+										{listing.sellerInfo.rating.toFixed(1)}
+									</span>
+									<span class="text-muted-foreground">
+										({listing.sellerInfo.reviewCount})
+									</span>
+								</span>
 							</div>
 							<ChevronRight class="text-muted-foreground group-hover:text-foreground size-4 shrink-0 transition-colors" />
 						</a>
@@ -355,13 +407,49 @@
 			</div>
 		</div>
 
+		{#if displayWishes.length > 0}
+			<section class="flex flex-col gap-3" aria-label="Está buscando">
+				<h2 class="text-lg font-medium">Está buscando</h2>
+				<div
+					class="-mx-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:-mx-6 sm:px-6"
+					style="scroll-snap-type: x mandatory; scroll-padding-left: 1rem;"
+				>
+					<div class="flex w-max gap-2">
+						{#each displayWishes as w}
+							<a
+								href="/app/perfil/{listing.sellerInfo.username}"
+								class="bg-card ring-foreground/10 flex w-72 shrink-0 snap-start items-center gap-3 rounded-xl p-3 text-left ring-1"
+							>
+								<span class="flex min-w-0 flex-1 flex-col gap-0.5">
+									<span class="flex items-center gap-1">
+										<span class="truncate text-sm font-medium">{w.keywords}</span>
+										{#if w.id === listing?.wishId}
+											<Badge
+												variant="secondary"
+												class="shrink-0 text-[10px] tracking-wider uppercase"
+											>
+												Deseado
+											</Badge>
+										{/if}
+									</span>
+									<span class="text-muted-foreground truncate text-xs">{w.location}</span>
+									<span class="text-muted-foreground text-xs">{wishPriceLabel(w)}</span>
+								</span>
+								<ChevronRight class="text-muted-foreground size-4 shrink-0" />
+							</a>
+						{/each}
+					</div>
+				</div>
+			</section>
+		{/if}
+
 		{#if sellerListings.length > 0}
 			<section class="flex flex-col gap-4" aria-label="Este vendedor también tiene">
 				<h2 class="text-lg font-medium">Este vendedor también tiene</h2>
 				<div class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">
 					{#each sellerListings as item (item.id)}
 						<a
-							href="/app/anuncio/{item.id}"
+							href={listingHref(item)}
 							class="group focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-2xl"
 						>
 							<div class="flex flex-col">
@@ -372,21 +460,23 @@
 										loading="lazy"
 										class="absolute inset-0 h-full w-full object-cover"
 									/>
-									{#if item.type === 'regalar'}
-										<Badge
-											variant="default"
-											class="absolute top-2 left-2 text-[10px] tracking-wider uppercase"
-										>
-											Regalo
-										</Badge>
-									{:else if item.type === 'cambiar'}
-										<Badge
-											variant="secondary"
-											class="absolute top-2 left-2 text-[10px] tracking-wider uppercase"
-										>
-											Cambio
-										</Badge>
-									{/if}
+									{#each item.type as t (t)}
+										{#if t === 'regalar'}
+											<Badge
+												variant="default"
+												class="absolute top-2 left-2 text-[10px] tracking-wider uppercase"
+											>
+												Regalo
+											</Badge>
+										{:else if t === 'cambiar'}
+											<Badge
+												variant="secondary"
+												class="absolute top-2 left-2 text-[10px] tracking-wider uppercase"
+											>
+												Cambio
+											</Badge>
+										{/if}
+									{/each}
 								</div>
 								<div class="flex flex-col gap-1 px-1 pt-2.5 pb-4">
 									<span class="text-sm leading-snug font-medium">
