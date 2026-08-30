@@ -44,6 +44,23 @@
 		}
 	});
 
+	// ── Open Graph / Twitter (sharing) ──
+	const ogBase = $derived(page.url.origin);
+	const ogUrl = $derived(listing ? `${ogBase}${listingHref(listing)}` : '');
+	const ogImage = $derived(listing?.images[0] ? `${ogBase}${listing.images[0]}` : '');
+	const ogTitle = $derived(
+		listing
+			? `${listing.title} · ${listing.type.includes('regalar') ? 'Gratis' : `${listing.price} €`}`
+			: ''
+	);
+	const ogDescription = $derived(
+		listing
+			? listing.description.trim()
+				? listing.description.trim().slice(0, 160)
+				: `${listing.category} en ${listing.location}`
+			: ''
+	);
+
 	const isFavorited = $derived(listing ? favorites.isFavorite(listing.id) : false);
 
 	// Deseos del vendedor (solo en anuncios de cambio): los suyos si es el usuario
@@ -183,7 +200,25 @@
 
 <svelte:head>
 	<title>{listing ? listing.title : 'Anuncio no encontrado'} · Botanic</title>
-	<meta name="robots" content="noindex, nofollow" />
+	{#if listing}
+		<meta name="robots" content="noindex, nofollow, max-image-preview:large" />
+		<link rel="canonical" href={ogUrl} />
+		<meta name="description" content={ogDescription} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={ogTitle} />
+		<meta property="og:description" content={ogDescription} />
+		<meta property="og:url" content={ogUrl} />
+		<meta property="og:site_name" content="Botanic" />
+		<meta property="og:locale" content="es_ES" />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:alt" content={ogTitle} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={ogTitle} />
+		<meta name="twitter:description" content={ogDescription} />
+		<meta name="twitter:image" content={ogImage} />
+	{:else}
+		<meta name="robots" content="noindex, nofollow" />
+	{/if}
 </svelte:head>
 
 <div class="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 pt-6 pb-28 sm:px-6 sm:pt-10 sm:pb-32">

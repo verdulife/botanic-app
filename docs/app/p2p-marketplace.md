@@ -99,6 +99,11 @@ Sobre la galería (fija, no se desplaza con el slider) dos botones apilados a la
 
 El galería es un carrusel deslizable (imagen 4:5, dots como indicador no-navegación).
 
+El detalle emite **Open Graph/Twitter** para compartir: `og:title` (título + precio),
+`og:description` (descripción truncada ~160 chars), `og:image` (portada en URL
+absoluta con `page.url.origin`), `canonical`, `robots noindex, nofollow,
+max-image-preview:large` y `twitter:card summary_large_image` (imagen en grande).
+
 ### Deseos del vendedor (anuncios de cambio)
 
 Si el anuncio es de **cambio**, el detalle muestra el bloque **"Está buscando"**
