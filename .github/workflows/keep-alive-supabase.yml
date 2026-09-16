@@ -2,19 +2,44 @@ name: Keep-alive Supabase Free
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    # 4x/día (03:00, 09:00, 15:00, 21:00 UTC): superar el umbral
+    # "a few user requests to the database each day" (docs oficiales
+    # free-project-pausing); 1x/día resultó insuficiente.
+    - cron: "0 3,9,15,21 * * *"
   workflow_dispatch:
 
 jobs:
   ping:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 5
     steps:
       - name: Keep-alive via REST
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          curl -fsS -o /dev/null -w "%{http_code}\n" \
-            -H "apikey: $SUPABASE_ANON_KEY" \
-            "$SUPABASE_URL/rest/v1/waitlist_count?select=total&limit=1"
+          set -euo pipefail
+
+          q() {
+            curl -fsS --max-time 25 --retry 2 --retry-all-errors \
+              -H "apikey: $SUPABASE_ANON_KEY" \
+              "$SUPABASE_URL/rest/v1/waitlist_count?$1"
+          }
+
+          # Query 1: total de apuntes -> query real a la DB
+          BODY1="$(q "select=total")"
+          echo "query1: $BODY1"
+          echo "$BODY1" | grep -q '"total"' || {
+            echo "::error::respuesta inesperada en query1: $BODY1"
+            exit 1
+          }
+
+          # Query 2: misma vista, proyección con límite -> otra query real
+          BODY2="$(q "select=total&limit=1")"
+          echo "query2: $BODY2"
+          echo "$BODY2" | grep -q '"total"' || {
+            echo "::error::respuesta inesperada en query2: $BODY2"
+            exit 1
+          }
+
+          echo "keep-alive OK ($(date -u +%FT%TZ))"
