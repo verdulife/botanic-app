@@ -8,8 +8,8 @@
  * de pasar a producción. No usar contra entornos reales.
  *
  * Modos:
- *   bun run scripts/seed-mock.ts            → preview JSON (no escribe nada)
- *   bun run scripts/seed-mock.ts --apply    → ejecuta el seed completo
+ *   node --env-file-if-exists=.env.local scripts/seed-mock.ts            → preview JSON (no escribe nada)
+ *   node --env-file-if-exists=.env.local scripts/seed-mock.ts --apply    → ejecuta el seed completo
  *
  * Requiere en .env.local:
  *   - PUBLIC_SUPABASE_URL
@@ -37,7 +37,7 @@ import {
 	describe,
 	mockEmailFor,
 	type CategorySlug
-} from '../src/lib/mock/seed-data';
+} from '../src/lib/mock/seed-data.ts';
 
 const APPLY = process.argv.includes('--apply');
 
