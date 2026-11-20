@@ -24,7 +24,7 @@ Frontend único en SvelteKit 5: **landing** (hecha), **blog** (hecho), **web app
 
 ## Reglas específicas
 
-- UI: cargar skill `impeccable` (tabla en AGENTS.md raíz) — trae PRODUCT.md + DESIGN.md. **En la fase de wireframe neutro todavía NO aplicar DESIGN.md.**
+- UI: autoridad visual en [DESIGN.md](../../DESIGN.md); contexto de diseño = PRODUCT.md + DESIGN.md. **En la fase de wireframe neutro todavía NO aplicar DESIGN.md.**
 - Componentes `src/lib/components/ui/`: convención `shadcn-svelte`. En wireframe se usan tal cual del CLI sin custom CSS.
 - Tailwind v4 (CSS-first, `@import "tailwindcss"`, sin `tailwind.config.js`): skill `tailwind-4-docs` (snapshot local, no se commitea).
 - Svelte 5: runes (`$state`, `$derived`, `$props`) — skills `svelte-core-bestpractices` / `svelte-code-writer`.

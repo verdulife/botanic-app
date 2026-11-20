@@ -25,48 +25,21 @@ Cada AGENTS.md de módulo es autocontenido, enlaza de vuelta aquí y a PRODUCT/D
 | flutter | App nativa (fase 2, pendiente) | [docs/flutter/AGENTS.md](docs/flutter/AGENTS.md) |
 | product | Mercado, monetización, difusión (contexto de negocio) | [docs/product/AGENTS.md](docs/product/AGENTS.md) |
 
-## Skills (opencode)
+## Skills
+
+Las skills de proyecto viven en `.pi/skills/` (fuente que descubren Pi y el índice `.atl/skill-registry.md`).
 
 | Skill | Para qué | SKILL.md |
 |---|---|---|
-| impeccable | Diseño/redesign UI, auditoría visual, design system | [.opencode/skills/impeccable/SKILL.md](.opencode/skills/impeccable/SKILL.md) |
-| shadcn-svelte | Componentes shadcn para Svelte — CLI, composición, estilos | [.opencode/skills/shadcn-svelte/SKILL.md](.opencode/skills/shadcn-svelte/SKILL.md) |
-| svelte-code-writer | Guía de escritura de código Svelte 5 idiomático | [.opencode/skills/svelte-code-writer/SKILL.md](.opencode/skills/svelte-code-writer/SKILL.md) |
-| svelte-core-bestpractices | Buenas prácticas del core de Svelte 5 (runes, snippets) | [.opencode/skills/svelte-core-bestpractices/SKILL.md](.opencode/skills/svelte-core-bestpractices/SKILL.md) |
-| tailwind-4-docs | Snapshot de Tailwind v4 — utilities, variants, config, migración v3→v4 | [.opencode/skills/tailwind-4-docs/SKILL.md](.opencode/skills/tailwind-4-docs/SKILL.md) |
+| shadcn-svelte | Componentes shadcn para Svelte — CLI, composición, estilos | [.pi/skills/shadcn-svelte/SKILL.md](.pi/skills/shadcn-svelte/SKILL.md) |
+| svelte-code-writer | Guía de escritura de código Svelte 5 idiomático | [.pi/skills/svelte-code-writer/SKILL.md](.pi/skills/svelte-code-writer/SKILL.md) |
+| svelte-core-bestpractices | Buenas prácticas del core de Svelte 5 (runes, snippets) | [.pi/skills/svelte-core-bestpractices/SKILL.md](.pi/skills/svelte-core-bestpractices/SKILL.md) |
+| tailwind-4-docs | Snapshot de Tailwind v4 — utilities, variants, config, migración v3→v4 | [.pi/skills/tailwind-4-docs/SKILL.md](.pi/skills/tailwind-4-docs/SKILL.md) |
 
-## Subagentes
-
-| Agente | Para qué | AGENT.md |
-|---|---|---|
-| visual-eval | Audita assets de stock contra la escena (modelo `opencode-go/qwen3.7-plus`). **Nunca** audita renders propios (verificación humana). Carril social retirado ago 2026; se conserva para uso futuro. | [.opencode/agents/visual-eval.md](.opencode/agents/visual-eval.md) |
-
-## Cómo mantener los docs
-
-| Doc | Trigger | Acción |
-|---|---|---|
-| `README.md` | Setup local cambia | Editar pasos; verificar `bun install` desde cero |
-| `PRODUCT.md` | Claim, target o brand commitment cambia | Reautorizar manualmente (autoridad producto) |
-| `PLAN.md` | Tarea se completa | Marcar `[x]`; no mover texto fuera del doc |
-| `DESIGN.md` | Token o componente global cambia | Reautorizar (autoridad visual) |
-| `architecture.md` | Stack, hosting o coste cambia | Actualizar diagrama + tabla de costes |
-| `AGENTS.md` raíz | Convención transversal nueva | Añadir regla en "Reglas de trabajo"; revisar AGENTS.md de módulos |
-| `docs/<módulo>/AGENTS.md` | Regla específica del módulo cambia | Editar; mantener enlace de vuelta a raíz |
-| `docs/<módulo>/*.md` (técnicos) | Feature o decisión del módulo cambia | Editar; añadir regla en "Reglas específicas" si aplica |
-| `docs/email/deliverability-log.md` | Incidencia de entregabilidad | Append-only (nunca reescribir entradas previas) |
-
-**Plantilla in-file** (al final de cualquier doc técnico que no sea autoridad):
-
-```markdown
-> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](AGENTS.md#cómo-mantener-los-docs).
-```
 
 ## Reglas de trabajo (globales)
 
 - **Paso a paso + hitos verificables**: en tareas grandes, parar tras cada hito y reportar. No iniciar el siguiente sin OK.
-- **NUNCA arrancar servidores de desarrollo** (`bun run dev`, `vite dev`, etc.) salvo que el usuario lo pida EXPLÍCITAMENTE: no dan output y el agente se queda bloqueado. En su lugar, pedir al usuario que lo lance y que dé feedback.
-- **Antes de commit/push** (explícito del usuario): docs afectados actualizados (raíz + módulo + PLAN/PRODUCT/DESIGN si aplica). El usuario pide el commit; nunca automático.
-- **Engram** complementa docs: docs = verdad canónica; Engram = contexto privado entre sesiones.
 - **Sistema de diseño**: [DESIGN.md](DESIGN.md) es autoridad visual global — landing, blog, webapp, emails, og-image, futura app Flutter.
 
 ## Seguridad — credenciales MCP

@@ -22,15 +22,12 @@ Thumbs.db
 .opencode/supabase-auth.json  # explícito (defensa en profundidad)
 
 # Tailwind 4 docs snapshot (source-available, no commitear)
-.opencode/skills/tailwind-4-docs/references/docs/
-.opencode/skills/tailwind-4-docs/references/docs-index.tsx
+.pi/skills/tailwind-4-docs/references/docs/
+.pi/skills/tailwind-4-docs/references/docs-index.tsx
 
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-
-# Impeccable skill artifacts
-.impeccable/
 
 # Mock auth state (modo wireframe, no commitear)
 .mock-auth/
@@ -38,3 +35,5 @@ vite.config.ts.timestamp-*
 # Caché de búsqueda de imágenes (scripts/images.mjs)
 /scripts/.tmp/
 
+# Local AI runtime state
+.atl/

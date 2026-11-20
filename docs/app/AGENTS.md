@@ -45,7 +45,6 @@ Documentación funcional y de navegación de la webapp de Botanic. Fuente canón
 
 ## Skills aplicables
 
-- `impeccable` — cuando llegue la fase de aplicar design system (no antes).
 - `svelte-code-writer` / `svelte-core-bestpractices` — implementación de componentes Svelte 5.
 - `shadcn-svelte` — para incorporar componentes base vía CLI.
 - `tailwind-4-docs` — utilidades responsive (`sm`, `md`, `lg`, `xl`).
