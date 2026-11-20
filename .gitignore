@@ -17,10 +17,6 @@ Thumbs.db
 .env.*
 !.env.test
 
-# OpenCode MCP auth (per-machine, never commit)
-.opencode/*-auth.json
-.opencode/supabase-auth.json  # explícito (defensa en profundidad)
-
 # Tailwind 4 docs snapshot (source-available, no commitear)
 .pi/skills/tailwind-4-docs/references/docs/
 .pi/skills/tailwind-4-docs/references/docs-index.tsx
