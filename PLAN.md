@@ -48,7 +48,7 @@ Pre-Sprint + 6 sprints (~8-10 semanas).
 - [x] `bun create svelte@latest botanic --template typescript`
 - [x] TailwindCSS
 - [x] Proyecto Supabase `botanic` creado (Free tier, eu-central-1)
-- [x] `.env.local` con `PUBLIC_SUPABASE_URL` + `PUBLIC_SUPABASE_ANON_KEY` (+ `.env.example`)
+- [x] `.env.local` con `PUBLIC_SUPABASE_URL` + `PUBLIC_SUPABASE_PUBLISHABLE_KEY` (+ `.env.example`)
 - [x] Tabla `waitlist` (email único) + RLS solo-insert
 - [x] `src/lib/supabase.ts` con `createClient`
 - [x] Integrar en `WaitlistForm.svelte`: `insert` + tratar duplicado (`23505`) como éxito con feedback `alreadyRegistered`
