@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "url": "https://mcp.supabase.com/mcp",
+      "description": "Supabase de Botanic: esquema, SQL, migraciones y advisors (lectura y escritura). OAuth con /mcp login supabase.",
+      "exposure": "deferred"
+    },
+    "resend": {
+      "url": "https://mcp.resend.com/mcp",
+      "description": "Resend: dominios y DKIM, plantillas, broadcasts, contactos y logs de envio. OAuth con /mcp login resend.",
+      "exposure": "deferred"
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "--package=@upstash/context7-mcp@2.2.5", "--", "context7-mcp"],
+      "description": "Documentacion actualizada de librerias (Svelte 5, SvelteKit, Tailwind 4, Supabase JS, bits-ui).",
+      "exposure": "direct"
+    }
+  }
+}
