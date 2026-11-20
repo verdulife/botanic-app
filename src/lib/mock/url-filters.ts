@@ -38,7 +38,7 @@ function isVista(v: string | null): v is Vista {
  * Resuelve la vista activa. La ruta es la fuente de verdad; el URL param `?vista=`
  * solo se consulta como fallback para links antiguos.
  */
-export function readVista(searchParams: URLSearchParams, pathname?: string): Vista {
+export function readVista(searchParams: Pick<URLSearchParams, "get">, pathname?: string): Vista {
 	if (pathname) {
 		const normalized = pathname.replace(/\/+$/, "") || "/";
 		if (normalized === "/app") return "lista";
@@ -72,7 +72,7 @@ function parseTypes(v: string | null): ListingType[] {
 }
 
 export function readFiltersFromSearchParams(
-	searchParams: URLSearchParams
+	searchParams: Pick<URLSearchParams, "get">
 ): Filters {
 	const categoria = searchParams.get("categoria") ?? defaultFilters.categoria;
 	const termino = searchParams.get("termino") ?? "";
@@ -141,7 +141,7 @@ export function pushFiltersToURL(filters: Filters, base?: string): Promise<void>
 	const route =
 		base ?? (typeof window !== "undefined" ? window.location.pathname : "/app");
 	const url = buildFiltersURL(filters, route);
-	return goto(url, { replaceState: true, keepFocus: true, noScroll: true });
+	return goto(url, { replace: true, reset: false });
 }
 
 /**
@@ -154,8 +154,7 @@ export function pushVistaToURL(targetRoute: string): Promise<void> {
 	);
 	const filters = readFiltersFromSearchParams(current);
 	return goto(buildFiltersURL(filters, targetRoute), {
-		replaceState: true,
-		keepFocus: true,
-		noScroll: true
+		replace: true,
+		reset: false
 	});
 }

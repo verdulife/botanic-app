@@ -2,7 +2,7 @@
 // Persisten entre sesiones y permiten retomar un anuncio sin publicar.
 // Post-wireframe migrarán a Supabase (tabla `drafts` + storage de imágenes).
 
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 import type { ListingType } from '$lib/mock/listings';
 
 export type ListingDraft = {

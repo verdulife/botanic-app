@@ -1,4 +1,4 @@
-import type { Handle } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit/hooks';
 import { createSupabaseServerClient } from '$lib/supabase/server';
 import { isMockAuth } from '$lib/auth-mode';
 import { getSessionData, getSessionUser } from '$lib/mock/auth-server';
