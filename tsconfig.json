@@ -1,5 +1,5 @@
 {
-	"extends": "$app/tsconfig",
+	"extends": "./node_modules/$app/tsconfig.json",
 	"include": ["src", "test", "*", ".svelte-kit/ambient.d.ts", ".svelte-kit/non-ambient.d.ts"],
 	"exclude": ["src/service-worker"],
 	"compilerOptions": {
@@ -13,12 +13,13 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"moduleResolution": "bundler",
-		"paths": {
-			"$lib": ["./src/lib"],
-			"$lib/*": ["./src/lib/*"]
-		}
+		"moduleResolution": "bundler"
 	}
-	// Los alias de rutas los gestiona SvelteKit 3 con subpath imports
-	// (package.json#imports), no con "alias" en la config.
+	// `extends` apunta a la ruta real del config que genera SvelteKit en
+	// `node_modules/$app/tsconfig.json` (lo escribe `svelte-kit sync`). Se usa la
+	// ruta en disco, no el especificador virtual `$app/tsconfig`, para que
+	// cualquier herramienta que solo sepa leer ficheros lo resuelva igual.
+	//
+	// Ese config ya declara los alias de `$lib`, así que aquí no se repiten.
+	// Los alias nuevos van por subpath imports (#lib), no por `alias`.
 }
