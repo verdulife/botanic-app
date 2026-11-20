@@ -4,7 +4,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import AuthShell from '$lib/components/auth/AuthShell.svelte';
-	import { KeyRound, Mail, Sprout } from 'lucide-svelte/icons';
+	import { KeyRound, Mail, Sprout } from '@lucide/svelte/icons';
 
 	let { form } = $props();
 

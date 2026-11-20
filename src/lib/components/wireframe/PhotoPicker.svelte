@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { seedImagesByCategory } from '$lib/mock/seed';
 	import type { CategorySlug } from '$lib/mock/seed-data';
-	import { Camera, X } from 'lucide-svelte/icons';
+	import { Camera, X } from '@lucide/svelte/icons';
 
 	type Props = {
 		images: string[];

@@ -17,7 +17,7 @@
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { searchOverlay } from '../../../lib/stores/search-overlay.svelte.ts';
-	import { X } from 'lucide-svelte/icons';
+	import { X } from '@lucide/svelte/icons';
 
 	let filters = $derived<Filters>(
 		readFiltersFromSearchParams(page.url.searchParams)

@@ -9,7 +9,7 @@
 	import { sellerWishesByUsername } from '$lib/mock/seller-wishes';
 	import { wishPriceLabel } from '$lib/mock/wishes';
 	import { wishes } from '$lib/stores/wishes.svelte';
-	import { Heart, MapPin, MessageCircle, Pencil, Star } from 'lucide-svelte/icons';
+	import { Heart, MapPin, MessageCircle, Pencil, Star } from '@lucide/svelte/icons';
 
 	let { data } = $props();
 

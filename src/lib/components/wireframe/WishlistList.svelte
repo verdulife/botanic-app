@@ -3,7 +3,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import { mockWishes, wishPriceLabel, type Wish } from '$lib/mock/wishes';
-	import { Bell, ChevronRight, Plus, Sparkles } from 'lucide-svelte/icons';
+	import { Bell, ChevronRight, Plus, Sparkles } from '@lucide/svelte/icons';
 
 	type Props = {
 		wishes?: Wish[];

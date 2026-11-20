@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Card from "$lib/components/ui/card";
 	import { Button } from "$lib/components/ui/button";
-	import { LogIn } from "lucide-svelte/icons";
+	import { LogIn } from "@lucide/svelte/icons";
 
 	type Props = {
 		message?: string;

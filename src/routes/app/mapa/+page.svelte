@@ -16,7 +16,7 @@
 	import { readFiltersFromSearchParams, pushFiltersToURL } from '$lib/mock/url-filters';
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { LocateFixed, X } from 'lucide-svelte/icons';
+	import { LocateFixed, X } from '@lucide/svelte/icons';
 	import { MAP_TILE_URL, MAP_ATTRIBUTION } from '$lib/map/tiles';
 
 	function escapeHtml(s: string): string {

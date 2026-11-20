@@ -17,7 +17,7 @@
 		type LocationScope
 	} from '$lib/mock/locations';
 	import { wishes } from '$lib/stores/wishes.svelte';
-	import { ChevronDown } from 'lucide-svelte/icons';
+	import { ChevronDown } from '@lucide/svelte/icons';
 
 	let { data } = $props();
 

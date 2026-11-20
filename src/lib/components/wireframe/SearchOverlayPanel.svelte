@@ -18,7 +18,7 @@
 		Search,
 		LayoutGrid,
 		MapPin
-	} from "lucide-svelte/icons";
+	} from "@lucide/svelte/icons";
 
 	const vistaItems: { value: Vista; label: string; route: string; icon: typeof LayoutList }[] =
 		[

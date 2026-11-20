@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
-	import { Heart } from 'lucide-svelte/icons';
+	import { Heart } from '@lucide/svelte/icons';
 
 	type Props = {
 		/** Qué hace esta ruta, explicado brevemente (ej. "Guarda anuncios y sigue tus deseos"). */

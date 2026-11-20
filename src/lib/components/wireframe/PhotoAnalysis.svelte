@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
-	import { Check, Leaf, Loader2, RefreshCw, X } from 'lucide-svelte/icons';
+	import { Check, Leaf, Loader2, RefreshCw, X } from '@lucide/svelte/icons';
 	import type { IdentifyResult } from '$lib/identify-plant';
 
 	type Props = {

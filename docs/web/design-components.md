@@ -22,7 +22,7 @@ Reglas con nombre, decisiones de diseño y enlaces al código. Spec pixel-a-pixe
 ## Convenciones
 
 - Tipografía: Fraunces (display, optical) + Inter (UI) + JetBrains Mono (eyebrows/tags) — variables self-hosted.
-- Iconos: lucide-svelte con `aria-hidden="true"` si decorativos.
+- Iconos: @lucide/svelte con `aria-hidden="true"` si decorativos.
 - Imágenes: `.webp` con `.jpg` gemelo, servidas localmente, soft cap 100 KB.
 
 ---

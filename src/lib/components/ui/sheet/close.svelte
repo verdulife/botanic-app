@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Dialog as SheetPrimitive } from "bits-ui";
-	import { X } from "lucide-svelte/icons";
+	import { X } from "@lucide/svelte/icons";
 	import { cn } from "$lib/utils.js";
 
 	let {

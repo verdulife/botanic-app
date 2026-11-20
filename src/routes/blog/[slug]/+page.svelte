@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowLeft, User, CalendarDays, Clock } from "lucide-svelte/icons";
+	import { ArrowLeft, User, CalendarDays, Clock } from "@lucide/svelte/icons";
 	import BlogIndex from "$lib/components/blog/BlogIndex.svelte";
 	import BlogCta from "$lib/components/blog/BlogCta.svelte";
 	import { categoryLabel, formatDate } from "$lib/blog/utils";

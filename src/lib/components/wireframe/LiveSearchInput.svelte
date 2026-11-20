@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Input } from "$lib/components/ui/input";
-	import { Search, X } from "lucide-svelte/icons";
+	import { Search, X } from "@lucide/svelte/icons";
 
 	type Props = {
 		placeholder?: string;

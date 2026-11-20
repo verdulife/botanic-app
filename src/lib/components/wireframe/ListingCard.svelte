@@ -3,7 +3,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { favorites } from '$lib/stores/favorites.svelte';
 	import { listingHref } from '$lib/listing-url';
-	import { Heart, MapPin } from 'lucide-svelte/icons';
+	import { Heart, MapPin } from '@lucide/svelte/icons';
 	import type { Listing } from '$lib/mock/listings';
 
 	type Props = {

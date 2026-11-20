@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Input } from "$lib/components/ui/input";
-	import { ChevronDown } from "lucide-svelte/icons";
+	import { ChevronDown } from "@lucide/svelte/icons";
 
 	type Props = {
 		id?: string;

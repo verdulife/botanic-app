@@ -12,7 +12,7 @@
 		ShieldCheck,
 		ShoppingBasket,
 		Shovel,
-	} from "lucide-svelte/icons";
+	} from "@lucide/svelte/icons";
 
 	const demoListings = [
 		{

@@ -4,7 +4,7 @@
 	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
-	import { X } from 'lucide-svelte/icons';
+	import { X } from '@lucide/svelte/icons';
 	import { mockListings } from '$lib/mock/listings';
 	import {
 		applyFiltersAndSort,

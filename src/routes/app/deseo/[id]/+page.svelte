@@ -7,7 +7,7 @@
 	import AuthRequired from '$lib/components/wireframe/AuthRequired.svelte';
 	import { wishes } from '$lib/stores/wishes.svelte';
 	import { wishPriceLabel } from '$lib/mock/wishes';
-	import { ArrowLeft, Coins, MapPin, Sparkles, Tag } from 'lucide-svelte/icons';
+	import { ArrowLeft, Coins, MapPin, Sparkles, Tag } from '@lucide/svelte/icons';
 
 	let { data } = $props();
 

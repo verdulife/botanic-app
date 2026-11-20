@@ -1,4 +1,4 @@
-import { Bell, Heart, Plus, Sprout, User } from 'lucide-svelte/icons';
+import { Bell, Heart, Plus, Sprout, User } from '@lucide/svelte/icons';
 
 export type NavItem = {
 	label: string;

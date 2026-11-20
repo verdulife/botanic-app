@@ -31,7 +31,7 @@
 	import type { Wish } from '$lib/mock/wishes';
 	import { identifyPlant, type IdentifyResult } from '$lib/identify-plant';
 	import { listingHref, randomListingToken } from '$lib/listing-url';
-	import { Check, ChevronRight, Heart, Loader2, Share2, Sparkles } from 'lucide-svelte/icons';
+	import { Check, ChevronRight, Heart, Loader2, Share2, Sparkles } from '@lucide/svelte/icons';
 
 	let { data } = $props();
 

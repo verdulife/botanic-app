@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Sprout, Clock } from "lucide-svelte/icons";
+	import { Sprout, Clock } from "@lucide/svelte/icons";
 	import { categoryLabel, formatDate } from "$lib/blog/utils";
 	import type { Post } from "$lib/blog/posts";
 

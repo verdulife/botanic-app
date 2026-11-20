@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
-	import { Heart } from 'lucide-svelte/icons';
+	import { Heart } from '@lucide/svelte/icons';
 	import { getListingById, type Listing } from '$lib/mock/listings';
 	import { favorites } from '$lib/stores/favorites.svelte';
 	import AuthRequired from '$lib/components/wireframe/AuthRequired.svelte';

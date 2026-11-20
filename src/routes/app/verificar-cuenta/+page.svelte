@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AuthShell from '$lib/components/auth/AuthShell.svelte';
-	import { Mail, LogIn } from 'lucide-svelte/icons';
+	import { Mail, LogIn } from '@lucide/svelte/icons';
 
 	let { data } = $props();
 </script>

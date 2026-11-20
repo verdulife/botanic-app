@@ -24,7 +24,7 @@
 		Heart,
 		Share2,
 		Star
-	} from 'lucide-svelte/icons';
+	} from '@lucide/svelte/icons';
 
 	let { data } = $props();
 

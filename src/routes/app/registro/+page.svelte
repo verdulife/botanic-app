@@ -8,7 +8,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import AuthShell from '$lib/components/auth/AuthShell.svelte';
-	import { Mail } from 'lucide-svelte/icons';
+	import { Mail } from '@lucide/svelte/icons';
 
 	let { form } = $props();
 	let pending = $state(false);

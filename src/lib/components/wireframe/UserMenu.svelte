@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { LogOut, User as UserIcon } from 'lucide-svelte/icons';
+	import { LogOut, User as UserIcon } from '@lucide/svelte/icons';
 
 	type Profile = {
 		username: string;

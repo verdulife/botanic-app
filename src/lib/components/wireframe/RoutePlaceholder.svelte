@@ -3,7 +3,7 @@
 	import * as Card from "$lib/components/ui/card";
 	import { Badge } from "$lib/components/ui/badge";
 	import { Button } from "$lib/components/ui/button";
-	import { LogIn } from "lucide-svelte/icons";
+	import { LogIn } from "@lucide/svelte/icons";
 
 	type Action = {
 		label: string;

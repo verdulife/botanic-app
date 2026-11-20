@@ -15,7 +15,7 @@
 		ChevronRight,
 		Sparkles,
 		FileText
-	} from 'lucide-svelte/icons';
+	} from '@lucide/svelte/icons';
 
 	let { data } = $props();
 

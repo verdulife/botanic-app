@@ -2,7 +2,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import { listingDraft } from '$lib/stores/listing-draft.svelte';
-	import { FileText, Plus, Trash2 } from 'lucide-svelte/icons';
+	import { FileText, Plus, Trash2 } from '@lucide/svelte/icons';
 
 	function timeAgo(iso: string): string {
 		const diff = Date.now() - new Date(iso).getTime();

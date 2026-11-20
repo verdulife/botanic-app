@@ -3,7 +3,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import { Sprout } from 'lucide-svelte/icons';
+	import { Sprout } from '@lucide/svelte/icons';
 
 	let { data, form } = $props();
 

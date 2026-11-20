@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Sprout } from 'lucide-svelte/icons';
+	import { Sprout } from '@lucide/svelte/icons';
 
 	type Props = {
 		title: string;

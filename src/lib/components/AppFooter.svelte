@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Heart } from "lucide-svelte/icons";
+	import { Heart } from "@lucide/svelte/icons";
 </script>
 
 <footer

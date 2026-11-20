@@ -4,7 +4,7 @@
 	import Logo from "$lib/components/Logo.svelte";
 	import { readVista } from "$lib/mock/url-filters";
 	import { searchOverlay } from "../../stores/search-overlay.svelte.ts";
-	import { ArrowLeft, Heart, Search, Sparkles, X } from "lucide-svelte/icons";
+	import { ArrowLeft, Heart, Search, Sparkles, X } from "@lucide/svelte/icons";
 
 	let isAppArea = $derived(page.url.pathname.startsWith("/app"));
 	let currentVista = $derived(readVista(page.url.searchParams, page.url.pathname));

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from "$lib/components/ui/button";
 	import { Input } from "$lib/components/ui/input";
-	import { Mail } from "lucide-svelte/icons";
+	import { Mail } from "@lucide/svelte/icons";
 
 	type Status = "idle" | "loading" | "success" | "error";
 	let {
