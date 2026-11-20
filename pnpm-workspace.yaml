@@ -1,0 +1,7 @@
+# Settings de pnpm (pnpm 12 ya no lee el campo "pnpm" de package.json).
+# Dependencias con scripts de instalación que sí queremos ejecutar: esbuild
+# descarga su binario; sharp y resvg traen prebuilds nativos.
+allowBuilds:
+  esbuild: true
+  sharp: true
+  '@resvg/resvg-js': true
