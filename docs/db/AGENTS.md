@@ -38,5 +38,3 @@ PostgreSQL + Auth + Storage + Realtime, tier Free. Proyecto `botanic` (eu-centra
 - Antes de crear el schema app, confirmar con el usuario el orden de implementación y el alcance.
 
 ---
-
-> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

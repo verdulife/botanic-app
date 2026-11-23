@@ -2,9 +2,9 @@
 
 - **Proveedor**: [Resend](https://resend.com) (Free: 3.000 emails transaccionales/mes, 100/día; marketing ilimitado hasta 1.000 contactos/mes).
 - **Envío**: siempre vía SvelteKit server route (`src/routes/api/waitlist/+server.ts`), nunca desde el cliente.
-- **Dominio verificado**: `botanicapp.es` → `hola@botanicapp.es`. DKIM en root, SPF/MX en `send.botanicapp.es`, región eu-west-1, DMARC `p=none`. Estado detallado en [deliverability.md](deliverability.md).
-- **Plantillas**: HTML en `src/lib/emails/` (`layout.ts` + `confirmation.ts` + `adminNotify.ts`), estilos inline, tablas 600px. Header con `og-image.jpg` (banner de marca, generado con `bun run og`). Cada email incluye `text` como fallback.
-- **Baja/unsubscribe**: diferido a Resend (`{{{RESEND_UNSUBSCRIBE_URL}}}` en broadcasts); página propia de baja pendiente (ver backlog en [deliverability.md](deliverability.md)).
+- **Dominio verificado**: `botanicapp.es` → `hola@botanicapp.es`. DKIM en root, SPF/MX en `send.botanicapp.es`, región eu-west-1, DMARC `p=none`. Estado detallado en las reglas de entregabilidad.
+- **Plantillas**: HTML en `src/lib/emails/` (`layout.ts` + `confirmation.ts` + `adminNotify.ts`), estilos inline, tablas 600px. Header con `og-image.jpg` (banner de marca, generado con `pnpm og`). Cada email incluye `text` como fallback.
+- **Baja/unsubscribe**: diferido a Resend (`{{{RESEND_UNSUBSCRIBE_URL}}}` en broadcasts); página propia de baja pendiente (ver backlog en las reglas de entregabilidad).
 
 ## Flujo alta waitlist (hecho)
 
@@ -28,5 +28,3 @@ Ideas pendientes de email y comunidad:
 Todos deben respetar [DESIGN.md](../../DESIGN.md) (misma marca que `layout.ts`) y la terminología de [PRODUCT.md](../../PRODUCT.md) (sin anglicismos: "waitlist"→"lista de espera", etc.).
 
 ---
-
-> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

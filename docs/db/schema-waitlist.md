@@ -16,5 +16,3 @@ CREATE TABLE waitlist (
 Consumido por: `src/lib/supabase.ts`, `src/routes/api/waitlist/+server.ts`, `src/lib/components/waitlist/WaitlistForm.svelte`.
 
 ---
-
-> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

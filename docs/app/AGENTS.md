@@ -1,52 +1,29 @@
-# App — Contexto del módulo (wireframe funcional)
+# App — contrato del módulo
 
-Documentación funcional y de navegación de la webapp de Botanic. Fuente canónica de producto → [PRODUCT.md](../../PRODUCT.md); design system → [DESIGN.md](../../DESIGN.md) (ya aplicado); estado técnico y routing → [docs/web/AGENTS.md](../web/AGENTS.md).
-
-## Estado
-
-| Área | Estado | Notas |
-|---|---|---|
-| Wireframe neutro | 🔶 En construcción | Hito actual: rutas navegables con shadcn-svelte base |
-| Design system | 🔶 Pendiente | Se aplica después sobre el wireframe sin tocar estructura |
-| Lógica de negocio | 🔴 Pendiente | No implementar en esta fase |
-| Auth | 🟢 Mock funcional | Sesión/registro simulados (sin Supabase), conmutable en `auth-mode.ts` |
-
-## Documentación del módulo
+Webapp de Botanic bajo `/app`: marketplace P2P de plantas entre particulares —vender, cambiar, regalar— con deseos, comunidad, chat, perfil y ajustes. Producto y voz → [PRODUCT.md](../../PRODUCT.md); autoridad visual → [DESIGN.md](../../DESIGN.md); stack, límites y verificación → [ARCHITECTURE.md](../../ARCHITECTURE.md).
 
 | Doc | Contenido |
 |---|---|
-| [README.md](README.md) | Índice, principios y convenciones de slugs |
-| [README.md](README.md) | Índice del módulo y convenciones |
-| [NAVIGATION.md](NAVIGATION.md) | Navegación global y reglas de acceso |
-| [ROUTES.md](ROUTES.md) | Inventario de rutas y flags MVP |
-| [ENTITIES.md](ENTITIES.md) | Entidades funcionales y relaciones |
-| [p2p-marketplace.md](p2p-marketplace.md) | Marketplace P2P (anuncios) |
-| [wishlist.md](wishlist.md) | Deseos, coincidencias y alertas |
-| [community.md](community.md) | Publicaciones e hilos |
-| [chat.md](chat.md) | Mensajería |
-| [notifications.md](notifications.md) | Centro de notificaciones |
-| [auth.md](auth.md) | Autenticación |
-| [profile.md](profile.md) | Perfil propio y público |
-| [settings.md](settings.md) | Ajustes |
-| [botanic-market.md](botanic-market.md) | Botanic Market (futuro) |
-| [cross-cutting.md](cross-cutting.md) | Responsive, scroll horizontal, GPS, búsqueda, imágenes, permisos, estados |
+| Este archivo | Acceso, convenciones y comportamiento transversal |
+| [FUNCIONAL.md](FUNCIONAL.md) | Reglas funcionales por área: auth, marketplace, deseos, comunidad, chat, notificaciones, perfil y ajustes |
+| [UX](../ux/ux.md) | Jerarquía, gestos, registro y feed |
 
-## Reglas específicas
+## Acceso
 
-- **Wireframe primero, estilos después.** Esta fase usa shadcn-svelte base sin estilos custom. El design system global se aplica en una fase posterior sin modificar la estructura.
-- **Todas las rutas con prefijo `/app/`** y slugs en español (sin tildes, sin eñes, sin artículos). Excepciones universales: `login`, `chat`, `market` (Botanic Market).
-- **Browse sin login en `/app`.** La raíz del marketplace, anuncios, comunidad, mapa y detalle son públicos. Las acciones de escritura requieren autenticación y deben mostrar el estado "no autenticado" cuando aplique.
-- **Acceso**: `/app/*` se sirve bajo Supabase Auth (email+password + magic link) sin gate adicional. Browse público para listings, comunidad y mapa; acciones de escritura (publicar, chatear, crear deseo, guardar, responder) requieren sesión y deben redirigir a `/app/login?next=...` cuando no hay usuario. Ver [AGENTS.md § Seguridad — autenticación y autorización en `/app`](../../AGENTS.md#seguridad--autenticación-y-autorización-en-app).
-- **Auth mock (fase wireframe)**: mientras no se conecte Supabase, la sesión es simulada (cookie `botanic_mock_session` + `.mock-auth/users.json` **en dev**; en producción es stateless y determinista, sin writes de filesystem — ver [auth.md](auth.md)). Los formularios de login/registro y las redirecciones protegidas se comportan igual que con Supabase. Conmutar en `src/lib/auth-mode.ts` (`AUTH_MODE`). Detalle en [auth.md](auth.md).
-- **UX sobre UI.** Adaptación impecable a escritorio y móvil (estilo Wallapop). Detalle en [cross-cutting.md § Responsive](cross-cutting.md#responsive).
-- **Scroll horizontal sin barra visible.** Flechas en escritorio, gesto natural en móvil. Detalle en [cross-cutting.md § Scroll horizontal sin barra visible](cross-cutting.md#scroll-horizontal-sin-barra-visible).
+- **Navegar es público; escribir exige sesión.** Raíz `/app`, listados, búsqueda, mapa, detalle de anuncio, comunidad e hilos se leen sin cuenta. Publicar o editar anuncios, guardar, contactar, crear deseo, responder, ver perfil propio, ajustes y notificaciones requieren sesión.
+- Sin sesión, toda acción protegida redirige a `/app/login?next=...` y, después de autenticarse, se devuelve al usuario a la acción que interrumpió.
+- Cualquier respuesta de `/app*` lleva `X-Robots-Tag: noindex, nofollow`.
+- Hay dos modos de autenticación conmutables con `AUTH_MODE` en `src/lib/auth-mode.ts`; con el modo real la sesión se valida siempre contra el servidor, nunca solo con cookies. Reglas de seguridad en [AGENTS.md § Seguridad](../../AGENTS.md#seguridad).
 
-## Skills aplicables
+## Convenciones
 
-- `svelte-code-writer` / `svelte-core-bestpractices` — implementación de componentes Svelte 5.
-- `shadcn-svelte` — para incorporar componentes base vía CLI.
-- `tailwind-4-docs` — utilidades responsive (`sm`, `md`, `lg`, `xl`).
+- Slugs en español, sin tildes, sin eñes y sin artículos. Únicas excepciones en inglés: `login`, `chat` y `market`.
+- Búsqueda y filtros viven en la URL: las rutas profundas se abren directamente y cambiar de vista no pierde el estado.
 
----
+## Comportamiento transversal
 
-> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).
+- **Adaptación por dispositivo.** Escritorio y móvil impecables, estilo Wallapop: en móvil manda el scroll vertical y las acciones quedan al alcance del pulgar; en escritorio se admite más densidad por pantalla.
+- **Scroll horizontal sin barra nativa.** Chips de categorías, carruseles, tabs y listados secundarios ocultan la barra del navegador, llevan flechas en los extremos en escritorio que avanzan al siguiente punto de anclaje y, en móvil, solo el gesto del dedo, sin flechas ni dots.
+- **Estados globales.** Toda vista prevé carga, vacío, error, contenido, no autenticado cuando la acción exige sesión y permiso no concedido cuando depende del GPS.
+- **Ubicación.** Lo que use GPS contempla concedido, rechazado y no configurado; la ubicación guardada en el perfil es la fuente principal y el GPS solo un atajo.
+- **Movimiento.** Se respeta `prefers-reduced-motion`: sin animaciones en bucle ni transiciones cuando el usuario lo pide.

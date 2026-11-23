@@ -51,5 +51,3 @@ Registro automático de las imágenes descargadas de Wikimedia Commons para el b
 - `images/blog/propagar-en-agua-o-tierra-3.jpg` — Pomelo stem cutting with growth — Autor: Dr. Chinchu C. — Licencia: CC BY-SA 3.0 — [Fuente](https://commons.wikimedia.org/wiki/File:Pomelo_stem_cutting_with_growth.jpg)
 
 ---
-
-> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

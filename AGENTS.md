@@ -22,8 +22,6 @@ Cada `AGENTS.md` de módulo es autocontenido y enlaza de vuelta aquí.
 | app | Rutas, entidades, navegación y UX cross-cutting | [docs/app/AGENTS.md](docs/app/AGENTS.md) |
 | db | Esquema, migraciones y políticas de Supabase | [docs/db/AGENTS.md](docs/db/AGENTS.md) |
 | email | Transaccionales y campañas con Resend | [docs/email/AGENTS.md](docs/email/AGENTS.md) |
-| flutter | App nativa | [docs/flutter/AGENTS.md](docs/flutter/AGENTS.md) |
-| product | Mercado, monetización y difusión | [docs/product/AGENTS.md](docs/product/AGENTS.md) |
 
 ## Skills
 
@@ -74,4 +72,4 @@ Los servidores están declarados en `.pi/mcp.json`: Supabase (esquema, SQL, migr
 - Las cuentas de prueba viven en `.mock-auth/`, que está gitignored y no se commitea.
 - Cualquier respuesta de `/app*` lleva `X-Robots-Tag: noindex, nofollow`.
 - Navegar es público; escribir exige sesión y redirige a `/app/login?next=...`.
-- El detalle de la autenticación, las RLS y el Storage está en [docs/app/auth.md](docs/app/auth.md) y [docs/db/AGENTS.md](docs/db/AGENTS.md).
+- El detalle de la autenticación, las RLS y el Storage está en [docs/app/FUNCIONAL.md](docs/app/FUNCIONAL.md) y [docs/db/AGENTS.md](docs/db/AGENTS.md).

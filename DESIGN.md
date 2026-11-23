@@ -246,7 +246,7 @@ rounded:
 
 ## Motion & Micro-interaction
 
-El movimiento es corto y funcional: confirma un cambio de estado, no decora. Nada hace bucle salvo dos piezas de marca —el abanico del hero y la malla de la banda de categorías— y ambas se desactivan con `prefers-reduced-motion`.
+El movimiento es corto y funcional: confirma un cambio de estado, no decora. Nada hace bucle salvo tres piezas: el abanico del hero, la malla de la banda de categorías y el avance automático de la vista Scroll, que cambia de tarjeta cada 3 s.
 
 ```yaml
 motion:

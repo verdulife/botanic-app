@@ -112,9 +112,9 @@ src/lib/components/AppFooter.svelte # compartido landing + blog
 
 **Sourcing** → Wikimedia Commons (coste 0, licencias libres). Scripts en `scripts/`:
 
-- `bun run img search "<query>"` → lista resultados de Commons filtrando por licencia (CC BY / CC BY-SA / PD), ancho ≥ 1200 px, y priorizando `featured`/`quality`.
-- `bun run img fetch <nº> <dest>` → descarga, optimiza (webp + jpg, cada uno ≤ 100 KB con techo duro de 120 KB por búsqueda binaria de calidad), y registra la atribución en [`docs/images-credits.md`](images-credits.md).
-- `bun run img:optimize [--force]` → audita y reoptimiza las imágenes del blog (14 MB → ~800 KB en la pasada inicial).
+- `pnpm img search "<query>"` → lista resultados de Commons filtrando por licencia (CC BY / CC BY-SA / PD), ancho ≥ 1200 px, y priorizando `featured`/`quality`.
+- `pnpm img fetch <nº> <dest>` → descarga, optimiza (webp + jpg, cada uno ≤ 100 KB con techo duro de 120 KB por búsqueda binaria de calidad), y registra la atribución en [`docs/images-credits.md`](images-credits.md).
+- `pnpm img:optimize [--force]` → audita y reoptimiza las imágenes del blog (14 MB → ~800 KB en la pasada inicial).
 
 **Formato**: cada imagen se sirve como `<picture>` con `<source type="image/webp">` y fallback jpg. El renderer de `marked` envuelve cualquier `<img>` con src bajo `/images/`; hero y cards usan componentes equivalentes. Si falta el `.webp`, el navegador cae al jpg (grácil).
 
@@ -165,5 +165,3 @@ src/lib/components/AppFooter.svelte # compartido landing + blog
 - [ ] Batch 16-20 artículos en `_drafts/`
 
 ---
-
-> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

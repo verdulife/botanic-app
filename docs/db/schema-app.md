@@ -1,6 +1,6 @@
 # DB — Schema app (marketplace + auth)
 
-Schema del Hito 1 implementado (auth, profiles, listings) + pendientes para los siguientes hitos. Cada tabla lleva RLS desde la migración que la crea, nunca después.
+Schema de la app: auth, profiles y listings, más el resto de tablas del marketplace. Cada tabla lleva RLS desde la migración que la crea, nunca después.
 
 ## Implementado
 

@@ -35,14 +35,9 @@ export default defineConfig({
 });
 ```
 
-## Desactivar SW nativo de SvelteKit
+## Service worker nativo de SvelteKit
 
-```ts
-// svelte.config.js
-const config = {
-  kit: { serviceWorker: { register: false } }
-};
-```
+SvelteKit solo registra su propio service worker si existe `src/service-worker.js`. Aquí no existe: el único service worker es el que genera `@vite-pwa/sveltekit`, así que no hay que desactivar nada. Si algún día se añade, se desactiva en las opciones del plugin `sveltekit()` de `vite.config.ts`.
 
 ## Layout
 
@@ -64,7 +59,7 @@ const config = {
 ## Iconos
 
 ```bash
-bun add -D @vite-pwa/assets-generator
+pnpm add -D @vite-pwa/assets-generator
 bunx pwa-assets-generator --preset minimal public/logo.svg
 ```
 

@@ -35,7 +35,7 @@ El DNS vive en Vercel (`ns1` y `ns2.vercel-dns.com`) y el sitio se sirve desde V
 | DNS | Vercel DNS | `ns1`/`ns2.vercel-dns.com` · dominio `botanicapp.es` | $0 |
 | CDN/WAF | Cloudflare Free | DDoS y CDN por delante del host | $0 |
 | Instalación | PWA con `@vite-pwa/sveltekit` | Service worker, manifest e instalación desde el navegador | $0 |
-| App nativa | Flutter | Fase 2 — [docs/flutter/AGENTS.md](docs/flutter/AGENTS.md) | — |
+| App nativa | Flutter | Fase 2 | — |
 
 **Coste total del MVP: 0 €/mes.**
 
