@@ -13,6 +13,8 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"design:check": "node scripts/design-check.mjs",
+		"design:test": "node --test scripts/design-check.test.mjs",
 		"img": "node --env-file-if-exists=.env.local scripts/images.mjs",
 		"img:optimize": "node --env-file-if-exists=.env.local scripts/optimize-images.mjs",
 		"img:seed": "node --env-file-if-exists=.env.local scripts/optimize-seed-images.mjs",
@@ -26,6 +28,7 @@
 		"email:send": "node --env-file-if-exists=.env.local scripts/email-send.mjs"
 	},
 	"devDependencies": {
+		"@google/design.md": "0.4.0",
 		"@resvg/resvg-js": "^2.6.2",
 		"@sveltejs/adapter-vercel": "^7.0.5",
 		"@sveltejs/kit": "^3.4.0",
