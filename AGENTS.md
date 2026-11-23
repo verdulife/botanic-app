@@ -34,6 +34,7 @@ Las skills de proyecto viven en `.pi/skills/` (fuente que descubren Pi y el índ
 | svelte-code-writer | Guía de escritura de código Svelte 5 idiomático | [.pi/skills/svelte-code-writer/SKILL.md](.pi/skills/svelte-code-writer/SKILL.md) |
 | svelte-core-bestpractices | Buenas prácticas del core de Svelte 5 (runes, snippets) | [.pi/skills/svelte-core-bestpractices/SKILL.md](.pi/skills/svelte-core-bestpractices/SKILL.md) |
 | tailwind-4-docs | Snapshot de Tailwind v4 — utilities, variants, config, migración v3→v4 | [.pi/skills/tailwind-4-docs/SKILL.md](.pi/skills/tailwind-4-docs/SKILL.md) |
+| modern-web-guidance | Buenas prácticas de la plataforma web (Baseline) — dialogs, formularios, a11y, CWV | [.pi/skills/modern-web-guidance/SKILL.md](.pi/skills/modern-web-guidance/SKILL.md) |
 
 
 ## Reglas de trabajo (globales)
@@ -41,6 +42,7 @@ Las skills de proyecto viven en `.pi/skills/` (fuente que descubren Pi y el índ
 - **Paso a paso + hitos verificables**: en tareas grandes, parar tras cada hito y reportar. No iniciar el siguiente sin OK.
 - **Servidor de desarrollo**: se puede arrancar, siempre **en segundo plano** (`pnpm run dev` como job en background, nunca en primer plano). La prohibición anterior queda reducida al primer plano: un servidor que no termina bloquea la conversación esperando una salida que no llega. En segundo plano no bloquea nada, y se para al terminar la verificación.
 - **Sistema de diseño**: [DESIGN.md](DESIGN.md) es autoridad visual global — landing, blog, webapp, emails, og-image, futura app Flutter.
+- **Soporte de navegador**: Baseline Widely available. Una función que no lo sea necesita detección y fallback, o no se usa. La guía de plataforma se consulta con la skill `modern-web-guidance` antes de escribir HTML, CSS o JS de cliente.
 
 ## Seguridad — credenciales MCP
 
