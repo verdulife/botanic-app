@@ -4,8 +4,8 @@ Reglas con nombre, decisiones de diseño y enlaces al código. Spec pixel-a-pixe
 
 ## Reglas de diseño
 
-- **Fan Rule** (abanico de anuncios en hero): 3 tarjetas con `perspective: 1400px` + `rotateY(-8deg)`. Rotación automática cada 2.5s, pausa en hover/focus, desactivada con `prefers-reduced-motion`. Curva `cubic-bezier(0.22,1,0.36,1)`. CSS en `src/routes/+page.svelte` (clases `.fan-stage`, `.fan-card`).
-- **Waitlist Flip Rule**: tarjeta de confirmación con perspectiva + flip 3D en `onsuccess`. Altura gestionada por JS (`syncHeight`) en móvil; desktop = absoluto sin altura fija. Cara trasera: composición "Semilla fundadora" sobre `tranquil-200`. Ver: `WaitlistForm.svelte` + `founder-card.ts`.
+- **Abanico** ([Motion](../../DESIGN.md), hero): 3 tarjetas con `perspective: 1400px` + `rotateY(-8deg)`. Rotación automática cada 2.5s, pausa en hover/focus, desactivada con `prefers-reduced-motion`. Curva `cubic-bezier(0.22,1,0.36,1)`. CSS en `src/routes/+page.svelte` (clases `.fan-stage`, `.fan-card`).
+- **Volteo** ([Motion](../../DESIGN.md), lista de espera): tarjeta de confirmación con perspectiva + flip 3D en `onsuccess`. Altura gestionada por JS (`syncHeight`) en móvil; desktop = absoluto sin altura fija. Cara trasera: composición "Semilla fundadora" sobre `tranquil-200`. Ver: `WaitlistForm.svelte` + `founder-card.ts`.
 
 ## Componentes
 

@@ -1,385 +1,360 @@
 ---
+version: alpha
 name: Botanic
-description: Botanic — la app donde las plantas conocen a gente. Marketplace P2P de plantas entre particulares.
-surface_briefs:
+description: "Marketplace P2P de plantas entre particulares. Cálido y sobrio: lino, tinta cálida, un verde funcional y ámbar solo en las estrellas."
+---
+
+# Botanic · Sistema de diseño
+
+La identidad visual de Botanic: landing, blog, web app, emails, instalación y futura app Flutter. Se lee antes de escribir cualquier token, clase o componente.
+
+**Los tokens de este documento son normativos.** Definen el valor correcto, no una aproximación de lo que hay. Cuando el código no coincida, el defecto está en el código y se corrige ahí. Si el diseño cambia, se cambia primero aquí y después se propaga: un valor nuevo no entra por un componente.
+
+## Overview
+
+El estándar de categoría de un marketplace, ejecutado con voz de economía circular. El listón de acabado es **Wallapop + Vinted + Airbnb**: estructura clásica —hero foto-liderado, categorías, funcionalidades, por qué, lista de espera, footer— a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk.
+
+El sistema es **cálido y sobrio**. Un lino cálido hace de suelo, la tinta es cálida casi negra, el verde solo aparece donde hay una acción y el ámbar se reserva a la valoración. La fotografía real de plantas es protagonista; la interfaz no compite con ella.
+
+La calidez es la firma: ningún neutro es frío ni azulado, en ninguna superficie. Lo que se evita de forma explícita es el resultado genérico de plantilla: degradados de neón, glassmorphism, serif decorativos, métricas o testimonios inventados.
+
+## Colors
+
+La paleta es cálida de lino con un acento verde. El verde tiene rol funcional y escasez deliberada: su rareza es lo que hace que el CTA destaque.
+
+```yaml
 colors:
-  background: "oklch(0.977 0.008 85)"
-  foreground: "oklch(0.28 0.02 55)"
-  card: "oklch(0.99 0.006 85)"
-  card-foreground: "oklch(0.28 0.02 55)"
-  popover: "oklch(0.99 0.006 85)"
-  popover-foreground: "oklch(0.28 0.02 55)"
   primary: "oklch(0.687 0.089 148)"
   primary-foreground: "oklch(0.99 0.005 150)"
-  secondary: "oklch(0.931 0.026 145)"
-  secondary-foreground: "oklch(0.349 0.06 149)"
-  muted: "oklch(0.95 0.012 85)"
-  muted-foreground: "oklch(0.52 0.02 70)"
-  accent: "oklch(0.931 0.026 145)"
-  accent-foreground: "oklch(0.349 0.06 149)"
-  destructive: "oklch(0.577 0.245 27.325)"
-  destructive-foreground: "oklch(0.98 0.01 27.325)"
-  border: "oklch(0.91 0.014 85)"
-  input: "oklch(0.91 0.014 85)"
   ring: "oklch(0.687 0.089 148)"
-  chart-1: "oklch(0.687 0.089 148)"
-  chart-2: "oklch(0.768 0.075 147)"
-  chart-3: "oklch(0.79 0.16 90)"
-  chart-4: "oklch(0.577 0.245 27.325)"
-  chart-5: "oklch(0.28 0.02 55)"
   star: "oklch(0.79 0.16 90)"
-  still-50: "oklch(0.972 0.012 145)"
-  still-100: "oklch(0.931 0.026 145)"
-  still-200: "oklch(0.863 0.047 146)"
-  still-300: "oklch(0.768 0.075 147)"
-  still-400: "oklch(0.687 0.089 148)"
-  still-500: "oklch(0.557 0.104 148)"
-  still-600: "oklch(0.471 0.093 148)"
-  still-700: "oklch(0.404 0.076 149)"
-  still-800: "oklch(0.349 0.06 149)"
-  still-900: "oklch(0.309 0.048 150)"
-  still-950: "oklch(0.221 0.032 151)"
-  tranquil-50: "oklch(0.985 0.025 100)"
-  tranquil-100: "oklch(0.97 0.068 100)"
-  tranquil-200: "oklch(0.935 0.128 99)"
-  tranquil-300: "oklch(0.895 0.163 95)"
-  tranquil-400: "oklch(0.847 0.171 87)"
-  tranquil-500: "oklch(0.782 0.161 81)"
-  tranquil-600: "oklch(0.67 0.144 71)"
-  tranquil-700: "oklch(0.544 0.124 61)"
-  tranquil-800: "oklch(0.468 0.107 57)"
-  tranquil-900: "oklch(0.415 0.094 53)"
-  tranquil-950: "oklch(0.281 0.068 49)"
-  linen-50: "oklch(0.99 0.006 85)"
-  linen-100: "oklch(0.977 0.008 85)"
-  linen-200: "oklch(0.95 0.012 85)"
-  linen-300: "oklch(0.91 0.014 85)"
-  linen-400: "oklch(0.84 0.02 85)"
-  linen-500: "oklch(0.76 0.025 85)"
-  linen-600: "oklch(0.64 0.028 85)"
-  linen-700: "oklch(0.52 0.03 85)"
-  linen-800: "oklch(0.4 0.03 85)"
-  linen-900: "oklch(0.3 0.028 85)"
-  linen-950: "oklch(0.22 0.025 85)"
-  zinc-950: "oklch(0.141 0.005 285)"
+  still:
+    "50": "oklch(0.972 0.012 145)"
+    "100": "oklch(0.931 0.026 145)"
+    "200": "oklch(0.863 0.047 146)"
+    "300": "oklch(0.768 0.075 147)"
+    "400": "oklch(0.687 0.089 148)"
+    "500": "oklch(0.557 0.104 148)"
+    "600": "oklch(0.471 0.093 148)"
+    "700": "oklch(0.404 0.076 149)"
+    "800": "oklch(0.349 0.06 149)"
+    "900": "oklch(0.309 0.048 150)"
+    "950": "oklch(0.221 0.032 151)"
+  tranquil:
+    "50": "oklch(0.985 0.025 100)"
+    "100": "oklch(0.97 0.068 100)"
+    "200": "oklch(0.935 0.128 99)"
+    "300": "oklch(0.895 0.163 95)"
+    "400": "oklch(0.847 0.171 87)"
+    "500": "oklch(0.782 0.161 81)"
+    "600": "oklch(0.67 0.144 71)"
+    "700": "oklch(0.544 0.124 61)"
+    "800": "oklch(0.468 0.107 57)"
+    "900": "oklch(0.415 0.094 53)"
+    "950": "oklch(0.281 0.068 49)"
+  linen:
+    "50": "oklch(0.99 0.006 85)"
+    "100": "oklch(0.977 0.008 85)"
+    "200": "oklch(0.95 0.012 85)"
+    "300": "oklch(0.91 0.014 85)"
+    "400": "oklch(0.84 0.02 85)"
+    "500": "oklch(0.76 0.025 85)"
+    "600": "oklch(0.64 0.028 85)"
+    "700": "oklch(0.52 0.03 85)"
+    "800": "oklch(0.4 0.03 85)"
+    "900": "oklch(0.3 0.028 85)"
+    "950": "oklch(0.22 0.025 85)"
+  light:
+    background: "oklch(0.977 0.008 85)"
+    foreground: "oklch(0.28 0.02 55)"
+    card: "oklch(0.99 0.006 85)"
+    card-foreground: "oklch(0.28 0.02 55)"
+    popover: "oklch(0.99 0.006 85)"
+    popover-foreground: "oklch(0.28 0.02 55)"
+    secondary: "oklch(0.931 0.026 145)"
+    secondary-foreground: "oklch(0.349 0.06 149)"
+    accent: "oklch(0.931 0.026 145)"
+    accent-foreground: "oklch(0.349 0.06 149)"
+    muted: "oklch(0.95 0.012 85)"
+    muted-foreground: "oklch(0.52 0.02 70)"
+    border: "oklch(0.91 0.014 85)"
+    input: "oklch(0.91 0.014 85)"
+    destructive: "oklch(0.577 0.245 27.325)"
+    destructive-foreground: "oklch(0.98 0.01 27.325)"
+  dark:
+    background: "oklch(0.3 0.028 85)"
+    foreground: "oklch(0.95 0.01 90)"
+    card: "oklch(0.22 0.025 85)"
+    card-foreground: "oklch(0.95 0.01 90)"
+    popover: "oklch(0.22 0.025 85)"
+    popover-foreground: "oklch(0.95 0.01 90)"
+    secondary: "oklch(0.349 0.06 149)"
+    secondary-foreground: "oklch(0.931 0.026 145)"
+    accent: "oklch(0.349 0.06 149)"
+    accent-foreground: "oklch(0.931 0.026 145)"
+    muted: "oklch(0.4 0.03 85)"
+    muted-foreground: "oklch(0.74 0.02 70)"
+    border: "oklch(0.95 0.01 90 / 12%)"
+    input: "oklch(0.95 0.01 90 / 15%)"
+    destructive: "oklch(0.704 0.191 22.216)"
+    destructive-foreground: "oklch(0.98 0.01 22.216)"
+```
+
+Los valores de marca no cambian entre modos: `primary`, `ring` y `star` son los mismos en claro y oscuro. Lo que cambia son las superficies, el texto y los bordes, agrupados en `light` y `dark`.
+
+- **Still Green** (`still-400`) es el acento: CTA, logo, iconos y anillo de foco. Nunca es fondo de una pantalla completa.
+- **Lino** (`linen-*`) hace de fondo, tarjeta, superficie alterna y borde. `linen-100` es el suelo, `linen-50` la tarjeta.
+- **Still Green 100** (`secondary`) tiñe chips, icon-tiles y la banda de la lista de espera.
+- **Tranquil** (amarillo) es el acento complementario: rompe la monotonía en estados, badges y en la cara trasera de la lista de espera. No sustituye al verde en una acción.
+- **Ámbar** (`star`) solo pinta el glifo de la estrella y la puntuación del mapa.
+- **Terra** (`destructive`) solo marca error e `aria-invalid`.
+- **Footer**: superficie de lino con `border-t`, texto `muted-foreground`, enlaces y corazón `still-600`, y "Plant Lovers" en `foreground`. Cálido como el resto del sistema, sin bloque oscuro.
+
+**Contraste.** `primary-foreground` es casi blanco sobre `still-400`: ≈2,7:1. Sirve para botón y texto grande, nunca para párrafo. Para texto verde sobre superficie clara se usa `still-600` o `still-700`; `still-400` sobre lino da ≈2,6:1.
+
+## Typography
+
+Tres familias con rol estricto, autoalojadas con `fontsource-variable`, sin CDN. Fraunces aporta el carácter editorial de la marca; Inter sostiene la lectura y la interfaz; JetBrains Mono marca lo técnico y lo secundario.
+
+```yaml
 typography:
-  display: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, Times New Roman, serif"
-  sans: "Inter Variable, Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
-  mono: "JetBrains Mono Variable, JetBrains Mono, ui-monospace, monospace"
-  eyebrow:
-    fontFamily: "JetBrains Mono Variable, JetBrains Mono, ui-monospace, monospace"
+  display-hero:
+    fontFamily: Fraunces Variable
+    fontSize: 48px
     fontWeight: 400
-    fontSize: "0.8125rem (13px)"
-    color: "still-500"
-    textTransform: "uppercase"
-    letterSpacing: "0.04em"
-  display-headline:
-    fontFamily: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, Times New Roman, serif"
-    fontWeight: 400
-    fontSize: "3rem (text-5xl) → 4.5rem (md:text-7xl)"
     lineHeight: 1.05
-    letterSpacing: "normal"
-    textWrap: "balance"
-  h2:
-    fontFamily: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, Times New Roman, serif"
+    fontVariation: '"opsz" 144, "SOFT" 30'
+  display-section:
+    fontFamily: Fraunces Variable
+    fontSize: 36px
     fontWeight: 400
-    fontSize: "2.25rem (text-4xl) → 3.75rem (md:text-6xl)"
     lineHeight: 1.2
-    letterSpacing: "normal"
-    textWrap: "balance"
-  h3:
-    fontFamily: "Fraunces Variable, Fraunces, Times New Roman, serif (opsz natural; .display-opsz opt-in)"
+    fontVariation: '"opsz" 144, "SOFT" 30'
+  heading-feature:
+    fontFamily: Fraunces Variable
+    fontSize: 30px
     fontWeight: 400
-    fontSize: "1rem (text-base) – 3rem (text-5xl) según contexto"
-    textWrap: "balance"
+    lineHeight: 1.2
+    fontVariation: '"opsz" 144, "SOFT" 30'
+  heading-card:
+    fontFamily: Fraunces Variable
+    fontSize: 14px
+    fontWeight: 600
+    lineHeight: 1.4
+    fontVariation: "normal"
   body:
-    fontFamily: "Inter Variable, Inter, system-ui, -apple-system, sans-serif"
+    fontFamily: Inter Variable
+    fontSize: 16px
     fontWeight: 300
-    fontSize: "1rem (base) / 0.875rem (sm)"
     lineHeight: 1.5
-    textWrap: "pretty"
   body-strong:
-    fontFamily: "Inter Variable, Inter, system-ui, sans-serif"
+    fontFamily: Inter Variable
+    fontSize: 16px
     fontWeight: 600
-  headline-strong:
-    fontFamily: "Fraunces Variable (opsz 144, SOFT 30), Fraunces, serif"
-    fontWeight: 400
-    fontStyle: italic
-    color: "still-400"
+    lineHeight: 1.5
+  prose:
+    fontFamily: Inter Variable
+    fontSize: 17px
+    fontWeight: 300
+    lineHeight: 1.75
   button:
-    fontFamily: "Inter Variable, Inter, system-ui, sans-serif"
+    fontFamily: Inter Variable
+    fontSize: 14px
     fontWeight: 600
-  eyebrow-class:
-    fontFamily: "JetBrains Mono Variable, JetBrains Mono, ui-monospace, monospace"
+    lineHeight: 1.2
+  eyebrow:
+    fontFamily: JetBrains Mono Variable
+    fontSize: 13px
     fontWeight: 400
-    fontSize: "0.8125rem (13px)"
-    color: "still-500"
-    textTransform: "uppercase"
-    letterSpacing: "0.04em"
-rounded:
-  sm: "0.5rem"
-  md: "0.75rem"
-  lg: "1rem"
-  xl: "0.75rem (imagen de tarjeta)"
-  "2xl": "1rem (tarjetas)"
-  "3xl": "1.5rem (botones)"
-  full: "9999px"
+    lineHeight: 1.4
+    letterSpacing: 0.04em
+  headline-strong:
+    fontFamily: Fraunces Variable
+    fontSize: 48px
+    fontWeight: 400
+    lineHeight: 1.05
+    fontVariation: '"opsz" 144, "SOFT" 30'
+  display-hero-md:
+    fontFamily: Fraunces Variable
+    fontSize: 72px
+    fontWeight: 400
+    lineHeight: 1.05
+    fontVariation: '"opsz" 144, "SOFT" 30'
+  display-section-md:
+    fontFamily: Fraunces Variable
+    fontSize: 60px
+    fontWeight: 400
+    lineHeight: 1.2
+    fontVariation: '"opsz" 144, "SOFT" 30'
+```
+
+- **Titulares de marketing**: Fraunces 400 con `opsz 144` y `SOFT 30` forzados en h1 y h2. Los tokens `-md` son el paso responsive desde el breakpoint `md`; `display-hero` y `display-section` son el tamaño de móvil. Los h3 usan tamaño óptico natural, salvo el grande del carrusel de funcionalidades, que activa el tratamiento de display con la utilidad `.display-opsz` (`.no-opsz` lo desactiva, y lo usan las tarjetas del blog). Nunca peso 800 ni `tracking-tight`.
+- **Superficie de la app**: la UI de producto no usa Fraunces. `/app/**` escribe todo en Inter —titulares, cuerpo, botones— y el mecanismo es el wrapper `.app-ui`: anula la familia, el `fontVariation` y el italic de `<strong>`. Un h1-h3 con `font-display` dentro de `.app-ui` es un defecto.
+- **`<strong>`**: dentro de h1/h2/h3 es italic Fraunces 400 en `still-400` (en h3, sin forzar `opsz`); dentro de p sube a Inter 600, sin italic ni color. `headline-strong` es el token del primero y `body-strong` el del segundo.
+- **Eyebrows, tags y etiquetas de pill** van en `.eyebrow`: JetBrains Mono 400, 13 px, uppercase, `letterSpacing` 0.04em, color `still-500`. No admiten `<strong>` dentro.
+- **Ritmo del texto**: `text-wrap: balance` en h1-h3 y `pretty` en p. El cuerpo de artículo usa `prose` (17 px / 1.75).
+
+## Layout
+
+Mobile-first y centrado, con bandas de ancho completo y contenedor centrado. El ritmo vertical es generoso y constante: es lo que hace que la página respire sin necesidad de líneas ni adornos.
+
+```yaml
 spacing:
-  sm: "0.5rem"
-  md: "1rem"
-  lg: "1.5rem"
-  xl: "2.5rem"
+  base: 4px
+  sm: 8px
+  md: 16px
+  lg: 24px
+  xl: 32px
+  section: 80px
+  section-lg: 112px
+  band: 40px
+  container: 1280px
+  container-narrow: 1152px
+```
+
+- Todas las bandas usan `container` (1280 px) con padding lateral de 16, 24 y 32 px según el breakpoint. La lista de espera es una banda compacta: `band` de alto y `container-narrow` dentro.
+- Secciones de contenido: `section` de padding vertical, que pasa a `section-lg` a partir de `md`.
+- El hero es un grid de dos columnas con 48-64 px de separación; en móvil el copy se centra y respira con 64 px arriba.
+- Las secciones se separan con bandas alternas sobre `muted` con `border-y`, no con líneas sueltas.
+
+## Elevation & Depth
+
+La profundidad la construyen el borde fino y el radio generoso; la sombra llega después, solo como indicio de que algo se puede tocar.
+
+- Tarjetas y contenedores van con `border` de 1 px y nunca con una sombra pesada. El contraste tonal entre superficies hace el trabajo.
+- La sombra escala con la interacción: `shadow-xs` en la imagen dentro de una tarjeta, `shadow-sm` en tarjeta y botón en reposo, `shadow-md` al pasar el cursor por una tarjeta del blog.
+- El abanico del hero eleva la tarjeta en primer plano con su propia sombra, aplicada por estado y no solo por `:hover`, para que la rotación automática también la muestre.
+- Los markers del mapa usan dos capas de sombra y suben 1 px al pasar el cursor.
+- Quedan fuera del sistema las sombras de color, los glows y el glassmorphism.
+
+## Shapes
+
+El lenguaje de forma es redondeado y generoso: el radio es parte de la calidez, y no se mezcla con esquinas rectas en la misma vista.
+
+```yaml
+rounded:
+  base: 0.625rem
+  image: 0.75rem
+  card: 1rem
+  pill: 9999px
+```
+
+- `card` (1rem, `rounded-2xl`) en tarjetas del abanico, del carrusel de funcionalidades y del por-qué.
+- `image` (0.75rem, `rounded-xl`) en la imagen dentro de la tarjeta y en las miniaturas de los markers.
+- `pill` (`rounded-full`) en botones, pills de categoría, el campo de la lista de espera y el botón "Unirme" integrado en él.
+- `base` es el radio de shadcn del que derivan los controles del sistema de componentes.
+
+## Motion & Micro-interaction
+
+El movimiento es corto y funcional: confirma un cambio de estado, no decora. Nada hace bucle salvo dos piezas de marca —el abanico del hero y la malla de la banda de categorías— y ambas se desactivan con `prefers-reduced-motion`.
+
+```yaml
+motion:
+  state-change:
+    duration: 120ms
+    timingFunction: ease
+  surface-enter:
+    duration: 300ms
+    timingFunction: cubic-bezier(0.32, 0.72, 0, 1)
+  surface-exit:
+    duration: 200ms
+    timingFunction: cubic-bezier(0.32, 0.72, 0, 1)
+  overlay-in:
+    duration: 200ms
+    timingFunction: ease-out
+  overlay-out:
+    duration: 150ms
+    timingFunction: ease-in
+  fan-shift:
+    duration: 350ms
+    timingFunction: cubic-bezier(0.22, 1, 0.36, 1)
+  flip:
+    duration: 700ms
+    timingFunction: ease-out
+  fan-cycle:
+    duration: 2500ms
+    timingFunction: linear
+```
+
+- **Qué se anima**: `transform` y `opacity`, más `box-shadow` donde la sombra comunica interacción. Nada que obligue a recalcular layout.
+- **Ritmo**: los cambios locales caben en `state-change`; lo que entra en pantalla tarda más y desacelera (`surface-enter`), lo que sale acelera (`surface-exit`).
+- **Abanico del hero**: tres tarjetas en `.fan-stage` con `perspective: 1400px`, origen al 85 % y `rotateY(-8deg)`; cada `.fan-card` rota y escala por variable CSS. El foco cambia cada `fan-cycle` con `fan-shift`, se pausa en hover y focus, y no arranca con movimiento reducido.
+- **Malla de viento**: solo en la banda de categorías. Dos capas de degradado radial con tintes de rampa que hacen crossfade alternado y lento, mientras la capa deriva con traslación y rotación de muy poca amplitud. Es decorativa: `aria-hidden`, sin interacción y estática con movimiento reducido.
+- **Volteo de la lista de espera**: solo en esa tarjeta, al confirmar un registro. Perspectiva de 1400 px, `preserve-3d`, giro de 700 ms de derecha a izquierda, caras con `backface-visibility: hidden` y la trasera pre-rotada sobre `tranquil-200`. La altura en móvil la calcula JS; el foco pasa al titular trasero, la cara inactiva queda `inert` y con movimiento reducido el cambio es instantáneo.
+- **Sheet de filtros** (`/app`): entra con `surface-enter` desde arriba y sale con `surface-exit`; el overlay usa `overlay-in` y `overlay-out`.
+
+## Voice & Content Strategy
+
+La voz y la terminología son autoridad de producto: se definen en [PRODUCT.md](PRODUCT.md). Aquí solo lo que afecta a la interfaz escrita.
+
+- **Tono**: cercano y de comunidad, nunca técnico ni frío. Sin exclamaciones ni superlativos de marketing.
+- **Capitalización**: sentence case en titulares, botones, etiquetas de formulario y elementos de menú.
+- **Etiquetas de acción**: verbo y resultado ("Publicar anuncio", "Guardar deseo", "Unirme a la lista"), nunca "OK" ni "Enviar".
+- **Estados vacíos**: dicen qué va aquí y ofrecen la acción de crear. **Errores**: qué ha fallado y cuál es el siguiente paso, sin disculpas ni códigos.
+- **Números y fechas**: formato español (`dd/mm/aaaa`), tiempo relativo en listas ("hace 3 min") y espacio entre cifra y unidad (`16 px`).
+- **Restricciones de copy**: no se prometen "sin envíos", "sin comisiones", "quedar en mano" ni "solo cerca de ti". La semilla fundadora nunca comunica el tamaño del grupo.
+
+## Components
+
+Guía de estilo de los átomos del sistema. Los componentes base son los de shadcn-svelte; lo propio de Botanic son los envoltorios de marca.
+
+```yaml
 components:
   button-primary:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.primary-foreground}"
-    rounded: "{rounded.full}"
-    height: "2.25rem (sm) / 2.5rem (default) / 3rem (lg custom)"
-    padding: "0 1rem (sm) / 0 2rem (lg custom)"
+    typography: "{typography.button}"
+    rounded: "{rounded.pill}"
   button-outline:
-    backgroundColor: "{colors.card}"
-    borderColor: "{colors.border}"
-    textColor: "{colors.foreground}"
-  input:
-    backgroundColor: "bg-background"
-    borderColor: "{colors.border}"
-    textColor: "{colors.foreground}"
-    rounded: "{rounded.full}"
-    height: "3.5rem (h-14)"
-  card:
-    backgroundColor: "{colors.card}"
-    borderColor: "{colors.border}"
-    rounded: "{rounded.2xl}"
-    padding: "0.875rem"
-  listing-card (fan):
-    backgroundColor: "{colors.card}"
-    borderColor: "{colors.border}"
-    rounded: "{rounded.2xl}"
-    width: "max-w-72"
-    shadow: "shadow-sm (reposo) / elevación en hover"
+    backgroundColor: "{colors.light.card}"
+    textColor: "{colors.light.foreground}"
+    typography: "{typography.button}"
+    rounded: "{rounded.pill}"
+  input-waitlist:
+    backgroundColor: "{colors.light.background}"
+    textColor: "{colors.light.foreground}"
+    rounded: "{rounded.pill}"
+    height: 56px
+  card-listing:
+    backgroundColor: "{colors.light.card}"
+    textColor: "{colors.light.foreground}"
+    rounded: "{rounded.card}"
+    padding: 14px
+  card-blog:
+    backgroundColor: "{colors.light.card}"
+    textColor: "{colors.light.foreground}"
+    rounded: "{rounded.card}"
   pill-category:
-    backgroundColor: "{colors.background}"
-    borderColor: "{colors.border}"
-    rounded: "{rounded.full}"
+    backgroundColor: "{colors.light.background}"
+    textColor: "{colors.light.foreground}"
+    rounded: "{rounded.pill}"
+  badge-eyebrow:
+    textColor: "{colors.still.500}"
+    typography: "{typography.eyebrow}"
+  band-waitlist:
+    backgroundColor: "{colors.light.secondary}"
+    textColor: "{colors.light.secondary-foreground}"
   logo-wordmark:
-    textColor: "still-900"
-    fontSize: "2.5rem"
-    fontWeight: 700
-  waitlist-section:
-    backgroundColor: "{colors.secondary}/70"
+    height: 24px
   footer:
-    backgroundColor: "zinc-950"
-    textColor: "primary-foreground"
----
-
-# Design System: Botanic (canon 2026)
-
-## Overview
-
-**Creative North Star: el estándar de categoría de marketplace, ejecutado impecablemente, con voz de economía circular.**
-
-Botanic es la landing de una comunidad de economía circular para plantas; el listón de acabado es Wallapop + Vinted + Airbnb. La página ejecuta la estructura clásica de la categoría — hero foto-liderado, categorías, funcionalidades, por qué, waitlist prefooter y footer — a un nivel de oficio que pueda sentarse junto a esos productos, sin ironía ni quirk. El copy habla en el vocabulario de la economía circular ("vender, cambiar o regalar", "conocer a gente nueva") y evita declarar como promesas permanentes los "sin envíos", "sin comisiones", "quedar en mano" ni "solo cerca de ti" — son decisiones del MVP, no verdades de marca (ver [PRODUCT.md](PRODUCT.md)).
-
-El sistema es cálido y sobrio: un fondo de lino cálido, tinta cálida casi negra, Still Green (`#74AA7B`) para el CTA, el logo y los iconos, una rampa complementaria `tranquil` (amarillo) para romper la monotonía, y el ámbar `star` puntual para las estrellas. La fotografía real de plantas es protagonista en el hero (abanico de anuncios de ejemplo etiquetado como material sintético). La profundidad se construye con bordes finos, esquinas redondeadas (`rounded-2xl` en tarjetas, `rounded-full` en pills) y contraste tonal entre superficies; solo hay sombra puntual en la tarjeta del abanico elevada. Se evita explícitamente el `AI slop`: sin degradados de neón, sin glassmorphism, sin serif itálicos decorativos, sin métricas o testimonios inventados. Las animaciones del sistema son el mesh viento de las bandas de categorías y waitlist (The Wind Mesh Rule, con dos variantes de intensidad) y el abanico de anuncios del hero (The Fan Rule).
-
-**Key Characteristics**
-- Estructura clásica de marketplace, executed impeccably.
-- Fotografía real de plantas servida localmente (`static/images/`), no por CDN.
-- Still Green como acento principal (rampa completa), con `tranquil` (amarillo) como acento complementario.
-- **Tipografía** — sistema de 3 familias: Fraunces Variable (display, h1/h2/h3), Inter Variable (body, p, botones), JetBrains Mono Variable (eyebrows, tags). System stack como fallback de Inter. Sin CDN: self-hosted vía `@fontsource-variable/*`.
-- Calidez uniforme en todos los neutros (lino/tinta); nunca grises fríos.
-- Mobile-first, ritmo vertical generoso y constante.
-- Wordmark "Botanic" que integra el icono Sprout como la letra "t" (logo y texto, uno).
-
-## Colors
-
-Paleta cálida de lino y Still Green. El verde se usa con propósito (CTA, logo, iconos, anillos de foco); los neutros de lino hacen el resto del trabajo. El ámbar (`star`) es exclusivo para las estrellas de valoración. La `terra` es el único color destructivo. La rampa **`tranquil`** (amarillo) es el acento complementario: sirve para romper la monotonía (badges, highlights, estados) sin robar protagonismo al verde.
-
-Dos rampas completas viven en `@theme inline` de `src/app.css` (`still-50…950` y `linen-50…950`). El verde principal es `still-400` (`#74AA7B`); el resto de la rampa son sus shades.
-
-### Primary
-- **Still Green 400** (`oklch(0.687 0.089 148)`, ≈ `#74AA7B`) — el acento del sistema como token `primary`. Botón primario, iconos de categorías, anillos de foco. `ring` y `chart-1` usan el mismo 400; `chart-2` usa el 300.
-- **Contraste**: `primary-foreground` es casi-blanco (`oklch(0.99 0.005 150)`) — decisión del usuario (texto de botones casi-blanco sobre 400). Nota: blanco sobre `#74AA7B` da ~2.7:1 (no cumple AA en texto normal; válido para botones/texto grande). Para texto `text-primary` sobre superficies claras de lino usar `still-600`/`still-700`; 400 sobre lino da ~2.6:1.
-
-### Neutral (lino cálido)
-- **Lino (fondo)** `oklch(0.977 0.008 85)` (`linen-100`) — superficie base.
-- **Papel (tarjeta)** `oklch(0.99 0.006 85)` (`linen-50`) — tarjetas y superficies elevadas suaves.
-- **Tinta** `oklch(0.28 0.02 55)` — texto principal, headings.
-- **Oliva (muted-fg)** `oklch(0.52 0.02 70)` — texto secundario y metadatos.
-- **Verdín (border/input)** `oklch(0.91 0.014 85)` (`linen-300`) — bordes, separadores.
-- **Muted (superficie)** `oklch(0.95 0.012 85)` (`linen-200`) — bandas alternas y fondo de badges.
-
-### Secondary (tinte de Still Green)
-- **Still Green 800 (secondary-fg)** `oklch(0.349 0.06 149)` — texto sobre el tinte verde.
-- **Still Green 100 (secondary)** `oklch(0.931 0.026 145)` — chips, icon-tiles, banda de la waitlist al 70%.
-
-### Acentos puntuales
-- **Estrella (ámbar)** `oklch(0.79 0.16 90)` — exclusivo para la estrella de valoración.
-- **Terra (destructive)** `oklch(0.577 0.245 27.325)` — exclusivo para estados de error y `aria-invalid`.
-
-### Shade oscuro del wordmark
-- **Still Green 800** (`oklch(0.349 0.06 149)`) — color del logo "Botanic" (`text-still-800`).
-- **Still Green 900** (`oklch(0.309 0.048 150)`) y **Still Green 950** (`oklch(0.221 0.032 151)`) — títulos del hero y de la waitlist.
-
-### Footer
-- Lino cálido de fondo, texto `text-muted-foreground` y enlaces `text-primary` (sobre superficies claras, usar `still-600`/`still-700` para legibilidad AA).
-
-### Rampas Still Green y Tranquil — hex de referencia
-Valores oklch de las 3 rampas completas (`still-*`, `tranquil-*`, `linen-*`) ya están en el YAML frontmatter de este archivo (bloque `colors`) y en `src/app.css`. Equivalente hex de los pasos con nombre semántico:
-
-| Token | Hex |
-|---|---|
-| `still-400` (principal) | `#74AA7B` |
-| `still-500` (base) | `#45844F` |
-| `still-800` (wordmark) | `#224329` |
-| `tranquil-200` (base, cara trasera waitlist) | `#FFEB82` |
-| `tranquil-500` (botón compartir) | `#ECAB06` |
-
-### Dark mode
-Los mismos tokens se invierten sobre la rampa: `primary` → `still-400`, `secondary`/`accent` → `still-800` con fg `still-100`, `background` → `linen-900`, `card`/`popover` → `linen-950`, `muted` → `linen-800`, `border`/`input` → alphas cálidos sobre lino. El mesh tiene variantes dark propias.
-
-### Reglas nombradas
-- **The One Accent Rule.** Still Green y el ámbar son los únicos acentos. El verde aparece en CTA, logo, iconos y foco; el ámbar, solo en la estrella.
-- **The Warmth Rule.** Todos los neutros comparten la misma calidez de lino/tierra. No introducir grises fríos ni blancos azulados (excepción deliberada: el footer, que usa zinc-950 como cierre dramático).
-- **The Star Rarity Rule.** El ámbar de la estrella nunca pinta fondos ni chips; solo el glifo de la estrella.
-- **The Rarity Rule.** El Still Green se usa con moderación (≤10% de una pantalla); su escasez es lo que hace destacar al CTA y al logo.
-
-## Typography
-
-**Sistema de 3 familias** (self-hosted vía `@fontsource-variable/*`, sin CDN):
-
-| Token | Familia | Uso principal |
-|---|---|---|
-| `font-display` | **Fraunces Variable** (`opsz` 144, `SOFT` 30) | h1, h2, h3 — titulares |
-| `font-sans` | **Inter Variable** → system-ui fallback | body, p, microcopy, pills, botones |
-| `font-mono` | **JetBrains Mono Variable** → ui-monospace fallback | eyebrows, tags |
-
-Definidas en `@theme inline` de `src/app.css`. La carga se hace con `@import "@fontsource-variable/fraunces/opsz.css"` (variante con eje `opsz`), `@import "@fontsource-variable/inter"` y `@import "@fontsource-variable/jetbrains-mono"`.
-
-Text-wrap global en `src/app.css`: `h1/h2/h3 → text-wrap: balance`, `p → text-wrap: pretty`.
-
-### Jerarquía
-
-- **H1 / H2 — Fraunces Variable, weight 400, opsz 144 SOFT 30** (`font-variation-settings: "opsz" 144, "SOFT" 30`)
-  - H1 — `text-5xl` → `md:text-7xl`, `line-height: 1.05`, `tracking: normal`. Solo en el `h1` del hero.
-  - H2 — `text-4xl` → `md:text-6xl`, `line-height: 1.2` (`leading-[1.2]`). Titulares de sección.
-- **H3 — Fraunces Variable, weight 400, tamaño óptico NATURAL** (la regla global ya no fuerza `opsz`/`SOFT`; el eje `opsz` auto-selecciona según cuerpo). Excepciones opt-in: los h3 grandes del carrusel de funcionalidades usan `.display-opsz`; los títulos de card del blog desactivan el forzado heredado de h2 con `.no-opsz`.
-  - Utilidades en `src/app.css`: `.display-opsz` (aplica `"opsz" 144, "SOFT" 30`) y `.no-opsz` (`font-variation-settings: normal`).
-  - H3 (tarjeta) — `text-sm` / `text-base` / `text-lg` según tarjeta. Los nombres de listings de ejemplo se renderizan como `<p class="font-display ...">` (no `<h3>`) para no contaminar la jerarquía semántica del hero demo.
-
-- **Body / p — Inter Variable, weight 300**, `line-height: 1.5`, `text-wrap: pretty`. Tamaños: `text-sm` (0.875rem) en tarjetas, `text-base` (1rem) por defecto en párrafos de sección, `text-lg` cuando se quiere énfasis (ej. promesa del hero de la waitlist).
-
-- **Botones — Inter Variable, weight 600**.
-
-- **Eyebrow / Tag / Pill-label — JetBrains Mono Variable, weight 400, `0.8125rem` (13px), `color: still-500`, `text-transform: uppercase`, `letter-spacing: 0.04em`**. Se aplica con la clase `.eyebrow` (definida en `src/app.css`). No admite `<strong>` dentro.
-
-### Comportamiento de `<strong>`
-
-| Contexto | Resultado |
-|---|---|
-| Dentro de `h1` / `h2` / `h3` (Fraunces) | `font-style: italic`, mantiene weight 400 + opsz 144 SOFT 30, `color: still-400` |
-| Dentro de `body` / `p` (Inter) | `font-weight: 600`, sin italic, sin color |
-| Dentro de `.eyebrow` (JetBrains Mono) | ❌ no se permite (la norma JetBrains Mono es solo uppercase sin strong) |
-
-La regla global vive en `src/app.css`:
-
-```css
-h1 strong, h2 strong, h3 strong {
-  font-style: italic;
-  font-weight: 400;
-  font-variation-settings: "opsz" 144, "SOFT" 30;
-  color: var(--color-still-400);
-}
-
-body strong, p strong {
-  font-weight: 600;
-  font-style: normal;
-}
+    textColor: "{colors.light.muted-foreground}"
 ```
 
-### Reglas nombradas
-
-- **The Three Family Rule.** El sistema usa 3 familias (`Fraunces`, `Inter`, `JetBrains Mono`). Cada una tiene un rol estricto. No introducir serif decorativos adicionales, ni una segunda grotesk, ni otra mono.
-- **The Surface Scope Rule.** Fraunces (display) vive solo en superficies de marketing y comunicación —landing, banners, hero, emails, og-image, tarjeta fundadora del waitlist, futuros assets impresos. La UI de la app (`/app/**`) usa Inter (sans) para TODO: titulares, body, botones, cards. JetBrains Mono se reserva a eyebrows/tags/pills. Cualquier h2/h3 de un componente dentro de `/app` que aparezca con `font-display` es un bug.
-- **The Display Headline Rule.** En superficies de marketing (landing), los h1/h2 van en Fraunces 400 con opsz 144 + SOFT 30 forzados; los h3 usan tamaño óptico natural (utilidades `.display-opsz`/`.no-opsz` para excepciones puntuales). Nunca peso 800 ni `tracking-tight` en titulares. Esta regla NO aplica a la UI de la app.
-- **The Headline Strong Rule.** Los `<strong>` dentro de h1/h2/h3 son italic en Fraunces 400 + color `still-400`. No se añade otro peso ni decoración.
-- **The Body Strong Rule.** Los `<strong>` dentro de body/p suben de Inter 300 a Inter 600. Sin italic, sin color.
-- **The Eyebrow Rule.** Eyebrows, tags y pills-label usan JetBrains Mono 13px uppercase tracking 0.04em en `still-500`. No llevan `<strong>` adentro.
-- **The Muted Body Rule.** El texto de apoyo va en `text-muted-foreground` para que el titular mande.
-
-## Layout
-
-Mobile-first y centrado. Todas las bandas usan contenedor `max-w-7xl` centrado (landing, header y blog), con padding lateral `px-4`/`px-6`/`px-8` y vertical `py-20` → `md:py-28` en las secciones de contenido; la waitlist usa una banda compacta (`py-10`) con contenedor interno `max-w-6xl`. El hero usa un grid `md:grid-cols-2` con `gap-12 md:gap-16`; en móvil el copy se centra (`items-center text-center`) y respira con `pt-16`.
-
-Bandas alternas para separar secciones sin líneas extra: las secciones claras van sobre `background`, y la banda de categorías va sobre `muted/40` con `border-y`. La waitlist cierra con la tarjeta cálida `bg-secondary/70` (`BlogCta`).
-
-## Elevation & Depth
-
-Profundidad por **bordes y radio**, con una excepción de sombra. Las tarjetas del abanico usan `shadow-sm` en reposo y una sombra elevada (`0 16px 32px -12px`) solo cuando están en primer plano (hover o rotación automática). El resto del sistema no tiene `box-shadow`; la elevación se comunica con el contraste tonal y los bordes finos.
-
-### Reglas nombradas
-- **The Border-By-Default Rule.** La profundidad se comunica con un borde fino y un radio generoso, no con sombra.
-- **The Fan Shadow Rule.** La única sombra del sistema es la de la tarjeta del abanico en primer plano, y se aplica por estado (`.fan-lift`), no solo por `:hover`, para que la rotación automática también la muestre.
-
-## Shapes
-
-- `rounded-sm` (0.5rem) en el `radius` base de shadcn.
-- `rounded-xl` (0.75rem) en la imagen dentro de las tarjetas del abanico.
-- `rounded-2xl` (1rem) en tarjetas del abanico, carrusel de funcionalidades y por-qué.
-- `rounded-full` en botones (base), pills de categoría, input de la waitlist y el botón "Unirme" integrado en el input.
-
-## Implementación de componentes (landing)
-
-Referencia pixel-a-pixel de Hero, abanico de anuncios, categorías, funcionalidades, waitlist (incl. tarjeta "Semilla fundadora") y footer, además de SEO y Performance de la landing: [docs/web/design-components.md](docs/web/design-components.md). Cárgalo solo si vas a tocar esos componentes concretos.
-
-## Motion
-
-### The Wind Mesh Rule
-La banda de **categorías** lleva un mesh gradient que evoca el movimiento de las hojas al viento (variante suave, `.mesh-original`):
-
-- **Variante suave (banda de categorías, `.mesh-original`)**: dos capas `mesh-a`/`mesh-b` de `radial-gradient` con la rampa Still/Lino a baja opacidad (22–45%), en crossfade de `opacity` 0.35→1 (14s, `alternate`, delay −7s en `mesh-b`), mientras el contenedor hace un drift de `translate3d` ±1.5% y `rotate` ±1deg (40s, `alternate`). `inset: -15%`.
-- **Paleta**: tintes de Still (`still-100/200/300`) y lino cálido; en dark, la rampa oscura (`still-800/900`, `linen-900`). Nunca neón ni tonos fuera de rampa.
-- **Accesibilidad**: `aria-hidden="true"`, `pointer-events-none`, y `@media (prefers-reduced-motion: reduce)` deja el mesh estático.
-- **Restricción**: solo en la banda de categorías. No extender a tarjetas, hero, waitlist, fondo de página ni secciones de contenido.
-
-### The Fan Rule
-El **abanico de anuncios** del hero rota el foco entre las tarjetas de ejemplo.
-
-- **Rotación**: auto cada 2.5s vía `$effect` + `setInterval`; arranca en la tarjeta central; se pausa en hover/focus (`autoPaused`) y no arranca con `prefers-reduced-motion`.
-- **Geometría**: perspectiva en el contenedor (`.fan-stage`, 1400px, origin 85%), rotación base `rotateY(-8deg)`, rotación relativa `±10deg` por tarjeta, escala 1.04/1.07 según estado, `z-index` 10/11/12 → 30 al enfocar.
-- **Restricción**: solo en este abanico.
-
-### The Waitlist Flip Rule
-La **banda-tarjeta de la waitlist** voltea al confirmarse un registro.
-
-- **Gatillo**: éxito del `WaitlistForm` (alta nueva o email duplicado); el confeti salta en paralelo al arranque del giro.
-- **Geometría**: perspectiva 1400px en la sección; wrapper con `transition-transform duration-700 ease-out` y `transform-style: preserve-3d`; el giro barre de **derecha a izquierda** (`rotateY(-180deg)` al voltear); ambas caras con `backface-visibility: hidden`, la trasera pre-rotada `rotateY(180deg)`.
-- **Superficies**: frontal `bg-secondary/70` → trasera `bg-tranquil-200` (el amarillo comunica "ha pasado algo").
-- **Accesibilidad**: foco al `h2` trasero; cara inactiva `inert`; con `prefers-reduced-motion`, swap instantáneo (`motion-reduce:transition-none`).
-- **Restricción**: solo esta tarjeta.
+- **Botones**: primario relleno de `primary`, secundario con `card` y borde. Radio `pill` siempre; el icono va a `aria-hidden` si es decorativo.
+- **Tarjetas**: borde de 1 px, radio `card` y sombra de reposo. La del abanico es `card-listing` y la del blog añade la imagen con `rounded` `image` y `shadow-xs`.
+- **Entradas**: el campo de la lista de espera es alto, redondeado y con el botón integrado a la derecha.
+- **Wordmark**: el logo es un SVG (`Logo.svelte`) con el Sprout integrado en la letra "t" y `fill: currentColor`: hereda el color del texto que lo envuelve y se dimensiona por altura (24 px en la cabecera). No es tipografía: no lleva familia, peso ni tamaño de fuente.
+- Implementación viva: `@src/lib/components/AppHeader.svelte`, `@src/lib/components/AppFooter.svelte`, `@src/lib/components/Logo.svelte`, `@src/lib/components/waitlist/WaitlistForm.svelte`, `@src/lib/components/blog/BlogIndex.svelte`.
 
 ## Do's and Don'ts
 
-**Do**
-- Usar el Still Green con moderación: CTA, logo, iconos de chips, anillos de foco, color del eyebrow (`still-500`) y del headline-strong (`still-400`).
-- Aplicar las 3 familias según rol: Fraunces para titulares, Inter para body y botones, JetBrains Mono para eyebrows/tags/pills.
-- Respetar el comportamiento de `<strong>` por contexto: italic + `still-400` en headlines, peso 600 en body, prohibido en eyebrow.
-- Mantener los Fraunces con `opsz` 144 y `SOFT` 30 en h1/h2 (y opt-in con `.display-opsz`) para preservar el carácter editorial; los h3 usan tamaño óptico natural.
-- Etiquetar como "Anuncios de ejemplo" cualquier tarjeta que use material sintético.
-- Mantener la calidez de lino/tinta en todos los neutros.
-- Servir las imágenes desde `static/images/`; sustituir el stock por anuncios reales en cuanto estén disponibles.
-- Animar solo `transform` y `opacity` (mesh) o `transform`/`box-shadow` (abanico); respetar `prefers-reduced-motion`.
-- Mantener el wordmark con unidades `em` para que escale con el tamaño del logo.
-- Los dividers del por-qué se espacian con padding en las columnas, nunca con `gap` (descentra la columna central).
-
-**Don't**
-- No introducir sombras flotantes (excepto la del abanico en primer plano), glassmorphism o degradados de neón.
-- No añadir una cuarta familia tipográfica ni un serif decorativo adicional.
-- No usar peso 800 ni `tracking-tight` en titulares (Fraunces 400 + tracking normal canónico).
-- No usar italic fuera de los `<strong>` en Fraunces — el italic está reservado al headline-strong.
-- No fabricar métricas, testimonios o cifras de la landing.
-- No añadir una nav ni CTAs muertos fuera del CTA a `#waitlist`.
-- No usar el verde como color de fondo de pantalla completa.
-- No extender el mesh viento fuera de las bandas de categorías y waitlist, ni el abanico fuera del hero.
-- No usar URLs de Unsplash: las imágenes se sirven localmente.
-- No re-introducir el carrusel con dots ni la tarjeta destacada única (sustituida por el abanico).
+- Do usar el verde solo en la acción, el logo, los iconos y el foco: un único CTA destacado por pantalla.
+- Do mantener la calidez de lino y tinta en todos los neutros, también en estados vacíos y deshabilitados.
+- Do servir las imágenes desde `static/images/` en `.webp` con gemelo `.jpg`, y etiquetar como "Anuncios de ejemplo" cualquier tarjeta con material sintético.
+- Do respetar `prefers-reduced-motion` en todo lo que se mueva.
+- Don't usar `still-400` como color de texto sobre superficie clara: da ≈2,6:1.
+- Don't añadir una cuarta familia tipográfica, un serif decorativo ni una segunda grotesk.
+- Don't introducir sombras de color, glows, glassmorphism ni degradados de neón.
+- Don't usar el verde como fondo de pantalla completa ni extender la malla o el abanico fuera de su sección.
+- Don't fabricar métricas, testimonios ni cifras, ni usar URLs de Unsplash.
+- Don't añadir navegación ni CTAs en la landing fuera del CTA a la lista de espera.
