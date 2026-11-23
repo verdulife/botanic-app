@@ -5,9 +5,9 @@
 ## Decisiones ya tomadas
 
 - **Framework**: Flutter (Dart).
-- **Backend**: el mismo proyecto Supabase que la web (ver [../db/AGENTS.md](../db/AGENTS.md)) — sin duplicar schema ni lógica de negocio.
-- **Diseño**: debe portar los tokens de [DESIGN.md](../../DESIGN.md) (paleta Still/Lino, tipografías Fraunces/Inter/JetBrains Mono) — autoridad global también para nativo.
-- **Producto**: mismo alcance funcional que la web app (ver [PRODUCT.md](../../PRODUCT.md)), añadiendo capacidades nativas: notificaciones push, cámara.
+- **Backend**: el mismo proyecto Supabase que la web (ver [../docs/db/AGENTS.md](../docs/db/AGENTS.md)) — sin duplicar schema ni lógica de negocio.
+- **Diseño**: debe portar los tokens de [DESIGN.md](../DESIGN.md) (paleta Still/Lino, tipografías Fraunces/Inter/JetBrains Mono) — autoridad global también para nativo.
+- **Producto**: mismo alcance funcional que la web app (ver [PRODUCT.md](../PRODUCT.md)), añadiendo capacidades nativas: notificaciones push, cámara.
 
 ## Pendiente de decidir (al arrancar la fase)
 
@@ -18,5 +18,3 @@
 Cuando arranque esta fase, crear aquí los `.md` específicos que se necesiten (arquitectura Flutter, convenciones de widgets, etc.) siguiendo el mismo patrón de tabla que el resto de módulos.
 
 ---
-
-> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).

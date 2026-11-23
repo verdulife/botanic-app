@@ -131,7 +131,7 @@ La campaña de difusión se ejecuta en un proyecto aparte; aquí queda como cont
 
 ### El Market vía afiliados
 
-Adelantar el catálogo profesional con programas de afiliación. Detalle, schema y niveles en `docs/product/afiliados.md`.
+Adelantar el catálogo profesional con programas de afiliación. Detalle, schema y niveles en `producto/afiliados.md`.
 
 - Alta en Amazon Afiliados y solicitud en Awin (Leroy Merlin ES y ManoMano ES). La PA-API v5 exige 3 ventas en 180 días para activarse.
 - Mock de catálogo afiliado: `src/lib/mock/market-products.ts` y cablear las rutas `/app/market/*`, hoy `RoutePlaceholder`.
@@ -171,7 +171,7 @@ dispositivo. Pl@ntNet quedaría como fallback para la cola larga.
 
 ### Feed adaptativo
 
-Módulos horizontales del feed descritos en `docs/ux/FEED_UX.md`. El schema ya está escrito en `docs/db/schema-app.md`: migración `add_feed_personalization_schema` con `user_events`, `user_category_interests`, `feed_banners`, `feed_banner_views` y `user_banner_dismissals`, con RLS desde el primer día.
+Módulos horizontales del feed descritos en `docs/ux/ux.md`. El schema ya está escrito en `docs/db/schema-app.md`: migración `add_feed_personalization_schema` con `user_events`, `user_category_interests`, `feed_banners`, `feed_banner_views` y `user_banner_dismissals`, con RLS desde el primer día.
 
 - Tracking en base de datos desde el día 1.
 - Banners en `src/lib/feed/banners.ts`, migrables a base de datos sin perder históricos.

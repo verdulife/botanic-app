@@ -21,12 +21,12 @@ La ubicación es relevante principalmente en el P2P Marketplace. El usuario debe
 
 Existe una cuenta transversal para autenticación, perfil, preferencias, ubicación, notificaciones y participación en las diferentes áreas.
 
-**Browse sin login.** La raíz del marketplace (`/app`) y la consulta de anuncios, comunidad y mapa son accesibles sin iniciar sesión. Acciones como publicar, chatear, guardar o crear un deseo requieren autenticación. Detalle en [NAVIGATION.md](NAVIGATION.md).
+**Browse sin login.** La raíz del marketplace (`/app`) y la consulta de anuncios, comunidad y mapa son accesibles sin iniciar sesión. Acciones como publicar, chatear, guardar o crear un deseo requieren autenticación. Detalle en la estructura de navegación.
 
 ## Fase actual
 
-Esta documentación describe el **wireframe neutro base** (estructura, navegación y placeholders). El sistema visual definitivo se aplicará después sobre esta base (ver [DESIGN.md](../../DESIGN.md)).
+Esta documentación describe el **wireframe neutro base** (estructura, navegación y placeholders). El sistema visual definitivo se aplicará después sobre esta base (ver [DESIGN.md](../DESIGN.md)).
 
 ---
 
-> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).
+> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../AGENTS.md#cómo-mantener-los-docs).
