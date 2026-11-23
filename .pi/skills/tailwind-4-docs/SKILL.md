@@ -1,77 +1,37 @@
 ---
 name: tailwind-4-docs
-description: Comprehensive Tailwind CSS v4 documentation snapshot and workflow guidance. Use when answering Tailwind v4 questions, selecting utilities/variants, configuring Tailwind v4, or migrating projects from v3 to v4 with official docs and gotcha checks.
-compatibility: Requires git, Python 3, and internet access to initialize the Tailwind docs snapshot from tailwindcss.com.
+description: Tailwind CSS v4 guidance for implementing, refactoring and reviewing styles. Use when writing or reviewing Tailwind v4 classes, configuring @theme / @utility / @variant, or migrating from v3. Ships a curated playbook and a gotchas list; for exhaustive reference, consult the official docs.
 ---
 
-# Tailwind 4 Docs
+# Tailwind v4
 
-## Overview
+Guía curada de Tailwind CSS v4 para este proyecto. No incluye el corpus de documentación: se apoya en un playbook y en una lista de trampas, y para el detalle exhaustivo se consultan las docs oficiales.
 
-Use this skill to navigate a locally synced Tailwind CSS v4 documentation snapshot and answer development, configuration, migration, implementation, refactor, and review questions with official guidance.
+## Cómo usarla
 
-The docs snapshot is not bundled with this skill because the upstream repository is source-available but not open-source. Users must initialize the snapshot themselves and are responsible for complying with the upstream license.
+1. Antes de escribir o revisar clases, lee `references/gotchas.md`. Es una lista corta de trampas que en v4 fallan sin avisar.
+2. Para implementar, refactorizar o revisar, lee `references/engineering-playbook.md`.
+3. Si el detalle no está en ninguno de los dos, consulta https://tailwindcss.com/docs o la guía de plataforma `modern-web-guidance`. No inventes sintaxis de v4.
 
-## Quick start
+## Qué hay aquí
 
-1. Check whether the docs snapshot is initialized (`references/docs/` and `references/docs-index.tsx` exist).
-2. If the snapshot is missing or older than one week, stop and ask to run the initialization step in "Initialization" before continuing. Do not answer the user's question until the snapshot is initialized.
-3. Identify the topic (utility, variant, config, migration, compatibility, implementation, refactor, review).
-4. Find the matching doc in `references/docs-index.tsx`.
-5. Load only the relevant file from `references/docs/`.
-6. For implementation, refactor, or review tasks, also load `references/engineering-playbook.md`.
-7. Apply guidance and call out any breaking changes or constraints.
+- `references/engineering-playbook.md` — cómo decidir entre utilidad, token, utilidad propia y componente.
+- `references/gotchas.md` — variantes apiladas, sintaxis de variables arbitrarias, `@theme` anidado, renombres de utilidades.
+- `references/docs-source.txt` — metadatos de una instantánea de documentación que nunca se materializó. Esta copia no tiene `references/docs/`.
+- `scripts/sync_tailwind_docs.py` — el script que materializaría esa instantánea si alguna vez se quiere el corpus completo en local (requiere red, Python y aceptar la licencia de `tailwindlabs/tailwindcss.com`).
 
-## Initialization (required once per install)
+## Contexto de este proyecto
 
-Run the sync script to download the Tailwind docs locally. This requires network access, git, and Python 3:
-
-```
-python skills/tailwind-4-docs/scripts/sync_tailwind_docs.py --accept-docs-license
-```
-
-This pulls content from `tailwindlabs/tailwindcss.com`. That repo is source-available and explicitly not open-source, so the user must accept its license before downloading and keep the snapshot local.
-
-If you cannot run tools or have no internet access, ask the user to run the exact command above in a terminal, then continue once `references/docs/` and `references/docs-index.tsx` exist.
-
-If the snapshot is missing or older than one week, you must ask for permission to run the command or ask the user to run it. Do not proceed with Tailwind guidance until the snapshot is initialized or refreshed.
-
-If initialization is blocked (no internet or no write access), use `references/gotchas.md` as a limited fallback and ask the user to consult the official docs. For implementation, refactor, or review tasks, `references/engineering-playbook.md` can also serve as a limited fallback.
-
-## References map
-
-- `references/docs/` is generated locally and contains the Tailwind v4 MDX docs snapshot.
-- `references/docs-index.tsx` is generated locally and contains the category and slug map used by the docs sidebar.
-- `references/docs-source.txt` captures the upstream repo, commit, and snapshot date (or reports that initialization is pending).
-- `references/engineering-playbook.md` is the agent-oriented implementation, refactor, and review guide.
-- `references/gotchas.md` provides a quick scan of common v4 migration pitfalls.
-
-## MDX handling
-
-- Treat `export const title` and `export const description` as metadata.
-- Read JSX callouts like `<TipInfo>` or `<TipBad>` as guidance text.
-
-## Common entry points
-
-- Migration: `references/docs/upgrade-guide.mdx`, `references/docs/compatibility.mdx`.
-- Implementation/refactor/review: `references/engineering-playbook.md`.
-- Gotchas overview: `references/gotchas.md`.
-- Configuration and directives: `references/docs/functions-and-directives.mdx`, `references/docs/adding-custom-styles.mdx`, `references/docs/theme.mdx`.
-- Variants and responsive patterns: `references/docs/hover-focus-and-other-states.mdx`, `references/docs/responsive-design.mdx`.
-- Core behavior: `references/docs/preflight.mdx`, `references/docs/detecting-classes-in-source-files.mdx`.
+- **Sin archivo de configuración**: Tailwind 4 entra por `@tailwindcss/vite` y el tema se declara en `src/app.css` con `@theme inline`.
+- **Los tokens los define `DESIGN.md`**, y se validan con `pnpm design:check`. No se añaden valores sueltos: si falta un color, un radio o una sombra, se añade al sistema.
+- `@plugin "@tailwindcss/typography"` para la prosa del blog, y modo oscuro con `@custom-variant dark (&:is(.dark *))`.
 
 ## Migration checklist
 
-When upgrading from v3 to v4, always confirm the following in the docs:
+Al migrar de v3 a v4, confirma siempre:
 
-- Browser support and compatibility expectations.
-- Tooling changes: `@tailwindcss/postcss`, `@tailwindcss/cli`, `@tailwindcss/vite`.
-- Import syntax: `@import "tailwindcss"` replaces `@tailwind` directives.
-- Utility renames/removals, prefix format, and important modifier placement.
-- Changes to variants, transforms, and arbitrary value syntax.
-
-## Update workflow
-
-Run `scripts/sync_tailwind_docs.py` to refresh the snapshot. Use `--local-repo` if you already have a local clone of `tailwindlabs/tailwindcss.com` to speed up syncs. Always pass `--accept-docs-license`.
-
----
+- Soporte de navegador y expectativas de compatibilidad.
+- Cambios de tooling: `@tailwindcss/postcss`, `@tailwindcss/cli`, `@tailwindcss/vite`.
+- Sintaxis de importación: `@import "tailwindcss"` sustituye a las directivas `@tailwind`.
+- Utilidades renombradas o eliminadas, formato del prefijo y posición del modificador importante.
+- Cambios en variantes, transformaciones y valores arbitrarios.

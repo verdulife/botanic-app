@@ -7,7 +7,7 @@
 - Import Tailwind with `@import "tailwindcss";` (no `@tailwind` directives).
 - Prefix syntax is `@import "tailwindcss" prefix(tw);` and classes use `tw:` at the start.
 - Important modifier goes at the end: `bg-red-500!`.
-- Utility renames and removals: see `references/docs/upgrade-guide.mdx` for the full list.
+- Utility renames and removals: see https://tailwindcss.com/docs/upgrade-guide for the full list.
 - Default border and ring color now use `currentColor`; ring width default is 1px.
 - `space-*` and `divide-*` selectors changed; use flex/grid with `gap` if layouts break.
 - Custom utilities should use `@utility` instead of `@layer utilities` or `@layer components`.

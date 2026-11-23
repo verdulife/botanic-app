@@ -24,7 +24,7 @@ Use this order by default:
 2. If markup repeats, extract the markup into the project's native reusable abstraction, such as a component, partial, include, or template.
 3. If repeated values are missing from the system, add tokens with `@theme`.
 4. If a repeated low-level behavior is missing, add a custom utility with `@utility`.
-5. If a stable named visual primitive is justified, add a small component class in `@layer components`.
+5. If a stable named visual primitive is justified, add it with `@utility`; `@layer components` is the v3 idiom and is not the v4 way.
 6. Use `@apply` only as a narrow adapter, not as the main architecture.
 
 ## What good reuse looks like
