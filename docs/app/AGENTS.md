@@ -16,9 +16,7 @@ Documentación funcional y de navegación de la webapp de Botanic. Fuente canón
 | Doc | Contenido |
 |---|---|
 | [README.md](README.md) | Índice, principios y convenciones de slugs |
-| [AGENT_PROMPT.md](AGENT_PROMPT.md) | Prompt principal para el agente |
-| [VISION.md](VISION.md) | Visión funcional general |
-| [ROADMAP.md](ROADMAP.md) | Alcance MVP / MPL / futuro |
+| [README.md](README.md) | Índice del módulo y convenciones |
 | [NAVIGATION.md](NAVIGATION.md) | Navegación global y reglas de acceso |
 | [ROUTES.md](ROUTES.md) | Inventario de rutas y flags MVP |
 | [ENTITIES.md](ENTITIES.md) | Entidades funcionales y relaciones |

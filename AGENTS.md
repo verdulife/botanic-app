@@ -1,6 +1,6 @@
 # Botanic — Contexto global para el agente
 
-Marketplace P2P de plantas entre particulares + **Deseos** (wishlist), **Comunidad**, **El Market de Botanic**. PWA; coste objetivo 0 €. Stack: TypeScript · Dart (fase 2) · bun · sin add-ons. Autoridad producto → [PRODUCT.md](PRODUCT.md); planificación → [PLAN.md](PLAN.md); diseño → [DESIGN.md](DESIGN.md); técnica → [architecture.md](architecture.md). **Carga selectiva**: este es el único contexto transversal (docs, planning, brand); los AGENTS.md de módulo se cargan solo si la tarea cae dentro del módulo.
+Marketplace P2P de plantas entre particulares + **Deseos** (wishlist), **Comunidad**, **El Market de Botanic**. PWA; coste objetivo 0 €. Stack: TypeScript · Dart (fase 2) · bun · sin add-ons. Autoridad producto → [PRODUCT.md](PRODUCT.md); planificación → [PLAN.md](PLAN.md); diseño → [DESIGN.md](DESIGN.md); técnica → [ARCHITECTURE.md](ARCHITECTURE.md). **Carga selectiva**: este es el único contexto transversal (docs, planning, brand); los AGENTS.md de módulo se cargan solo si la tarea cae dentro del módulo.
 
 ## Documentación raíz
 
@@ -10,7 +10,7 @@ Marketplace P2P de plantas entre particulares + **Deseos** (wishlist), **Comunid
 | PRODUCT | Claim, target, brand voice (autoridad producto) | [PRODUCT.md](PRODUCT.md) |
 | PLAN | Fases, sprints, KPIs, backlog | [PLAN.md](PLAN.md) |
 | DESIGN | Design system (autoridad visual global) | [DESIGN.md](DESIGN.md) |
-| architecture | Stack, diagrama, costes, hosting | [architecture.md](architecture.md) |
+| architecture | Stack, diagrama, costes, hosting | [ARCHITECTURE.md](ARCHITECTURE.md) |
 
 ## Módulos
 

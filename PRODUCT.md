@@ -97,7 +97,7 @@ Análisis comparativo con la competencia en [docs/product/mercado.md](docs/produ
 
 ## Evidence on Hand
 
-- Documentación canónica: [PRODUCT.md](PRODUCT.md), [PLAN.md](PLAN.md), [DESIGN.md](DESIGN.md), [architecture.md](architecture.md)
+- Documentación canónica: [PRODUCT.md](PRODUCT.md), [PLAN.md](PLAN.md), [DESIGN.md](DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md)
 - Análisis de mercado con datos secundarios en [docs/product/mercado.md](docs/product/mercado.md)
 - Sin usuarios, testimonios, métricas ni capturas reales todavía: no fabricar cifras
 

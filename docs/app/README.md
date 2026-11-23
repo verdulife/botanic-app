@@ -33,9 +33,7 @@ Inventario completo y definitivo en [ROUTES.md](ROUTES.md).
 
 | Doc | Contenido |
 |---|---|
-| [AGENT_PROMPT.md](AGENT_PROMPT.md) | Prompt principal para el agente |
-| [VISION.md](VISION.md) | Definición funcional general |
-| [ROADMAP.md](ROADMAP.md) | Alcance MVP / MPL / futuro |
+| [AGENTS.md](AGENTS.md) | Contrato del módulo: cómo se trabaja en `/app` |
 | [NAVIGATION.md](NAVIGATION.md) | Navegación global, 4 destinos principales y reglas de acceso |
 | [ROUTES.md](ROUTES.md) | Inventario completo de rutas y flags MVP |
 | [ENTITIES.md](ENTITIES.md) | Entidades funcionales y relaciones |

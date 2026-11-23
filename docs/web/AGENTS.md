@@ -1,6 +1,6 @@
 # Web — Contexto del módulo (SvelteKit)
 
-Frontend único en SvelteKit 5: **landing** (hecha), **blog** (hecho), **web app marketplace** (pendiente, mock en `/app`). Stack/diagrama → [architecture.md](../../architecture.md); design system → [DESIGN.md](../../DESIGN.md) (autoridad global, no duplicar).
+Frontend único en SvelteKit 5: **landing** (hecha), **blog** (hecho), **web app marketplace** (pendiente, mock en `/app`). Stack/diagrama → [ARCHITECTURE.md](../../ARCHITECTURE.md); design system → [DESIGN.md](../../DESIGN.md) (autoridad global, no duplicar).
 
 ## Estado
 

@@ -8,7 +8,7 @@ Marketplace P2P de plantas entre particulares — [botanicapp.es](https://botani
 
 ## Docs
 
-- [PRODUCT.md](PRODUCT.md) · [PLAN.md](PLAN.md) · [DESIGN.md](DESIGN.md) · [architecture.md](architecture.md)
+- [PRODUCT.md](PRODUCT.md) · [PLAN.md](PLAN.md) · [DESIGN.md](DESIGN.md) · [ARCHITECTURE.md](ARCHITECTURE.md)
 
 ## Licencia
 

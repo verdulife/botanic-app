@@ -76,7 +76,7 @@ caja de cuidados (entre la ubicación y el vendedor) con 3 celdas:
 - **Toxicidad**: solo texto neutro (sin color) con 3 posibilidades: `No`, `Sí`, `Mascotas`.
 
 El dataset de cuidados vive en `src/lib/mock/plant-care.ts` y, post-wireframe, en la tabla
-`plant_care` de Supabase (ver [architecture.md](../../architecture.md) "Identificación y
+`plant_care` de Supabase (ver [ARCHITECTURE.md](../../ARCHITECTURE.md) "Identificación y
 cuidados de plantas"). Si no hay datos para la especie, la caja se oculta.
 
 ### Ayuda (IA + comunidad)
@@ -176,7 +176,7 @@ detalle (`/app/anuncio/:slug`) resuelve primero desde ese store y cae al seed.
   el vendedor o se sugiere con IA). Las fotos webp se convierten a jpeg **en el
   cliente** (Canvas); la clave vive solo en el servidor
   (`src/routes/api/identify-plant/+server.ts`). Detalle del flujo y cuotas en
-  [architecture.md § Identificación y cuidados](../../architecture.md#identificación-y-cuidados-de-plantas-híbrido--post-wireframe).
+  [ARCHITECTURE.md § Identificación y cuidados](../../ARCHITECTURE.md#identificación-y-cuidados-de-plantas-híbrido--post-wireframe).
 - **Título + descripción con IA (botón conjunto)**: en la fase 4, "Sugerir con IA"
   llama a `src/routes/api/suggest-description/+server.ts`, que genera **título y
   descripción en una sola llamada** con un LLM de tier gratis — **Groq**
