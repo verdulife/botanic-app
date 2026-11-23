@@ -47,7 +47,8 @@ Los servidores están declarados en `.pi/mcp.json`: Supabase (esquema, SQL, migr
 - **Servidor de desarrollo**: siempre en segundo plano, nunca en primer plano; se para al terminar la verificación.
 - **Verificación antes de cerrar**: `pnpm check` para tipos, `pnpm build` para producción y `pnpm design:check` cuando se toca UI. Qué comprueba cada uno, en [ARCHITECTURE.md](ARCHITECTURE.md).
 - **Sistema de diseño**: [DESIGN.md](DESIGN.md) es la fuente de verdad visual. Un valor nuevo entra ahí primero, y después al código.
-- **Soporte de navegador**: Baseline Widely available. Una función que no lo sea necesita detección y fallback, o no se usa.
+- **Plataforma**: el suelo lo pone el stack. Por encima, Baseline Widely available como margen de seguridad; si una función del navegador no lo es, se aplican las guías de fallback de `modern-web-guidance`, y si no hay fallback limpio se avisa y se decide.
+- **Ámbito**: la regla es para features del navegador. El framework y la librería de componentes no se someten a Baseline, porque no son plataforma.
 - **Nada de cifras inventadas**: ni usuarios, ni testimonios, ni métricas.
 
 ## Cómo mantener los docs
