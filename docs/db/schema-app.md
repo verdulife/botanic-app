@@ -215,7 +215,7 @@ CREATE POLICY "user_banner_dismissals_delete_own" ON public.user_banner_dismissa
 
 ## Pendiente para siguientes hitos
 
-Orden aproximado (ver PLAN.md para el backlog completo):
+Orden aproximado:
 
 ```sql
 -- Hito 3+: favoritos

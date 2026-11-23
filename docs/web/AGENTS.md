@@ -20,11 +20,11 @@ Frontend único en SvelteKit 5: **landing** (hecha), **blog** (hecho), **web app
 | images-credits | Atribución imágenes Wikimedia del blog | [images-credits.md](images-credits.md) |
 | design-components | Landing (Hero, abanico, waitlist, footer) + SEO/perf | [design-components.md](design-components.md) |
 
-**Web app marketplace**: documento funcional del wireframe en [../app/README.md](../app/README.md) (entidades, rutas, navegación, módulos, cross-cutting). Carga selectiva: lee solo el módulo afectado por la vista a implementar. Esquema de rutas y sprints en [PLAN.md](../../PLAN.md); autoridad visual en [DESIGN.md](../../DESIGN.md) — se aplica **después** del wireframe neutro.
+**Web app marketplace**: documento funcional de la app web en [../app/README.md](../app/README.md) (entidades, rutas, navegación, módulos, cross-cutting). Carga selectiva: lee solo el módulo afectado por la vista a implementar. Autoridad visual en [DESIGN.md](../../DESIGN.md), ya aplicada.
 
 ## Reglas específicas
 
-- UI: autoridad visual en [DESIGN.md](../../DESIGN.md); contexto de diseño = PRODUCT.md + DESIGN.md. **En la fase de wireframe neutro todavía NO aplicar DESIGN.md.**
+- UI: autoridad visual en [DESIGN.md](../../DESIGN.md); contexto de diseño = PRODUCT.md + DESIGN.md. **DESIGN.md ya está aplicado; respétalo en cualquier cambio de UI.**
 - Componentes `src/lib/components/ui/`: convención `shadcn-svelte`. En wireframe se usan tal cual del CLI sin custom CSS.
 - Tailwind v4 (CSS-first, `@import "tailwindcss"`, sin `tailwind.config.js`): skill `tailwind-4-docs` (snapshot local, no se commitea).
 - Svelte 5: runes (`$state`, `$derived`, `$props`) — skills `svelte-core-bestpractices` / `svelte-code-writer`.

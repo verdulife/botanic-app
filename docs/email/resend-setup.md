@@ -18,7 +18,7 @@
 
 ## Emails de novedades/lanzamiento (pendiente)
 
-Backlog priorizado en [PLAN.md](../../PLAN.md) → Backlog de ideas → Email/comunidad:
+Ideas pendientes de email y comunidad:
 
 - [ ] Email de pre-lanzamiento para las Semillas fundadoras (primeros registrados).
 - [ ] Email semanal con las 2 publicaciones del blog.

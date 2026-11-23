@@ -1,6 +1,6 @@
 # App — Contexto del módulo (wireframe funcional)
 
-Documentación funcional y de navegación de la webapp de Botanic. Fuente canónica de producto → [PRODUCT.md](../../PRODUCT.md); design system → [DESIGN.md](../../DESIGN.md) (se aplica **después** del wireframe neutro); estado técnico y routing → [docs/web/AGENTS.md](../web/AGENTS.md); planificación → [PLAN.md](../../PLAN.md).
+Documentación funcional y de navegación de la webapp de Botanic. Fuente canónica de producto → [PRODUCT.md](../../PRODUCT.md); design system → [DESIGN.md](../../DESIGN.md) (ya aplicado); estado técnico y routing → [docs/web/AGENTS.md](../web/AGENTS.md).
 
 ## Estado
 

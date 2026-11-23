@@ -7,4 +7,7 @@ para construir.
 **No es documentación del proyecto**: no se enlaza desde `AGENTS.md`, no se
 carga en ninguna tarea y ningún agente debe usarlo como fuente de verdad.
 
+Contenido actual: `PLAN.md` (estado, alcance del MVP, pendientes, fases, métricas y
+backlog de ideas) y `VISION.md`.
+
 Cuando su contenido esté en el vault personal, esta carpeta se borra.

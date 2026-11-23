@@ -1,6 +1,6 @@
 # Botanic — Contexto global para el agente
 
-Marketplace P2P de plantas entre particulares + **Deseos** (wishlist), **Comunidad**, **El Market de Botanic**. PWA; coste objetivo 0 €. Stack: TypeScript · Dart (fase 2) · bun · sin add-ons. Autoridad producto → [PRODUCT.md](PRODUCT.md); planificación → [PLAN.md](PLAN.md); diseño → [DESIGN.md](DESIGN.md); técnica → [ARCHITECTURE.md](ARCHITECTURE.md). **Carga selectiva**: este es el único contexto transversal (docs, planning, brand); los AGENTS.md de módulo se cargan solo si la tarea cae dentro del módulo.
+Marketplace P2P de plantas entre particulares + **Deseos** (wishlist), **Comunidad**, **El Market de Botanic**. PWA; coste objetivo 0 €. Stack: TypeScript · Dart (fase 2) · pnpm · sin add-ons. Autoridad producto → [PRODUCT.md](PRODUCT.md); diseño → [DESIGN.md](DESIGN.md); técnica → [ARCHITECTURE.md](ARCHITECTURE.md). **Carga selectiva**: este es el único contexto transversal (docs, planning, brand); los AGENTS.md de módulo se cargan solo si la tarea cae dentro del módulo.
 
 ## Documentación raíz
 
@@ -8,7 +8,6 @@ Marketplace P2P de plantas entre particulares + **Deseos** (wishlist), **Comunid
 |---|---|---|
 | README | Setup local + portada | [README.md](README.md) |
 | PRODUCT | Claim, target, brand voice (autoridad producto) | [PRODUCT.md](PRODUCT.md) |
-| PLAN | Fases, sprints, KPIs, backlog | [PLAN.md](PLAN.md) |
 | DESIGN | Design system (autoridad visual global) | [DESIGN.md](DESIGN.md) |
 | architecture | Stack, diagrama, costes, hosting | [ARCHITECTURE.md](ARCHITECTURE.md) |
 
@@ -18,8 +17,8 @@ Cada AGENTS.md de módulo es autocontenido, enlaza de vuelta aquí y a PRODUCT/D
 
 | Módulo | Ámbito | AGENTS.md |
 |---|---|---|
-| web | Landing + blog (hecho) + web app marketplace (wireframe en curso) — SvelteKit | [docs/web/AGENTS.md](docs/web/AGENTS.md) |
-| app | Wireframe funcional de la web app (rutas, entidades, navegación, UX cross-cutting) | [docs/app/AGENTS.md](docs/app/AGENTS.md) |
+| web | Landing + blog (hecho) + app web marketplace sobre datos mock — SvelteKit | [docs/web/AGENTS.md](docs/web/AGENTS.md) |
+| app | App web: rutas, entidades, navegación y UX cross-cutting | [docs/app/AGENTS.md](docs/app/AGENTS.md) |
 | email | Transaccionales (waitlist, hecho) + campaña (pendiente) — Resend | [docs/email/AGENTS.md](docs/email/AGENTS.md) |
 | db | Supabase — waitlist (hecho) + schema app (pendiente) | [docs/db/AGENTS.md](docs/db/AGENTS.md) |
 | flutter | App nativa (fase 2, pendiente) | [docs/flutter/AGENTS.md](docs/flutter/AGENTS.md) |
@@ -52,7 +51,7 @@ Las skills de proyecto viven en `.pi/skills/` (fuente que descubren Pi y el índ
 
 ## Seguridad — autenticación y autorización en `/app`
 
-- **Modo mock (fase wireframe, activo)**: `/app/*` usa **autenticación simulada** — sesión local por cookie `botanic_mock_session` y cuentas registradas en `.mock-auth/users.json` (gitignored, no commitear). Sin tokens ni llamadas a Supabase. Registro con auto-confirmación (no hay email) y recuperación de contraseña inerte. **En producción (Vercel serverless) el mock es stateless y determinista** (`NODE_ENV=production`): sin writes de filesystem, los usuarios seed se derivan de `USERS` con salt/timestamps fijos y la cuenta demo siempre funciona; los registros nuevos son efímeros. Conmutar a Supabase real con el flag `AUTH_MODE` en `src/lib/auth-mode.ts`; al conectarlo, retirar el módulo `src/lib/mock/auth-server.ts` y sus ramas `isMockAuth()`.
+- **Modo mock (activo)**: `/app/*` usa **autenticación simulada** — sesión local por cookie `botanic_mock_session` y cuentas registradas en `.mock-auth/users.json` (gitignored, no commitear). Sin tokens ni llamadas a Supabase. Registro con auto-confirmación (no hay email) y recuperación de contraseña inerte. **En producción (Vercel serverless) el mock es stateless y determinista** (`NODE_ENV=production`): sin writes de filesystem, los usuarios seed se derivan de `USERS` con salt/timestamps fijos y la cuenta demo siempre funciona; los registros nuevos son efímeros. Conmutar a Supabase real con el flag `AUTH_MODE` en `src/lib/auth-mode.ts`; al conectarlo, retirar el módulo `src/lib/mock/auth-server.ts` y sus ramas `isMockAuth()`.
 - **Con Supabase (`AUTH_MODE = 'supabase'`)**: `/app/*` usa **Supabase Auth** (email+password + magic link recovery) integrado vía `@supabase/ssr` en `src/hooks.server.ts`. No hay Basic Auth gate.
 - Cada request crea `event.locals.supabase` (cliente SSR con cookies). `event.locals.safeGetSession()` valida sesión contra el servidor (`getUser()`) tras leer las cookies (`getSession()`); nunca se confía solo en cookies para auth checks.
 - SEO: cualquier respuesta de `/app*` lleva la cabecera `X-Robots-Tag: noindex, nofollow` (los motores no indexan).

@@ -7,7 +7,7 @@ definición funcional del módulo en [../app/botanic-market.md](../app/botanic-m
 
 ## Propósito
 
-El Market de Botanic (fase 3 en [PLAN.md](../../PLAN.md)) tenía como vía de
+El Market de Botanic (fase 3) tenía como vía de
 entrada las tiendas/profesionales. Los programas de afiliados permiten
 **adelantar el lanzamiento** con un catálogo de productos reales de jardinería
 (plantas y relacionados) sin stock, sin logística, sin pagos integrados y con

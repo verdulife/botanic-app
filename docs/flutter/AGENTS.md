@@ -1,6 +1,6 @@
 # Flutter — Contexto del módulo (app nativa, Fase 2)
 
-**Sin código todavía.** Fase 2 de [PLAN.md](../../PLAN.md) (Q1 2027, tras validación con 1.000 usuarios activos en la PWA). Este archivo es el único contexto necesario hasta que arranque — no hay más docs específicos que cargar.
+**Sin código todavía.** Fase 2, posterior a la validación de la PWA. Este archivo es el único contexto necesario hasta que arranque — no hay más docs específicos que cargar.
 
 ## Decisiones ya tomadas
 

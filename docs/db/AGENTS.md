@@ -35,7 +35,7 @@ PostgreSQL + Auth + Storage + Realtime, tier Free. Proyecto `botanic` (eu-centra
 
 - Toda tabla nueva lleva RLS desde el commit que la crea, nunca después.
 - Preferir `SECURITY DEFINER` + `EXECUTE` restringido a `anon` sobre exponer `service_role` al cliente (patrón ya usado en `get_waitlist_position`).
-- Antes de crear el schema app, confirmar con el usuario si sigue el orden de sprints de [PLAN.md](../../PLAN.md) o hay cambios de alcance.
+- Antes de crear el schema app, confirmar con el usuario el orden de implementación y el alcance.
 
 ---
 
