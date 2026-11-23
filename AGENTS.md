@@ -40,6 +40,7 @@ Las skills de proyecto viven en `.pi/skills/` (fuente que descubren Pi y el índ
 ## Reglas de trabajo (globales)
 
 - **Paso a paso + hitos verificables**: en tareas grandes, parar tras cada hito y reportar. No iniciar el siguiente sin OK.
+- **Servidor de desarrollo**: sí se puede arrancar, siempre **en segundo plano** (`pnpm run dev` como job en background, nunca en primer plano ni esperando su salida). Un servidor en primer plano no termina nunca y cuelga la conversación; por eso estaba prohibido, y esa razón ya no aplica. Se para al terminar la verificación.
 - **Sistema de diseño**: [DESIGN.md](DESIGN.md) es autoridad visual global — landing, blog, webapp, emails, og-image, futura app Flutter.
 
 ## Seguridad — credenciales MCP
