@@ -1,6 +1,6 @@
 # Arquitectura — visión global
 
-Cross-cutting únicamente. Detalle por módulo en el [AGENTS.md](AGENTS.md) correspondiente (web, email, db, flutter).
+Cross-cutting únicamente: qué tecnología hay, cómo se conecta y qué reglas cruzan todos los módulos. El detalle de cada módulo vive en [docs/](docs/) y no se repite aquí.
 
 ## Diagrama
 
@@ -14,74 +14,65 @@ Cross-cutting únicamente. Detalle por módulo en el [AGENTS.md](AGENTS.md) corr
                     + Realtime chat)
 ```
 
+El DNS vive en Vercel (`ns1` y `ns2.vercel-dns.com`) y el sitio se sirve desde Vercel Edge. Cloudflare se colocará delante cuando se implemente; hoy no está en el camino.
+
 ## Stack
 
 | Capa | Tecnología | Propósito | Coste |
 |---|---|---|---|
-| Framework | SvelteKit 5 | SSR + PWA + routing | $0 |
-| Lenguaje | TypeScript 5 | Tipado | $0 |
+| Framework | SvelteKit 3 | SSR y routing | $0 |
+| UI | Svelte 5 | Componentes y runes | $0 |
+| Lenguaje | TypeScript 6 | Tipado | $0 |
 | Estilos | TailwindCSS 4 | Utilidades | $0 |
+| Componentes | shadcn-svelte + bits-ui 2 | Base de la UI de app | $0 |
+| Build | Vite 8 | Servidor de desarrollo y build | $0 |
 | Gestor | pnpm 12 | Solo `pnpm install` / `pnpm run` | $0 |
 | Runtime | Node 24 (mise) | Versión fijada en `mise.toml` y en `engines` | $0 |
 | Backend | Supabase Free | DB + Auth + Storage + Realtime — [docs/db/AGENTS.md](docs/db/AGENTS.md) | $0 |
 | Mapas | Leaflet + OSM | Sin API key | $0 |
-| Email | Resend Free | Transaccional + broadcasts — [docs/email/AGENTS.md](docs/email/AGENTS.md) | $0 |
+| Email | Resend Free | Transaccional y broadcasts — [docs/email/AGENTS.md](docs/email/AGENTS.md) | $0 |
 | Hosting | Vercel Hobby | SSR + CDN | $0 |
-| DNS/CDN | Cloudflare Free | DDoS + CDN · dominio `botanicapp.es` (NS en Vercel) | $0 |
+| DNS | Vercel DNS | `ns1`/`ns2.vercel-dns.com` · dominio `botanicapp.es` | $0 |
+| CDN/WAF | Cloudflare Free | Previsto delante de Vercel; todavía no está en el camino | $0 |
+| Instalación | PWA con `@vite-pwa/sveltekit` | Prevista; dependencia instalada, sin manifest ni service worker | $0 |
 | App nativa | Flutter | Fase 2 — [docs/flutter/AGENTS.md](docs/flutter/AGENTS.md) | — |
 
-**Coste total MVP: 0 €/mes**.
+**Coste total del MVP: 0 €/mes.**
+
+SvelteKit 3 cambió cosas que un agente formado en versiones anteriores escribe mal: `$lib` se sustituyó por imports de subruta (`#lib`), `svelte.config.js` desapareció y `$app/environment` pasó a `$app/env`. El entorno público se genera desde `src/env.ts`; sin ese archivo el build falla aunque la variable exista.
+
+Las versiones de la tabla son las mayores, no las exactas: son las que cambian cómo se escribe el código. El número preciso vive en `package.json`.
+
+## UI y estilos
+
+- **shadcn-svelte no es una dependencia**: los componentes se instalan con su CLI y se copian al proyecto, hoy 12 en `src/lib/components/ui`. `components.json` fija el registro, los alias (`ui` → `$lib/components/ui`, `utils` → `$lib/utils`) y `baseColor: olive`. Un componente nuevo se trae con el CLI y se adapta ahí; no se escribe desde cero.
+- **bits-ui 2** son las primitivas accesibles que hay debajo: foco, teclado, `aria` y comportamiento de cada componente.
+- **Tailwind 4 no tiene archivo de configuración**: se integra con `@tailwindcss/vite` y el tema se declara en `src/app.css` con `@theme inline`. La tipografía de artículo entra como plugin de CSS (`@plugin "@tailwindcss/typography"`) y el modo oscuro es la variante `@custom-variant dark (&:is(.dark *))`, activada por la clase `.dark`.
+- **`cn()`** combina `clsx` y `tailwind-merge` en `$lib/utils`, y las variantes de componente se escriben con `tailwind-variants`.
+- **Iconos** con `@lucide/svelte`, decorativos siempre `aria-hidden`.
+
+Las convenciones de uso de estas librerías las fijan las skills del proyecto —`shadcn-svelte`, `svelte-code-writer`, `svelte-core-bestpractices`, `tailwind-4-docs` y `modern-web-guidance`—, indexadas en [AGENTS.md](AGENTS.md).
+
+## Verificación
+
+| Comando | Qué comprueba |
+|---|---|
+| `pnpm check` | Tipos y plantillas con `svelte-check` sobre el tsconfig del proyecto |
+| `pnpm build` | Build de producción con `adapter-vercel`; es la prueba de que nada se rompió |
+| `pnpm design:check` | `DESIGN.md` contra la especificación del formato: tokens rotos, referencias y secciones |
+| `pnpm design:test` | El propio gate, con nueve casos de éxito y de fallo |
 
 ## Design system
 
-[DESIGN.md](DESIGN.md) es autoridad global de tokens y marca (paleta Still/Lino, 3 familias tipográficas — Fraunces + Inter + JetBrains Mono — motion, Do's & Don'ts). Aplica a web, emails y futura app Flutter.
+[DESIGN.md](DESIGN.md) es la fuente de verdad de tokens, tipografía, forma, movimiento y reglas visuales, y se valida con `pnpm design:check`. Este documento no repite ninguno de sus valores.
 
-> Nota histórica: carril social (Remotion/Pexels) y póster A3 retirados ago 2026. El wordmark del logo vive solo en `src/lib/components/Logo.svelte`.
+## Identificación de plantas
 
-## Identificación y cuidados de plantas (híbrido — posterior al MVP)
+Al publicar, la primera foto identifica la especie y autocompleta el formulario, siempre editable, con un aviso de confirmación.
 
-Al publicar, el vendedor sube la 1ª foto → se identifica la especie y se autocompleta el formulario (campos editables). Como Pl@ntNet **solo identifica especie** (no da cuidados), se combina con una API de cuidados cacheando en nuestra DB para bajar consumo.
-
-**Flujo:**
-
-```
-Foto → [Pl@ntNet] → especie + score (+ nombre común, familia)
-        ├─ especie en nuestra DB → cargo cuidados curados (0 consumo)
-        └─ especie nueva → [Perenual] → cuidados (riego, luz, ph, tierra)
-                           └─ guardo en DB (especie → cuidados) → reutilizable
-```
-
-**Decisiones tomadas:** autocompletar siempre pero editable (con aviso "¿Es esta tu planta?"); las llamadas a las APIs **nunca** desde el cliente (Edge Function / server, la key no se expone).
-
-**Cuotas tier free (revisar en docs oficiales):**
-
-| API | Cuota free | Rol |
-|---|---|---|
-| Pl@ntNet | ~500 identificaciones/día | Identificar especie |
-| Perenual | ~100 request/día | Cuidados de la especie (riego, luz, ph…) |
-
-Perenual es el cuello de botella → se consulta solo la 1ª vez por especie; si se agota, encolar/especies "pendientes de cuidados" sin bloquear al vendedor.
-
-**Documentación oficial:**
-- Pl@ntNet: https://my.plantnet.org/doc/getting-started/introduction
-- Perenual: https://perenual.com/docs/api
-
-**Estado actual — prototipo en `/app/publicar`**: `/app/publicar` identifica la
-especie desde la portada vía `src/routes/api/identify-plant/+server.ts` (key solo
-en servidor; Pl@ntNet rechaza webp → las fotos se convierten a jpeg **en el
-cliente** con Canvas). Autocompleta título/descripción/categoría de forma
-editable y guarda una `PlantSpecies` estructurada (`name` + científico/familia/
-confianza/origen). Perenual se integrará con la caché DB más adelante.
-
-**Evolución a detección propia a coste 0**: cuando acumulemos fotos UGC con
-especie confirmada (el aviso "¿Es esta tu planta?" genera etiquetas positivas),
-se puede entrenar un clasificador ligero (MobileNet/EfficientNet-lite → ONNX)
-para las top-N especies del marketplace, servido en cliente (onnxruntime-web) o
-en edge gratis — la imagen nunca sale del dispositivo. Pl@ntNet quedaría como
-fallback para la cola larga y cross-check (su cuota free ~500/día cubre el
-fallback). Encaja con la fase 4 (identificación por foto con IA).
-
-**Credenciales:** `PLANTNET_API_KEY` y `PERENUAL_API_KEY` en `.env.local` (no versionado).
+- Corre **en servidor**: `src/routes/api/identify-plant/+server.ts`. La API key nunca llega al cliente.
+- Pl@ntNet rechaza webp, así que la conversión a jpeg ocurre **en el cliente** con Canvas antes de enviar.
+- El resultado se guarda como `PlantSpecies` estructurada: nombre, nombre científico, familia, confianza y origen.
 
 ---
 

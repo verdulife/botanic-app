@@ -133,6 +133,36 @@ Adelantar el catálogo profesional con programas de afiliación. Detalle, schema
 - Importador de feeds y curaduría agéntica: mapeo de categorías externas a la taxonomía de Botanic y revisión con IA.
 - Proxy de clicks `/out` con analítica propia y automatización completa.
 
+### Identificación y cuidados de plantas
+
+Al publicar, el vendedor sube la primera foto, se identifica la especie y se autocompleta el formulario
+(campos editables). Pl@ntNet solo identifica especie y no da cuidados, así que se combina con una API
+de cuidados cacheando en la base de datos para bajar consumo.
+
+```
+Foto → [Pl@ntNet] → especie + score (+ nombre común, familia)
+        ├─ especie en DB → cuidados curados (0 consumo)
+        └─ especie nueva → [Perenual] → cuidados (riego, luz, ph, tierra)
+                           └─ guardar en DB (especie → cuidados) → reutilizable
+```
+
+**Decisiones**: autocompletar siempre pero editable, con aviso «¿Es esta tu planta?»; las llamadas a
+las APIs nunca desde el cliente.
+
+**Cuotas free**: Pl@ntNet ~500 identificaciones/día; Perenual ~100 request/día. Perenual es el cuello
+de botella, así que se consulta solo la primera vez por especie; si se agota, se encola la especie sin
+bloquear al vendedor.
+
+**Documentación oficial**: Pl@ntNet https://my.plantnet.org/doc/getting-started/introduction ·
+Perenual https://perenual.com/docs/api
+
+**Evolución a coste 0**: cuando haya fotos UGC con especie confirmada (el aviso genera etiquetas
+positivas), entrenar un clasificador ligero (MobileNet/EfficientNet-lite → ONNX) para las top-N
+especies, servido en cliente con onnxruntime-web o en edge gratis, sin que la imagen salga del
+dispositivo. Pl@ntNet quedaría como fallback para la cola larga.
+
+**Credenciales**: `PLANTNET_API_KEY` y `PERENUAL_API_KEY` en `.env.local`.
+
 ### Feed adaptativo
 
 Módulos horizontales del feed descritos en `docs/ux/FEED_UX.md`. El schema ya está escrito en `docs/db/schema-app.md`: migración `add_feed_personalization_schema` con `user_events`, `user_category_interests`, `feed_banners`, `feed_banner_views` y `user_banner_dismissals`, con RLS desde el primer día.
