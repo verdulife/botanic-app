@@ -5,7 +5,7 @@
  *  - Auth users cuyo email contiene "-mock@botanic.test" (cascade borra profiles)
  *  - Storage objects del bucket listing-images cuyos paths pertenecen a mock users
  *
- * Idempotente. Ejecutar con `bun run scripts/wipe-mock.ts [--dry-run]`.
+ * Idempotente. Ejecutar con `pnpm seed:wipe [--dry-run]`.
  *
  * Requiere: SUPABASE_SERVICE_ROLE_KEY en .env.local.
  */

@@ -13,7 +13,7 @@ const DEFAULT_RECIPIENTS = ["verdukactus@gmail.com", "verdu@live.com"];
 const template = process.argv[2];
 const recipient = process.argv[3];
 if (!template) {
-	console.error("uso: bun run email:send <confirmation|adminNotify> [destinatario]");
+	console.error("uso: pnpm email:send <confirmation|adminNotify> [destinatario]");
 	process.exit(1);
 }
 

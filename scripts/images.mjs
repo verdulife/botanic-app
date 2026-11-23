@@ -100,7 +100,7 @@ function kb(n) {
 
 async function fetchImage(index, dest) {
 	if (!existsSync(CACHE_FILE)) {
-		console.error("No hay búsqueda en cache. Ejecuta primero: bun run img search \"<query>\"");
+		console.error("No hay búsqueda en cache. Ejecuta primero: pnpm img search \"<query>\"");
 		process.exit(1);
 	}
 	const results = JSON.parse(readFileSync(CACHE_FILE, "utf8"));
@@ -143,7 +143,7 @@ async function main() {
 	if (cmd === "search") {
 		const q = rest.join(" ");
 		if (!q) {
-			console.error('Uso: bun run img search "<query>"');
+			console.error('Uso: pnpm img search "<query>"');
 			process.exit(1);
 		}
 		const limit = Number(rest.find((a) => /^\d+$/.test(a))) || 12;
@@ -160,12 +160,12 @@ async function main() {
 			return;
 		}
 		printResults(usable);
-		console.log(`\n${usable.length} resultados válidos. Descarga con: bun run img fetch <nº> <dest>`);
+		console.log(`\n${usable.length} resultados válidos. Descarga con: pnpm img fetch <nº> <dest>`);
 	} else if (cmd === "fetch") {
 		const index = Number(rest[0]);
 		const dest = (rest[1] ?? "").replace(/\.(webp|jpe?g|png)$/i, "");
 		if (!index || !dest) {
-			console.error("Uso: bun run img fetch <nº> <dest>");
+			console.error("Uso: pnpm img fetch <nº> <dest>");
 			process.exit(1);
 		}
 		if (!/^[\w-]+$/.test(dest)) {

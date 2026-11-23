@@ -8,9 +8,9 @@
  * - Sin transformar, sin créditos — solo material fuente crudo.
  *
  * Uso:
- *   bun run scripts/download-seed-images.mjs            # descarga lo que falte
- *   bun run scripts/download-seed-images.mjs --force   # re-baja todo
- *   bun run scripts/download-seed-images.mjs --dry-run # preview sin descargar
+ *   pnpm img:download            # descarga lo que falte
+ *   pnpm img:download --force   # re-baja todo
+ *   pnpm img:download --dry-run # preview sin descargar
  */
 
 import { readFileSync, mkdirSync, existsSync, writeFileSync } from "node:fs";

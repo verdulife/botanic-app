@@ -168,7 +168,7 @@ function preview() {
 
 	console.log(JSON.stringify(output, null, 2));
 	console.log('\n── Para aplicar este plan, ejecuta:');
-	console.log('   bun run scripts/seed-mock.ts --apply');
+	console.log('   pnpm seed:apply');
 }
 
 // ──────────────────────────────────────────────────────────
@@ -182,7 +182,7 @@ async function apply() {
 	const imageFiles = listSeedImages();
 	if (imageFiles.length === 0) {
 		console.warn('⚠ No hay imágenes en static/images/seed/ — los listings se crearán sin fotos.');
-		console.warn('  Ejecuta antes: bun run scripts/optimize-seed-images.mjs (con imágenes en static/images/seed-source/)');
+		console.warn('  Ejecuta antes: pnpm img:seed (con imágenes en static/images/seed-source/)');
 	}
 
 	// 1. Categorías
@@ -323,8 +323,8 @@ async function apply() {
 	console.log(`   · ${totalListings} listings`);
 	console.log(`   · ${uploaded}/${totalImages} imágenes subidas a Storage (${failedUploads} fallidas)`);
 	console.log(`\nPara wipear antes de producción:`);
-	console.log(`   bun run scripts/wipe-mock.ts`);
-	console.log(`   bun run scripts/wipe-mock.ts --dry-run  # preview primero`);
+	console.log(`   pnpm seed:wipe`);
+	console.log(`   pnpm seed:wipe:dry  # preview primero`);
 }
 
 // ──────────────────────────────────────────────────────────

@@ -56,6 +56,12 @@ fuente de verdad. Cuando esté en el vault de Obsidian, esta carpeta se borra.
 - Storage de imágenes: bucket `listing-images` y subida de fotos en el formulario de publicación.
 - Realtime en el chat: Supabase Realtime para conversaciones y mensajes.
 
+### Checklist pre-beta de email
+
+- Supabase → `Authentication` → `Providers` → `Email` → **Enable Custom SMTP** con las credenciales de Resend (`smtp.resend.com:465`).
+- Personalizar las plantillas `Confirm signup`, `Magic link` y `Reset password` con el branding de Botanic.
+- Remitente: `noreply@botanicapp.es` (el DKIM ya está configurado en Resend).
+
 ### Instalación
 
 - Enchufar el PWA: `@vite-pwa/sveltekit` está en dependencias pero no aparece en `vite.config.ts`, y `static/` no tiene manifest ni iconos 192/512. Faltan service worker, precaching y prompt de instalación.

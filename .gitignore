@@ -25,7 +25,7 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# Mock auth state (modo wireframe, no commitear)
+# Estado de la autenticación simulada (no commitear)
 .mock-auth/
 
 # Caché de búsqueda de imágenes (scripts/images.mjs)

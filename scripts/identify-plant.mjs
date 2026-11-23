@@ -10,7 +10,7 @@
  *   y convertirá las fotos webp a jpeg en el cliente antes de enviarlas.
  *
  * Uso:
- *   bun run scripts/identify-plant.mjs [ruta-a-jpeg-o-png] [organ]
+ *   node scripts/identify-plant.mjs [ruta-a-jpeg-o-png] [organ]
  *     - sin argumentos: baja un jpeg de prueba de Pexels.
  *     - organ: opcional, por defecto "leaf".
  */

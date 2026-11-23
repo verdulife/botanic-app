@@ -2,7 +2,7 @@
 //
 // Reutiliza la misma data compartida del seed (usuarios, categorías, ubicaciones,
 // plantillas) para que el cliente muestre lo que luego subirá a Supabase con
-// `bun run seed:apply`, pero con las imágenes servidas LOCALMENTE desde
+// `pnpm seed:apply`, pero con las imágenes servidas LOCALMENTE desde
 // /images/seed/ (ver DESIGN.md: Fotografía real servida localmente, no por CDN).
 //
 // El generador es determinista (misma semilla que scripts/seed-mock.ts) para
