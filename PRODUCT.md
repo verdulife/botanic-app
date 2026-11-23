@@ -1,120 +1,69 @@
-# Product
+# Botanic · Producto
 
-## Platform
+Autoridad de producto del proyecto: a quién hablamos, por qué existimos y con qué voz.
+No decide estética ([DESIGN.md](DESIGN.md)), técnica ([ARCHITECTURE.md](ARCHITECTURE.md)) ni fases ([PLAN.md](PLAN.md)).
 
-web (PWA instalable; app nativa en fase 2)
+| Sección | Qué resuelve |
+|---|---|
+| [Usuarios y mercado](#usuarios-y-mercado) | A quién hablamos y en qué idioma |
+| [Propósito](#propósito) | Qué es Botanic y qué cuenta como éxito |
+| [Problema y solución](#problema-y-solución) | Por qué existe |
+| [Posicionamiento](#posicionamiento) | Frente a quién |
+| [Voz y marca](#voz-y-marca) | Nombre, tono, terminología y qué no se promete |
 
-## Users
+## Usuarios y mercado
 
-Botanic está enfocado en **Plant Lovers** en España. Personas con huerta o huerto urbano también encajan en el público objetivo (misma motivación, ayuda al SEO).
+Botanic se dirige a **Plant Lovers** en España. Idioma del producto: español. Mercado inicial: España, con expansión posible en fase 4.
 
-- Aficionados con esquejes, semillas o excedente de sus plantas
-- Coleccionistas de variedades específicas
-- Personas que se mudan y necesitan dar salida a macetas y plantas
-- Principiantes que buscan plantas baratas cerca de su zona
+| Perfil | Qué trae |
+|---|---|
+| Aficionado con esquejes, semillas o excedente | Dar salida a lo que le sobra |
+| Coleccionista | Buscar variedades concretas |
+| Persona que se muda | Colocar macetas y plantas |
+| Principiante | Encontrar plantas baratas y cerca |
 
-## Product Purpose
+## Propósito
 
-Botanic es la app donde las plantas conocen a gente. Plataforma de compra, venta, intercambio y regalo de plantas entre particulares. El éxito es que un **Plant Lovers** publique un anuncio en menos de un minuto y otro lo encuentre cerca.
+La app donde las plantas conocen a gente: compra, venta, intercambio y regalo entre particulares.
+El éxito es que alguien publique un anuncio en menos de un minuto y otro lo encuentre cerca.
 
-Módulos adyacentes al particular-a-particular:
-
-- **Deseos** — wishlist supervitaminada: dices qué plantas buscas y te avisamos cuando alguien las publique.
-- **Comunidad** — preguntar, compartir consejos y aprender entre Plant Lovers.
-- **El Market de Botanic** — *Próximamente*: profesionales y tiendas del sector en un solo catálogo.
+| Módulo | Qué añade |
+|---|---|
+| **Deseos** | Dices qué plantas buscas y te avisamos cuando alguien las publica |
+| **Comunidad** | Preguntar, compartir consejos y aprender entre Plant Lovers |
+| **El Market de Botanic** | Próximamente: profesionales y tiendas del sector en un solo catálogo |
 
 ## Problema y solución
 
-### Problema
+**Problema**
 
-- Hoy es más fácil vender una chaqueta usada que un esqueje de Monstera.
-- Las plataformas generalistas (Wallapop, Vinted, Milanuncios) tienen las plantas como subcategoría perdida entre muebles, ropa y electrónica.
-- No hay filtros específicos para especies vegetales, no hay lenguaje común, no hay comunidad.
-- Los intercambios ocurren en grupos de Facebook, foros o WhatsApp, de forma desorganizada.
+- Vender un esqueje es más difícil que vender una chaqueta usada.
+- Las plataformas generalistas tratan las plantas como una subcategoría perdida entre muebles y ropa.
+- No hay filtros por especie ni lenguaje común, y no hay comunidad.
+- Los intercambios ocurren en grupos de Facebook, foros y WhatsApp, sin orden.
 
-### Solución
+**Solución**
 
-1. **Especialización** — Categorías pensadas para el mundo vegetal.
-2. **Cercanía** — Búsqueda por ubicación.
-3. **Comunidad** — Perfiles, valoraciones, reputación entre Plant Lovers.
-4. **Sencillez** — Publicar un anuncio lleva menos de un minuto.
+1. **Especialización** — categorías y lenguaje del mundo vegetal.
+2. **Cercanía** — búsqueda por ubicación.
+3. **Confianza** — perfiles, valoraciones y chat directo.
+4. **Sencillez** — publicar un anuncio lleva menos de un minuto.
 
-## Positioning
+## Posicionamiento
 
-Única comunidad de España dedicada por completo al mundo vegetal, con lenguaje y categorías propias de plantas. Las plataformas generalistas (Wallapop, Vinted, Milanuncios) tratan las plantas como subcategoría; Botanic ofrece especialización vegetal + cercanía + comunidad de confianza.
+La única comunidad de España dedicada por completo al mundo vegetal. Frente a las plataformas generalistas, Botanic aporta especialización vegetal, cercanía y comunidad de confianza.
 
-Análisis comparativo con la competencia en [docs/product/mercado.md](docs/product/mercado.md).
+## Voz y marca
 
-## Operating Context
+| Atributo | Valor |
+|---|---|
+| Nombre | Botanic |
+| Tagline | «Donde las plantas conocen a gente» |
+| Tono | Cercano y de comunidad; nunca técnico ni frío |
+| Terminología | «vender, cambiar o regalar» y «conocer a gente nueva» antes que anglicismos |
 
-- Uso principal en móvil, como PWA instalable (SvelteKit)
-- Mapas Leaflet + OpenStreetMap para buscar por ubicación
-- Comunicación comprador-vendedor vía chat en tiempo real
-- Idioma del producto: español
-- Mercado objetivo: España (puede expandirse en fase 4)
+**Sustituciones fijas**: «lista de espera» (no waitlist) · «Deseos» (no match) · «El Market de Botanic» (no marketplace profesional) · «consejos» o «novedades» (no feedback) · «lanzamiento» o «estreno» (no release).
 
-## Capabilities and Constraints
+**Restricción de copy**: el copy no declara como promesas permanentes «sin envíos», «sin comisiones», «quedar en mano», «solo cerca de ti» ni «de tu barrio». Son decisiones de fase y la marca no las promete.
 
-### Categorías
-
-- Semillas
-- Esquejes
-- Plantas
-- Tiestos
-- Accesorios
-
-### Capabilities
-
-- Anuncio con nombre, descripción, precio, ubicación y 1-5 fotos
-- Registro con email y Google OAuth
-- Perfiles con valoraciones de 1 a 5 estrellas
-- Favoritos
-- Chat en tiempo real (Supabase Realtime)
-- Búsqueda y filtros por categoría, precio y ubicación
-- Mapa de anuncios con Leaflet + OpenStreetMap
-- Coste operativo objetivo: 0 €/mes
-
-### Restricciones del MVP (decisiones de fase, no promesas de marca)
-
-- Sin pagos integrados (los usuarios se pagan fuera)
-- Sin envíos con etiquetas integradas
-- Sin identificación por foto (IA)
-- Sin live shopping
-
-> Las decisiones anteriores son del MVP y pueden evolucionar. No se declaran como verdades de marca.
-
-## Brand Commitments
-
-- **Nombre**: Botanic
-- **Tagline canónico**: "Donde las plantas conocen a gente"
-- **Identidad visual**: canon de marketplace ejecutado con voz editorial — fondo cálido de lino, tinta cálida casi negra, acento verde hoja saturado, estrellas ámbar, **3 familias tipográficas** (Fraunces Variable para titulares, Inter Variable para body y botones, JetBrains Mono Variable para eyebrows/tags/pills), fotografía real de plantas; tokens en `src/app.css`. Autoridad global: [DESIGN.md](DESIGN.md).
-- **Estilo por defecto**: estándar de categoría ejecutado impecablemente (elegido en el flujo new-work, seed 77b83067); sin quirk ni sobre-decoración.
-- **Tono**: cercano y de comunidad **Plant Lovers**.
-- **Terminología**: lenguaje cercano de comunidad y economía circular ("conocer a gente nueva", "vender, cambiar o regalar", "segunda mano") frente a anglicismos como "marketplace" (que suena técnico y frío); "vender, cambiar o regalar" como tríada de acciones.
-- **Semilla fundadora**: título de quienes se apuntan a la lista de espera antes del lanzamiento. Se materializa como una tarjeta compartible con su número de puesto (p. ej. #037) que se genera al confirmar el registro. No se comunica el tamaño total del grupo — solo el número propio.
-- **Restricción de copy**: el copy no declara como promesas permanentes "sin envíos", "sin comisiones", "quedar en mano", "solo cerca de ti" ni "de tu barrio". Son decisiones del MVP, no verdades de marca, para no condicionar la monetización ni los cambios de rumbo.
-- **Sustituciones inglés → español**: "waitlist" → "lista de espera"; "match" → "Deseos"; "marketplace profesional" → "El Market de Botanic"; "feedback" → "consejos"/"novedades"; "release/launch" → "lanzamiento"/"estreno"; "signup" → "apuntarse"/"registrarse".
-
-## Evidence on Hand
-
-- Documentación canónica: [PRODUCT.md](PRODUCT.md), [PLAN.md](PLAN.md), [DESIGN.md](DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md)
-- Análisis de mercado con datos secundarios en [docs/product/mercado.md](docs/product/mercado.md)
-- Sin usuarios, testimonios, métricas ni capturas reales todavía: no fabricar cifras
-
-## Product Principles
-
-- Especialización total en el mundo vegetal frente a generalistas
-- Confianza entre particulares: perfiles, valoraciones y chat directo
-- Sencillez: publicar un anuncio en menos de un minuto
-- Vocabulario de comunidad: las plantas se comparten para conocer a gente nueva
-
-## User stories (ejemplos)
-
-```
-Como usuario quiero registrarme para acceder a la plataforma.
-Como usuario quiero publicar un anuncio con fotos para vender mi planta.
-Como usuario quiero buscar plantas cerca de mí para encontrar lo que necesito.
-Como usuario quiero chatear con el vendedor para acordar la entrega.
-Como usuario quiero valorar a otros para construir confianza.
-Como usuario quiero guardar favoritos para volver después.
-```
+**Semilla fundadora**: quien se apunta a la lista de espera antes del lanzamiento recibe su número de puesto; nunca se comunica el tamaño total del grupo.
