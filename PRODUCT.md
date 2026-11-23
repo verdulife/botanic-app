@@ -1,7 +1,8 @@
 # Botanic · Producto
 
-Autoridad de producto del proyecto: a quién hablamos, por qué existimos y con qué voz.
-No decide estética ([DESIGN.md](DESIGN.md)), técnica ([ARCHITECTURE.md](ARCHITECTURE.md)) ni fases ([PLAN.md](PLAN.md)).
+Autoridad de producto de Botanic. Define a quién hablamos, por qué existimos, qué contamos como éxito y con qué voz se escribe todo lo que el proyecto dice: la web, la app, los emails y el copy de la interfaz.
+
+Se lee al decidir algo de producto o al escribir texto de cara al usuario —una pantalla, un email, un onboarding, el nombre de una sección—. Las secciones son cortas a propósito: el índice lleva directo a lo que resuelve cada una.
 
 | Sección | Qué resuelve |
 |---|---|
