@@ -172,16 +172,19 @@ export type Database = {
 			};
 			waitlist: {
 				Row: {
+					access_token: string;
 					created_at: string;
 					email: string;
 					id: string;
 				};
 				Insert: {
+					access_token?: string;
 					created_at?: string;
 					email: string;
 					id?: string;
 				};
 				Update: {
+					access_token?: string;
 					created_at?: string;
 					email?: string;
 					id?: string;
@@ -199,8 +202,12 @@ export type Database = {
 		};
 		Functions: {
 			get_waitlist_position: {
-				Args: { target_email: string };
+				Args: { target_token: string };
 				Returns: number;
+			};
+			join_waitlist: {
+				Args: { p_email: string };
+				Returns: { wait_position: number; token: string }[];
 			};
 		};
 		Enums: {

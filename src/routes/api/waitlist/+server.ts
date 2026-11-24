@@ -67,10 +67,10 @@ async function getWaitlistTotal(): Promise<number> {
 	}
 }
 
-async function getWaitlistPosition(email: string): Promise<number | null> {
+async function getWaitlistPosition(token: string): Promise<number | null> {
 	try {
 		const { data, error } = await supabase.rpc("get_waitlist_position", {
-			target_email: email,
+			target_token: token,
 		});
 		if (error) throw error;
 		return typeof data === "number" ? data : null;
@@ -118,14 +118,19 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json({ error: "Debes aceptar la Política de Privacidad y el Aviso Legal" }, { status: 400 });
 	}
 
-	const { error } = await supabase.from("waitlist").insert({ email });
+	// El alta la hace una función del servidor: el rol anónimo no puede leer la
+	// tabla, y `insert ... select` necesitaría hacerlo. Devuelve el testigo solo
+	// cuando la fila es nueva; si el correo ya estaba no devuelve nada, así que la
+	// respuesta es idéntica en ambos casos.
+	const { data, error } = await supabase.rpc("join_waitlist", { p_email: email });
 	if (error) {
-		if (error.code === "23505") {
-			const position = await getWaitlistPosition(email);
-			return json({ ok: true, alreadyRegistered: true, position });
-		}
-		console.error("[waitlist] insert error", error);
+		console.error("[waitlist] join error", error);
 		return json({ error: "Error al guardar" }, { status: 500 });
+	}
+
+	const created = (data as { wait_position: number; token: string }[] | null)?.[0] ?? null;
+	if (!created) {
+		return json({ ok: true });
 	}
 
 	const now = new Date().toISOString();
@@ -141,6 +146,5 @@ export const POST: RequestHandler = async ({ request }) => {
 		);
 	}
 
-	const position = await getWaitlistPosition(email);
-	return json({ ok: true, position });
+	return json({ ok: true, position: created.wait_position, token: created.token });
 };
