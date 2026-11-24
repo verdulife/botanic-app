@@ -2,7 +2,7 @@ import type { LayoutServerLoad } from './$types';
 import type { Database } from '$lib/supabase/types';
 
 export const load: LayoutServerLoad = async ({ locals: { safeGetSession, supabase } }) => {
-	const { session, user } = await safeGetSession();
+	const { user } = await safeGetSession();
 
 	let profile: Database['public']['Tables']['profiles']['Row'] | null = null;
 	if (user) {
@@ -14,5 +14,6 @@ export const load: LayoutServerLoad = async ({ locals: { safeGetSession, supabas
 		profile = data;
 	}
 
-	return { session, user, profile };
+	// El objeto de sesión lleva un `user` sin validar: no se expone al cliente.
+	return { user, profile };
 };
