@@ -1,4 +1,5 @@
 import { json } from "@sveltejs/kit";
+import { createHash } from "node:crypto";
 import { env } from "$env/dynamic/private";
 import { supabase } from "$lib/supabase";
 import { confirmationHtml, confirmationText } from "$lib/emails/confirmation";
@@ -15,6 +16,31 @@ const LIST_UNSUBSCRIBE_HEADERS = {
 	"List-Unsubscribe": "<mailto:unsubscribe@botanicapp.es>",
 	"List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
 } as const;
+
+// En serverless no hay memoria compartida, así que el contador vive en la base de
+// datos. La clave es la IP hasheada: nunca se guarda en claro.
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_SECONDS = 3600;
+
+function rateKey(ip: string): string {
+	return createHash("sha256").update(`waitlist:${ip}`).digest("hex");
+}
+
+async function withinRateLimit(ip: string): Promise<boolean> {
+	try {
+		const { data, error } = await supabase.rpc("check_rate_limit", {
+			p_key: rateKey(ip),
+			p_limit: RATE_LIMIT_MAX,
+			p_window_seconds: RATE_LIMIT_WINDOW_SECONDS,
+		});
+		if (error) throw error;
+		return data !== false;
+	} catch (err) {
+		// Es una defensa, no un requisito del servicio: si falla, el alta pasa.
+		console.warn("[waitlist] rate limit no disponible:", err);
+		return true;
+	}
+}
 
 async function sendConfirmation(email: string) {
 	await sendResend(
@@ -120,6 +146,7 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
 }
 
 export const POST: RequestHandler = async ({ request, getClientAddress }) => {
+	const ip = getClientAddress();
 	let email: string;
 	let consent: boolean;
 	let turnstileToken: string;
@@ -144,7 +171,14 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 		return json({ error: "Debes aceptar la Política de Privacidad y el Aviso Legal" }, { status: 400 });
 	}
 
-	if (!(await verifyTurnstile(turnstileToken, getClientAddress()))) {
+	if (!(await withinRateLimit(ip))) {
+		return json(
+			{ error: "Demasiados intentos. Espera unos minutos antes de volver a probar." },
+			{ status: 429 }
+		);
+	}
+
+	if (!(await verifyTurnstile(turnstileToken, ip))) {
 		return json(
 			{ error: "No hemos podido verificar que no eres un robot. Recarga e inténtalo de nuevo." },
 			{ status: 400 }
