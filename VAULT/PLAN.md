@@ -171,7 +171,7 @@ dispositivo. Pl@ntNet quedaría como fallback para la cola larga.
 
 ### Feed adaptativo
 
-Módulos horizontales del feed descritos en `docs/ux/ux.md`. El schema ya está escrito en `docs/db/schema-app.md`: migración `add_feed_personalization_schema` con `user_events`, `user_category_interests`, `feed_banners`, `feed_banner_views` y `user_banner_dismissals`, con RLS desde el primer día.
+Módulos horizontales del feed descritos en `docs/ux/UX.md`. El schema ya está escrito en `docs/db/schema-app.md`: migración `add_feed_personalization_schema` con `user_events`, `user_category_interests`, `feed_banners`, `feed_banner_views` y `user_banner_dismissals`, con RLS desde el primer día.
 
 - Tracking en base de datos desde el día 1.
 - Banners en `src/lib/feed/banners.ts`, migrables a base de datos sin perder históricos.
@@ -186,7 +186,7 @@ Web en catalán, gallego y euskera, prevista para la fase 2. Pendiente de decidi
 
 ## Cerrado, sin acción pendiente
 
-- Emails en spam — auditoría y correcciones aplicadas (`docs/email/deliverability.md`).
+- Emails en spam — auditoría y correcciones aplicadas (`email/deliverability.md`).
 - Cron keep-alive de Supabase Free — implementado.
 - `waitlist_count` verificada contra la realidad.
 - Documentos para impresión — póster A3 implementado y retirado en agosto de 2026 (fuente en git).

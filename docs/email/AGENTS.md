@@ -1,41 +1,26 @@
-# Email — Contexto del módulo (Resend)
+# Email — contrato del módulo
 
-Envío transaccional y de campaña vía Resend. Nunca desde el cliente — siempre por server route SvelteKit. Marca visual y copy deben respetar [DESIGN.md](../../DESIGN.md) y [PRODUCT.md](../../PRODUCT.md) (terminología sin anglicismos) — autoridad global, no la dupliques aquí.
+Envío transaccional y de campaña con Resend, siempre desde el servidor: nunca desde el cliente. Marca y copy siguen [DESIGN.md](../../DESIGN.md) y [PRODUCT.md](../../PRODUCT.md).
 
-## Estado
-
-| Área | Estado |
-|---|---|
-| Respuesta automática waitlist (confirmación + notif. admin + alta en Audience) | ✅ Hecho |
-| Deliverability (SPF/DKIM/DMARC/MX) | ✅ Resuelto |
-| Emails de novedades y lanzamiento (broadcast) | 🔶 Pendiente — infra lista, falta contenido |
-
-## Documentación del módulo
-
-| Doc | Contenido | Ubicación |
-|---|---|---|
-| resend-setup | Config del proveedor, flujo waitlist completo, plantillas, backlog de novedades/lanzamiento | [resend-setup.md](resend-setup.md) |
-| deliverability | Estado actual de DNS y entrega por proveedor + fixes aplicados | las reglas de entregabilidad |
-| deliverability-log | Log histórico completo de la auditoría (hitos fechados) — solo bajo demanda | el registro histórico de entregabilidad |
-
-## Código relevante
-
-- `src/lib/emails/` — plantillas (`layout.ts`, `confirmation.ts`, `adminNotify.ts`)
-- `src/routes/api/waitlist/+server.ts` — endpoint de alta
-- `scripts/email-preview.mjs`, `scripts/email-send.mjs` — preview y envío manual (`pnpm email:preview`, `pnpm email:send`)
-
-## Reglas específicas de este módulo
-
-- Cualquier plantilla nueva reutiliza `layout.ts` (header + footer legal ya resueltos) — no reimplementar el layout.
-- Antes de tocar DNS o headers de entrega, revisar las reglas de entregabilidad para no repetir un fix ya aplicado.
-- Nuevas campañas usan el Audience "waitlist" existente en Resend, no crear uno nuevo.
-
----
+Qué se envía, a quién y con qué plantilla está en el código. Aquí queda lo que una lectura no revela y lo que no se puede romper sin aviso.
 
 ## Entregabilidad
 
-- **Remitente**: `hola@botanicapp.es` con `replyTo`, nunca `no-reply@`. Pie con información físico-legal (RGPD y LSSI).
-- **Desuscripción**: cabeceras `List-Unsubscribe` y `List-Unsubscribe-Post: One-Click` en todo envío.
-- **Cabecera de imagen**: `max-width` de 480 px y texto alternativo descriptivo.
-- **Autenticación**: DKIM, SPF y DMARC (`p=none`) configurados en `botanicapp.es`. Endurecer a `p=quarantine` y luego `p=reject` cuando los informes estén limpios.
-- Una entrega en spam a Outlook se atribuye a la reputación de un dominio nuevo, no a la configuración: se comprueba con volumen real.
+- Remitente `hola@botanicapp.es` con `replyTo`; nunca `no-reply@`. Pie con información físico-legal (RGPD y LSSI).
+- Todo envío lleva `List-Unsubscribe` y `List-Unsubscribe-Post: One-Click`.
+- Imágenes con `max-width` de 480 px y texto alternativo descriptivo.
+- DKIM, SPF y DMARC configurados en `botanicapp.es`.
+- Una entrega en spam a un proveedor nuevo se atribuye a la reputación del dominio, no a la configuración: se comprueba con volumen real.
+
+## Reglas
+
+- Toda plantilla nueva reutiliza `layout.ts`: el header, el pie legal y el `text` de respaldo ya están resueltos ahí.
+- Las campañas usan el Audience «waitlist» existente; no se crea otro.
+- Un alta duplicada (`23505`) no reenvía emails: responde `alreadyRegistered` con la posición y el formulario voltea la tarjeta, para no llenar el buzón del admin.
+- Antes de tocar DNS o cabeceras de entrega, se revisa el historial del vault para no repetir un arreglo ya aplicado.
+
+## Fuera del repo
+
+- Auditoría de entregabilidad e historial fechado → `VAULT/email/deliverability.md` y `VAULT/email/deliverability-log.md`.
+- Backlog de campañas → `VAULT/PLAN.md`.
+- Esquema de la lista de espera → [../db/schema-waitlist.md](../db/schema-waitlist.md).

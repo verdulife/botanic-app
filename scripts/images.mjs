@@ -8,7 +8,7 @@ const ROOT = resolve(__dirname, "..");
 const CACHE_DIR = resolve(__dirname, ".tmp");
 const CACHE_FILE = join(CACHE_DIR, "images-search.json");
 const OUT_DIR = resolve(ROOT, "static/images/blog");
-const CREDITS_FILE = resolve(ROOT, "docs/images-credits.md");
+const CREDITS_FILE = resolve(ROOT, "docs/web/IMAGES-CREDITS.md");
 const API = "https://commons.wikimedia.org/w/api.php";
 const UA =
 	"BotanicApp/0.1 (https://www.botanicapp.es; blog image sourcing)";
@@ -134,7 +134,7 @@ async function fetchImage(index, dest) {
 
 	console.log(`OK ${dest}.jpg (${kb(jpg.size)} @${jpg.w}px q${jpg.q}${jpg.overBudget ? " · sobre presupuesto" : ""})`);
 	console.log(`OK ${dest}.webp (${kb(webp.size)} @${webp.w}px q${webp.q}${webp.overBudget ? " · sobre presupuesto" : ""})`);
-	console.log(`Crédito añadido a docs/images-credits.md`);
+	console.log(`Crédito añadido a docs/web/IMAGES-CREDITS.md`);
 }
 
 async function main() {

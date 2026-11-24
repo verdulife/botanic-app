@@ -19,7 +19,7 @@ Cada `AGENTS.md` de módulo es autocontenido y enlaza de vuelta aquí.
 | Módulo | Área | AGENTS.md |
 |---|---|---|
 | web | Landing, blog y app web — SvelteKit | [docs/web/AGENTS.md](docs/web/AGENTS.md) |
-| app | Rutas, entidades, navegación y UX cross-cutting | [docs/app/AGENTS.md](docs/app/AGENTS.md) |
+| app | Reglas del marketplace P2P, deseos y comunidad | [docs/app/AGENTS.md](docs/app/AGENTS.md) |
 | db | Esquema, migraciones y políticas de Supabase | [docs/db/AGENTS.md](docs/db/AGENTS.md) |
 | email | Transaccionales y campañas con Resend | [docs/email/AGENTS.md](docs/email/AGENTS.md) |
 
@@ -67,9 +67,6 @@ Los servidores están declarados en `.pi/mcp.json`: Supabase (esquema, SQL, migr
 
 **Reglas de `/app`**
 
-- Hay dos modos de autenticación, y `AUTH_MODE` en `src/lib/auth-mode.ts` conmuta entre ellos.
-- Con el modo real, la sesión se valida siempre contra el servidor, nunca solo con cookies.
-- Las cuentas de prueba viven en `.mock-auth/`, que está gitignored y no se commitea.
 - Cualquier respuesta de `/app*` lleva `X-Robots-Tag: noindex, nofollow`.
 - Navegar es público; escribir exige sesión y redirige a `/app/login?next=...`.
-- El detalle de la autenticación, las RLS y el Storage está en [docs/app/FUNCIONAL.md](docs/app/FUNCIONAL.md) y [docs/db/AGENTS.md](docs/db/AGENTS.md).
+- Las RLS y el Storage están en [docs/db/AGENTS.md](docs/db/AGENTS.md).

@@ -1,35 +1,19 @@
-# Web — Contexto del módulo (SvelteKit)
+# Web — contrato del módulo
 
-Frontend único en SvelteKit 5: **landing** (hecha), **blog** (hecho), **web app marketplace** (pendiente, mock en `/app`). Stack/diagrama → [ARCHITECTURE.md](../../ARCHITECTURE.md); design system → [DESIGN.md](../../DESIGN.md) (autoridad global, no duplicar).
+Frontend único en **SvelteKit 3** con Svelte 5: landing, blog y web app bajo `/app`.
 
-## Estado
-
-| Área | Estado | Ruta |
-|---|---|---|
-| Landing + waitlist | ✅ | `src/routes/+page.svelte` |
-| Blog | ✅ | `src/routes/blog/**` |
-| Web app (marketplace) | 🔶 Wireframe neutro | `src/routes/app/**` |
-| Legal | ✅ | `src/routes/aviso-legal`, `src/routes/politica-de-privacidad` |
+Stack, límites y verificación → [ARCHITECTURE.md](../../ARCHITECTURE.md) · autoridad visual y movimiento → [DESIGN.md](../../DESIGN.md) · interacción, gestos y pantallas → [UX.md](../ux/UX.md) · reglas de la web app → [../app/AGENTS.md](../app/AGENTS.md).
 
 ## Documentación del módulo
 
-| Doc | Contenido | Ubicación |
-|---|---|---|
-| blog | Frontmatter, loader, pipeline imágenes, cron, guía IA | [blog.md](blog.md) |
-| pwa | `@vite-pwa/sveltekit` | [pwa.md](pwa.md) |
-| images-credits | Atribución imágenes Wikimedia del blog | [images-credits.md](images-credits.md) |
+| Doc | Contenido |
+|---|---|
+| [BLOG.md](BLOG.md) | Frontmatter, loader, pipeline de imágenes, cron y guía de IA |
+| [IMAGES-CREDITS.md](IMAGES-CREDITS.md) | Registro de atribución de las imágenes del blog; lo reescribe `scripts/images.mjs` |
 
-**Web app marketplace**: documento funcional de la app web en [../app/AGENTS.md](../app/AGENTS.md) (entidades, rutas, navegación, módulos, cross-cutting). Carga selectiva: lee solo el módulo afectado por la vista a implementar. Autoridad visual en [DESIGN.md](../../DESIGN.md), ya aplicada.
+## Reglas
 
-## Reglas específicas
-
-- UI: autoridad visual en [DESIGN.md](../../DESIGN.md); contexto de diseño = PRODUCT.md + DESIGN.md. **DESIGN.md ya está aplicado; respétalo en cualquier cambio de UI.**
-- Componentes `src/lib/components/ui/`: convención `shadcn-svelte`. Se usan tal cual, sin sobreescrituras de tema del CLI sin custom CSS.
-- Tailwind v4 (CSS-first, `@import "tailwindcss"`, sin `tailwind.config.js`): skill `tailwind-4-docs` (snapshot local, no se commitea).
-- Svelte 5: runes (`$state`, `$derived`, `$props`) — skills `svelte-core-bestpractices` / `svelte-code-writer`.
-- Logo vectorial vive solo en `src/lib/components/Logo.svelte` (consumido vía `?raw`).
-- **Web app (`/app/**`)**: raíz browseable sin login en `/app`. Contrato del módulo en [../app/AGENTS.md](../app/AGENTS.md), reglas funcionales en [../app/FUNCIONAL.md](../app/FUNCIONAL.md) y autenticación por `AUTH_MODE` en `src/lib/auth-mode.ts`.
-
----
-
-> **Actualización**: ver [AGENTS.md § Cómo mantener los docs](../../AGENTS.md#cómo-mantener-los-docs).
+- Componentes `src/lib/components/ui/`: convención `shadcn-svelte`. Se usan tal cual; el tema se ajusta con CSS propio, no sobreescribiendo el CLI.
+- Tailwind 4 es CSS-first: `@import "tailwindcss"` y `@theme inline` en `src/app.css`, sin archivo de configuración. Skill `tailwind-4-docs`.
+- Svelte 5 con runes. Skills `svelte-core-bestpractices` y `svelte-code-writer`.
+- El logo vectorial vive solo en `src/lib/components/Logo.svelte` y se consume con `?raw`.

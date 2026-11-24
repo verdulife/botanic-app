@@ -5,7 +5,7 @@
 // - 'supabase': autenticación real con Supabase Auth (SSR).
 //
 // Al conectar Supabase: cambiar a 'supabase' y borrar el módulo mock cuando
-// ya no se necesite. Ver docs/app/FUNCIONAL.md.
+// ya no se necesite.
 export const AUTH_MODE: 'mock' | 'supabase' = 'mock';
 
 export function isMockAuth(): boolean {

@@ -2,8 +2,7 @@
 
 Autoridad técnica y de negocio del **catálogo afiliado** como motor para lanzar
 **El Market de Botanic** antes que el modelo de tiendas/profesionales. Contexto
-de producto en [monetizacion.md](monetizacion.md) y [PRODUCT.md](../../PRODUCT.md);
-definición funcional del módulo en `docs/app/FUNCIONAL.md`.
+de producto en [monetizacion.md](monetizacion.md) y [PRODUCT.md](../../PRODUCT.md).
 
 ## Propósito
 

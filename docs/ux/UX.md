@@ -4,7 +4,7 @@ Reglas de UX que condicionan cómo se construyen las pantallas. Solo lo que un l
 
 - Sistema visual (tokens, tipografía, color, forma, movimiento) → [DESIGN.md](../../DESIGN.md).
 - Stack, límites entre módulos y verificación → [ARCHITECTURE.md](../../ARCHITECTURE.md).
-- Rutas y entidades de la webapp → [docs/app/AGENTS.md](../app/AGENTS.md).
+- Reglas del marketplace P2P, deseos y comunidad → [docs/app/AGENTS.md](../app/AGENTS.md).
 
 ## Índice
 
@@ -14,26 +14,19 @@ Reglas de UX que condicionan cómo se construyen las pantallas. Solo lo que un l
 4. [Feed](#4-feed)
 5. [Copy de estados](#5-copy-de-estados)
 6. [Prioridades](#6-prioridades)
+7. [Adaptación y pantallas](#7-adaptación-y-pantallas)
 
 ## 1. Jerarquía y navegación
 
-Botanic muestra las **intenciones principales** del usuario, no todo lo que la app sabe hacer.
+La navegación se lee en el código. Aquí solo se dice dónde, para no repetirla ni contradecirla:
 
-| Destino permanente | Para qué |
-|---|---|
-| **Inicio** | Descubrimiento del marketplace P2P: anuncios, búsqueda, filtros, vista |
-| **Comunidad** | Preguntas, consejos y conversaciones entre usuarios |
-| **Market** | Catálogo de profesionales y tiendas del sector |
-| **Mi Botanic** | Cuenta y todo lo personal |
+- **Barra móvil** (`md:hidden`): `primaryNavItems` en `src/lib/components/wireframe/nav-items.ts` fija los destinos, su orden, el icono y la ruta de cada uno.
+- **Área personal**: `MI_BOTANIC_PREFIXES`, en el mismo fichero, agrupa las rutas que caen dentro de Mi Botanic.
+- **Al hacer scroll**: `WebAppPrimaryNav.svelte` reduce la barra y oculta las etiquetas, dejando solo los iconos.
 
-- Son cuatro destinos, ni uno más. **No se da espacio permanente de navegación a una funcionalidad solo porque exista.**
-- Área personal = un único espacio, no acciones repartidas por la interfaz. `Mi Botanic` agrupa perfil, notificaciones, anuncios propios, favoritos, conversaciones, deseos/alertas, ajustes, anunciar y cerrar sesión.
-- Pero tampoco se esconde a dos toques: `Mi Botanic` es el cuarto destino del bottom nav, nunca una entrada del header.
-- `Anunciar` es una acción, no un destino: vive en `Mi Botanic` y en accesos contextuales (tarjeta del feed, anuncios propios).
-- `Deseos / alertas` es automatización en segundo plano: su entrada fuerte es contextual (búsqueda sin resultados) y la gestión vive en `Mi Botanic`.
-- Header: anónimo `Logo · Búsqueda · Entrar`; autenticado `Logo · Búsqueda · 🔔`. Sin avatar ni entrada a Mi Botanic.
-- El 🔔 es el único elemento del header reservado a feedback en tiempo real y lleva badge de no leídas.
-- Antipatrones: una pestaña por funcionalidad, el mismo destino en dos sitios sin motivo, el mismo peso visual para lo secundario que para lo principal, destinos no documentados.
+Cambiar la navegación es cambiar esos tres puntos.
+
+Antipatrones: una pestaña por funcionalidad, el mismo destino en dos sitios sin motivo, el mismo peso visual para lo secundario que para lo principal.
 
 ## 2. Vista, filtros y gestos
 
@@ -58,17 +51,8 @@ El marketplace ofrece tres formas de explorar **el mismo** conjunto de resultado
 - Si no caben todos, se priorizan los mejor valorados con un máximo por nivel de zoom; el resto se agrupa en chips que se abren al acercar.
 - Las chips nunca quedan apiladas entre sí ni encima de un marker: se separan por colisión en píxeles al renderizar.
 
-### Auto-hide del bottom nav
-
-- Se oculta al bajar y reaparece al subir, para devolver altura al contenido.
-- Antes del primer umbral (~80-100 px desde arriba) está siempre visible: nada de parpadeo al cargar.
-- La histéresis de dirección (~8 px) evita el temblor; un tap **no** la reactiva, solo el scroll hacia arriba.
-- Con `prefers-reduced-motion`, el cambio es instantáneo.
-
 ## 3. Registro
 
-- Se explora sin cuenta: feed, búsqueda, filtros, mapa, detalle de anuncio y comunidad.
-- La cuenta se pide para: publicar, contactar o chatear, guardar favoritos de forma persistente y crear deseos/alertas.
 - Regla única: **pide el registro cuando la intención ya está demostrada**, nunca antes.
 - El copy dice el beneficio y el motivo —"Regístrate para publicar", "Regístrate para chatear con el vendedor"—, no "Debes registrarte".
 - Prohibido: modales por tiempo, registro sin acción previa, interrupciones repetidas y bloquear el feed antes de que haya aportado valor.
@@ -112,3 +96,12 @@ Cuando dos decisiones chocan, gana la de arriba:
 6. Visibilidad de funcionalidades secundarias.
 
 No se sacrifica la exploración para exponer más funcionalidades.
+
+## 7. Adaptación y pantallas
+
+- **Escritorio y móvil, ambos impecables**, con el patrón del marketplace de segunda mano: en móvil manda el scroll vertical y las acciones quedan al alcance del pulgar; en escritorio se admite más densidad por pantalla.
+- **Scroll horizontal sin barra nativa** en chips de categorías, carruseles, tabs y listados secundarios: la barra del navegador se oculta, en escritorio las flechas de los extremos avanzan al siguiente punto de anclaje y en móvil manda el gesto del dedo, sin flechas ni dots.
+- **Estados globales**: toda vista prevé carga, vacío, error, contenido, no autenticado cuando la acción exige sesión y permiso no concedido cuando depende del GPS.
+- **Ubicación**: concedida, rechazada y no configurada. La ubicación guardada en el perfil es la fuente principal y el GPS solo un atajo.
+- **Chat**: dos paneles en escritorio —lista a la izquierda, conversación a la derecha—; en móvil, una vista por vez.
+- **Ajustes**: columnas en escritorio, lista en móvil.

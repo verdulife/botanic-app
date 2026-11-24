@@ -248,6 +248,8 @@ rounded:
 
 El movimiento es corto y funcional: confirma un cambio de estado, no decora. Nada hace bucle salvo tres piezas: el abanico del hero, la malla de la banda de categorías y el avance automático de la vista Scroll, que cambia de tarjeta cada 3 s.
 
+Todo lo que se mueve respeta `prefers-reduced-motion`: con movimiento reducido no arranca ninguna pieza en bucle y los cambios de estado son instantáneos.
+
 ```yaml
 motion:
   state-change:
