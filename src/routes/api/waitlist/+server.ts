@@ -17,29 +17,13 @@ const LIST_UNSUBSCRIBE_HEADERS = {
 	"List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
 } as const;
 
-// En serverless no hay memoria compartida, así que el contador vive en la base de
-// datos. La clave es la IP hasheada: nunca se guarda en claro.
-const RATE_LIMIT_MAX = 5;
-const RATE_LIMIT_WINDOW_SECONDS = 3600;
-
+// La clave del límite es la IP hasheada con una sal secreta: nunca se guarda en
+// claro y nadie puede calcular la de otra persona. El límite y la ventana viven
+// dentro del alta, no aquí: una función pública con esos argumentos sería un
+// endpoint que cualquiera podría torcer.
 function rateKey(ip: string): string {
-	return createHash("sha256").update(`waitlist:${ip}`).digest("hex");
-}
-
-async function withinRateLimit(ip: string): Promise<boolean> {
-	try {
-		const { data, error } = await supabase.rpc("check_rate_limit", {
-			p_key: rateKey(ip),
-			p_limit: RATE_LIMIT_MAX,
-			p_window_seconds: RATE_LIMIT_WINDOW_SECONDS,
-		});
-		if (error) throw error;
-		return data !== false;
-	} catch (err) {
-		// Es una defensa, no un requisito del servicio: si falla, el alta pasa.
-		console.warn("[waitlist] rate limit no disponible:", err);
-		return true;
-	}
+	const salt = env.RATE_LIMIT_SALT ?? "";
+	return createHash("sha256").update(`waitlist:${salt}:${ip}`).digest("hex");
 }
 
 async function sendConfirmation(email: string) {
@@ -171,13 +155,6 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 		return json({ error: "Debes aceptar la Política de Privacidad y el Aviso Legal" }, { status: 400 });
 	}
 
-	if (!(await withinRateLimit(ip))) {
-		return json(
-			{ error: "Demasiados intentos. Espera unos minutos antes de volver a probar." },
-			{ status: 429 }
-		);
-	}
-
 	if (!(await verifyTurnstile(turnstileToken, ip))) {
 		return json(
 			{ error: "No hemos podido verificar que no eres un robot. Recarga e inténtalo de nuevo." },
@@ -189,8 +166,19 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 	// tabla, y `insert ... select` necesitaría hacerlo. Devuelve el testigo solo
 	// cuando la fila es nueva; si el correo ya estaba no devuelve nada, así que la
 	// respuesta es idéntica en ambos casos.
-	const { data, error } = await supabase.rpc("join_waitlist", { p_email: email });
+	// El límite de intentos lo aplica la propia función del alta: un único punto
+	// público, sin argumentos que el llamante pueda torcer.
+	const { data, error } = await supabase.rpc("join_waitlist", {
+		p_email: email,
+		p_rate_key: rateKey(ip),
+	});
 	if (error) {
+		if (error.code === "P0001" || error.message?.includes("rate_limited")) {
+			return json(
+				{ error: "Demasiados intentos. Espera unos minutos antes de volver a probar." },
+				{ status: 429 }
+			);
+		}
 		console.error("[waitlist] join error", error);
 		return json({ error: "Error al guardar" }, { status: 500 });
 	}
