@@ -2,6 +2,17 @@
 	import { Button } from "$lib/components/ui/button";
 	import { Input } from "$lib/components/ui/input";
 	import { Mail } from "@lucide/svelte/icons";
+	import { onMount } from "svelte";
+	import { env } from "$env/dynamic/public";
+
+	// Si la clave no está configurada, el widget no se pinta y el alta sigue
+	// funcionando: no tiene sentido bloquear el formulario por un entorno a medias.
+	const SITE_KEY = env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+
+	type TurnstileApi = {
+		render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+		reset: (id?: string) => void;
+	};
 
 	type Status = "idle" | "loading" | "success" | "error";
 	let {
@@ -18,6 +29,30 @@
 	let consent = $state(false);
 	let status = $state<Status>("idle");
 	let errorMessage = $state("");
+	let turnstileToken = $state("");
+	let turnstileWrap: HTMLDivElement | undefined = $state();
+
+	onMount(() => {
+		if (!SITE_KEY || !turnstileWrap) return;
+		const w = window as unknown as { turnstile?: TurnstileApi };
+		const render = () => {
+			w.turnstile?.render(turnstileWrap as HTMLElement, {
+				sitekey: SITE_KEY,
+				callback: (token: string) => (turnstileToken = token),
+				"expired-callback": () => (turnstileToken = ""),
+			});
+		};
+		if (w.turnstile) {
+			render();
+		} else {
+			const script = document.createElement("script");
+			script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+			script.async = true;
+			script.defer = true;
+			script.onload = render;
+			document.head.appendChild(script);
+		}
+	});
 
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
@@ -32,11 +67,16 @@
 			errorMessage = "Debes aceptar la Política de Privacidad y el Aviso Legal.";
 			return;
 		}
+		if (SITE_KEY && !turnstileToken) {
+			status = "error";
+			errorMessage = "Confirma que no eres un robot antes de continuar.";
+			return;
+		}
 		status = "loading";
 		const res = await fetch("/api/waitlist", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ email: trimmed, consent }),
+			body: JSON.stringify({ email: trimmed, consent, turnstileToken }),
 		});
 		if (!res.ok) {
 			status = "error";
@@ -85,6 +125,9 @@
 			<span class="text-destructive">{errorMessage}</span>
 		{/if}
 	</p>
+	{#if SITE_KEY}
+		<div bind:this={turnstileWrap} class="flex justify-center pt-1"></div>
+	{/if}
 	<label class="flex items-center justify-center gap-2 pt-2 text-sm text-muted-foreground">
 		<input type="checkbox" bind:checked={consent} class="size-4 shrink-0 accent-[var(--color-still-400)]" />
 		<span>

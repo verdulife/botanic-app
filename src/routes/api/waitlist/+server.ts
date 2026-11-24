@@ -99,13 +99,39 @@ async function sendResend(payload: Record<string, unknown>, url: string) {
 	}
 }
 
-export const POST: RequestHandler = async ({ request }) => {
+async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
+	const secret = env.TURNSTILE_SECRET_KEY?.trim();
+	// Sin clave configurada no se bloquea: el formulario tiene que poder probarse
+	// en local con un entorno a medias.
+	if (!secret) return true;
+	if (!token) return false;
+
+	try {
+		const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+			method: "POST",
+			body: new URLSearchParams({ secret, response: token, remoteip: ip }),
+		});
+		const data = (await res.json()) as { success?: boolean } | null;
+		return data?.success === true;
+	} catch (err) {
+		console.error("[waitlist] turnstile error", err);
+		return false;
+	}
+}
+
+export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 	let email: string;
 	let consent: boolean;
+	let turnstileToken: string;
 	try {
-		const body = (await request.json()) as { email?: unknown; consent?: unknown };
+		const body = (await request.json()) as {
+			email?: unknown;
+			consent?: unknown;
+			turnstileToken?: unknown;
+		};
 		email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
 		consent = body.consent === true;
+		turnstileToken = typeof body.turnstileToken === "string" ? body.turnstileToken : "";
 	} catch {
 		return json({ error: "Cuerpo inválido" }, { status: 400 });
 	}
@@ -116,6 +142,13 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	if (!consent) {
 		return json({ error: "Debes aceptar la Política de Privacidad y el Aviso Legal" }, { status: 400 });
+	}
+
+	if (!(await verifyTurnstile(turnstileToken, getClientAddress()))) {
+		return json(
+			{ error: "No hemos podido verificar que no eres un robot. Recarga e inténtalo de nuevo." },
+			{ status: 400 }
+		);
 	}
 
 	// El alta la hace una función del servidor: el rol anónimo no puede leer la
