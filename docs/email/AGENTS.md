@@ -17,7 +17,7 @@ Qué se envía, a quién y con qué plantilla está en el código. Aquí queda l
 - Toda plantilla nueva reutiliza `layout.ts`: el header, el pie legal y el `text` de respaldo ya están resueltos ahí.
 - Las campañas usan el Audience «waitlist» existente; no se crea otro.
 - Un alta duplicada (`23505`) no reenvía emails: responde `alreadyRegistered` con la posición y el formulario voltea la tarjeta, para no llenar el buzón del admin.
-- Antes de tocar DNS o cabeceras de entrega, se revisa el historial del vault para no repetir un arreglo ya aplicado.
+- Antes de tocar DNS o cabeceras de entrega, comprueba que el arreglo no está ya aplicado: el historial de la auditoría vive en el vault del proyecto, no en este repositorio.
 
 ## Fuera del repo
 
