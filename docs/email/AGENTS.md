@@ -21,6 +21,4 @@ Qué se envía, a quién y con qué plantilla está en el código. Aquí queda l
 
 ## Fuera del repo
 
-- Auditoría de entregabilidad e historial fechado → `VAULT/email/deliverability.md` y `VAULT/email/deliverability-log.md`.
-- Backlog de campañas → `VAULT/PLAN.md`.
-- Esquema de la lista de espera → [../db/schema-waitlist.md](../db/schema-waitlist.md).
+El plan del proyecto, la auditoría de entregabilidad y su historial fechado viven en el vault de Obsidian, no aquí. Esquema de la lista de espera → [../db/schema-waitlist.md](../db/schema-waitlist.md).
