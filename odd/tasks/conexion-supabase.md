@@ -77,6 +77,12 @@ Cerrar la etapa de demo: la aplicación en `/app` pasa a leer y escribir en la b
 
 **Decisión abierta:** un slug legible solo rinde si la página se indexa, y `AGENTS.md` exige `noindex` en todo `/app*`. Si el SEO del anuncio es objetivo, el detalle tiene que salir a una ruta pública fuera de `/app`; la forma de la URL ya está preparada para ese día.
 
+**L11.** Revisión del hito 1 aprobada (3 lentes, 768 líneas) con **siete hallazgos no bloqueantes** y autoridad quemada. Cerrados en el acto R3-001 (valoraciones del perfil), R3-002 (`public_id` en el select), R3-003 (formas canónicas de URL) y R3-005 (`regalar` exclusivo por restricción). Quedan para T9 R3-004 (nada de `(0,0)` en el mapa) y R4 (un error de base de datos no puede parecer un mercado vacío).
+
+**L12.** Seed aplicado a la base: **142 anuncios, 18 vendedores, 284 imágenes**, 0 sin `public_id`, 0 sin coordenadas, 0 con `regalar` combinado. Separación real por barrio: Bilbao 166 m de pareja más cercana, Madrid Centro 127 m, Malasaña 231 m, Poblenou 58 m — el suelo duro de 50 m se cumple en toda España.
+
+**L13.** El seed perdió dos usuarios sin avisar: `mockEmailFor` construía el correo con el acento del nombre (`inés-mock@botanic.test`) y Supabase Auth lo rechaza, arrastrando sus anuncios. Corregido a ASCII y con test que recorre los 20 usuarios del seed.
+
 ## Siguiente sesión: empezar por aquí
 
 1. **T6 a T12** — el listado pasa a leerse de la base. 13 ficheros consumen `$lib/mock/listings` (no 19: los demás módulos de `src/lib/mock/` son dependencias internas): 4 componentes de wireframe, 2 stores y 7 rutas.
