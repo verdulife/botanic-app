@@ -1,9 +1,8 @@
 // Filtrado y ordenación de anuncios sobre el modelo de vista de ./types.ts.
 //
-// Este módulo sustituye a `src/lib/mock/filters.ts` para las rutas que ya leen de
-// la base. Los nombres de los campos de `Filters` se mantienen en español a
-// propósito: son el vocabulario de la URL, compartido con ./options.ts y con
-// `src/lib/mock/url-filters.ts` mientras el mock siga vivo (T12).
+// Es la única capa de filtros del marketplace. Los nombres de los campos de
+// `Filters` se mantienen en español a propósito: son el vocabulario de la URL,
+// compartido con ./options.ts y ./url-filters.ts.
 
 import { DEFAULT_ORIGIN, distanceKm } from './geo.ts';
 import { PRICE_MAX, PRICE_MIN, type PublishedOption, type SortOption } from './options.ts';

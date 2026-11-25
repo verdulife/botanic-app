@@ -11,7 +11,7 @@
 	import {
 		readFiltersFromSearchParams,
 		pushFiltersToURL
-	} from '$lib/mock/url-filters';
+	} from '$lib/listings/url-filters';
 	import ScrollCard from '$lib/components/wireframe/ScrollCard.svelte';
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import { Button } from '$lib/components/ui/button';

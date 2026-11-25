@@ -10,14 +10,14 @@
 		mapCapsForZoom,
 		nudgeChipsFromMarkers,
 		resolveChipCollisions
-	} from '$lib/mock/listings';
+	} from '$lib/listings/map';
 	import {
 		applyFiltersAndSort,
 		defaultFilters,
 		type Filters
 	} from '$lib/listings/filters';
 	import { DEFAULT_ORIGIN } from '$lib/listings/geo';
-	import { readFiltersFromSearchParams, pushFiltersToURL } from '$lib/mock/url-filters';
+	import { readFiltersFromSearchParams, pushFiltersToURL } from '$lib/listings/url-filters';
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { LocateFixed, X } from '@lucide/svelte/icons';
@@ -80,11 +80,6 @@
 	// de agregar vendedores, en vez de pintarlo en un punto inventado.
 	let locatedListings = $derived(listings.filter((listing) => listing.coordinates !== null));
 
-	// La agregación y el clustering siguen en $lib/mock y tipados contra el modelo
-	// del mock (T12 los mueve). El cast es de tipo, no de dato: los anuncios ya
-	// vienen de la base.
-	type SellerAggregationInput = Parameters<typeof aggregateSellers>[0];
-
 	let mapEl: HTMLDivElement | undefined = $state();
 	let map: any = $state(null);
 	let LRef: any = $state(null);
@@ -135,9 +130,9 @@
 
 		const bounds = map.getBounds();
 		const zoom = map.getZoom();
-		const sellers = aggregateSellers(
-			locatedListings as unknown as SellerAggregationInput
-		).filter((seller) => bounds.contains([seller.lat, seller.lng]));
+		const sellers = aggregateSellers(locatedListings).filter((seller) =>
+			bounds.contains([seller.lat, seller.lng])
+		);
 		const caps = mapCapsForZoom(zoom);
 		const { markers, chips } = clusterSellers(
 			sellers,

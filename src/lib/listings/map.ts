@@ -1,68 +1,11 @@
-// API de datos del wireframe P2P.
+// Ayudantes del mapa: agregación de vendedores, topes por zoom y anti-apilado.
 //
-// Este módulo es la única vía por la que las páginas consumen listings mock.
-// Los datos "realistas" viven en seed.ts (reutiliza la data compartida del seed
-// y sirve las imágenes localmente desde /images/seed/). Este archivo mantiene la
-// firma consumida por filtros, mapa, scroll y detalle.
+// Vive en $lib/listings desde T12: el mapa pinta vendedores reales y la posición
+// sale del anuncio (`listing.coordinates`), no de una tabla de barrios mock. Un
+// anuncio sin posición no entra en la agregación: el (0,0) cae en el golfo de
+// Guinea y no se inventa un punto.
 
-export {
-	seedListings,
-	getListingById,
-	getListingsBySeller,
-	userCoords,
-	type Listing,
-	type ListingType,
-	type SellerInfo,
-	type PlantSpecies
-} from './seed';
-export { seedListings as mockListings } from './seed';
-export { type Listing as ClientListing } from './seed';
-export { getPlantCare, getPlantCareForSpecies, type PlantCare } from './plant-care';
-import { LOCATIONS } from './seed-data';
-import { userCoords, type Listing } from './seed';
-import type { ListingType } from './seed';
-
-export const categories = [
-	'Todas las categorías',
-	'Semillas',
-	'Esquejes',
-	'Plantas',
-	'Bulbos',
-	'Tiestos',
-	'Accesorios',
-	'Herramientas',
-	'Otros'
-];
-
-export const listingTypes: ListingType[] = ['vender', 'cambiar', 'regalar'];
-
-export const publishedOptions = [
-	{ value: 'hoy', label: 'Hoy' },
-	{ value: 'semana', label: 'Última semana' },
-	{ value: 'mes', label: 'Último mes' },
-	{ value: 'cualquiera', label: 'Cualquier fecha' }
-] as const;
-
-export type PublishedOption = (typeof publishedOptions)[number]['value'];
-
-export const sortOptions = [
-	{ value: 'distancia', label: 'Distancia' },
-	{ value: 'relevancia', label: 'Relevancia' },
-	{ value: 'novedad', label: 'Novedad' },
-	{ value: 'precio-desc', label: 'Precio (mayor a menor)' },
-	{ value: 'precio-asc', label: 'Precio (menor a mayor)' }
-] as const;
-
-export type SortOption = (typeof sortOptions)[number]['value'];
-
-export const PRICE_MIN = 0;
-export const PRICE_MAX = 100;
-export const RADIO_MIN = 1;
-export const RADIO_MAX = 50;
-
-// ──────────────────────────────────────────────────────────
-// Agregación de vendedores para el mapa
-// ──────────────────────────────────────────────────────────
+import type { Listing } from './types';
 
 export type SellerMarker = {
 	username: string;
@@ -81,55 +24,31 @@ export type SellerChip = {
 	members: SellerMarker[];
 };
 
-// Hash determinista estable por username: da la posición y el tint del avatar.
-function hashSeed(s: string): number {
-	let h = 2166136261;
-	for (let i = 0; i < s.length; i++) {
-		h ^= s.charCodeAt(i);
-		h = Math.imul(h, 16777619);
-	}
-	return (h >>> 0) / 4294967296;
-}
-
-// Posición del vendedor en el mapa: su barrio base + un jitter determinista por
-// username (±0.004°, ~400 m) para que vendedores del mismo barrio no se solapen.
-export function sellerPosition(
-	city: string,
-	username: string
-): { lat: number; lng: number } {
-	const base = LOCATIONS.find((l) => l.label === city);
-	const lat0 = base?.lat ?? userCoords.lat;
-	const lng0 = base?.lng ?? userCoords.lng;
-	const k = hashSeed(username);
-	return {
-		lat: lat0 + (k - 0.5) * 0.008,
-		lng: lng0 + (((k * 1.618033988749895) % 1) - 0.5) * 0.008
-	};
-}
-
 // Agrupa listings (ya filtrados) por vendedor. `count` respeta los filtros
-// activos; la posición es siempre el barrio del vendedor, independiente de filtros.
+// activos; la identidad es `sellerId`, porque el nombre de usuario no es único y
+// un anuncio puede llegar sin perfil embebido.
 export function aggregateSellers(listings: Listing[]): SellerMarker[] {
-	const byUser = new Map<string, SellerMarker>();
-	for (const l of listings) {
-		const { username, full_name, rating, reviewCount, city } = l.sellerInfo;
-		const existing = byUser.get(username);
+	const bySeller = new Map<string, SellerMarker>();
+	for (const listing of listings) {
+		const coordinates = listing.coordinates;
+		if (!coordinates) continue;
+		const { username, full_name, rating, reviewCount } = listing.sellerInfo;
+		const existing = bySeller.get(listing.sellerId);
 		if (existing) {
 			existing.count += 1;
-		} else {
-			const { lat, lng } = sellerPosition(city, username);
-			byUser.set(username, {
-				username,
-				full_name,
-				rating,
-				reviewCount,
-				count: 1,
-				lat,
-				lng
-			});
+			continue;
 		}
+		bySeller.set(listing.sellerId, {
+			username,
+			full_name,
+			rating,
+			reviewCount,
+			count: 1,
+			lat: coordinates.lat,
+			lng: coordinates.lng
+		});
 	}
-	return [...byUser.values()];
+	return [...bySeller.values()];
 }
 
 // Topes de markers individuales y de chips por nivel de zoom.

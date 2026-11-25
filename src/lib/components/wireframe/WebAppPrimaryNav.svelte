@@ -3,7 +3,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { primaryNavItems } from './nav-items';
-	import { pushVistaToURL } from '$lib/mock/url-filters';
+	import { pushVistaToURL } from '$lib/listings/url-filters';
 
 	let current = $derived(page.url.pathname);
 

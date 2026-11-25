@@ -2,8 +2,8 @@
 	import { fade } from "svelte/transition";
 	import { page } from '$app/state';
 	import SearchOverlayPanel from "./SearchOverlayPanel.svelte";
-	import { readFiltersFromSearchParams, pushFiltersToURL } from "$lib/mock/url-filters";
-	import type { Filters } from "$lib/mock/filters";
+	import { readFiltersFromSearchParams, pushFiltersToURL } from "$lib/listings/url-filters";
+	import type { Filters } from "$lib/listings/filters";
 	import { searchOverlay } from "../../stores/search-overlay.svelte.ts";
 
 	let filters = $derived<Filters>(

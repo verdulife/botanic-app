@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import Logo from "$lib/components/Logo.svelte";
-	import { readVista } from "$lib/mock/url-filters";
+	import { readVista } from "$lib/listings/url-filters";
 	import { searchOverlay } from "../../stores/search-overlay.svelte.ts";
 	import { ArrowLeft, Heart, Search, Sparkles, X } from "@lucide/svelte/icons";
 

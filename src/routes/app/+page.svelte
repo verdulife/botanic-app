@@ -13,7 +13,7 @@
 	import {
 		readFiltersFromSearchParams,
 		pushFiltersToURL
-	} from '$lib/mock/url-filters';
+	} from '$lib/listings/url-filters';
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import ListingCard from '$lib/components/wireframe/ListingCard.svelte';
 

@@ -1,14 +1,18 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { browser } from '$app/env';
 	import FiltersPanel from "$lib/components/wireframe/FiltersPanel.svelte";
 	import { Input } from "$lib/components/ui/input";
 	import { Button } from "$lib/components/ui/button";
 	import * as Select from "$lib/components/ui/select";
-	import { mockListings, sortOptions, type SortOption } from "$lib/mock/listings";
+	import { sortOptions, type SortOption } from "$lib/listings/options";
+	import type { Listing } from "$lib/listings/types";
+	import { getActiveListings } from "$lib/listings/query";
+	import { getSupabaseBrowserClient } from "$lib/supabase/client";
 	import { USERS } from "$lib/mock/seed-data";
 	import { listingHref } from "$lib/listing-url";
-	import { type Filters } from "$lib/mock/filters";
-	import { readVista, pushVistaToURL, type Vista } from "$lib/mock/url-filters";
+	import { type Filters } from "$lib/listings/filters";
+	import { readVista, pushVistaToURL, type Vista } from "$lib/listings/url-filters";
 	import { searchOverlay } from "../../stores/search-overlay.svelte.ts";
 	import { goto } from "$app/navigation";
 	import {
@@ -46,10 +50,30 @@
 		readVista(page.url.searchParams, page.url.pathname)
 	);
 
+	// Sugerencias de anuncios: la misma lectura que el listado, desde el navegador.
+	// El overlay solo se monta al abrirlo (`{#if searchOverlay.open}`), así que no
+	// hay nada que pintar en servidor y no se añade ninguna consulta a las páginas.
+	let catalog: Listing[] = $state([]);
+
+	$effect(() => {
+		if (!browser) return;
+		let cancelled = false;
+		getActiveListings(getSupabaseBrowserClient())
+			.then((listings) => {
+				if (!cancelled) catalog = listings;
+			})
+			.catch((error: unknown) => {
+				console.warn('[search-overlay] no se pudieron leer los anuncios:', error);
+			});
+		return () => {
+			cancelled = true;
+		};
+	});
+
 	let suggestions = $derived.by(() => {
 		const q = filters.termino.trim().toLowerCase();
 		const out: Suggestion[] = [];
-		const pushListing = (l: (typeof mockListings)[number]) => {
+		const pushListing = (l: Listing) => {
 			if (out.some((s) => s.kind === "listing" && s.id === l.id)) return;
 			if (q && !l.title.toLowerCase().includes(q)) return;
 			out.push({
@@ -84,8 +108,8 @@
 		};
 
 		const relevant = q
-			? mockListings.filter((l) => l.title.toLowerCase().includes(q))
-			: mockListings;
+			? catalog.filter((l) => l.title.toLowerCase().includes(q))
+			: catalog;
 
 		for (const l of relevant) {
 			pushListing(l);
