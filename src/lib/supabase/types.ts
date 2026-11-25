@@ -81,9 +81,13 @@ export type Database = {
 					lng: number | null;
 					location_label: string | null;
 					price: number | null;
+					public_id: number;
 					seller_id: string;
+					size: string | null;
+					species: Json | null;
 					status: string;
 					title: string;
+					types: string[];
 					updated_at: string;
 				};
 				Insert: {
@@ -95,9 +99,13 @@ export type Database = {
 					lng?: number | null;
 					location_label?: string | null;
 					price?: number | null;
+					public_id?: number;
 					seller_id: string;
+					size?: string | null;
+					species?: Json | null;
 					status?: string;
 					title: string;
+					types?: string[];
 					updated_at?: string;
 				};
 				Update: {
@@ -109,9 +117,13 @@ export type Database = {
 					lng?: number | null;
 					location_label?: string | null;
 					price?: number | null;
+					public_id?: number;
 					seller_id?: string;
+					size?: string | null;
+					species?: Json | null;
 					status?: string;
 					title?: string;
+					types?: string[];
 					updated_at?: string;
 				};
 				Relationships: [
@@ -141,6 +153,8 @@ export type Database = {
 					lat: number | null;
 					lng: number | null;
 					location_label: string | null;
+					rating: number;
+					review_count: number;
 					updated_at: string;
 					username: string;
 				};
@@ -153,6 +167,8 @@ export type Database = {
 					lat?: number | null;
 					lng?: number | null;
 					location_label?: string | null;
+					rating?: number;
+					review_count?: number;
 					updated_at?: string;
 					username: string;
 				};
@@ -165,6 +181,8 @@ export type Database = {
 					lat?: number | null;
 					lng?: number | null;
 					location_label?: string | null;
+					rating?: number;
+					review_count?: number;
 					updated_at?: string;
 					username?: string;
 				};
