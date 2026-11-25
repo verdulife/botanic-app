@@ -25,10 +25,18 @@ test('un correo sin cuenta se responde en neutro', () => {
 	assert.equal(isNoAccountError({ code: 'user_not_found' }), true);
 });
 
-test('otp_disabled no es «sin cuenta»: es el servicio apagado', () => {
-	// Si el proveedor tiene el enlace mágico desactivado, callarlo deja al usuario
-	// esperando un correo que no va a llegar nunca.
+test('otp_disabled es «sin cuenta» solo cuando el mensaje lo dice', () => {
+	// Supabase responde 422 / `otp_disabled` / «Signups not allowed for otp» ante un
+	// correo sin cuenta. Si eso se mostrara como error, cualquiera averiguaría qué
+	// correos están registrados probando uno a uno.
+	assert.equal(isNoAccountError({ code: 'otp_disabled', message: 'Signups not allowed for otp' }), true);
+});
+
+test('otp_disabled sin ese mensaje es un fallo real del servicio', () => {
+	// El mismo código aparece si el enlace mágico está apagado en el proyecto.
+	// Callarlo dejaría al usuario esperando un correo que no va a salir nunca.
 	assert.equal(isNoAccountError({ code: 'otp_disabled', message: 'OTP is disabled' }), false);
+	assert.equal(isNoAccountError({ code: 'otp_disabled' }), false);
 });
 
 test('un error desconocido no se toma por «sin cuenta»', () => {

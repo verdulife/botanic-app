@@ -19,6 +19,10 @@ export const load: PageServerLoad = async ({ locals: { safeGetSession, supabase 
 		throw error;
 	}
 
+	// Quien ya eligió nombre de usuario no tiene nada que hacer aquí: el enlace
+	// mágico no debe devolverlo al formulario de bienvenida.
+	if (profile?.username) throw redirect(303, '/app');
+
 	return { profile };
 };
 

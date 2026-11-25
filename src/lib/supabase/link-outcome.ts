@@ -34,19 +34,23 @@ export function classifyExchangeError(error: {
  * Un correo sin cuenta no se distingue de uno con cuenta: el enlace mágico es una
  * forma de entrar, no de registrarse.
  *
- * `otp_disabled` queda fuera a propósito: no significa «sin cuenta», sino que el
- * enlace mágico está apagado en el proyecto. Callarlo dejaría al usuario
- * esperando un correo que no va a llegar nunca.
+ * `otp_disabled` es ambiguo: Supabase lo devuelve con el mensaje «Signups not
+ * allowed for otp» cuando el correo no tiene cuenta (comprobado con peticiones
+ * reales), pero el mismo código aparece si el enlace mágico está apagado en el
+ * proyecto. Solo el mensaje distingue los dos casos, así que solo se trata como
+ * «sin cuenta» cuando lo dice: en el otro caso el usuario tiene que ver el error
+ * en vez de esperar un correo que no va a llegar.
  *
  * Los códigos llegan con guiones bajos (`user_not_found`) y los mensajes con
- * espacios, así que el patrón acepta las dos formas.
+ * espacios, así que los patrones aceptan las dos formas.
  */
 const NO_ACCOUNT = /signups?[ _]not[ _]allowed|user[ _]not[ _]found|not[ _]registered/i;
+const SIGNUPS_NOT_ALLOWED = /signups?[ _]not[ _]allowed/i;
 
 export function isNoAccountError(error: {
 	code?: string | null;
 	message?: string | null;
 }): boolean {
-	if (error.code === 'otp_disabled') return false;
+	if (error.code === 'otp_disabled') return SIGNUPS_NOT_ALLOWED.test(error.message ?? '');
 	return NO_ACCOUNT.test(error.message ?? '') || NO_ACCOUNT.test(error.code ?? '');
 }

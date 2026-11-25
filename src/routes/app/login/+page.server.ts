@@ -59,5 +59,11 @@ async function magic(event: Parameters<Actions['magic']>[0]) {
 		return fail(400, { mode: 'magic' as const, email, error: mapAuthError(error) });
 	}
 
+	if (error) {
+		// Queda en el log para poder distinguir un correo sin cuenta de un enlace
+		// mágico apagado en el proyecto, que devuelve el mismo código.
+		console.warn('[login] enlace mágico neutralizado:', error.code ?? error.status);
+	}
+
 	return { mode: 'magic' as const, email, sent: true };
 }

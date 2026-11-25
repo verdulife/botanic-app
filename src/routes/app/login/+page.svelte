@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { replaceState } from '$app/navigation';
 	import { page } from '$app/state';
+	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
@@ -47,29 +48,26 @@
 	{/if}
 
 	{#if magicSent}
-		<div
-			class="bg-card text-card-foreground flex flex-col items-center gap-3 rounded-2xl border p-6 text-center"
-		>
-			<div class="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-full">
-				<Mail class="size-5" />
-			</div>
-			<div class="space-y-1">
-				<p class="font-medium">Revisa tu bandeja</p>
-				<p class="text-muted-foreground text-sm">
-					Si {form?.email} existe, te hemos enviado un enlace mágico. Abre el enlace para iniciar
-					sesión.
-				</p>
-			</div>
-			<a
-				href="/app/login"
-				class="text-muted-foreground hover:text-foreground mt-2 text-sm underline-offset-4 hover:underline"
-			>
+		<div class="flex flex-col gap-4">
+			<Card.Root>
+				<Card.Content class="flex flex-col items-center gap-3 text-center">
+					<div class="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-full">
+						<Mail class="size-5" />
+					</div>
+					<div class="space-y-1">
+						<p class="font-medium">Revisa tu bandeja</p>
+						<p class="text-muted-foreground text-sm">
+							Te hemos enviado un enlace mágico a
+							<span class="text-foreground font-medium break-all">{form?.email}</span>. Ábrelo desde
+							tu bandeja para iniciar sesión.
+						</p>
+					</div>
+				</Card.Content>
+			</Card.Root>
+
+			<Button href="/app/login" class="h-12 w-full">
 				Volver al inicio de sesión
-			</a>
-			<p class="text-muted-foreground text-sm">
-				¿Todavía no tienes cuenta?
-				<a href="/app/registro" class="text-foreground underline underline-offset-4">Crea una</a>
-			</p>
+			</Button>
 		</div>
 	{:else}
 		<form
@@ -92,6 +90,7 @@
 					type="email"
 					autocomplete="email"
 					required
+					class="h-12"
 					value={form?.email ?? ''}
 					placeholder="tu@email.com"
 				/>
@@ -114,6 +113,7 @@
 					autocomplete="current-password"
 					required
 					minlength={8}
+					class="h-12"
 					placeholder="••••••••"
 				/>
 			</div>
@@ -122,7 +122,7 @@
 				<p class="text-destructive text-sm" role="alert">{passwordError}</p>
 			{/if}
 
-			<Button type="submit" disabled={passwordPending} class="w-full">
+			<Button type="submit" disabled={passwordPending} class="h-12 w-full">
 				<KeyRound class="size-4" />
 				{passwordPending ? 'Entrando…' : 'Entrar'}
 			</Button>
@@ -162,6 +162,7 @@
 					type="email"
 					autocomplete="email"
 					required
+					class="h-12"
 					value={form?.email ?? ''}
 					placeholder="tu@email.com"
 				/>
@@ -171,7 +172,7 @@
 				<p class="text-destructive text-sm" role="alert">{magicError}</p>
 			{/if}
 
-			<Button type="submit" variant="outline" disabled={magicPending} class="w-full">
+			<Button type="submit" variant="outline" disabled={magicPending} class="h-12 w-full">
 				<Mail class="size-4" />
 				{magicPending ? 'Enviando…' : 'Enviar enlace mágico'}
 			</Button>
