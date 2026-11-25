@@ -2,6 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { field, safeNextPath, validateEmail, validatePassword } from '$lib/supabase/auth-utils';
 import { mapAuthError } from '$lib/supabase/auth-errors';
+import { isNoAccountError } from '$lib/supabase/link-outcome';
 
 export const load: PageServerLoad = async ({ locals: { safeGetSession } }) => {
 	const { user } = await safeGetSession();
@@ -44,11 +45,17 @@ async function magic(event: Parameters<Actions['magic']>[0]) {
 	const { error } = await locals.supabase.auth.signInWithOtp({
 		email,
 		options: {
+			// Sin alta automática: el enlace mágico sirve para entrar, no para
+			// registrarse. Quien no tiene cuenta se registra en /app/registro.
+			shouldCreateUser: false,
 			emailRedirectTo: `${url.origin}/auth/callback`
 		}
 	});
 
-	if (error) {
+	// Si el correo no tiene cuenta, Supabase devuelve error. Se responde igual que
+	// en el caso bueno para no revelar qué correos están registrados; el enlace a
+	// registro está siempre visible en la pantalla, así que nadie se queda atascado.
+	if (error && !isNoAccountError(error)) {
 		return fail(400, { mode: 'magic' as const, email, error: mapAuthError(error) });
 	}
 

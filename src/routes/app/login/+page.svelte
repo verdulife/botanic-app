@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { replaceState } from '$app/navigation';
+	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
@@ -13,12 +15,37 @@
 	let magicSent = $derived(form?.mode === 'magic' && form?.sent === true);
 	let passwordError = $derived(form?.mode === 'password' ? form?.error : undefined);
 	let magicError = $derived(form?.mode === 'magic' && !form?.sent ? form?.error : undefined);
+	// El callback manda aquí cuando el enlace del correo caducó o ya se usó. Deja de
+	// mostrarse en cuanto se pide uno nuevo: el formulario reenvía a esta misma URL
+	// y el aviso quedaría junto al «revisa tu bandeja», contradiciéndose.
+	// El callback vuelve aquí con el motivo: `caducado` si el enlace ya no sirve,
+	// `fallo` si no se pudo canjear por algo temporal. Deja de mostrarse en cuanto
+	// se pide un enlace nuevo, porque el formulario reenvía a esta misma URL.
+	let linkIssue = $derived(magicSent ? null : page.url.searchParams.get('enlace'));
 </script>
 
 <AuthShell
 	title="Inicia sesión"
 	subtitle="Entra con tu email y contraseña, o pide un enlace mágico."
 >
+	{#if linkIssue === 'caducado'}
+		<div class="border-destructive/40 bg-destructive/5 rounded-2xl border p-4 text-sm" role="alert">
+			<p class="font-medium">Ese enlace ya no sirve</p>
+			<p class="text-muted-foreground mt-1">
+				Los enlaces de acceso caducan y solo se pueden usar una vez. Pide uno nuevo más abajo, o
+				entra con tu contraseña.
+			</p>
+		</div>
+	{:else if linkIssue === 'fallo'}
+		<div class="border-border bg-muted/40 rounded-2xl border p-4 text-sm" role="alert">
+			<p class="font-medium">No hemos podido completar el acceso</p>
+			<p class="text-muted-foreground mt-1">
+				No ha sido culpa del enlace: inténtalo otra vez desde el mismo correo. Si vuelve a pasar, pide
+				uno nuevo más abajo.
+			</p>
+		</div>
+	{/if}
+
 	{#if magicSent}
 		<div
 			class="bg-card text-card-foreground flex flex-col items-center gap-3 rounded-2xl border p-6 text-center"
@@ -39,6 +66,10 @@
 			>
 				Volver al inicio de sesión
 			</a>
+			<p class="text-muted-foreground text-sm">
+				¿Todavía no tienes cuenta?
+				<a href="/app/registro" class="text-foreground underline underline-offset-4">Crea una</a>
+			</p>
 		</div>
 	{:else}
 		<form
@@ -107,9 +138,18 @@
 			action="?/magic"
 			use:enhance={() => {
 				magicPending = true;
-				return async ({ update }) => {
+				return async ({ result, update }) => {
 					await update();
 					magicPending = false;
+					// El motivo del fallo viaja en la URL del login. Si el envío salió bien
+					// se quita solo ese parámetro —el `next` que trajo el correo se queda—,
+					// para que el aviso no conviva con «revisa tu bandeja» ni reaparezca al
+					// recargar.
+					if (result.type === 'success' && page.url.searchParams.has('enlace')) {
+						const clean = new URL(page.url.href);
+						clean.searchParams.delete('enlace');
+						replaceState(clean.href, page.state);
+					}
 				};
 			}}
 			class="flex flex-col gap-4"
