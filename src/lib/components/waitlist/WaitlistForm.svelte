@@ -3,11 +3,11 @@
 	import { Input } from "$lib/components/ui/input";
 	import { Mail } from "@lucide/svelte/icons";
 	import { onMount } from "svelte";
-	import { env } from "$env/dynamic/public";
+	import { PUBLIC_TURNSTILE_SITE_KEY } from "$app/env/public";
 
 	// Si la clave no está configurada, el widget no se pinta y el alta sigue
 	// funcionando: no tiene sentido bloquear el formulario por un entorno a medias.
-	const SITE_KEY = env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+	const SITE_KEY = PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
 	type TurnstileApi = {
 		render: (el: HTMLElement, opts: Record<string, unknown>) => string;

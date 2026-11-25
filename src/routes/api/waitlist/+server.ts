@@ -1,6 +1,6 @@
 import { json } from "@sveltejs/kit";
 import { createHash } from "node:crypto";
-import { env } from "$env/dynamic/private";
+import { ADMIN_NOTIFY_EMAIL, RATE_LIMIT_SALT, RESEND_API_KEY, RESEND_AUDIENCE_ID, TURNSTILE_HOSTNAMES, TURNSTILE_SECRET, TURNSTILE_SECRET_KEY } from "$app/env/private";
 import { supabase } from "$lib/supabase";
 import { confirmationHtml, confirmationText } from "$lib/emails/confirmation";
 import { adminNotifyHtml, adminNotifyText } from "$lib/emails/adminNotify";
@@ -22,7 +22,7 @@ const LIST_UNSUBSCRIBE_HEADERS = {
 // dentro del alta, no aquí: una función pública con esos argumentos sería un
 // endpoint que cualquiera podría torcer.
 function rateKey(ip: string): string {
-	const salt = env.RATE_LIMIT_SALT ?? "";
+	const salt = RATE_LIMIT_SALT ?? "";
 	return createHash("sha256").update(`waitlist:${salt}:${ip}`).digest("hex");
 }
 
@@ -42,7 +42,7 @@ async function sendConfirmation(email: string) {
 }
 
 async function sendAdminNotification(email: string, now: string, total: number) {
-	const recipients = (env.ADMIN_NOTIFY_EMAIL ?? "")
+	const recipients = (ADMIN_NOTIFY_EMAIL ?? "")
 		.split(",")
 		.map((addr) => addr.trim())
 		.filter(Boolean);
@@ -91,7 +91,7 @@ async function getWaitlistPosition(token: string): Promise<number | null> {
 }
 
 async function sendResend(payload: Record<string, unknown>, url: string) {
-	const key = env.RESEND_API_KEY?.trim();
+	const key = RESEND_API_KEY?.trim();
 	if (!key) {
 		console.warn("[waitlist] RESEND_API_KEY no configurada; email omitido");
 		return;
@@ -116,7 +116,7 @@ const TURNSTILE_ACTION = "waitlist";
 
 function allowedHostnames(): Set<string> {
 	return new Set(
-		(env.TURNSTILE_HOSTNAMES ?? "")
+		(TURNSTILE_HOSTNAMES ?? "")
 			.split(",")
 			.map((h) => h.trim())
 			.filter(Boolean)
@@ -127,7 +127,7 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
 	// Acepta el nombre canónico de Cloudflare y el que ya estaba en el proyecto,
 	// pero toma el primero que **no esté vacío**: si el canónico existe en blanco,
 	// `??` no cae al otro y la verificación quedaría desactivada en silencio.
-	const secret = [env.TURNSTILE_SECRET, env.TURNSTILE_SECRET_KEY]
+	const secret = [TURNSTILE_SECRET, TURNSTILE_SECRET_KEY]
 		.map((value) => value?.trim())
 		.find((value) => value && value.length > 0);
 	// Sin clave configurada no se bloquea: el formulario tiene que poder probarse
@@ -225,10 +225,10 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 
 	await sendAdminNotification(email, now, await getWaitlistTotal());
 
-	if (env.RESEND_AUDIENCE_ID?.trim()) {
+	if (RESEND_AUDIENCE_ID?.trim()) {
 		await sendResend(
 			{ email },
-			`${RESEND_CONTACTS_URL}/${env.RESEND_AUDIENCE_ID.trim()}/contacts`
+			`${RESEND_CONTACTS_URL}/${RESEND_AUDIENCE_ID.trim()}/contacts`
 		);
 	}
 

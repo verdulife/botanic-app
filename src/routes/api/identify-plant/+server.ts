@@ -3,7 +3,7 @@
 // Pl@ntNet rechaza webp) y recibe candidatas normalizadas.
 
 import { json } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
+import { PLANTNET_API_KEY } from "$app/env/private";
 import type { RequestHandler } from './$types';
 import type { IdentifyResult } from '$lib/identify-plant';
 
@@ -19,7 +19,7 @@ type PlntNetSpecies = {
 type PlntNetResult = { score?: number; species?: PlntNetSpecies };
 
 export const POST: RequestHandler = async ({ request }) => {
-	const apiKey = env.PLANTNET_API_KEY?.trim();
+	const apiKey = PLANTNET_API_KEY?.trim();
 	if (!apiKey) {
 		return json({ error: 'PLANTNET_API_KEY no configurada' }, { status: 500 });
 	}

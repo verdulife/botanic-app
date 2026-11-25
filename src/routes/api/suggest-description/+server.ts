@@ -4,7 +4,7 @@
 // anuncio y devuelve una descripción breve en español, tono segunda mano.
 
 import { json } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
+import { GEMINI_API_KEY, GROQ_API_KEY } from "$app/env/private";
 import type { RequestHandler } from './$types';
 
 type Care = { watering: string; light: string; toxicity: string };
@@ -107,7 +107,7 @@ async function callGroq(prompt: string): Promise<string> {
 	const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
 		method: 'POST',
 		headers: {
-			Authorization: `Bearer ${env.GROQ_API_KEY}`,
+			Authorization: `Bearer ${GROQ_API_KEY}`,
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
@@ -145,7 +145,7 @@ async function callGroq(prompt: string): Promise<string> {
 }
 
 async function callGemini(prompt: string): Promise<string> {
-	const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(env.GEMINI_API_KEY ?? '')}`;
+	const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(GEMINI_API_KEY ?? '')}`;
 	const res = await fetch(url, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -164,8 +164,8 @@ async function callGemini(prompt: string): Promise<string> {
 }
 
 export const POST: RequestHandler = async ({ request }) => {
-	const groqKey = env.GROQ_API_KEY?.trim();
-	const geminiKey = env.GEMINI_API_KEY?.trim();
+	const groqKey = GROQ_API_KEY?.trim();
+	const geminiKey = GEMINI_API_KEY?.trim();
 	if (!groqKey && !geminiKey) {
 		return json(
 			{ error: 'No hay clave de IA configurada (GROQ_API_KEY o GEMINI_API_KEY)' },
