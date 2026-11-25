@@ -38,6 +38,7 @@ import {
 	mockEmailFor,
 	type CategorySlug
 } from '../src/lib/mock/seed-data.ts';
+import { placeOne, type GeoPoint } from '../src/lib/mock/placement.ts';
 
 const APPLY = process.argv.includes('--apply');
 
@@ -60,6 +61,15 @@ const MOCK_PASSWORD = 'MockPass123!';
 
 export type ListingType = 'vender' | 'cambiar' | 'regalar';
 const LISTING_TYPES: ListingType[] = ['vender', 'cambiar', 'regalar'];
+// Vender y Cambiar son combinables; Regalar va siempre solo. Una sola llamada al
+// generador elige el conjunto, para no alterar el resto de campos del seed.
+const TYPE_SETS: ListingType[][] = [
+	['vender'],
+	['cambiar'],
+	['regalar'],
+	['vender', 'cambiar'],
+	['vender', 'cambiar']
+];
 
 // ──────────────────────────────────────────────────────────
 // Determinismo del preview vs apply
@@ -83,6 +93,25 @@ function fillTemplateSeeded(tpl: string): string {
 		.replace('{size}', pickSeeded(Object.keys(SIZES)));
 }
 
+// ──────────────────────────────────────────────────────────
+// Reparto geográfico
+// ──────────────────────────────────────────────────────────
+
+// Escala de barrio: las etiquetas de LOCATIONS son barrios dentro de una
+// ciudad, no ciudades enteras. 1,2 km de radio cubre un barrio urbano.
+const PLACEMENT = { radiusMeters: 1200, floorMeters: 50, typicalMeters: 500 };
+
+// Posiciones ya usadas por etiqueta de ubicación. Sin esto, todos los anuncios
+// de un barrio compartían el centroide exacto y el mapa los apilaba en un píxel.
+const placements = new Map<string, GeoPoint[]>();
+
+function nextCoordinates(location: { label: string; lat: number; lng: number }): GeoPoint {
+	const taken = placements.get(location.label) ?? [];
+	const point = placeOne({ lat: location.lat, lng: location.lng }, taken, rand, PLACEMENT);
+	placements.set(location.label, [...taken, point]);
+	return point;
+}
+
 function planForUser(
 	user: (typeof USERS)[number],
 	categoryList: typeof CATEGORIES,
@@ -97,12 +126,15 @@ function planForUser(
 		const title = fillTemplateSeeded(tpl);
 		const numImages = Math.min(imageCount, Math.floor(rand() * 3) + 1);
 		const location = LOCATIONS.find((l) => l.label === user.city) ?? pickSeeded(LOCATIONS);
+		const coordinates = nextCoordinates(location);
 		plan.push({
 			title,
 			category: category.slug,
 			price: priceFor(category.slug),
-			type: pickSeeded(LISTING_TYPES),
+			type: pickSeeded(TYPE_SETS),
 			location: location.label,
+			lat: coordinates.lat,
+			lng: coordinates.lng,
 			images: numImages,
 			description_preview: describe(category, title).slice(0, 80) + '…'
 		});
@@ -153,6 +185,7 @@ function preview() {
 		users: USERS.length,
 		listings_total: totalListings,
 		listings_per_user: '5-10 (uniforme)',
+		placement: PLACEMENT,
 		images_total: totalImages,
 		storage_uploads: totalImages,
 		db_writes: CATEGORIES.length + USERS.length + totalListings + totalImages,
@@ -259,9 +292,10 @@ async function apply() {
 			const title = fillTemplateSeeded(tpl);
 			const numImages = imageFiles.length === 0 ? 0 : Math.min(imageFiles.length, Math.floor(rand() * 3) + 1);
 			const location = LOCATIONS.find((l) => l.label === u.city) ?? pickSeeded(LOCATIONS);
+			const coordinates = nextCoordinates(location);
 			const description = describe(category, title);
 			const price = priceFor(category.slug);
-			const type = pickSeeded(LISTING_TYPES);
+			const type = pickSeeded(TYPE_SETS);
 
 			const { data: listing, error: listErr } = await supabase
 				.from('listings')
@@ -271,10 +305,10 @@ async function apply() {
 					description,
 					category_id: categoryBySlug[category.slug],
 					price,
-					type,
+					types: type,
 					location_label: location.label,
-					lat: location.lat,
-					lng: location.lng
+					lat: coordinates.lat,
+					lng: coordinates.lng
 				})
 				.select('id')
 				.single();
