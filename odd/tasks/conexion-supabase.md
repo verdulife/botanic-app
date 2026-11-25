@@ -35,7 +35,7 @@ Cerrar la etapa de demo: la aplicación en `/app` pasa a leer y escribir en la b
 | T7 | Seed con reparto orgánico entre anuncios de un mismo barrio | hecho | `59da934` |
 | T8 | Capa de lectura de anuncios contra Supabase: fila, imágenes y vendedor | hecho | `12efaa4` |
 | T8b | URL del detalle: slug legible más número público | hecho | `12efaa4` |
-| T9 | Listado, mapa y scroll leen de la base de datos | pendiente | — |
+| T9 | Listado, mapa y scroll leen de la base de datos | hecho | `a6c1470` |
 | T10 | Detalle, favoritos y perfil leen de la base de datos | pendiente | — |
 | T11 | Publicar escribe en la base de datos | pendiente | — |
 | T12 | `$lib/mock/listings` fuera del código | pendiente | — |
@@ -86,6 +86,10 @@ Cerrar la etapa de demo: la aplicación en `/app` pasa a leer y escribir en la b
 **L14.** Revisión del tramo 2 aprobada (lentes de riesgo y fiabilidad, 265 líneas; el proveedor pidió además un refutador por un hallazgo CRITICAL). Ese hallazgo —que la restricción nueva podría fallar sobre filas antiguas— fue **refutado**. Quedan dos avisos informativos: los correos del seed tenían que ser además **únicos**, no solo válidos (cerrado con test), y `getListingByPublicId` devuelve `null` ante error de base de datos, que es el mismo R4 pendiente para T9.
 
 **Decisión del humano:** el desarrollo basado en recibos queda **desactivado** (`gentle-ai review mode disable`): no quiere el aviso de revisión pendiente en cada cambio pequeño. Las revisiones ya hechas y sus recibos siguen ahí; no se borra nada. Cuando llegue un tramo delicado (migraciones, permisos, entrega) se propone reactivarlo para ese tramo.
+
+**L15.** T9 hecho y **verificado de extremo a extremo**, no solo por tipos: con el servidor de desarrollo arriba, `/app` devuelve 200 y su HTML contiene **142 enlaces a anuncio** con títulos, barrios del seed y rutas reales de Storage. Antes de eso, comprobado por SQL que el rol `anon` ve los 142 anuncios y las 284 imágenes, que es lo que necesita la lectura con RLS.
+
+**Pendiente anotado para T10:** la tarjeta construye el enlace con el **uuid**, pero el detalle espera `<slug>-<public_id>`. Hoy pinchar un anuncio da una URL que el detalle no resuelve; se arregla al conectar el detalle.
 
 ## Siguiente sesión: empezar por aquí
 
