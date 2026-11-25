@@ -46,7 +46,12 @@ async function sendAdminNotification(email: string, now: string, total: number) 
 		.split(",")
 		.map((addr) => addr.trim())
 		.filter(Boolean);
-	if (recipients.length === 0) return;
+	if (recipients.length === 0) {
+		console.warn(
+			"[waitlist] ADMIN_NOTIFY_EMAIL no configurada; aviso al admin omitido"
+		);
+		return;
+	}
 
 	for (const recipient of recipients) {
 		await sendResend(
@@ -229,6 +234,10 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 		await sendResend(
 			{ email },
 			`${RESEND_CONTACTS_URL}/${RESEND_AUDIENCE_ID.trim()}/contacts`
+		);
+	} else {
+		console.warn(
+			"[waitlist] RESEND_AUDIENCE_ID no configurada; el contacto no se da de alta en el segmento"
 		);
 	}
 
