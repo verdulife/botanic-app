@@ -82,25 +82,29 @@ colors:
     destructive: "oklch(0.577 0.245 27.325)"
     destructive-foreground: "oklch(0.98 0.01 27.325)"
   dark:
-    background: "oklch(0.3 0.028 85)"
-    foreground: "oklch(0.95 0.01 90)"
-    card: "oklch(0.22 0.025 85)"
-    card-foreground: "oklch(0.95 0.01 90)"
-    popover: "oklch(0.22 0.025 85)"
-    popover-foreground: "oklch(0.95 0.01 90)"
+    background: "oklch(0 0 0)"
+    foreground: "oklch(0.97 0 0)"
+    card: "oklch(0.205 0 0)"
+    card-foreground: "oklch(0.97 0 0)"
+    popover: "oklch(0.205 0 0)"
+    popover-foreground: "oklch(0.97 0 0)"
     secondary: "oklch(0.349 0.06 149)"
     secondary-foreground: "oklch(0.931 0.026 145)"
     accent: "oklch(0.349 0.06 149)"
     accent-foreground: "oklch(0.931 0.026 145)"
-    muted: "oklch(0.4 0.03 85)"
-    muted-foreground: "oklch(0.74 0.02 70)"
-    border: "oklch(0.95 0.01 90 / 12%)"
-    input: "oklch(0.95 0.01 90 / 15%)"
+    muted: "oklch(0.269 0 0)"
+    muted-foreground: "oklch(0.708 0 0)"
+    border: "oklch(0.97 0 0 / 12%)"
+    input: "oklch(0.97 0 0 / 15%)"
     destructive: "oklch(0.704 0.191 22.216)"
     destructive-foreground: "oklch(0.98 0.01 22.216)"
 ```
 
+En oscuro el suelo es neutro: negro puro para el fondo y grises neutros derivados para tarjetas, superficies y bordes. El tinte cálido del lino pertenece al modo claro; en oscuro competiría con la fotografía y con el verde de marca. Los acentos no cambian: `secondary` y `accent` siguen siendo verdes, `destructive` sigue siendo terra y `star` sigue siendo ámbar.
+
 Los valores de marca no cambian entre modos: `primary`, `ring` y `star` son los mismos en claro y oscuro. Lo que cambia son las superficies, el texto y los bordes, agrupados en `light` y `dark`.
+
+El tema se aplica como clase `dark` en el elemento `<html>`, que es lo que activa el bloque `.dark` de tokens a través de `@custom-variant dark`. **Es exclusivo de la web app**: solo las rutas bajo `/app` lo reciben, porque la web pública, el blog y las páginas legales son siempre claras. Dentro de `/app` la preferencia la dicta el sistema (`prefers-color-scheme`) y no hay ajuste de usuario todavía: un script en `src/app.html` la fija antes del primer pintado en las rutas de la app, y el layout de `/app` la mantiene sincronizada si el escritorio cambia y la retira al desmontar. Tanto `:root` como `.dark` fijan `color-scheme`, para que scrollbars y controles nativos no se queden claros sobre fondo oscuro.
 
 - **Still Green** (`still-400`) es el acento: CTA, logo, iconos y anillo de foco. Nunca es fondo de una pantalla completa.
 - **Lino** (`linen-*`) hace de fondo, tarjeta, superficie alterna y borde. `linen-100` es el suelo, `linen-50` la tarjeta.

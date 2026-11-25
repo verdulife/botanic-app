@@ -4,8 +4,24 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
+		<!-- El sitio público es siempre claro: no se anuncia lienzo oscuro. -->
+		<meta name="color-scheme" content="light" />
 		<meta name="application-name" content="Botanic" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<script>
+			// Solo la web app lleva tema; la web pública y el blog son siempre claros.
+			// Se fija antes del primer pintado porque esperar a hidratar provoca un
+			// destello claro con el escritorio en oscuro. La regla de qué rutas llevan
+			// tema vive en src/lib/theme.ts; aquí solo su parte imprescindible.
+			(() => {
+				const path = window.location.pathname;
+				const isApp = path === '/app' || path.startsWith('/app/');
+				const dark = isApp && window.matchMedia('(prefers-color-scheme: dark)').matches;
+				const root = document.documentElement;
+				root.classList.toggle('dark', dark);
+				root.style.colorScheme = dark ? 'dark' : 'light';
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
