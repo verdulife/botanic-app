@@ -109,20 +109,47 @@ async function sendResend(payload: Record<string, unknown>, url: string) {
 	}
 }
 
+// Turnstile: el testigo se verifica en servidor y además se comprueban la acción
+// y el hostname. Sin esas dos comprobaciones, un testigo obtenido en otro sitio
+// —o en otro formulario— valdría aquí, que es media protección.
+const TURNSTILE_ACTION = "waitlist";
+
+function allowedHostnames(): Set<string> {
+	return new Set(
+		(env.TURNSTILE_HOSTNAMES ?? "")
+			.split(",")
+			.map((h) => h.trim())
+			.filter(Boolean)
+	);
+}
+
 async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
-	const secret = env.TURNSTILE_SECRET_KEY?.trim();
+	// Acepta el nombre canónico de Cloudflare y el que ya estaba en el proyecto.
+	const secret = (env.TURNSTILE_SECRET ?? env.TURNSTILE_SECRET_KEY)?.trim();
 	// Sin clave configurada no se bloquea: el formulario tiene que poder probarse
 	// en local con un entorno a medias.
 	if (!secret) return true;
-	if (!token) return false;
+	if (!token || token.length > 2048) return false;
+
+	const hostnames = allowedHostnames();
 
 	try {
 		const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
 			method: "POST",
+			signal: AbortSignal.timeout(10_000),
 			body: new URLSearchParams({ secret, response: token, remoteip: ip }),
 		});
-		const data = (await res.json()) as { success?: boolean } | null;
-		return data?.success === true;
+		if (!res.ok) return false;
+		const data = (await res.json()) as {
+			success?: boolean;
+			action?: string;
+			hostname?: string;
+		} | null;
+		if (data?.success !== true) return false;
+		if (data.action !== TURNSTILE_ACTION) return false;
+		// En local no se declara lista: se valida solo si está configurada.
+		if (hostnames.size > 0 && !hostnames.has(data.hostname ?? "")) return false;
+		return true;
 	} catch (err) {
 		console.error("[waitlist] turnstile error", err);
 		return false;

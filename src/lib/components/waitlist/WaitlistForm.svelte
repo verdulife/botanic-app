@@ -30,17 +30,28 @@
 	let status = $state<Status>("idle");
 	let errorMessage = $state("");
 	let turnstileToken = $state("");
+	let turnstileWidget = $state<string | null>(null);
 	let turnstileWrap: HTMLDivElement | undefined = $state();
+
+	// El testigo de Turnstile es de un solo uso: si un intento falla, hay que
+	// reiniciar el widget o el siguiente envío iría con un testigo ya gastado.
+	function resetTurnstile() {
+		const w = window as unknown as { turnstile?: TurnstileApi };
+		if (turnstileWidget) w.turnstile?.reset(turnstileWidget);
+		turnstileToken = "";
+	}
 
 	onMount(() => {
 		if (!SITE_KEY || !turnstileWrap) return;
 		const w = window as unknown as { turnstile?: TurnstileApi };
 		const render = () => {
-			w.turnstile?.render(turnstileWrap as HTMLElement, {
+			const id = w.turnstile?.render(turnstileWrap as HTMLElement, {
 				sitekey: SITE_KEY,
+				action: "waitlist",
 				callback: (token: string) => (turnstileToken = token),
 				"expired-callback": () => (turnstileToken = ""),
 			});
+			turnstileWidget = id ?? null;
 		};
 		if (w.turnstile) {
 			render();
@@ -81,6 +92,7 @@
 		if (!res.ok) {
 			status = "error";
 			errorMessage = "Algo salió mal. Inténtalo de nuevo.";
+			resetTurnstile();
 			return;
 		}
 		const data = (await res.json().catch(() => null)) as {
