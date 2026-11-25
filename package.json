@@ -24,6 +24,7 @@
 		"seed:apply": "node --env-file-if-exists=.env.local scripts/seed-mock.ts --apply",
 		"seed:wipe": "node --env-file-if-exists=.env.local scripts/wipe-mock.ts",
 		"seed:wipe:dry": "node --env-file-if-exists=.env.local scripts/wipe-mock.ts --dry-run",
+		"env:link": "node scripts/link-env.mjs",
 		"og": "node --env-file-if-exists=.env.local scripts/generate-og.mjs",
 		"email:preview": "node --env-file-if-exists=.env.local scripts/email-preview.mjs",
 		"email:send": "node --env-file-if-exists=.env.local scripts/email-send.mjs"
