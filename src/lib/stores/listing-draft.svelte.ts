@@ -1,9 +1,10 @@
 // Borradores del formulario de publicación (localStorage).
 // Persisten entre sesiones y permiten retomar un anuncio sin publicar.
-// Post-wireframe migrarán a Supabase (tabla `drafts` + storage de imágenes).
+// Las fotos se guardan como vista previa en data URL: es el fichero ya comprimido,
+// así que un borrador recuperado puede volver a publicarse sin la imagen original.
 
 import { browser } from '$app/env';
-import type { ListingType } from '$lib/mock/listings';
+import type { ListingType } from '$lib/listings/types';
 
 export type ListingDraft = {
 	id: string;
@@ -44,7 +45,14 @@ class ListingDraftState {
 	}
 
 	persist() {
-		if (browser) localStorage.setItem(KEY, JSON.stringify(this.list));
+		if (!browser) return;
+		// Cinco fotos comprimidas se acercan al tope del almacén del navegador: un
+		// borrador que no cabe se pierde, pero no puede tumbar el formulario.
+		try {
+			localStorage.setItem(KEY, JSON.stringify(this.list));
+		} catch (err) {
+			console.warn('[borradores] no se pudo guardar el borrador:', err);
+		}
 	}
 
 	save(draft: ListingDraft) {

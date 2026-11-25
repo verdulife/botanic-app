@@ -19,6 +19,12 @@ export const categories = [
 
 export const listingTypes: ListingType[] = ['vender', 'cambiar', 'regalar'];
 
+// Tamaños de planta que ofrece el formulario. La base guarda el texto tal cual,
+// así que el conjunto vive aquí y lo validan tanto la vista como la escritura.
+export const listingSizes = ['Pequeña', 'Mediana', 'Grande'] as const;
+
+export type ListingSize = (typeof listingSizes)[number];
+
 export const publishedOptions = [
 	{ value: 'hoy', label: 'Hoy' },
 	{ value: 'semana', label: 'Última semana' },

@@ -1,31 +1,57 @@
 <script lang="ts">
-	import { seedImagesByCategory } from '$lib/mock/seed';
-	import type { CategorySlug } from '$lib/mock/seed-data';
-	import { Camera, X } from '@lucide/svelte/icons';
+	import { MAX_PHOTOS, compressPhoto, type PickedPhoto } from '$lib/listings/image';
+	import { Camera, Loader2, X } from '@lucide/svelte/icons';
 
 	type Props = {
-		images: string[];
-		categorySlug?: CategorySlug;
+		photos: PickedPhoto[];
 		error?: boolean;
 	};
 
-	let { images = $bindable([]), categorySlug, error = false }: Props = $props();
+	let { photos = $bindable([]), error = false }: Props = $props();
 
-	let panelOpen = $state(false);
+	let fileInput = $state<HTMLInputElement | null>(null);
+	let preparing = $state(0);
+	let message = $state<string | null>(null);
 
-	const pool = $derived.by(() => {
-		const base = categorySlug
-			? seedImagesByCategory(categorySlug)
-			: seedImagesByCategory('plantas');
-		return base.length ? base : seedImagesByCategory('plantas');
-	});
+	const full = $derived(photos.length >= MAX_PHOTOS);
 
-	function toggle(src: string) {
-		if (images.includes(src)) {
-			images = images.filter((i) => i !== src);
-		} else if (images.length < 5) {
-			images = [...images, src];
+	// La foto se comprime aquí, en el navegador, antes de salir: el bucket rechaza
+	// cualquier fichero de más de 512 KB y una foto de móvil los supera de largo.
+	async function onPick(event: Event) {
+		const input = event.currentTarget as HTMLInputElement;
+		const files = Array.from(input.files ?? []);
+		// Se limpia para poder volver a elegir la misma foto (por ejemplo tras un
+		// error de compresión).
+		input.value = '';
+		if (files.length === 0) return;
+
+		message = null;
+		const room = MAX_PHOTOS - photos.length;
+		if (files.length > room) {
+			message = `Solo caben ${MAX_PHOTOS} fotos por anuncio.`;
 		}
+
+		const selected = files.slice(0, Math.max(0, room));
+		preparing += selected.length;
+		for (const file of selected) {
+			try {
+				const photo = await compressPhoto(file);
+				if (photos.some((picked) => picked.preview === photo.preview)) {
+					message = 'Esa foto ya está en el anuncio.';
+					continue;
+				}
+				if (photos.length < MAX_PHOTOS) photos = [...photos, photo];
+			} catch (cause) {
+				message = cause instanceof Error ? cause.message : 'No pudimos preparar la foto.';
+			} finally {
+				preparing -= 1;
+			}
+		}
+	}
+
+	function remove(index: number) {
+		photos = photos.filter((_, i) => i !== index);
+		message = null;
 	}
 </script>
 
@@ -34,12 +60,12 @@
 		class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5"
 		aria-label="Fotos del anuncio"
 	>
-		{#each images as src, i (src)}
+		{#each photos as photo, i (photo.preview)}
 			<div
 				class="border-border bg-muted relative aspect-[4/5] overflow-hidden rounded-xl border"
 			>
 				<img
-					src={src}
+					src={photo.preview}
 					alt={`Foto ${i + 1} del anuncio`}
 					class="h-full w-full object-cover"
 				/>
@@ -52,7 +78,7 @@
 				{/if}
 				<button
 					type="button"
-					onclick={() => (images = images.filter((_, j) => j !== i))}
+					onclick={() => remove(i)}
 					class="bg-background/90 text-muted-foreground hover:text-foreground absolute top-1.5 right-1.5 flex size-7 items-center justify-center rounded-full shadow-sm transition-colors"
 					aria-label={`Quitar foto ${i + 1}`}
 				>
@@ -61,10 +87,19 @@
 			</div>
 		{/each}
 
-		{#if images.length < 5 && !panelOpen}
+		{#each Array.from({ length: preparing }) as _, i (i)}
+			<div
+				class="border-border bg-muted text-muted-foreground flex aspect-[4/5] items-center justify-center rounded-xl border"
+				aria-hidden="true"
+			>
+				<Loader2 class="size-4 animate-spin" />
+			</div>
+		{/each}
+
+		{#if !full}
 			<button
 				type="button"
-				onclick={() => (panelOpen = true)}
+				onclick={() => fileInput?.click()}
 				class={[
 					'border-muted-foreground/40 text-muted-foreground hover:border-foreground hover:text-foreground flex aspect-[4/5] flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-dashed transition-colors',
 					error ? 'border-destructive/60' : ''
@@ -77,41 +112,21 @@
 		{/if}
 	</div>
 
-	{#if panelOpen}
-		<div class="border-border rounded-xl border p-3">
-			<div class="mb-2 flex items-center justify-between gap-2">
-				<p class="text-muted-foreground text-xs">
-					Elige una foto (simulado, hasta 5).
-				</p>
-				<button
-					type="button"
-					onclick={() => (panelOpen = false)}
-					class="text-muted-foreground hover:text-foreground transition-colors"
-					aria-label="Cerrar selector de fotos"
-				>
-					<X class="size-4" />
-				</button>
-			</div>
-			<div class="grid max-h-64 grid-cols-4 gap-2 overflow-y-auto sm:grid-cols-6">
-				{#each pool as src (src)}
-					<button
-						type="button"
-						onclick={() => toggle(src)}
-						class={[
-							'border-border bg-muted relative aspect-[4/5] overflow-hidden rounded-lg border transition-opacity',
-							images.includes(src) ? 'opacity-40' : 'hover:opacity-80'
-						].join(' ')}
-						aria-label={images.includes(src) ? 'Quitar esta foto' : 'Añadir esta foto'}
-					>
-						<img
-							src={src}
-							alt=""
-							loading="lazy"
-							class="h-full w-full object-cover"
-						/>
-					</button>
-				{/each}
-			</div>
-		</div>
+	<input
+		bind:this={fileInput}
+		type="file"
+		accept="image/webp,image/jpeg,image/png"
+		multiple
+		class="sr-only"
+		onchange={onPick}
+		aria-label="Elegir fotos del anuncio"
+	/>
+
+	{#if message}
+		<p class="text-destructive text-xs">{message}</p>
+	{:else}
+		<p class="text-muted-foreground text-xs">
+			Hasta {MAX_PHOTOS} fotos. Se reducen y comprimen en tu navegador antes de subirlas.
+		</p>
 	{/if}
 </div>

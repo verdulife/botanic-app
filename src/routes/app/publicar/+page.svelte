@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance, type SubmitFunction } from '$app/forms';
 	import { beforeNavigate, goto } from '$app/navigation';
 	import { browser } from '$app/env';
 	import { page } from '$app/state';
@@ -14,8 +15,7 @@
 	import AutocompleteInput from '$lib/components/wireframe/AutocompleteInput.svelte';
 	import PhotoAnalysis from '$lib/components/wireframe/PhotoAnalysis.svelte';
 	import PhotoPicker from '$lib/components/wireframe/PhotoPicker.svelte';
-	import { CATEGORIES, LOCATIONS, PLANT_TERMS } from '$lib/mock/seed-data';
-	import type { CategorySlug } from '$lib/mock/seed-data';
+	import { PLANT_TERMS } from '$lib/mock/seed-data';
 	import { getPlantCareForSpecies } from '$lib/mock/plant-care';
 	import {
 		CIUDADES,
@@ -24,24 +24,27 @@
 		composeLocationLabel,
 		type LocationScope
 	} from '$lib/mock/locations';
-	import type { Listing, ListingType, PlantSpecies } from '$lib/mock/listings';
-	import { userListings } from '$lib/stores/user-listings.svelte';
+	import type { ListingType } from '$lib/listings/types';
+	import { fileFromPreview, type PickedPhoto } from '$lib/listings/image';
+	import { listingSizes, type ListingSize } from '$lib/listings/options';
 	import { listingDraft, type ListingDraft } from '$lib/stores/listing-draft.svelte';
 	import { wishes } from '$lib/stores/wishes.svelte';
 	import type { Wish } from '$lib/mock/wishes';
 	import { identifyPlant, type IdentifyResult } from '$lib/identify-plant';
-	import { listingHref, randomListingToken } from '$lib/listing-url';
-	import { Check, ChevronRight, Heart, Loader2, Share2, Sparkles } from '@lucide/svelte/icons';
+	import { Check, Heart, Loader2, Sparkles } from '@lucide/svelte/icons';
+	import type { PageData } from './$types';
 
-	let { data } = $props();
+	let { data, form }: { data: PageData; form: { error: string } | null } = $props();
 
 	// ──────────────────────────────────────────────────────────
 	// Estado del formulario (compartido entre fases)
 	// ──────────────────────────────────────────────────────────
 
 	let phase = $state(1);
-	let published = $state<Listing | null>(null);
-	let images = $state<string[]>([]);
+	// Las fotos se eligen, se comprimen y se suben desde aquí. La vista previa es
+	// el propio fichero comprimido, así que lo que se ve es lo que se publica.
+	let photos = $state<PickedPhoto[]>([]);
+	const previews = $derived(photos.map((photo) => photo.preview));
 	let title = $state('');
 	let type = $state<ListingType[]>(['vender']);
 	let price = $state('');
@@ -63,6 +66,8 @@
 	let errPrice = $state(false);
 	let errDescription = $state(false);
 	let errLocation = $state(false);
+	let errPhotos = $state(false);
+	let submitting = $state(false);
 
 	let titleInput = $state<HTMLInputElement | null>(null);
 	let previewIdx = $state(0);
@@ -78,12 +83,12 @@
 		swipeStart = null;
 		const threshold = 40;
 		if (Math.abs(dx) < threshold) return;
-		if (dx < 0 && previewIdx < images.length - 1) previewIdx += 1;
+		if (dx < 0 && previewIdx < photos.length - 1) previewIdx += 1;
 		else if (dx > 0 && previewIdx > 0) previewIdx -= 1;
 	}
 
 	$effect(() => {
-		if (previewIdx >= images.length) previewIdx = Math.max(0, images.length - 1);
+		if (previewIdx >= photos.length) previewIdx = Math.max(0, photos.length - 1);
 	});
 
 	$effect(() => {
@@ -97,6 +102,9 @@
 	});
 	$effect(() => {
 		if (errLocation && locationInput.trim()) errLocation = false;
+	});
+	$effect(() => {
+		if (errPhotos && photos.length > 0) errPhotos = false;
 	});
 	$effect(() => {
 		if (errTitle && titleInput) titleInput.focus();
@@ -115,20 +123,19 @@
 	// Fases / navegación
 	// ──────────────────────────────────────────────────────────
 
-	const ANALYZER_CATEGORIES: CategorySlug[] = ['plantas', 'esquejes'];
+	const ANALYZER_CATEGORIES = ['plantas', 'esquejes'];
 
-	const categorySlug = $derived<CategorySlug | undefined>(
-		CATEGORIES.find((c) => c.name === category)?.slug
+	const selectedCategory = $derived(
+		data.categories.find((candidate) => candidate.name === category) ?? null
 	);
-	const isAnalysisCategory = $derived(
-		!!categorySlug && ANALYZER_CATEGORIES.includes(categorySlug)
-	);
+	const categorySlug = $derived(selectedCategory?.slug ?? '');
+	const isAnalysisCategory = $derived(ANALYZER_CATEGORIES.includes(categorySlug));
 
-	const SPECIES_CATEGORIES: CategorySlug[] = ['plantas', 'esquejes', 'semillas', 'bulbos'];
-	const showSpecies = $derived(!!categorySlug && SPECIES_CATEGORIES.includes(categorySlug));
+	const SPECIES_CATEGORIES = ['plantas', 'esquejes', 'semillas', 'bulbos'];
+	const showSpecies = $derived(SPECIES_CATEGORIES.includes(categorySlug));
 
 	const canContinue = $derived(
-		phase === 1 ? !!category : phase === 2 ? images.length > 0 : phase === 3 ? !analyzing : true
+		phase === 1 ? !!category : phase === 2 ? photos.length > 0 : phase === 3 ? !analyzing : true
 	);
 
 	function selectCategory(name: string) {
@@ -174,7 +181,7 @@
 
 	$effect(() => {
 		if (phase !== 3) return;
-		const cover = images[0];
+		const cover = previews[0];
 		if (!cover || cover === identifiedCover) return;
 		runAnalysis(cover);
 	});
@@ -300,9 +307,8 @@
 	});
 
 	function hasUnsaved(): boolean {
-		if (published) return false;
 		return (
-			images.length > 0 ||
+			photos.length > 0 ||
 			title.trim() !== '' ||
 			JSON.stringify(type) !== JSON.stringify(['vender']) ||
 			price.trim() !== '' ||
@@ -329,7 +335,9 @@
 	function applyDraft(d: ListingDraft) {
 		category = d.category;
 		plantSize = d.plantSize;
-		images = d.images;
+		// El borrador guarda la vista previa ya comprimida: el fichero se
+		// reconstruye al publicar.
+		photos = d.images.map((preview) => ({ preview, file: null }));
 		title = d.title;
 		type = d.type.length ? d.type : ['vender'];
 		price = typeof d.price === 'string' ? d.price : String(d.price ?? '');
@@ -359,7 +367,7 @@
 			savedAt: new Date().toISOString(),
 			category,
 			plantSize,
-			images,
+			images: previews,
 			title,
 			type,
 			price,
@@ -395,58 +403,6 @@
 	function saveAndLeave() {
 		listingDraft.save(buildCurrentDraft());
 		leaveNow();
-	}
-
-	function publishAnother() {
-		published = null;
-		phase = 1;
-		images = [];
-		title = '';
-		type = ['vender'];
-		price = '';
-		category = '';
-		plantSize = '';
-		speciesInput = '';
-		speciesMeta = null;
-		description = '';
-		locationInput = '';
-		locationPrefilled = false;
-		previewIdx = 0;
-		exchangeWishId = null;
-		exchangeAccordion = undefined;
-		wishKeywords = '';
-		wishError = false;
-		wishLocationInput = '';
-		wishAlert = true;
-		wishCategory = 'Cualquiera';
-		wishBudget = '';
-		analysisCandidates = [];
-		analysisError = null;
-		identifiedCover = null;
-		analyzing = false;
-		suggestError = null;
-		errTitle = false;
-		errPrice = false;
-		errDescription = false;
-		errLocation = false;
-	}
-
-	async function sharePublished() {
-		if (!published || typeof navigator === 'undefined') return;
-		const url =
-			typeof window !== 'undefined'
-				? `${window.location.origin}${listingHref(published)}`
-				: '';
-		const data = { title: published.title, text: `Mira "${published.title}" en Botanic`, url };
-		try {
-			if (navigator.share) {
-				await navigator.share(data);
-			} else if (navigator.clipboard?.writeText) {
-				await navigator.clipboard.writeText(`${data.title} — ${data.url}`);
-			}
-		} catch {
-			// el usuario canceló o hubo un error; no hacer nada
-		}
 	}
 
 	// ──────────────────────────────────────────────────────────
@@ -550,7 +506,7 @@
 		{ value: 'Pequeña', hint: 'hasta 15 cm' },
 		{ value: 'Mediana', hint: '15–40 cm' },
 		{ value: 'Grande', hint: 'más de 40 cm' }
-	];
+	] satisfies { value: ListingSize; hint: string }[];
 
 	function toggleType(t: ListingType) {
 		if (t === 'regalar') {
@@ -567,77 +523,49 @@
 		if (!type.includes('vender')) errPrice = false;
 	});
 
-	const locationLabels = LOCATIONS.map((l) => l.label);
+	const locationLabels = $derived(data.locations.map((location) => location.label));
 
 	// ──────────────────────────────────────────────────────────
 	// Envío
 	// ──────────────────────────────────────────────────────────
 
-	function onSubmit() {
-		const loc = LOCATIONS.find((l) => l.label === locationInput.trim());
+	// La acción del servidor valida otra vez y es la que manda; aquí solo se
+	// corta lo que se ve a simple vista para no esperar un viaje de red. Las fotos
+	// se adjuntan ya comprimidas: el `input type="file"` no viaja con el formulario.
+	const enhanceSubmit: SubmitFunction = async ({ formData, cancel }) => {
+		const location = data.locations.find(
+			(candidate) => candidate.label === locationInput.trim()
+		);
 
 		errTitle = !title.trim();
 		errPrice = type.includes('vender') && (!price.trim() || !(Number(price) >= 0));
 		errDescription = !description.trim();
-		errLocation = !loc;
+		errLocation = !location;
+		errPhotos = photos.length === 0;
 
-		if (errTitle || errPrice || errDescription || errLocation) {
+		if (errTitle || errPrice || errDescription || errLocation || errPhotos) {
+			cancel();
 			return;
 		}
 
-		const cat = CATEGORIES.find((c) => c.name === category)!;
-		const displayName =
-			data.profile?.full_name?.trim() ||
-			data.profile?.username ||
-			data.user?.email?.split('@')[0] ||
-			'Vendedor';
+		for (const photo of photos) {
+			formData.append('photos', photo.file ?? (await fileFromPreview(photo.preview)));
+		}
 
-		const species: PlantSpecies | undefined = speciesInput.trim()
-			? {
-					name: speciesInput.trim(),
-					scientific: speciesMeta?.scientific,
-					genus: speciesMeta?.genus,
-					family: speciesMeta?.family,
-					confidence: speciesMeta?.confidence,
-					source: speciesMeta?.scientific ? 'plantnet' : 'manual'
-				}
-			: undefined;
-
-		const listing: Listing = {
-			id: randomListingToken(),
-			title: title.trim(),
-			price: type.includes('regalar') ? 0 : Number(price) || 0,
-			category: cat.name,
-			categorySlug: cat.slug,
-			location: loc!.label,
-			seller: displayName,
-			sellerInfo: {
-				username: data.profile?.username ?? 'usuario',
-				full_name: displayName,
-				bio: data.profile?.bio ?? '',
-				city: loc!.label,
-				email: data.user?.email ?? '',
-				rating: 0,
-				reviewCount: 0
-			},
-			images,
-			type,
-			coordinates: {
-				lat: loc!.lat + (Math.random() - 0.5) * 0.004,
-				lng: loc!.lng + (Math.random() - 0.5) * 0.004
-			},
-			datePosted: new Date(),
-			description: description.trim(),
-			species,
-			size: categorySlug === 'plantas' ? plantSize || undefined : undefined,
-			wishId: type.includes('cambiar') && exchangeWishId ? exchangeWishId : undefined
+		submitting = true;
+		return async ({ result, update }) => {
+			submitting = false;
+			// Publicado: el borrador ya no hace falta y el servidor redirige al
+			// detalle canónico. La navegación se deja pasar sin el aviso de datos sin
+			// guardar: lo que había en el formulario ya está en la base.
+			if (result.type === 'redirect') {
+				allowNav = true;
+				if (activeDraftId) listingDraft.remove(activeDraftId);
+				draftHandled = true;
+			}
+			await update();
 		};
-
-		userListings.add(listing);
-		if (activeDraftId) listingDraft.remove(activeDraftId);
-		draftHandled = true;
-		published = listing;
-	}
+	};
 </script>
 
 <svelte:head>
@@ -649,66 +577,7 @@
 	class="mx-auto flex w-full max-w-xl flex-col gap-5 px-4 pt-6 pb-28 sm:px-6 sm:pt-8 sm:pb-32"
 >
 	{#if data.user}
-		{#if published}
-			<section class="flex flex-col items-center gap-5 text-center">
-				<div
-					class="bg-primary/15 text-primary mt-4 flex size-16 items-center justify-center rounded-full"
-				>
-					<Check class="size-8" />
-				</div>
-				<div class="flex flex-col gap-1">
-					<h2 class="text-3xl font-medium">¡Anuncio publicado!</h2>
-					<p class="text-muted-foreground text-sm">
-						Ya está visible para quien busca {published.category}.
-					</p>
-				</div>
-
-				<a
-					href={listingHref(published)}
-					class="bg-card ring-foreground/10 flex w-full items-center gap-3 rounded-xl p-3 text-left ring-1"
-				>
-					<div class="bg-muted h-16 w-12 shrink-0 overflow-hidden rounded-lg">
-						{#if published.images[0]}
-							<img src={published.images[0]} alt="" class="h-full w-full object-cover" />
-						{/if}
-					</div>
-					<span class="flex min-w-0 flex-1 flex-col">
-						<span class="truncate text-sm font-medium">{published.title}</span>
-						<span class="text-muted-foreground text-xs">
-							{published.type.includes('regalar')
-								? 'Gratis'
-								: `${published.price} €`}{' '}
-							· {published.location}
-						</span>
-					</span>
-					<ChevronRight class="text-muted-foreground size-4 shrink-0" />
-				</a>
-
-				<div class="flex w-full flex-col gap-2">
-					<Button href={listingHref(published)} class="h-12 w-full">
-						Ver mi anuncio
-					</Button>
-					<Button variant="outline" class="h-12 w-full" onclick={sharePublished}>
-						<Share2 class="size-4" />
-						Compartir
-					</Button>
-					<Button variant="outline" class="h-12 w-full" onclick={publishAnother}>
-						Publicar otro anuncio
-					</Button>
-					<a
-						href="/app/mis-anuncios"
-						class="text-muted-foreground hover:text-foreground text-sm font-medium underline transition-colors"
-					>
-						Ir a Mis anuncios
-					</a>
-				</div>
-
-				<p class="text-muted-foreground max-w-sm text-xs">
-					Consejo: responde rápido a los mensajes para cerrar el trato.
-				</p>
-			</section>
-		{:else}
-			{#if listingDraft.list.length > 0 && !draftHandled}
+		{#if listingDraft.list.length > 0 && !draftHandled}
 			<div class="bg-card ring-foreground/10 flex flex-col gap-3 rounded-xl p-4 ring-1">
 				<div class="flex flex-col gap-0.5">
 					<p class="text-sm font-medium">Tienes un borrador guardado</p>
@@ -736,12 +605,32 @@
 		{/if}
 
 		<form
-			onsubmit={(e) => {
-				e.preventDefault();
-				onSubmit();
-			}}
+			method="POST"
+			enctype="multipart/form-data"
+			use:enhance={enhanceSubmit}
 			class="flex flex-col gap-5"
 		>
+			<!-- Los campos que no son un control de texto viajan como ocultos para que
+			el formulario se pueda enviar sin JavaScript. -->
+			<input type="hidden" name="category" value={selectedCategory?.slug ?? ''} />
+			<input
+				type="hidden"
+				name="size"
+				value={categorySlug === 'plantas' ? plantSize : ''}
+			/>
+			<input type="hidden" name="location" value={locationInput} />
+			<input type="hidden" name="species" value={speciesInput} />
+			<input type="hidden" name="species_scientific" value={speciesMeta?.scientific ?? ''} />
+			<input type="hidden" name="species_genus" value={speciesMeta?.genus ?? ''} />
+			<input type="hidden" name="species_family" value={speciesMeta?.family ?? ''} />
+			<input
+				type="hidden"
+				name="species_confidence"
+				value={speciesMeta?.confidence ?? ''}
+			/>
+			{#each type as selected (selected)}
+				<input type="hidden" name="types" value={selected} />
+			{/each}
 			{#if phase === 1}
 				<section class="flex flex-col gap-3">
 					<div class="flex flex-col gap-1">
@@ -752,7 +641,7 @@
 						</p>
 					</div>
 					<div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
-						{#each CATEGORIES as c (c.slug)}
+						{#each data.categories as c (c.slug)}
 							<button
 								type="button"
 								onclick={() => selectCategory(c.name)}
@@ -813,7 +702,10 @@
 					</div>
 					<Card.Root class="gap-0 overflow-visible py-0">
 						<Card.Content class="py-5">
-							<PhotoPicker bind:images {categorySlug} />
+							<PhotoPicker bind:photos error={errPhotos} />
+							{#if errPhotos}
+								<p class="text-destructive text-xs">Añade al menos una foto.</p>
+							{/if}
 						</Card.Content>
 					</Card.Root>
 				</section>
@@ -826,13 +718,13 @@
 						</p>
 					</div>
 					<PhotoAnalysis
-						cover={images[0] ?? ''}
+						cover={previews[0] ?? ''}
 						{analyzing}
 						error={analysisError}
 						candidates={analysisCandidates}
 						onPick={applyDetection}
 						onNone={clearDetection}
-						onRetry={() => runAnalysis(images[0] ?? '')}
+						onRetry={() => runAnalysis(previews[0] ?? '')}
 					/>
 				</section>
 			{:else}
@@ -886,7 +778,7 @@
 								class="flex h-full transition-transform duration-300 ease-out"
 								style="transform: translateX(-{previewIdx * 100}%);"
 							>
-								{#each images as src, i (src)}
+								{#each previews as src, i (src)}
 									<img
 										src={src}
 										alt={`Foto ${i + 1} del anuncio`}
@@ -896,9 +788,9 @@
 								{/each}
 							</div>
 						</div>
-						{#if images.length > 1}
+						{#if previews.length > 1}
 							<div class="flex items-center justify-center gap-1.5">
-								{#each images as _, i}
+								{#each previews as _, i}
 									<span
 										class={[
 											'h-1.5 rounded-full transition-all duration-300',
@@ -921,6 +813,7 @@
 							<Input
 								bind:ref={titleInput}
 								id="title"
+								name="title"
 								type="text"
 								placeholder="Ej. Monstera deliciosa en maceta de 12cm"
 								aria-invalid={errTitle}
@@ -951,6 +844,7 @@
 							</div>
 							<Textarea
 								id="description"
+								name="description"
 								rows={5}
 								placeholder="Cuenta el estado, tamaño, por qué lo vendes…"
 								aria-invalid={errDescription}
@@ -1025,6 +919,7 @@
 									<div class="relative">
 										<Input
 											id="price"
+											name="price"
 											type="number"
 											min="0"
 											step="0.5"
@@ -1175,7 +1070,7 @@
 															<Select.Value />
 														</Select.Trigger>
 														<Select.Content>
-															{#each ['Cualquiera', ...CATEGORIES.map((c) => c.name)] as c}
+															{#each ['Cualquiera', ...data.categories.map((c) => c.name)] as c}
 																<Select.Item value={c} label={c} />
 															{/each}
 														</Select.Content>
@@ -1235,6 +1130,10 @@
 				</section>
 			{/if}
 
+			{#if form?.error}
+				<p class="text-destructive text-sm" role="alert">{form.error}</p>
+			{/if}
+
 			<nav class="flex items-center gap-2" aria-label="Navegación del formulario">
 				{#if phase < 4}
 					<Button
@@ -1259,14 +1158,18 @@
 					>
 						Guardar borrador
 					</Button>
-					<Button type="submit" class="h-12 flex-1">
-						<Sparkles class="size-4" />
-						Publicar anuncio
+					<Button type="submit" class="h-12 flex-1" disabled={submitting}>
+						{#if submitting}
+							<Loader2 class="size-4 animate-spin" />
+							Publicando…
+						{:else}
+							<Sparkles class="size-4" />
+							Publicar anuncio
+						{/if}
 					</Button>
 				{/if}
 			</nav>
 		</form>
-		{/if}
 	{:else}
 		<AuthRequired title="Publica tu anuncio y llega a quien lo busca" />
 	{/if}
