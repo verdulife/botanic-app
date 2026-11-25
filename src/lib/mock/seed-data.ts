@@ -81,7 +81,16 @@ export const USERS: UserSeed[] = [
 ];
 
 export function mockEmailFor(username: string): string {
-	return username.replace('mock_', '') + '-mock@botanic.test';
+	// El correo tiene que ser ASCII: `inés-mock@botanic.test` no es una dirección
+	// válida y Supabase Auth rechaza el usuario entero, con sus anuncios.
+	const local = username
+		.replace('mock_', '')
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+	return `${local}-mock@botanic.test`;
 }
 
 export const PLANT_TERMS = [

@@ -266,6 +266,8 @@ async function apply() {
 				full_name: u.full_name,
 				bio: u.bio,
 				location_label: u.city,
+				rating: u.rating,
+				review_count: u.reviewCount,
 				lat: location?.lat ?? null,
 				lng: location?.lng ?? null
 			})
