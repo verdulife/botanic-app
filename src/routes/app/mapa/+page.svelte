@@ -4,7 +4,6 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { page } from '$app/state';
-	import { mockListings, userCoords } from '$lib/mock/listings';
 	import {
 		aggregateSellers,
 		clusterSellers,
@@ -12,7 +11,12 @@
 		nudgeChipsFromMarkers,
 		resolveChipCollisions
 	} from '$lib/mock/listings';
-	import { applyFiltersAndSort, defaultFilters, type Filters } from '$lib/mock/filters';
+	import {
+		applyFiltersAndSort,
+		defaultFilters,
+		type Filters
+	} from '$lib/listings/filters';
+	import { DEFAULT_ORIGIN } from '$lib/listings/geo';
 	import { readFiltersFromSearchParams, pushFiltersToURL } from '$lib/mock/url-filters';
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -64,10 +68,22 @@
 		return n === 1 ? '1 planta' : `${n} plantas`;
 	}
 
+	// Los anuncios llegan de +page.server.ts, leídos de la base.
+	let { data } = $props();
+
 	let filters = $derived<Filters>(
 		readFiltersFromSearchParams(page.url.searchParams)
 	);
-	let listings = $derived(applyFiltersAndSort(mockListings, filters));
+	let listings = $derived(applyFiltersAndSort(data.listings, filters));
+
+	// Un anuncio sin coordenadas no tiene posición en el mapa: se descarta antes
+	// de agregar vendedores, en vez de pintarlo en un punto inventado.
+	let locatedListings = $derived(listings.filter((listing) => listing.coordinates !== null));
+
+	// La agregación y el clustering siguen en $lib/mock y tipados contra el modelo
+	// del mock (T12 los mueve). El cast es de tipo, no de dato: los anuncios ya
+	// vienen de la base.
+	type SellerAggregationInput = Parameters<typeof aggregateSellers>[0];
 
 	let mapEl: HTMLDivElement | undefined = $state();
 	let map: any = $state(null);
@@ -119,9 +135,9 @@
 
 		const bounds = map.getBounds();
 		const zoom = map.getZoom();
-		const sellers = aggregateSellers(listings).filter((s) =>
-			bounds.contains([s.lat, s.lng])
-		);
+		const sellers = aggregateSellers(
+			locatedListings as unknown as SellerAggregationInput
+		).filter((seller) => bounds.contains([seller.lat, seller.lng]));
 		const caps = mapCapsForZoom(zoom);
 		const { markers, chips } = clusterSellers(
 			sellers,
@@ -209,7 +225,7 @@
 		map = L.map(mapEl, {
 			zoomControl: false,
 			scrollWheelZoom: true
-		}).setView([userCoords.lat, userCoords.lng], 12);
+		}).setView([DEFAULT_ORIGIN.lat, DEFAULT_ORIGIN.lng], 12);
 
 		L.tileLayer(MAP_TILE_URL, { attribution: MAP_ATTRIBUTION }).addTo(map);
 

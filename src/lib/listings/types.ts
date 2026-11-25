@@ -11,6 +11,10 @@ export type ListingType = 'vender' | 'cambiar' | 'regalar';
 // `categories` y la base puede añadir más sin tocar el código.
 export type CategorySlug = string;
 
+// Punto en el mapa, en grados decimales. Las operaciones geométricas viven en
+// ./geo.ts.
+export type Coordinates = { lat: number; lng: number };
+
 // Especie identificada (manual o vía Pl@ntNet). `name` es el nombre de display
 // (nombre común si existe, si no científico) y la clave usada por plant-care.
 export type PlantSpecies = {
@@ -53,7 +57,10 @@ export type Listing = {
 	sellerInfo: SellerInfo;
 	images: string[];
 	type: ListingType[];
-	coordinates: { lat: number; lng: number };
+	// `null` cuando el anuncio no tiene posición: ni el anuncio ni su vendedor
+	// tienen coordenadas guardadas. No se inventa un punto (el (0,0) cae en el
+	// golfo de Guinea): quien dibuja el mapa descarta el anuncio.
+	coordinates: Coordinates | null;
 	datePosted: Date;
 	description: string;
 	species?: PlantSpecies;

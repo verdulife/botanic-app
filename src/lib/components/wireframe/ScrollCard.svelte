@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Listing } from '$lib/mock/listings';
+	import type { Listing } from '$lib/listings/types';
 	import { favorites } from '$lib/stores/favorites.svelte';
 	import { listingHref } from '$lib/listing-url';
 	import { ArrowRight, Heart, Share2 } from '@lucide/svelte/icons';

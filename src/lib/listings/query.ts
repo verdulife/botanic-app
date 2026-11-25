@@ -1,13 +1,13 @@
 // Lectura de anuncios contra Supabase.
 //
 // El cliente llega por petición (patrón de src/routes/app/+layout.server.ts):
-// este módulo no abre conexiones ni guarda estado. Los errores de base no se
-// lanzan: se registran y la lectura devuelve vacío, para que una caída de la
-// consulta no tumbe la página.
+// este módulo no abre conexiones ni guarda estado. Un error de base se lanza: no
+// se convierte en lista vacía ni en `null`, porque un fallo de la consulta no es
+// un mercado sin anuncios y quien carga la página decide qué hacer con él.
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Database, Json } from '$lib/supabase/types';
-import type { Listing, ListingType, PlantSpecies, SellerInfo } from './types';
+import type { Coordinates, Listing, ListingType, PlantSpecies, SellerInfo } from './types';
 
 // Columnas reales del esquema: `categories` (name, slug), `profiles` (username,
 // full_name, bio, location_label, lat, lng, rating, review_count — el correo vive
@@ -93,6 +93,23 @@ function toSellerInfo(row: ListingRow): SellerInfo {
 	};
 }
 
+// Una latitud y una longitud son una posición solo si vienen las dos: media
+// pareja no sitúa nada.
+function asCoordinates(lat: number | null, lng: number | null): Coordinates | null {
+	if (lat === null || lng === null) return null;
+	return { lat, lng };
+}
+
+// La posición del anuncio: manda la suya; si no tiene, la del vendedor; si
+// tampoco, el anuncio no tiene posición y se queda sin coordenadas. Nunca se
+// rellena con un punto de conveniencia: el (0,0) del mapa cae en el golfo de
+// Guinea y pondría el anuncio donde no está.
+function toCoordinates(row: ListingRow): Coordinates | null {
+	const own = asCoordinates(row.lat, row.lng);
+	if (own) return own;
+	return asCoordinates(row.profiles?.lat ?? null, row.profiles?.lng ?? null);
+}
+
 function toListing(row: ListingRow): Listing {
 	const profile = row.profiles;
 	const images = [...(row.listing_images ?? [])].sort((a, b) => a.position - b.position);
@@ -110,12 +127,7 @@ function toListing(row: ListingRow): Listing {
 		sellerInfo: toSellerInfo(row),
 		images: images.map((image) => image.url),
 		type: toListingTypes(row.types),
-		// Sin coordenadas propias se usa el centro del vendedor; el mapa necesita
-		// un número siempre.
-		coordinates: {
-			lat: row.lat ?? profile?.lat ?? 0,
-			lng: row.lng ?? profile?.lng ?? 0
-		},
+		coordinates: toCoordinates(row),
 		datePosted: new Date(row.created_at),
 		description: row.description ?? '',
 		species: toPlantSpecies(row.species),
@@ -134,13 +146,16 @@ export async function getActiveListings(supabase: SupabaseClient<Database>): Pro
 
 	if (error) {
 		console.error('[listings] No se pudieron leer los anuncios:', error.message);
-		return [];
+		throw error;
 	}
 
 	return (data ?? []).map(toListing);
 }
 
 // La edición y el borrado van por uuid; la lectura pública, por número.
+//
+// `null` solo significa que el anuncio no existe. Un error de base se lanza: un
+// fallo de la consulta no es un anuncio ausente.
 export async function getListingByPublicId(
 	supabase: SupabaseClient<Database>,
 	publicId: number
@@ -154,7 +169,7 @@ export async function getListingByPublicId(
 
 	if (error) {
 		console.error('[listings] No se pudo leer el anuncio:', error.message);
-		return null;
+		throw error;
 	}
 
 	return data ? toListing(data) : null;
@@ -173,7 +188,7 @@ export async function getListingById(
 
 	if (error) {
 		console.error('[listings] No se pudo leer el anuncio:', error.message);
-		return null;
+		throw error;
 	}
 
 	return data ? toListing(data) : null;

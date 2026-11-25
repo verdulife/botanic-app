@@ -3,12 +3,11 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { page } from '$app/state';
-	import { mockListings } from '$lib/mock/listings';
 	import {
 		applyFiltersAndSort,
 		defaultFilters,
 		type Filters
-	} from '$lib/mock/filters';
+	} from '$lib/listings/filters';
 	import {
 		readFiltersFromSearchParams,
 		pushFiltersToURL
@@ -19,10 +18,13 @@
 	import { searchOverlay } from '../../../lib/stores/search-overlay.svelte.ts';
 	import { X } from '@lucide/svelte/icons';
 
+	// Los anuncios llegan de +page.server.ts, leídos de la base.
+	let { data } = $props();
+
 	let filters = $derived<Filters>(
 		readFiltersFromSearchParams(page.url.searchParams)
 	);
-	let listings = $derived(applyFiltersAndSort(mockListings, filters));
+	let listings = $derived(applyFiltersAndSort(data.listings, filters));
 
 	let scrollerEl: HTMLDivElement | undefined = $state();
 	let currentIndex = $state(0);

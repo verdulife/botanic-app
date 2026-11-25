@@ -8,11 +8,17 @@ import { getActiveListings, getListingByPublicId, getListingById } from './query
 // Las funciones de ./query.ts leen del cliente y no guardan estado, así que basta
 // con reproducir la cadena `from().select().eq().order().maybeSingle()`.
 type Call = readonly unknown[];
+type FakeError = { message: string };
 
-function fakeClient(row: unknown, { list = false } = {}) {
+function fakeClient(
+	row: unknown,
+	{ list = false, error = null }: { list?: boolean; error?: FakeError | null } = {}
+) {
 	const calls: Call[] = [];
 	// La consulta de listado espera un array; la de detalle, una fila o nada.
-	const data = list ? (row === null ? [] : [row]) : row;
+	const result = error
+		? { data: null, error }
+		: { data: list ? (row === null ? [] : [row]) : row, error: null };
 	const builder = {
 		select(columns: string) {
 			calls.push(['select', columns]);
@@ -26,11 +32,11 @@ function fakeClient(row: unknown, { list = false } = {}) {
 			calls.push(['order', column]);
 			return builder;
 		},
-		then(resolve: (value: { data: unknown; error: null }) => unknown) {
-			return Promise.resolve({ data, error: null }).then(resolve);
+		then(resolve: (value: typeof result) => unknown) {
+			return Promise.resolve(result).then(resolve);
 		},
 		maybeSingle() {
-			return Promise.resolve({ data, error: null });
+			return Promise.resolve(result);
 		}
 	};
 	const client = {
@@ -133,4 +139,71 @@ test('getListingById sigue leyendo por uuid y devuelve null si no hay fila', asy
 
 	const empty = fakeClient(null);
 	assert.equal(await getListingById(empty.client, listingRow().id), null);
+});
+
+test('el anuncio con lat/lng propios usa los suyos', async () => {
+	const { client } = fakeClient(listingRow(), { list: true });
+	const listings = await getActiveListings(client);
+
+	assert.deepEqual(listings[0]?.coordinates, { lat: 41.39, lng: 2.17 });
+});
+
+test('sin coordenadas propias el anuncio toma las del vendedor', async () => {
+	const row = listingRow();
+	const { client } = fakeClient({ ...row, lat: null, lng: null }, { list: true });
+	const listings = await getActiveListings(client);
+
+	assert.deepEqual(listings[0]?.coordinates, { lat: 41.38, lng: 2.16 });
+});
+
+test('las coordenadas no se mezclan entre anuncio y vendedor', async () => {
+	// Media pareja no es una posición: la latitud del anuncio con la longitud del
+	// vendedor sería un punto inventado en otro sitio.
+	const row = listingRow();
+	const { client } = fakeClient({ ...row, lat: 41.39, lng: null }, { list: true });
+	const listings = await getActiveListings(client);
+
+	assert.deepEqual(listings[0]?.coordinates, { lat: 41.38, lng: 2.16 });
+
+	const orphan = listingRow();
+	const noPosition = fakeClient(
+		{
+			...orphan,
+			lat: null,
+			lng: null,
+			profiles: { ...orphan.profiles, lat: null, lng: null }
+		},
+		{ list: true }
+	);
+	const empty = await getActiveListings(noPosition.client);
+
+	// Ni (0,0) ni ninguna otra posición: el anuncio no tiene dónde pintarse.
+	assert.equal(empty[0]?.coordinates, null);
+});
+
+test('getActiveListings lanza el error de la base en vez de devolver un mercado vacío', async () => {
+	const { client } = fakeClient(null, { list: true, error: { message: 'boom' } });
+
+	await assert.rejects(getActiveListings(client), (error: FakeError) => {
+		assert.equal(error.message, 'boom');
+		return true;
+	});
+});
+
+test('las funciones de detalle lanzan el error de la base y solo devuelven null sin fila', async () => {
+	const failed = fakeClient(listingRow(), { error: { message: 'boom' } });
+
+	await assert.rejects(getListingByPublicId(failed.client, 4321), (error: FakeError) => {
+		assert.equal(error.message, 'boom');
+		return true;
+	});
+	await assert.rejects(getListingById(failed.client, listingRow().id), (error: FakeError) => {
+		assert.equal(error.message, 'boom');
+		return true;
+	});
+
+	// Sin error y sin fila, la ausencia es del anuncio y no de la consulta.
+	const missing = fakeClient(null);
+	assert.equal(await getListingByPublicId(missing.client, 4321), null);
+	assert.equal(await getListingById(missing.client, listingRow().id), null);
 });

@@ -5,12 +5,11 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import { X } from '@lucide/svelte/icons';
-	import { mockListings } from '$lib/mock/listings';
 	import {
 		applyFiltersAndSort,
 		defaultFilters,
 		type Filters
-	} from '$lib/mock/filters';
+	} from '$lib/listings/filters';
 	import {
 		readFiltersFromSearchParams,
 		pushFiltersToURL
@@ -18,11 +17,14 @@
 	import FiltersPanel from '$lib/components/wireframe/FiltersPanel.svelte';
 	import ListingCard from '$lib/components/wireframe/ListingCard.svelte';
 
+	// Los anuncios llegan de +page.server.ts, leídos de la base.
+	let { data } = $props();
+
 	let filters = $derived<Filters>(
 		readFiltersFromSearchParams(page.url.searchParams)
 	);
 
-	let listings = $derived(applyFiltersAndSort(mockListings, filters));
+	let listings = $derived(applyFiltersAndSort(data.listings, filters));
 
 	let mobileFiltersOpen = $state(false);
 	let mobileDraft = $state<Filters>(defaultFilters);

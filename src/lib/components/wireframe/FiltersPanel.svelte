@@ -16,11 +16,11 @@
 		PRICE_MIN,
 		RADIO_MAX,
 		RADIO_MIN,
-		type ListingType,
 		type PublishedOption,
 		type SortOption
-	} from "$lib/mock/listings";
-	import { defaultFilters, type Filters } from "$lib/mock/filters";
+	} from '$lib/listings/options';
+	import type { ListingType } from '$lib/listings/types';
+	import { defaultFilters, type Filters } from '$lib/listings/filters';
 
 	type Props = {
 		filters: Filters;

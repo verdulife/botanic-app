@@ -4,10 +4,18 @@
 	import { favorites } from '$lib/stores/favorites.svelte';
 	import { listingHref } from '$lib/listing-url';
 	import { Heart, MapPin } from '@lucide/svelte/icons';
-	import type { Listing } from '$lib/mock/listings';
+	import type { Listing } from '$lib/listings/types';
+
+	// La tarjeta solo pinta estos campos, así que se queda con el recorte del modelo
+	// de la base. Así sirve también a las rutas que aún leen el mock (favoritos y
+	// perfil, T10 y T11) sin que este componente arrastre ese modelo.
+	type ListingCardData = Pick<
+		Listing,
+		'id' | 'title' | 'price' | 'type' | 'images' | 'location'
+	>;
 
 	type Props = {
-		listing: Listing;
+		listing: ListingCardData;
 	};
 
 	let { listing }: Props = $props();
