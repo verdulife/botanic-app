@@ -41,6 +41,25 @@ export type SellerInfo = {
 };
 
 /**
+ * Perfil público de un vendedor (`profiles`), tal y como lo pinta su página.
+ *
+ * No lleva el correo: vive en auth y no se expone. `id` es el uuid con el que se
+ * piden sus anuncios; `username` es lo que va en la URL del perfil.
+ */
+export type SellerProfile = {
+	id: string;
+	username: string;
+	fullName: string;
+	bio: string;
+	// `profiles.location_label`.
+	location: string;
+	// `profiles.avatar_url`; `null` cuando el vendedor no ha subido foto.
+	avatarUrl: string | null;
+	rating: number;
+	reviewCount: number;
+};
+
+/**
  * @property publicId Número público del anuncio. Es lo que identifica el anuncio
  * en la URL (`/app/anuncio/<slug>-<publicId>`, ver ./ref.ts): el uuid `id` queda
  * para editar y borrar.

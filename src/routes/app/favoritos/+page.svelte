@@ -1,8 +1,11 @@
 <script lang="ts">
+	import { browser } from '$app/env';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import { Heart } from '@lucide/svelte/icons';
-	import { getListingById, type Listing } from '$lib/mock/listings';
+	import { getListingsByIds } from '$lib/listings/query';
+	import type { Listing } from '$lib/listings/types';
+	import { supabase } from '$lib/supabase/client';
 	import { favorites } from '$lib/stores/favorites.svelte';
 	import AuthRequired from '$lib/components/wireframe/AuthRequired.svelte';
 	import ListingCard from '$lib/components/wireframe/ListingCard.svelte';
@@ -12,11 +15,47 @@
 
 	let searchTerm = $state('');
 
-	let favoriteListings = $derived(
-		[...favorites.ids]
-			.map((id) => getListingById(id))
-			.filter((l): l is Listing => Boolean(l))
-	);
+	// Los favoritos viven en una store de cliente, así que sus ids solo existen en
+	// el navegador: se resuelven allí con el cliente de navegador y no en una carga
+	// de servidor. Al cambiar el conjunto de ids (o al entrar por primera vez) se
+	// vuelve a preguntar; una respuesta que llega tarde no pisa a la siguiente.
+	let favoriteListings = $state<Listing[]>([]);
+	let loading = $state(true);
+	let loadFailed = $state(false);
+
+	$effect(() => {
+		const ids = [...favorites.ids];
+		if (!browser) return;
+
+		if (ids.length === 0) {
+			favoriteListings = [];
+			loadFailed = false;
+			loading = false;
+			return;
+		}
+
+		let cancelled = false;
+		loading = true;
+		loadFailed = false;
+
+		getListingsByIds(supabase, ids)
+			.then((listings) => {
+				if (!cancelled) favoriteListings = listings;
+			})
+			.catch((error: unknown) => {
+				if (cancelled) return;
+				console.error('[favoritos] No se pudieron leer los favoritos:', error);
+				favoriteListings = [];
+				loadFailed = true;
+			})
+			.finally(() => {
+				if (!cancelled) loading = false;
+			});
+
+		return () => {
+			cancelled = true;
+		};
+	});
 
 	function matchesTerm(l: Listing, q: string): boolean {
 		const t = q.toLowerCase();
@@ -48,7 +87,18 @@
 	</header>
 
 	{#if data.user}
-		{#if favoriteListings.length === 0}
+		{#if loading}
+			<p class="text-muted-foreground text-sm">Cargando tus favoritos…</p>
+		{:else if loadFailed}
+			<Card.Root class="border-dashed">
+				<Card.Content class="flex flex-col items-center gap-2 py-12 text-center">
+					<p class="text-sm font-medium">No se pudieron cargar tus favoritos</p>
+					<p class="text-muted-foreground max-w-sm text-sm">
+						Ha fallado la conexión con el mercado. Vuelve a intentarlo en un momento.
+					</p>
+				</Card.Content>
+			</Card.Root>
+		{:else if favoriteListings.length === 0}
 			<Card.Root class="border-dashed">
 				<Card.Content class="flex flex-col items-center gap-2 py-12 text-center">
 					<div

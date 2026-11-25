@@ -6,7 +6,9 @@ import {
 	getActiveListings,
 	getActiveListingsBySeller,
 	getListingByPublicId,
-	getListingById
+	getListingById,
+	getListingsByIds,
+	getProfileByUsername
 } from './query.ts';
 
 // Cliente falso: registra lo que pide la consulta y devuelve la fila indicada.
@@ -31,6 +33,10 @@ function fakeClient(
 		},
 		eq(column: string, value: unknown) {
 			calls.push(['eq', column, value]);
+			return builder;
+		},
+		in(column: string, values: readonly unknown[]) {
+			calls.push(['in', column, [...values]]);
 			return builder;
 		},
 		order(column: string, options?: unknown) {
@@ -88,6 +94,20 @@ function listingRow() {
 			{ url: 'https://cdn.example/a.jpg', position: 1 },
 			{ url: 'https://cdn.example/b.jpg', position: 0 }
 		]
+	};
+}
+
+/** Fila de `profiles` con las columnas del perfil público. */
+function profileRow() {
+	return {
+		id: '22222222-2222-4222-8222-222222222222',
+		username: 'marta',
+		full_name: 'Marta Puig',
+		bio: 'Colecciono monsteras.',
+		location_label: 'Barcelona',
+		avatar_url: 'https://cdn.example/marta.jpg',
+		rating: 4.6,
+		review_count: 12
 	};
 }
 
@@ -169,6 +189,84 @@ test('getActiveListingsBySeller lanza el error de la base', async () => {
 			return true;
 		}
 	);
+});
+
+test('getListingsByIds resuelve los favoritos entre los anuncios activos', async () => {
+	const ids = [listingRow().id, '33333333-3333-4333-8333-333333333333'];
+	const { client, calls } = fakeClient(listingRow(), { list: true });
+	const listings = await getListingsByIds(client, ids);
+
+	assert.equal(listings.length, 1);
+	assert.equal(listings[0]?.publicId, 4321);
+	assert.ok(
+		calls.some(
+			(call) => call[0] === 'in' && call[1] === 'id' && JSON.stringify(call[2]) === JSON.stringify(ids)
+		)
+	);
+	// Un favorito que ya no está activo (vendido, retirado) no vuelve a la lista.
+	assert.ok(calls.some((call) => call[0] === 'eq' && call[1] === 'status' && call[2] === 'active'));
+});
+
+test('getListingsByIds no consulta cuando no hay ids', async () => {
+	const { client, calls } = fakeClient(listingRow(), { list: true });
+
+	assert.deepEqual(await getListingsByIds(client, []), []);
+	// Sin ids no hay consulta que hacer: ni `from` ni `select`.
+	assert.deepEqual(calls, []);
+});
+
+test('getListingsByIds lanza el error de la base', async () => {
+	const { client } = fakeClient(null, { list: true, error: { message: 'boom' } });
+
+	await assert.rejects(getListingsByIds(client, [listingRow().id]), (error: FakeError) => {
+		assert.equal(error.message, 'boom');
+		return true;
+	});
+});
+
+test('getProfileByUsername lee el perfil público por nombre de usuario', async () => {
+	const { client, calls } = fakeClient(profileRow());
+	const profile = await getProfileByUsername(client, 'marta');
+
+	assert.ok(calls.some((call) => call[0] === 'from' && call[1] === 'profiles'));
+	assert.ok(calls.some((call) => call[0] === 'eq' && call[1] === 'username' && call[2] === 'marta'));
+	assert.deepEqual(profile, {
+		id: '22222222-2222-4222-8222-222222222222',
+		username: 'marta',
+		fullName: 'Marta Puig',
+		bio: 'Colecciono monsteras.',
+		location: 'Barcelona',
+		avatarUrl: 'https://cdn.example/marta.jpg',
+		rating: 4.6,
+		reviewCount: 12
+	});
+
+	// El perfil lleva el uuid con el que se piden sus anuncios y las valoraciones
+	// que pinta la cabecera; sin esas columnas, la página no las tiene.
+	const select = selectOf(calls);
+	for (const column of [
+		'id',
+		'username',
+		'full_name',
+		'bio',
+		'location_label',
+		'avatar_url',
+		'rating',
+		'review_count'
+	]) {
+		assert.match(select, new RegExp(`\\b${column}\\b`));
+	}
+});
+
+test('getProfileByUsername devuelve null sin fila y lanza el error de la base', async () => {
+	const missing = fakeClient(null);
+	assert.equal(await getProfileByUsername(missing.client, 'nadie'), null);
+
+	const failed = fakeClient(profileRow(), { error: { message: 'boom' } });
+	await assert.rejects(getProfileByUsername(failed.client, 'marta'), (error: FakeError) => {
+		assert.equal(error.message, 'boom');
+		return true;
+	});
 });
 
 test('getListingByPublicId lee por número público', async () => {

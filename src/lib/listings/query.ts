@@ -7,7 +7,14 @@
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Database, Json } from '$lib/supabase/types';
-import type { Coordinates, Listing, ListingType, PlantSpecies, SellerInfo } from './types';
+import type {
+	Coordinates,
+	Listing,
+	ListingType,
+	PlantSpecies,
+	SellerInfo,
+	SellerProfile
+} from './types';
 
 // Columnas reales del esquema: `categories` (name, slug), `profiles` (username,
 // full_name, bio, location_label, lat, lng, rating, review_count — el correo vive
@@ -35,6 +42,22 @@ type SellerEmbed = Pick<
 > | null;
 
 type ImageEmbed = Pick<Database['public']['Tables']['listing_images']['Row'], 'url' | 'position'>;
+
+// Columnas del perfil público del vendedor. El correo no está: vive en auth y no
+// se expone; `avatar_url` puede ser `null`.
+const PROFILE_SELECT = 'id, username, full_name, bio, location_label, avatar_url, rating, review_count';
+
+type ProfileRow = Pick<
+	Database['public']['Tables']['profiles']['Row'],
+	| 'id'
+	| 'username'
+	| 'full_name'
+	| 'bio'
+	| 'location_label'
+	| 'avatar_url'
+	| 'rating'
+	| 'review_count'
+>;
 
 // Fila tal y como la devuelve el `select` de arriba: las columnas del anuncio
 // más el vendedor, la categoría y las imágenes embebidas.
@@ -136,6 +159,66 @@ function toListing(row: ListingRow): Listing {
 		size: row.size ?? undefined
 		// `wishId` queda sin mapear: `listings` aún no tiene `wish_id`.
 	};
+}
+
+// Los favoritos son ids que guarda el navegador: se resuelven en una sola
+// consulta y solo vuelven los que siguen visibles (activos). Un id que ya no está
+// activo se cae de la lista en vez de romper la página. Sin ids no se consulta.
+export async function getListingsByIds(
+	supabase: SupabaseClient<Database>,
+	ids: string[]
+): Promise<Listing[]> {
+	if (ids.length === 0) return [];
+
+	const { data, error } = await supabase
+		.from('listings')
+		.select(LISTING_SELECT)
+		.in('id', ids)
+		.eq('status', 'active')
+		.order('created_at', { ascending: false })
+		.order('position', { referencedTable: 'listing_images' });
+
+	if (error) {
+		console.error('[listings] No se pudieron leer los anuncios favoritos:', error.message);
+		throw error;
+	}
+
+	return (data ?? []).map(toListing);
+}
+
+function toSellerProfile(row: ProfileRow): SellerProfile {
+	return {
+		id: row.id,
+		username: row.username,
+		fullName: row.full_name ?? '',
+		bio: row.bio ?? '',
+		location: row.location_label ?? '',
+		avatarUrl: row.avatar_url,
+		rating: row.rating,
+		reviewCount: row.review_count
+	};
+}
+
+// El perfil público se busca por nombre de usuario, que es lo que lleva la URL.
+//
+// `null` solo significa que no existe: un error de base se lanza, porque un fallo
+// de la consulta no es un usuario ausente.
+export async function getProfileByUsername(
+	supabase: SupabaseClient<Database>,
+	username: string
+): Promise<SellerProfile | null> {
+	const { data, error } = await supabase
+		.from('profiles')
+		.select(PROFILE_SELECT)
+		.eq('username', username)
+		.maybeSingle();
+
+	if (error) {
+		console.error('[profiles] No se pudo leer el perfil:', error.message);
+		throw error;
+	}
+
+	return data ? toSellerProfile(data) : null;
 }
 
 export async function getActiveListings(supabase: SupabaseClient<Database>): Promise<Listing[]> {
