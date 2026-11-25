@@ -83,6 +83,10 @@ Cerrar la etapa de demo: la aplicación en `/app` pasa a leer y escribir en la b
 
 **L13.** El seed perdió dos usuarios sin avisar: `mockEmailFor` construía el correo con el acento del nombre (`inés-mock@botanic.test`) y Supabase Auth lo rechaza, arrastrando sus anuncios. Corregido a ASCII y con test que recorre los 20 usuarios del seed.
 
+**L14.** Revisión del tramo 2 aprobada (lentes de riesgo y fiabilidad, 265 líneas; el proveedor pidió además un refutador por un hallazgo CRITICAL). Ese hallazgo —que la restricción nueva podría fallar sobre filas antiguas— fue **refutado**. Quedan dos avisos informativos: los correos del seed tenían que ser además **únicos**, no solo válidos (cerrado con test), y `getListingByPublicId` devuelve `null` ante error de base de datos, que es el mismo R4 pendiente para T9.
+
+**Decisión del humano:** el desarrollo basado en recibos queda **desactivado** (`gentle-ai review mode disable`): no quiere el aviso de revisión pendiente en cada cambio pequeño. Las revisiones ya hechas y sus recibos siguen ahí; no se borra nada. Cuando llegue un tramo delicado (migraciones, permisos, entrega) se propone reactivarlo para ese tramo.
+
 ## Siguiente sesión: empezar por aquí
 
 1. **T6 a T12** — el listado pasa a leerse de la base. 13 ficheros consumen `$lib/mock/listings` (no 19: los demás módulos de `src/lib/mock/` son dependencias internas): 4 componentes de wireframe, 2 stores y 7 rutas.
