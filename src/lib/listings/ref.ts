@@ -39,16 +39,14 @@ export type ListingRef = { publicId: number; slug: string };
  */
 export function parseListingRef(param: string): ListingRef | null {
 	const trimmed = param.trim();
-	if (!trimmed || trimmed.startsWith('-')) return null;
-	const match = /^(.*?)-?(\d+)$/.exec(trimmed);
+	// Dos formas canónicas y nada más: el número solo, o slug + guion + número.
+	// Sin el guion obligatorio, `monstera1234` sería otra URL del mismo anuncio; y
+	// con ceros a la izquierda, `0123` también. Una sola forma por anuncio.
+	const match = /^(?:([a-z0-9]+(?:-[a-z0-9]+)*)-)?([1-9]\d*)$/i.exec(trimmed);
 	if (!match) return null;
-	const slug = match[1] ?? '';
-	// El slug de la URL solo puede tener letras, números y guiones: así se
-	// rechazan cosas como `+5` o `a/b-5` en vez de resolverlas por accidente.
-	if (slug !== '' && !/^[a-z0-9-]+$/i.test(slug)) return null;
 	const publicId = Number(match[2]);
-	if (!Number.isSafeInteger(publicId) || publicId <= 0) return null;
-	return { publicId, slug };
+	if (!Number.isSafeInteger(publicId)) return null;
+	return { publicId, slug: match[1] ?? '' };
 }
 
 /** `true` cuando el slug de la URL ya no coincide con el título actual. */

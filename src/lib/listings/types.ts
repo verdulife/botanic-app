@@ -31,13 +31,19 @@ export type SellerInfo = {
 	// No se lee de `profiles` (el correo vive en auth y no se expone): queda fuera
 	// del modelo de vista salvo que quien lo construya lo tenga a mano.
 	email?: string;
-	// `profiles` aún no tiene valoraciones: 0 mientras no existan reseñas.
+	// `profiles.rating` y `profiles.review_count`, tal y como los guarda la base.
 	rating: number;
 	reviewCount: number;
 };
 
+/**
+ * @property publicId Número público del anuncio. Es lo que identifica el anuncio
+ * en la URL (`/app/anuncio/<slug>-<publicId>`, ver ./ref.ts): el uuid `id` queda
+ * para editar y borrar.
+ */
 export type Listing = {
 	id: string;
+	publicId: number;
 	title: string;
 	price: number;
 	category: string;

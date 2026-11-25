@@ -45,6 +45,17 @@ test('parseListingRef rechaza lo que no termina en número', () => {
 	assert.equal(parseListingRef('-5'), null);
 });
 
+test('parseListingRef exige una sola forma canónica por anuncio', () => {
+	// Sin guion de separación: no es la URL canónica.
+	assert.equal(parseListingRef('monstera1234'), null);
+	// Ceros a la izquierda: el mismo anuncio con otra URL.
+	assert.equal(parseListingRef('monstera-0123'), null);
+	assert.equal(parseListingRef('0123'), null);
+	// Caracteres que no son de slug.
+	assert.equal(parseListingRef('monstera_deliciosa-12'), null);
+	assert.equal(parseListingRef('monstera deliciosa-12'), null);
+});
+
 test('slugIsStale detecta un título cambiado y respeta el número solo', () => {
 	assert.equal(slugIsStale({ publicId: 1, slug: 'monstera-deliciosa' }, 'Monstera deliciosa'), false);
 	assert.equal(slugIsStale({ publicId: 1, slug: 'monstera' }, 'Monstera deliciosa'), true);

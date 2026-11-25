@@ -10,21 +10,28 @@ import type { Database, Json } from '$lib/supabase/types';
 import type { Listing, ListingType, PlantSpecies, SellerInfo } from './types';
 
 // Columnas reales del esquema: `categories` (name, slug), `profiles` (username,
-// full_name, bio, location_label, lat, lng — sin `rating`, `review_count` ni
-// `email`) y `listing_images` (url, position).
+// full_name, bio, location_label, lat, lng, rating, review_count — el correo vive
+// en auth y no se expone) y `listing_images` (url, position).
 //
 // El `select` va como literal y no como concatenación: el cliente tipado lo
 // interpreta en tiempo de compilación y un `string` genérico se rechaza.
-const LISTING_SELECT = `id, title, price, description, types, species, size, lat, lng,
+const LISTING_SELECT = `id, public_id, title, price, description, types, species, size, lat, lng,
 	location_label, created_at, categories!listings_category_id_fkey ( name, slug ),
-	profiles!listings_seller_id_fkey ( username, full_name, bio, location_label, lat, lng ),
+	profiles!listings_seller_id_fkey ( username, full_name, bio, location_label, lat, lng, rating, review_count ),
 	listing_images ( url, position )`;
 
 type CategoryEmbed = Pick<Database['public']['Tables']['categories']['Row'], 'name' | 'slug'> | null;
 
 type SellerEmbed = Pick<
 	Database['public']['Tables']['profiles']['Row'],
-	'username' | 'full_name' | 'bio' | 'location_label' | 'lat' | 'lng'
+	| 'username'
+	| 'full_name'
+	| 'bio'
+	| 'location_label'
+	| 'lat'
+	| 'lng'
+	| 'rating'
+	| 'review_count'
 > | null;
 
 type ImageEmbed = Pick<Database['public']['Tables']['listing_images']['Row'], 'url' | 'position'>;
@@ -34,6 +41,7 @@ type ImageEmbed = Pick<Database['public']['Tables']['listing_images']['Row'], 'u
 type ListingRow = Pick<
 	Database['public']['Tables']['listings']['Row'],
 	| 'id'
+	| 'public_id'
 	| 'title'
 	| 'price'
 	| 'description'
@@ -80,9 +88,8 @@ function toSellerInfo(row: ListingRow): SellerInfo {
 		full_name: profile?.full_name ?? '',
 		bio: profile?.bio ?? '',
 		city: profile?.location_label ?? '',
-		// `profiles` todavía no guarda valoraciones.
-		rating: 0,
-		reviewCount: 0
+		rating: profile?.rating ?? 0,
+		reviewCount: profile?.review_count ?? 0
 	};
 }
 
@@ -92,6 +99,7 @@ function toListing(row: ListingRow): Listing {
 
 	return {
 		id: row.id,
+		publicId: row.public_id,
 		title: row.title,
 		price: row.price ?? 0,
 		category: row.categories?.name ?? '',
@@ -130,6 +138,26 @@ export async function getActiveListings(supabase: SupabaseClient<Database>): Pro
 	}
 
 	return (data ?? []).map(toListing);
+}
+
+// La edición y el borrado van por uuid; la lectura pública, por número.
+export async function getListingByPublicId(
+	supabase: SupabaseClient<Database>,
+	publicId: number
+): Promise<Listing | null> {
+	const { data, error } = await supabase
+		.from('listings')
+		.select(LISTING_SELECT)
+		.eq('public_id', publicId)
+		.order('position', { referencedTable: 'listing_images' })
+		.maybeSingle();
+
+	if (error) {
+		console.error('[listings] No se pudo leer el anuncio:', error.message);
+		return null;
+	}
+
+	return data ? toListing(data) : null;
 }
 
 export async function getListingById(
