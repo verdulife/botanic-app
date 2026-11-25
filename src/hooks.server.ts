@@ -7,14 +7,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createSupabaseServerClient(event);
 
 	event.locals.safeGetSession = async () => {
-		const { data: { session } } = await event.locals.supabase.auth.getSession();
-		if (!session) return { session: null, user: null };
-
-		// `getUser()` valida el token contra Auth; `session.user` no sirve como identidad.
+		// `getUser()` valida el token contra Auth y es la única fuente de identidad:
+		// su `user` viene comprobado, no el que viaja dentro de la sesión.
+		// No se llama a `getSession()`: en el servidor dispara el refresco automático
+		// y con él escrituras de cookie cuando la respuesta ya está generada.
 		const { data: { user }, error } = await event.locals.supabase.auth.getUser();
-		if (error) return { session: null, user: null };
+		if (error) return { user: null };
 
-		return { session, user };
+		return { user };
 	};
 
 	if (event.url.pathname.startsWith(APP_PREFIX)) {

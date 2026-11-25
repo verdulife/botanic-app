@@ -11,8 +11,15 @@ export function createSupabaseServerClient(event: RequestEvent) {
 			cookies: {
 				getAll: () => event.cookies.getAll(),
 				setAll: (cookiesToSet) => {
-					for (const { name, value, options } of cookiesToSet) {
-						event.cookies.set(name, value, { ...options, path: '/' });
+					// Supabase refresca el token por su cuenta y puede intentar escribir
+					// cookies cuando la respuesta ya está generada. Sin este try/catch el
+					// proceso cae con `cookies_set_after_response`.
+					try {
+						for (const { name, value, options } of cookiesToSet) {
+							event.cookies.set(name, value, { ...options, path: '/' });
+						}
+					} catch (err) {
+						console.warn('[supabase] no se pudo escribir la cookie de sesión:', err);
 					}
 				}
 			}
