@@ -124,8 +124,12 @@ function allowedHostnames(): Set<string> {
 }
 
 async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
-	// Acepta el nombre canónico de Cloudflare y el que ya estaba en el proyecto.
-	const secret = (env.TURNSTILE_SECRET ?? env.TURNSTILE_SECRET_KEY)?.trim();
+	// Acepta el nombre canónico de Cloudflare y el que ya estaba en el proyecto,
+	// pero toma el primero que **no esté vacío**: si el canónico existe en blanco,
+	// `??` no cae al otro y la verificación quedaría desactivada en silencio.
+	const secret = [env.TURNSTILE_SECRET, env.TURNSTILE_SECRET_KEY]
+		.map((value) => value?.trim())
+		.find((value) => value && value.length > 0);
 	// Sin clave configurada no se bloquea: el formulario tiene que poder probarse
 	// en local con un entorno a medias.
 	if (!secret) return true;
