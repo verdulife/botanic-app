@@ -14,6 +14,8 @@ Cerrar la etapa de demo: la aplicación en `/app` pasa a leer y escribir en la b
 
 **S5.** «Las migraciones entran en el repo antes de empezar con favoritos.»
 
+**S6.** «cuando utilizaba los datos de MOC, sí que había bastantes y todos repartidos por España, que eso estaba bien, pero en las ciudades o ubicaciones donde estaban, en las calles estaban demasiado juntos. Me gustaría que estuvieran más separados para que cuando se haga zoom no se pisen tanto y además resulte más realista.»
+
 ## Tasks
 
 | # | Tarea | Estado | Commit |
@@ -29,7 +31,14 @@ Cerrar la etapa de demo: la aplicación en `/app` pasa a leer y escribir en la b
 | O4 | Límite de intentos por IP en Postgres, IP hasheada | hecho | `92a9afa`, `d8a3ddc` |
 | O5 | `src/env.ts` declara todas las variables; imports a `$app/env` | hecho | `01b09f7` |
 | O6 | Alta completa verificada: dos correos y contacto en el segmento | hecho | — |
-| T6 | **El listado de anuncios se lee de la base de datos** | **pendiente** | — |
+| T6 | Migración: `types`, `species`, `size`, `public_id` y valoraciones del perfil | hecho | `12efaa4` |
+| T7 | Seed con reparto orgánico entre anuncios de un mismo barrio | hecho | `59da934` |
+| T8 | Capa de lectura de anuncios contra Supabase: fila, imágenes y vendedor | hecho | `12efaa4` |
+| T8b | URL del detalle: slug legible más número público | hecho | `12efaa4` |
+| T9 | Listado, mapa y scroll leen de la base de datos | pendiente | — |
+| T10 | Detalle, favoritos y perfil leen de la base de datos | pendiente | — |
+| T11 | Publicar escribe en la base de datos | pendiente | — |
+| T12 | `$lib/mock/listings` fuera del código | pendiente | — |
 
 ## Decisiones tomadas
 
@@ -56,8 +65,20 @@ Cerrar la etapa de demo: la aplicación en `/app` pasa a leer y escribir en la b
 
 **L5.** Verificación final del alta (O6) hecha por el humano: «me han llegado los correos a todos los lugares que eran necesarios».
 
+**L6 (humano, textual):** «antes de ponernos con esto, obviamente, como hemos hecho push en producción, Bersell se está quejando y no puede hacer deploy porque hemos cambiado algunos nombres de variables.» → Causa real: producción construía `master`, 47 commits por detrás. Resuelto con merge fast-forward a `main`, renombrado de la rama, variables reconfiguradas en Vercel y hook de deploy reapuntado.
+
+**L7 (humano, textual):** «cuando utilizaba los datos de MOCK, sí que había bastantes y todos repartidos por España, que eso estaba bien, pero en las ciudades o ubicaciones donde estaban, en las calles estaban demasiado juntos. Me gustaría que estuvieran más separados para que cuando se haga zoom no se pisen tanto y además resulte más realista.» → Abre S6 y la tarea T7.
+
+**L8.** Evidencia que cambia la forma de T6: el `listings` del esquema no tiene `type`, `species`, `size` ni `wish_id`, y el seed escribe `lat`/`lng` como el **centroide exacto** de la ciudad, sin variación: todos los anuncios de una ciudad comparten coordenada. Ningún ruta de `/app` tiene `+page.server.ts`; los datos se leen hoy dentro de los componentes.
+
+**L9 (humano, textual):** «Creo que esto es algo que ya habíamos discutido, no contigo, sino en la creación del proyecto, en la que decíamos utilizar la misma técnica que usa Wallapop, que creo que es la segunda opción que me dabas, que era una mezcla entre algo legible con un sufijo. Pensemos esto como ya un resultado definitivo, aunque ahora mismo sea un mock-up, ya que tiene que ser la mejor opción para el SEO posible y rendimiento.» → URL definitiva del detalle: `/app/anuncio/<slug>-<public_id>`. El número manda y el slug decora, así que cambiar el título no rompe enlaces.
+
+**L10.** Hito 1 cerrado sobre `feat/anuncios-supabase` (743 líneas de autoría en dos commits, por encima del corte de revisión de ~400: se entrega como rama propia, no como commit suelto). Evidencia: `pnpm test` 15/15, `pnpm check` 0 errores, `pnpm build` exit 0, migraciones aplicadas (`types`, `species`, `size`, `public_id`, `rating`, `review_count`). La base tiene 0 anuncios: la app sigue leyendo el mock hasta T9.
+
+**Decisión abierta:** un slug legible solo rinde si la página se indexa, y `AGENTS.md` exige `noindex` en todo `/app*`. Si el SEO del anuncio es objetivo, el detalle tiene que salir a una ruta pública fuera de `/app`; la forma de la URL ya está preparada para ese día.
+
 ## Siguiente sesión: empezar por aquí
 
-1. **T6** — 19 ficheros consumen `$lib/mock/listings`: listado, mapa, scroll, detalle, favoritos, perfil, publicar y los componentes de tarjeta. Es lo último del bloque 1.
+1. **T6 a T12** — el listado pasa a leerse de la base. 13 ficheros consumen `$lib/mock/listings` (no 19: los demás módulos de `src/lib/mock/` son dependencias internas): 4 componentes de wireframe, 2 stores y 7 rutas.
 2. Después, **favoritos** como primera migración de negocio, con el patrón que dejan las de `waitlist`.
 3. Decisiones menores aparcadas: los **48 apuntados antiguos no pueden recuperar su tarjeta** (su número era lo que abría la puerta); si se quiere, se les manda el testigo por correo. Y la **neutralidad completa** de la respuesta del alta (hoy aún distingue alta de duplicado).
