@@ -36,9 +36,9 @@ Cerrar la etapa de demo: la aplicación en `/app` pasa a leer y escribir en la b
 | T8 | Capa de lectura de anuncios contra Supabase: fila, imágenes y vendedor | hecho | `12efaa4` |
 | T8b | URL del detalle: slug legible más número público | hecho | `12efaa4` |
 | T9 | Listado, mapa y scroll leen de la base de datos | hecho | `a6c1470` |
-| T10 | Detalle, favoritos y perfil leen de la base de datos | pendiente | — |
-| T11 | Publicar escribe en la base de datos | pendiente | — |
-| T12 | `$lib/mock/listings` fuera del código | pendiente | — |
+| T10 | Detalle, favoritos y perfil leen de la base de datos | hecho | `e22888c`, `92047b9` |
+| T11 | Publicar escribe en la base de datos | hecho | `b5c3d1c` |
+| T12 | `$lib/mock/listings` fuera del código | hecho | `2f221b2` |
 
 ## Decisiones tomadas
 
@@ -90,6 +90,16 @@ Cerrar la etapa de demo: la aplicación en `/app` pasa a leer y escribir en la b
 **L15.** T9 hecho y **verificado de extremo a extremo**, no solo por tipos: con el servidor de desarrollo arriba, `/app` devuelve 200 y su HTML contiene **142 enlaces a anuncio** con títulos, barrios del seed y rutas reales de Storage. Antes de eso, comprobado por SQL que el rol `anon` ve los 142 anuncios y las 284 imágenes, que es lo que necesita la lectura con RLS.
 
 **Pendiente anotado para T10:** la tarjeta construye el enlace con el **uuid**, pero el detalle espera `<slug>-<public_id>`. Hoy pinchar un anuncio da una URL que el detalle no resuelve; se arregla al conectar el detalle.
+
+**L16.** Bloque cerrado salvo deseos. T10 a T12 hechos y entregados como **cadena de ocho PRs apilados** (`#2` a `#9`) sobre `main`:
+
+- T10: detalle por número público (301 a la forma canónica, 404 en URL inválida o anuncio inexistente) y favoritos y perfil leyendo de la base.
+- T11: publicar escribe de verdad. El camino de escritura se probó **contra la base real** con la clave publicable y sesión de un usuario del seed: alta bajo RLS, subida a la carpeta del vendedor, fila de imagen y lectura de vuelta, con limpieza posterior.
+- T12: el mock de anuncios sale del código. El autocompletado del buscador consulta la base; `mock/listings`, `filters`, `seed` y `url-filters` y la store `user-listings` están borrados, y `grep` no encuentra una sola referencia.
+
+Queda del mock lo que aún no tiene tabla: `wishes`, `seller-wishes`, `plant-care`, `locations` y `seed-data`. Eso entra con el bloque de deseos y favoritos como primera migración de negocio.
+
+**No verificado en navegador**: el envío del formulario de publicar de punta a punta, porque las fotos se comprimen en el cliente antes de viajar.
 
 ## Siguiente sesión: empezar por aquí
 
