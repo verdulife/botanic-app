@@ -146,7 +146,7 @@
 	{/each}
 
 	<form method="POST" action="/app/logout" class="mt-2">
-		<Button type="submit" variant="outline" class="w-full">
+		<Button type="submit" variant="outline" class="h-12 w-full">
 			<LogOut class="size-4" />
 			Cerrar sesión
 		</Button>

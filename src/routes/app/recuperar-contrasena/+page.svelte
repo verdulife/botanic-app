@@ -56,6 +56,7 @@
 					required
 					value={form?.email ?? ''}
 					placeholder="tu@email.com"
+					class="h-12"
 				/>
 			</div>
 
@@ -63,7 +64,7 @@
 				<p class="text-destructive text-sm" role="alert">{form.error}</p>
 			{/if}
 
-			<Button type="submit" disabled={pending} class="w-full">
+			<Button type="submit" disabled={pending} class="h-12 w-full">
 				{pending ? 'Enviando…' : 'Enviar enlace de recuperación'}
 			</Button>
 		</form>

@@ -13,7 +13,7 @@
 </script>
 
 <div class="flex flex-col gap-3">
-	<Button href="/app/deseos/nuevo" class="self-start">
+	<Button href="/app/deseos/nuevo" class="h-12 self-start">
 		<Plus class="size-4" />
 		Crear deseo
 	</Button>

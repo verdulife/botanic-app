@@ -117,7 +117,7 @@
 						El wireframe muestra el flujo de navegación aunque no haya lógica de auth implementada.
 					</p>
 				</div>
-				<Button href="/app/login" variant="default">Iniciar sesión</Button>
+				<Button href="/app/login" variant="default" class="h-12">Iniciar sesión</Button>
 			</Card.Content>
 		</Card.Root>
 	{/if}
@@ -129,7 +129,7 @@
 			</h2>
 			<div class="flex flex-wrap gap-2">
 				{#each primaryActions as action}
-					<Button href={action.href} variant={action.variant ?? "default"}>
+					<Button href={action.href} variant={action.variant ?? "default"} class="h-12">
 						{action.label}
 					</Button>
 				{/each}
@@ -144,7 +144,7 @@
 			</h2>
 			<div class="flex flex-wrap gap-2">
 				{#each secondaryActions as action}
-					<Button href={action.href} variant={action.variant ?? "outline"}>
+					<Button href={action.href} variant={action.variant ?? "outline"} class="h-12">
 						{action.label}
 					</Button>
 				{/each}

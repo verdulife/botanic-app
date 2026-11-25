@@ -215,7 +215,7 @@
 				<p class="text-muted-foreground max-w-sm text-sm">
 					Puede que se haya eliminado o que la dirección no sea válida.
 				</p>
-				<Button href="/app" variant="outline">Ver todos los anuncios</Button>
+				<Button href="/app" variant="outline" class="h-12">Ver todos los anuncios</Button>
 			</Card.Content>
 		</Card.Root>
 	{:else}

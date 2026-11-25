@@ -19,7 +19,7 @@
 			<LogIn class="size-5" />
 		</div>
 		<p class="text-sm">{message}</p>
-		<Button href={action?.href ?? "/app/login"} variant="default">
+		<Button href={action?.href ?? "/app/login"} variant="default" class="h-12">
 			{action?.label ?? "Iniciar sesión"}
 		</Button>
 	</Card.Content>

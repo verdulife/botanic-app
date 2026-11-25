@@ -33,8 +33,8 @@
 			</p>
 		</div>
 		<div class="flex flex-col gap-2 sm:flex-row">
-			<Button href="/app/registro" class="w-full sm:w-auto">Crear cuenta</Button>
-			<Button href="/app/login" variant="outline" class="w-full sm:w-auto">
+			<Button href="/app/registro" class="h-12 w-full sm:w-auto">Crear cuenta</Button>
+			<Button href="/app/login" variant="outline" class="h-12 w-full sm:w-auto">
 				Ya tengo cuenta
 			</Button>
 		</div>

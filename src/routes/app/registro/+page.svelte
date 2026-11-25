@@ -63,6 +63,7 @@
 					required
 					value={form?.email ?? ''}
 					placeholder="tu@email.com"
+					class="h-12"
 				/>
 			</div>
 
@@ -76,6 +77,7 @@
 					required
 					minlength={8}
 					placeholder={`Mínimo ${MIN_PASSWORD_HINT} caracteres`}
+					class="h-12"
 				/>
 			</div>
 
@@ -83,7 +85,7 @@
 				<p class="text-destructive text-sm" role="alert">{form.error}</p>
 			{/if}
 
-			<Button type="submit" disabled={pending} class="w-full">
+			<Button type="submit" disabled={pending} class="h-12 w-full">
 				{pending ? 'Creando cuenta…' : 'Crear cuenta'}
 			</Button>
 

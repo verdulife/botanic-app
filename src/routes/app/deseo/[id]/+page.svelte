@@ -89,13 +89,13 @@
 			</Card.Root>
 
 			<div class="flex flex-col gap-2 sm:flex-row">
-				<Button href="/app/deseo/{wish.id}/coincidencias" class="w-full sm:flex-1">
+				<Button href="/app/deseo/{wish.id}/coincidencias" class="h-12 w-full sm:flex-1">
 					Ver coincidencias
 				</Button>
 				<Button
 					href="/app/deseo/{wish.id}/alerta"
 					variant="outline"
-					class="w-full sm:flex-1"
+					class="h-12 w-full sm:flex-1"
 				>
 					Configurar alerta
 				</Button>

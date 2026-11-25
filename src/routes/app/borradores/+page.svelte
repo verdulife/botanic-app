@@ -51,7 +51,7 @@
 					Cuando guardes un anuncio sin publicar, aparecerá aquí para retomarlo
 					cuando quieras.
 				</p>
-				<Button href="/app/publicar" class="mt-1">
+				<Button href="/app/publicar" class="h-12 mt-1">
 					<Plus class="size-4" />
 					Crear anuncio
 				</Button>

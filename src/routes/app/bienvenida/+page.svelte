@@ -86,6 +86,7 @@
 						placeholder="ej. ana_ruiz"
 						minlength={3}
 						maxlength={20}
+						class="h-12"
 					/>
 					<p class="text-muted-foreground text-xs">
 						3-20 caracteres. Letras minúsculas, números y guiones bajos. Será tu
@@ -103,6 +104,7 @@
 						value={form?.values?.full_name ?? profile?.full_name ?? ''}
 						placeholder="Tu nombre completo"
 						maxlength={80}
+						class="h-12"
 					/>
 				</div>
 
@@ -116,6 +118,7 @@
 						value={form?.values?.location_label ?? profile?.location_label ?? ''}
 						placeholder="ej. Madrid, Malasaña"
 						maxlength={120}
+						class="h-12"
 					/>
 				</div>
 
@@ -135,7 +138,7 @@
 					<p class="text-destructive text-sm" role="alert">{form.error}</p>
 				{/if}
 
-				<Button type="submit" disabled={pending} class="w-full">
+				<Button type="submit" disabled={pending} class="h-12 w-full">
 					{pending ? 'Guardando…' : 'Guardar y empezar'}
 				</Button>
 
