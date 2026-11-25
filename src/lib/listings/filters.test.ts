@@ -23,6 +23,7 @@ function listing(overrides: Partial<Listing> = {}): Listing {
 		categorySlug: 'plantas',
 		location: 'Gràcia, Barcelona',
 		seller: 'Marta Puig',
+		sellerId: 'seller-a',
 		sellerInfo: {
 			username: 'marta',
 			full_name: 'Marta Puig',

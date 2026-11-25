@@ -2,28 +2,36 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
 	import { favorites } from '$lib/stores/favorites.svelte';
+	import { listingPath } from '$lib/listings/ref';
 	import { listingHref } from '$lib/listing-url';
 	import { Heart, MapPin } from '@lucide/svelte/icons';
 	import type { Listing } from '$lib/listings/types';
 
 	// La tarjeta solo pinta estos campos, así que se queda con el recorte del modelo
 	// de la base. Así sirve también a las rutas que aún leen el mock (favoritos y
-	// perfil, T10 y T11) sin que este componente arrastre ese modelo.
+	// perfil, T10 y T11) sin que este componente arrastre ese modelo. Esas rutas no
+	// tienen `publicId` todavía: su enlace cae al token antiguo hasta que migren.
 	type ListingCardData = Pick<
 		Listing,
 		'id' | 'title' | 'price' | 'type' | 'images' | 'location'
-	>;
+	> & { publicId?: number };
 
 	type Props = {
 		listing: ListingCardData;
 	};
 
 	let { listing }: Props = $props();
+
+	function hrefFor(listing: ListingCardData): string {
+		return listing.publicId === undefined
+			? listingHref(listing)
+			: listingPath(listing.title, listing.publicId);
+	}
 </script>
 
 <div class="group relative rounded-2xl">
 	<a
-		href={listingHref(listing)}
+		href={hrefFor(listing)}
 		class="block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 	>
 		<div class="flex flex-col">

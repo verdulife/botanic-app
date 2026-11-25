@@ -1,17 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
-	import { listingHref, parseAnuncioParam } from '$lib/listing-url';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
-	import { getListingById, getListingsBySeller, getPlantCareForSpecies } from '$lib/mock/listings';
+	import { listingPath } from '$lib/listings/ref';
+	import { getPlantCareForSpecies } from '$lib/mock/plant-care';
 	import { sellerWishesByUsername } from '$lib/mock/seller-wishes';
 	import { wishPriceLabel } from '$lib/mock/wishes';
 	import { favorites } from '$lib/stores/favorites.svelte';
 	import { wishes } from '$lib/stores/wishes.svelte';
-	import { userListings } from '$lib/stores/user-listings.svelte';
 	import {
 		ChevronRight,
 		MapPin,
@@ -26,28 +24,22 @@
 		Star
 	} from '@lucide/svelte/icons';
 
+	// El anuncio y los demás del vendedor llegan resueltos de +page.server.ts:
+	// aquí solo se pintan. Un slug inválido, un número inexistente o un slug
+	// desfasado se resuelven antes de montar el componente.
 	let { data } = $props();
 
 	let activeImage = $state(0);
 
-	const parsed = $derived(parseAnuncioParam(page.params.slug ?? ''));
-	const listing = $derived(
-		userListings.getById(parsed.id) ?? getListingById(parsed.id)
-	);
-
-	// Redirige a la URL canónica (slug correcto del título) con replaceState.
-	$effect(() => {
-		if (!listing) return;
-		const canonical = listingHref(listing);
-		if (page.url.pathname !== canonical) {
-			goto(canonical, { replaceState: true });
-		}
-	});
+	const listing = $derived(data.listing);
+	const sellerListings = $derived(data.sellerListings);
 
 	// ── Open Graph / Twitter (sharing) ──
 	const ogBase = $derived(page.url.origin);
-	const ogUrl = $derived(listing ? `${ogBase}${listingHref(listing)}` : '');
-	const ogImage = $derived(listing?.images[0] ? `${ogBase}${listing.images[0]}` : '');
+	const ogUrl = $derived(`${ogBase}${listingPath(listing.title, listing.publicId)}`);
+	// Las imágenes de la base son URLs absolutas de Storage: no se les antepone el
+	// origen, que produciría una dirección inválida.
+	const ogImage = $derived(listing.images[0] ?? '');
 	const ogTitle = $derived(
 		listing
 			? `${listing.title} · ${listing.type.includes('regalar') ? 'Gratis' : `${listing.price} €`}`
@@ -150,12 +142,6 @@
 
 	const perplexityUrl = $derived(
 		`https://www.perplexity.ai/search?q=${encodeURIComponent(aiPrompt)}`
-	);
-
-	const sellerListings = $derived(
-		listing
-			? getListingsBySeller(listing.sellerInfo.username, listing.id, 4)
-			: []
 	);
 
 	let dragStartX: number | null = null;
@@ -484,7 +470,7 @@
 				<div class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">
 					{#each sellerListings as item (item.id)}
 						<a
-							href={listingHref(item)}
+							href={listingPath(item.title, item.publicId)}
 							class="group focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-2xl"
 						>
 							<div class="flex flex-col">

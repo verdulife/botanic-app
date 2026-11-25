@@ -16,7 +16,7 @@ import type { Coordinates, Listing, ListingType, PlantSpecies, SellerInfo } from
 // El `select` va como literal y no como concatenación: el cliente tipado lo
 // interpreta en tiempo de compilación y un `string` genérico se rechaza.
 const LISTING_SELECT = `id, public_id, title, price, description, types, species, size, lat, lng,
-	location_label, created_at, categories!listings_category_id_fkey ( name, slug ),
+	location_label, seller_id, created_at, categories!listings_category_id_fkey ( name, slug ),
 	profiles!listings_seller_id_fkey ( username, full_name, bio, location_label, lat, lng, rating, review_count ),
 	listing_images ( url, position )`;
 
@@ -51,6 +51,7 @@ type ListingRow = Pick<
 	| 'lat'
 	| 'lng'
 	| 'location_label'
+	| 'seller_id'
 	| 'created_at'
 > & {
 	categories: CategoryEmbed;
@@ -124,6 +125,7 @@ function toListing(row: ListingRow): Listing {
 		// `location_label` del anuncio manda; si falta, la del vendedor.
 		location: row.location_label ?? profile?.location_label ?? '',
 		seller: profile?.full_name ?? profile?.username ?? '',
+		sellerId: row.seller_id,
 		sellerInfo: toSellerInfo(row),
 		images: images.map((image) => image.url),
 		type: toListingTypes(row.types),
@@ -146,6 +148,35 @@ export async function getActiveListings(supabase: SupabaseClient<Database>): Pro
 
 	if (error) {
 		console.error('[listings] No se pudieron leer los anuncios:', error.message);
+		throw error;
+	}
+
+	return (data ?? []).map(toListing);
+}
+
+// Los demás anuncios activos de un vendedor, para el bloque del detalle. Se
+// ordenan por fecha descendente igual que el listado: lo más reciente primero.
+// El anuncio que se está viendo se puede excluir por uuid (no por número: el
+// número solo es único entre los anuncios, no lo usa el resto de la app).
+export async function getActiveListingsBySeller(
+	supabase: SupabaseClient<Database>,
+	sellerId: string,
+	excludeId?: string
+): Promise<Listing[]> {
+	const active = supabase
+		.from('listings')
+		.select(LISTING_SELECT)
+		.eq('status', 'active')
+		.eq('seller_id', sellerId);
+
+	const filtered = excludeId ? active.neq('id', excludeId) : active;
+
+	const { data, error } = await filtered
+		.order('created_at', { ascending: false })
+		.order('position', { referencedTable: 'listing_images' });
+
+	if (error) {
+		console.error('[listings] No se pudieron leer los anuncios del vendedor:', error.message);
 		throw error;
 	}
 

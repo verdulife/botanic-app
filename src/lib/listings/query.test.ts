@@ -2,7 +2,12 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '$lib/supabase/types';
-import { getActiveListings, getListingByPublicId, getListingById } from './query.ts';
+import {
+	getActiveListings,
+	getActiveListingsBySeller,
+	getListingByPublicId,
+	getListingById
+} from './query.ts';
 
 // Cliente falso: registra lo que pide la consulta y devuelve la fila indicada.
 // Las funciones de ./query.ts leen del cliente y no guardan estado, así que basta
@@ -28,8 +33,12 @@ function fakeClient(
 			calls.push(['eq', column, value]);
 			return builder;
 		},
-		order(column: string) {
-			calls.push(['order', column]);
+		order(column: string, options?: unknown) {
+			calls.push(['order', column, options]);
+			return builder;
+		},
+		neq(column: string, value: unknown) {
+			calls.push(['neq', column, value]);
 			return builder;
 		},
 		then(resolve: (value: typeof result) => unknown) {
@@ -56,6 +65,7 @@ function listingRow() {
 		title: 'Monstera deliciosa enorme',
 		price: 25,
 		description: 'Con maceta.',
+		seller_id: '22222222-2222-4222-8222-222222222222',
 		types: ['vender'],
 		species: { name: 'Monstera deliciosa' },
 		size: 'grande',
@@ -110,6 +120,55 @@ test('el anuncio leído expone su número público', async () => {
 
 	assert.equal(listings[0]?.publicId, 4321);
 	assert.match(selectOf(calls), /\bpublic_id\b/);
+});
+
+test('el anuncio leído expone el vendedor para pedir sus otros anuncios', async () => {
+	const { client, calls } = fakeClient(listingRow(), { list: true });
+	const listings = await getActiveListings(client);
+
+	assert.equal(listings[0]?.sellerId, '22222222-2222-4222-8222-222222222222');
+	// Sin `seller_id` en el `select`, la consulta por vendedor no tiene con qué.
+	assert.match(selectOf(calls), /\bseller_id\b/);
+});
+
+test('getActiveListingsBySeller pide los activos del vendedor salvo el anuncio visto', async () => {
+	const { client, calls } = fakeClient(listingRow(), { list: true });
+	const sellerId = '22222222-2222-4222-8222-222222222222';
+	const listings = await getActiveListingsBySeller(client, sellerId, listingRow().id);
+
+	assert.equal(listings.length, 1);
+	assert.equal(listings[0]?.publicId, 4321);
+	assert.ok(calls.some((call) => call[0] === 'eq' && call[1] === 'status' && call[2] === 'active'));
+	assert.ok(calls.some((call) => call[0] === 'eq' && call[1] === 'seller_id' && call[2] === sellerId));
+	assert.ok(calls.some((call) => call[0] === 'neq' && call[1] === 'id' && call[2] === listingRow().id));
+	// El detalle enseña primero lo más reciente.
+	assert.ok(
+		calls.some(
+			(call) =>
+				call[0] === 'order' &&
+				call[1] === 'created_at' &&
+				(call[2] as { ascending?: boolean } | undefined)?.ascending === false
+		)
+	);
+});
+
+test('getActiveListingsBySeller no excluye nada sin anuncio visto', async () => {
+	const { client, calls } = fakeClient(listingRow(), { list: true });
+	await getActiveListingsBySeller(client, '22222222-2222-4222-8222-222222222222');
+
+	assert.ok(!calls.some((call) => call[0] === 'neq'));
+});
+
+test('getActiveListingsBySeller lanza el error de la base', async () => {
+	const { client } = fakeClient(null, { list: true, error: { message: 'boom' } });
+
+	await assert.rejects(
+		getActiveListingsBySeller(client, '22222222-2222-4222-8222-222222222222'),
+		(error: FakeError) => {
+			assert.equal(error.message, 'boom');
+			return true;
+		}
+	);
 });
 
 test('getListingByPublicId lee por número público', async () => {

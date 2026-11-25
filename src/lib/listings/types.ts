@@ -54,6 +54,9 @@ export type Listing = {
 	categorySlug: CategorySlug;
 	location: string;
 	seller: string;
+	// `listings.seller_id`: uuid del vendedor. Hace falta para pedir el resto de
+	// sus anuncios sin pasar por el nombre, que no es único.
+	sellerId: string;
 	sellerInfo: SellerInfo;
 	images: string[];
 	type: ListingType[];
